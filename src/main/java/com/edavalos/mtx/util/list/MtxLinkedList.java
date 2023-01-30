@@ -33,5 +33,33 @@ public final class MtxLinkedList<T> {
         }
 
         last.next = newNode;
+        this.size ++;
+    }
+
+    boolean remove(T element) {
+        if (this.head == null) {
+            return false;
+        }
+
+        if (this.head.content.equals(element)) {
+            this.head = this.head.next;
+            this.size --;
+            return true;
+        }
+
+        MtxNode currentNode = this.head;
+        MtxNode previous = null;
+        while (currentNode != null && !currentNode.content.equals(element)) {
+            currentNode = currentNode.next;
+            previous = currentNode;
+        }
+
+        if (currentNode != null) {
+            previous.next = currentNode.next;
+            this.size --;
+            return true;
+        }
+
+        return false;
     }
 }
