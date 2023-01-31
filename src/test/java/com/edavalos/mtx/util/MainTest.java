@@ -1,15 +1,14 @@
 package com.edavalos.mtx.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 public final class MainTest {
@@ -19,14 +18,14 @@ public final class MainTest {
     @Mock
     private Main mainMock;
 
-    @Before
+    @BeforeEach
     public void setUp() {
         mainMock = mock(Main.class);
 
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
         System.setOut(standardOut);
     }
