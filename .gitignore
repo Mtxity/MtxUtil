@@ -1,4 +1,6 @@
-target/
+### Project ###
+/target/
+/lib/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
