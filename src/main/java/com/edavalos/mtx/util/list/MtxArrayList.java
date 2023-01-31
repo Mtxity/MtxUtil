@@ -46,4 +46,20 @@ public final class MtxArrayList<T> {
 
         return found;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder("[");
+
+        for (Object element : this.content) {
+            string.append(element.toString()).append(", ");
+        }
+
+        string.append("]");
+        return string.toString().replace(", ]", "]");
+    }
+
+    public int size() {
+        return this.nextIdx - 1;
+    }
 }
