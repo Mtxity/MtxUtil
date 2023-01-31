@@ -62,4 +62,18 @@ public final class MtxLinkedList<T> {
 
         return false;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder string = new StringBuilder("[");
+
+        MtxNode next = this.head;
+        while (next != null) {
+            string.append(next.content.toString()).append(", ");
+            next = next.next;
+        }
+
+        string.append("]");
+        return string.toString().replace(", ]", "]");
+    }
 }
