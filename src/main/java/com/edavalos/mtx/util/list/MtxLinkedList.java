@@ -24,6 +24,7 @@ public final class MtxLinkedList<T> {
 
         if (this.head == null) {
             this.head = newNode;
+            this.size ++;
             return;
         }
 
@@ -36,7 +37,7 @@ public final class MtxLinkedList<T> {
         this.size ++;
     }
 
-    boolean remove(T element) {
+    public boolean remove(T element) {
         if (this.head == null) {
             return false;
         }
@@ -50,8 +51,8 @@ public final class MtxLinkedList<T> {
         MtxNode currentNode = this.head;
         MtxNode previous = null;
         while (currentNode != null && !currentNode.content.equals(element)) {
-            currentNode = currentNode.next;
             previous = currentNode;
+            currentNode = currentNode.next;
         }
 
         if (currentNode != null) {
@@ -75,5 +76,9 @@ public final class MtxLinkedList<T> {
 
         string.append("]");
         return string.toString().replace(", ]", "]");
+    }
+
+    public int size() {
+        return this.size;
     }
 }
