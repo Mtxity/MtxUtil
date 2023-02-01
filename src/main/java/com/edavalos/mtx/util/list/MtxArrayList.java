@@ -40,7 +40,7 @@ public final class MtxArrayList<T> {
         this.nextIdx ++;
     }
 
-    boolean remove(T element) {
+    public boolean remove(T element) {
         boolean found = false;
         for (int i = 0; i < this.size(); i++) {
             Object nextVal = null;
