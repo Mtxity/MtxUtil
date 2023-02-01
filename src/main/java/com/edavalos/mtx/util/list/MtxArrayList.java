@@ -66,4 +66,8 @@ public final class MtxArrayList<T> {
     public int size() {
         return this.nextIdx;
     }
+
+    public int getSpaceLeftBeforeArrayIncrease() {
+        return this.capacity - this.nextIdx;
+    }
 }

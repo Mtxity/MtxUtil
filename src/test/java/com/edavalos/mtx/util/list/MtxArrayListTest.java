@@ -174,4 +174,15 @@ public final class MtxArrayListTest {
 
         assertEquals(numberOfElements, mtxArrayListSpy.size());
     }
+
+    @Test
+    public void testGetSpaceLeftBeforeArrayIncrease() {
+        int numberOfElements = 5;
+        int defaultCapacity = 10;
+        for (int i = 0; i < numberOfElements; i++) {
+            int expectedSizeLeft = defaultCapacity - i;
+            assertEquals(expectedSizeLeft, mtxArrayListSpy.getSpaceLeftBeforeArrayIncrease());
+            mtxArrayListSpy.add(i);
+        }
+    }
 }
