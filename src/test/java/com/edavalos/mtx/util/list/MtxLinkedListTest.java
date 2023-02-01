@@ -154,4 +154,16 @@ public final class MtxLinkedListTest {
         MtxLinkedList<String> customMtxLinkedList = new MtxLinkedList<>(sampleElements);
         assertEquals(expectedElements, customMtxLinkedList.toString());
     }
+
+    @Test
+    public void testIsEmpty() {
+        String sample = "Sample Object";
+        assertTrue(mtxLinkedList.isEmpty());
+
+        mtxLinkedList.add(sample);
+        assertFalse(mtxLinkedList.isEmpty());
+
+        mtxLinkedList.remove(sample);
+        assertTrue(mtxLinkedList.isEmpty());
+    }
 }

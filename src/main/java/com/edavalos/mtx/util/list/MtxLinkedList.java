@@ -88,4 +88,8 @@ public final class MtxLinkedList<T> {
     public int size() {
         return this.size;
     }
+
+    public boolean isEmpty() {
+        return this.head == null;
+    }
 }

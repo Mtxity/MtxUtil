@@ -83,4 +83,8 @@ public final class MtxArrayList<T> {
     public int getSpaceLeftBeforeArrayIncrease() {
         return this.capacity - this.nextIdx;
     }
+
+    public boolean isEmpty() {
+        return this.nextIdx == 0;
+    }
 }

@@ -200,4 +200,16 @@ public final class MtxArrayListTest {
         MtxArrayList<String> customMtxLinkedList = new MtxArrayList<>(sampleElements);
         assertEquals(expectedElements, customMtxLinkedList.toString());
     }
+
+    @Test
+    public void testIsEmpty() {
+        String sample = "Sample Object";
+        assertTrue(mtxArrayList.isEmpty());
+
+        mtxArrayList.add(sample);
+        assertFalse(mtxArrayList.isEmpty());
+
+        mtxArrayList.remove(sample);
+        assertTrue(mtxArrayList.isEmpty());
+    }
 }
