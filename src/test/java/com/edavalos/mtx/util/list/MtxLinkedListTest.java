@@ -9,11 +9,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxLinkedListTest {
-    private MtxLinkedList<Object> mtxLinkedListSpy;
+    private MtxLinkedList<Object> mtxLinkedList;
 
     @BeforeEach
     public void setUp() {
-        mtxLinkedListSpy = new MtxLinkedList<>();
+        mtxLinkedList = new MtxLinkedList<>();
     }
 
     @Nested
@@ -23,11 +23,11 @@ public final class MtxLinkedListTest {
         public void testToString_fullList() {
             int numberOfElements = 10;
             for (int i = 0; i < numberOfElements; i++) {
-                mtxLinkedListSpy.add(i);
+                mtxLinkedList.add(i);
             }
 
             String expected = "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]";
-            String actual = mtxLinkedListSpy.toString();
+            String actual = mtxLinkedList.toString();
 
             assertEquals(expected, actual);
         }
@@ -35,7 +35,7 @@ public final class MtxLinkedListTest {
         @Test
         public void testToString_emptyList() {
             String expected = "[]";
-            String actual = mtxLinkedListSpy.toString();
+            String actual = mtxLinkedList.toString();
 
             assertEquals(expected, actual);
         }
@@ -46,29 +46,29 @@ public final class MtxLinkedListTest {
 
         @Test
         public void testAdd_emptyList() {
-            mtxLinkedListSpy.add("Sample Object");
+            mtxLinkedList.add("Sample Object");
             String listExpectedState = "[Sample Object]";
 
-            assertEquals(listExpectedState, mtxLinkedListSpy.toString());
+            assertEquals(listExpectedState, mtxLinkedList.toString());
         }
 
         @Test
         public void testAdd_fullList() {
             int numberOfElements = 3;
             for (int i = 0; i < numberOfElements; i++) {
-                mtxLinkedListSpy.add("Sample Object " + i);
+                mtxLinkedList.add("Sample Object " + i);
             }
             String listExpectedState1 = "[Sample Object 0, Sample Object 1, Sample Object 2]";
 
-            assertEquals(listExpectedState1, mtxLinkedListSpy.toString());
+            assertEquals(listExpectedState1, mtxLinkedList.toString());
 
             for (int i = 0; i < numberOfElements; i++) {
-                mtxLinkedListSpy.add("Sample Object " + (i + numberOfElements));
+                mtxLinkedList.add("Sample Object " + (i + numberOfElements));
             }
             String listExpectedState2 = "[Sample Object 0, Sample Object 1, Sample Object 2, " +
                                          "Sample Object 3, Sample Object 4, Sample Object 5]";
 
-            assertEquals(listExpectedState2, mtxLinkedListSpy.toString());
+            assertEquals(listExpectedState2, mtxLinkedList.toString());
         }
     }
 
@@ -79,7 +79,7 @@ public final class MtxLinkedListTest {
             int numberOfElements = 5;
             String sample = "Sample Object ";
             for (int i = 0; i < numberOfElements; i++) {
-                mtxLinkedListSpy.add(sample + i);
+                mtxLinkedList.add(sample + i);
             }
         }
 
@@ -97,41 +97,41 @@ public final class MtxLinkedListTest {
         public void testRemove_firstElement() {
             String elementToRemove = "Sample Object 0";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxLinkedListSpy.size());
-            assertEquals(elementsBefore, mtxLinkedListSpy.toString());
+            assertEquals(5, mtxLinkedList.size());
+            assertEquals(elementsBefore, mtxLinkedList.toString());
 
-            assertTrue(mtxLinkedListSpy.remove(elementToRemove));
-            assertEquals(4, mtxLinkedListSpy.size());
+            assertTrue(mtxLinkedList.remove(elementToRemove));
+            assertEquals(4, mtxLinkedList.size());
 
             String elementsAfter = "[Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(elementsAfter, mtxLinkedListSpy.toString());
+            assertEquals(elementsAfter, mtxLinkedList.toString());
         }
 
         @Test
         public void testRemove_middleElement() {
             String elementToRemove = "Sample Object 2";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxLinkedListSpy.size());
-            assertEquals(elementsBefore, mtxLinkedListSpy.toString());
+            assertEquals(5, mtxLinkedList.size());
+            assertEquals(elementsBefore, mtxLinkedList.toString());
 
-            assertTrue(mtxLinkedListSpy.remove(elementToRemove));
-            assertEquals(4, mtxLinkedListSpy.size());
+            assertTrue(mtxLinkedList.remove(elementToRemove));
+            assertEquals(4, mtxLinkedList.size());
 
             String elementsAfter = "[Sample Object 0, Sample Object 1, Sample Object 3, Sample Object 4]";
-            assertEquals(elementsAfter, mtxLinkedListSpy.toString());
+            assertEquals(elementsAfter, mtxLinkedList.toString());
         }
 
         @Test
         public void testRemove_elementNotFound() {
             String elementToRemove = "Sample Object 9";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxLinkedListSpy.size());
-            assertEquals(elementsBefore, mtxLinkedListSpy.toString());
+            assertEquals(5, mtxLinkedList.size());
+            assertEquals(elementsBefore, mtxLinkedList.toString());
 
-            assertFalse(mtxLinkedListSpy.remove(elementToRemove));
-            assertEquals(5, mtxLinkedListSpy.size());
+            assertFalse(mtxLinkedList.remove(elementToRemove));
+            assertEquals(5, mtxLinkedList.size());
 
-            assertEquals(elementsBefore, mtxLinkedListSpy.toString());
+            assertEquals(elementsBefore, mtxLinkedList.toString());
         }
     }
 
@@ -139,11 +139,11 @@ public final class MtxLinkedListTest {
     public void testSize() {
         int numberOfElements = 20;
         for (int i = 0; i < numberOfElements; i++) {
-            assertEquals(i, mtxLinkedListSpy.size());
-            mtxLinkedListSpy.add(i);
+            assertEquals(i, mtxLinkedList.size());
+            mtxLinkedList.add(i);
         }
 
-        assertEquals(numberOfElements, mtxLinkedListSpy.size());
+        assertEquals(numberOfElements, mtxLinkedList.size());
     }
 
     @Test
