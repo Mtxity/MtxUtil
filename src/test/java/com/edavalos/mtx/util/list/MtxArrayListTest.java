@@ -3,21 +3,17 @@ package com.edavalos.mtx.util.list;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.spy;
 
 public final class MtxArrayListTest {
-    @Spy
-    private MtxArrayList<Object> mtxArrayListSpy;
+    private MtxArrayList<Object> mtxArrayList;
 
     @BeforeEach
-    @SuppressWarnings("unchecked")
     public void setUp() {
-        mtxArrayListSpy = spy(MtxArrayList.class);
+        mtxArrayList = new MtxArrayList<>();
     }
 
     @Nested
@@ -27,11 +23,11 @@ public final class MtxArrayListTest {
         public void testToString_fullList() {
             int numberOfElements = 10;
             for (int i = 0; i < numberOfElements; i++) {
-                mtxArrayListSpy.add(i);
+                mtxArrayList.add(i);
             }
 
             String expected = "[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]";
-            String actual = mtxArrayListSpy.toString();
+            String actual = mtxArrayList.toString();
 
             assertEquals(expected, actual);
         }
@@ -39,7 +35,7 @@ public final class MtxArrayListTest {
         @Test
         public void testToString_emptyList() {
             String expected = "[]";
-            String actual = mtxArrayListSpy.toString();
+            String actual = mtxArrayList.toString();
 
             assertEquals(expected, actual);
         }
@@ -50,46 +46,46 @@ public final class MtxArrayListTest {
 
         @Test
         public void testAdd_emptyList() {
-            mtxArrayListSpy.add("Sample Object");
+            mtxArrayList.add("Sample Object");
             String listExpectedState = "[Sample Object]";
 
-            assertEquals(listExpectedState, mtxArrayListSpy.toString());
+            assertEquals(listExpectedState, mtxArrayList.toString());
         }
 
         @Test
         public void testAdd_fullList_initialCapacity() {
             int numberOfElements = 3;
             for (int i = 0; i < numberOfElements; i++) {
-                mtxArrayListSpy.add("Sample Object " + i);
+                mtxArrayList.add("Sample Object " + i);
             }
             String listExpectedState1 = "[Sample Object 0, Sample Object 1, Sample Object 2]";
 
-            assertEquals(listExpectedState1, mtxArrayListSpy.toString());
+            assertEquals(listExpectedState1, mtxArrayList.toString());
 
             for (int j = 0; j < numberOfElements; j++) {
-                mtxArrayListSpy.add("Sample Object " + (j + numberOfElements));
+                mtxArrayList.add("Sample Object " + (j + numberOfElements));
             }
             String listExpectedState2 = "[Sample Object 0, Sample Object 1, Sample Object 2, " +
                                          "Sample Object 3, Sample Object 4, Sample Object 5]";
 
-            assertEquals(listExpectedState2, mtxArrayListSpy.toString());
+            assertEquals(listExpectedState2, mtxArrayList.toString());
         }
 
         @Test
         public void testAdd_fullList_increasedCapacity() {
             int numberOfElements = 9;
             for (int i = 0; i < numberOfElements; i++) {
-                mtxArrayListSpy.add("Sample Object " + i);
+                mtxArrayList.add("Sample Object " + i);
             }
             String listExpectedState1 = "[Sample Object 0, Sample Object 1, Sample Object 2, " +
                                          "Sample Object 3, Sample Object 4, Sample Object 5, " +
                                          "Sample Object 6, Sample Object 7, Sample Object 8]";
 
-            assertEquals(listExpectedState1, mtxArrayListSpy.toString());
+            assertEquals(listExpectedState1, mtxArrayList.toString());
 
             int numberOfNewElements = 6;
             for (int j = 0; j < numberOfNewElements; j++) {
-                mtxArrayListSpy.add("Sample Object " + (j + numberOfElements));
+                mtxArrayList.add("Sample Object " + (j + numberOfElements));
             }
             String listExpectedState2 = "[Sample Object 0, Sample Object 1, Sample Object 2, " +
                                          "Sample Object 3, Sample Object 4, Sample Object 5, " +
@@ -97,7 +93,7 @@ public final class MtxArrayListTest {
                                          "Sample Object 9, Sample Object 10, Sample Object 11, " +
                                          "Sample Object 12, Sample Object 13, Sample Object 14]";
 
-            assertEquals(listExpectedState2, mtxArrayListSpy.toString());
+            assertEquals(listExpectedState2, mtxArrayList.toString());
         }
     }
 
@@ -108,7 +104,7 @@ public final class MtxArrayListTest {
             int numberOfElements = 5;
             String sample = "Sample Object ";
             for (int i = 0; i < numberOfElements; i++) {
-                mtxArrayListSpy.add(sample + i);
+                mtxArrayList.add(sample + i);
             }
         }
 
@@ -126,41 +122,41 @@ public final class MtxArrayListTest {
         public void testRemove_firstElement() {
             String elementToRemove = "Sample Object 0";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxArrayListSpy.size());
-            assertEquals(elementsBefore, mtxArrayListSpy.toString());
+            assertEquals(5, mtxArrayList.size());
+            assertEquals(elementsBefore, mtxArrayList.toString());
 
-            assertTrue(mtxArrayListSpy.remove(elementToRemove));
-            assertEquals(4, mtxArrayListSpy.size());
+            assertTrue(mtxArrayList.remove(elementToRemove));
+            assertEquals(4, mtxArrayList.size());
 
             String elementsAfter = "[Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(elementsAfter, mtxArrayListSpy.toString());
+            assertEquals(elementsAfter, mtxArrayList.toString());
         }
 
         @Test
         public void testRemove_middleElement() {
             String elementToRemove = "Sample Object 2";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxArrayListSpy.size());
-            assertEquals(elementsBefore, mtxArrayListSpy.toString());
+            assertEquals(5, mtxArrayList.size());
+            assertEquals(elementsBefore, mtxArrayList.toString());
 
-            assertTrue(mtxArrayListSpy.remove(elementToRemove));
-            assertEquals(4, mtxArrayListSpy.size());
+            assertTrue(mtxArrayList.remove(elementToRemove));
+            assertEquals(4, mtxArrayList.size());
 
             String elementsAfter = "[Sample Object 0, Sample Object 1, Sample Object 3, Sample Object 4]";
-            assertEquals(elementsAfter, mtxArrayListSpy.toString());
+            assertEquals(elementsAfter, mtxArrayList.toString());
         }
 
         @Test
         public void testRemove_elementNotFound() {
             String elementToRemove = "Sample Object 9";
             String elementsBefore = "[Sample Object 0, Sample Object 1, Sample Object 2, Sample Object 3, Sample Object 4]";
-            assertEquals(5, mtxArrayListSpy.size());
-            assertEquals(elementsBefore, mtxArrayListSpy.toString());
+            assertEquals(5, mtxArrayList.size());
+            assertEquals(elementsBefore, mtxArrayList.toString());
 
-            assertFalse(mtxArrayListSpy.remove(elementToRemove));
-            assertEquals(5, mtxArrayListSpy.size());
+            assertFalse(mtxArrayList.remove(elementToRemove));
+            assertEquals(5, mtxArrayList.size());
 
-            assertEquals(elementsBefore, mtxArrayListSpy.toString());
+            assertEquals(elementsBefore, mtxArrayList.toString());
         }
     }
 
@@ -168,11 +164,11 @@ public final class MtxArrayListTest {
     public void testSize() {
         int numberOfElements = 20;
         for (int i = 0; i < numberOfElements; i++) {
-            assertEquals(i, mtxArrayListSpy.size());
-            mtxArrayListSpy.add(i);
+            assertEquals(i, mtxArrayList.size());
+            mtxArrayList.add(i);
         }
 
-        assertEquals(numberOfElements, mtxArrayListSpy.size());
+        assertEquals(numberOfElements, mtxArrayList.size());
     }
 
     @Test
@@ -181,8 +177,8 @@ public final class MtxArrayListTest {
         int defaultCapacity = 10;
         for (int i = 0; i < numberOfElements; i++) {
             int expectedSizeLeft = defaultCapacity - i;
-            assertEquals(expectedSizeLeft, mtxArrayListSpy.getSpaceLeftBeforeArrayIncrease());
-            mtxArrayListSpy.add(i);
+            assertEquals(expectedSizeLeft, mtxArrayList.getSpaceLeftBeforeArrayIncrease());
+            mtxArrayList.add(i);
         }
     }
 }

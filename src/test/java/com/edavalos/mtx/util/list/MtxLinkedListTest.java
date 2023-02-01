@@ -3,21 +3,17 @@ package com.edavalos.mtx.util.list;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Spy;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.spy;
 
 public final class MtxLinkedListTest {
-    @Spy
     private MtxLinkedList<Object> mtxLinkedListSpy;
 
     @BeforeEach
-    @SuppressWarnings("unchecked")
     public void setUp() {
-        mtxLinkedListSpy = spy(MtxLinkedList.class);
+        mtxLinkedListSpy = new MtxLinkedList<>();
     }
 
     @Nested
