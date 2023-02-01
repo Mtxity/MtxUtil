@@ -167,8 +167,12 @@ public final class MtxArrayListTest {
             assertEquals(i, mtxArrayList.size());
             mtxArrayList.add(i);
         }
-
         assertEquals(numberOfElements, mtxArrayList.size());
+
+        for (int j = 0; j < numberOfElements - 10; j++) {
+            mtxArrayList.remove(j);
+        }
+        assertEquals(numberOfElements - 10, mtxArrayList.size());
     }
 
     @Test

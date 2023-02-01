@@ -142,8 +142,12 @@ public final class MtxLinkedListTest {
             assertEquals(i, mtxLinkedList.size());
             mtxLinkedList.add(i);
         }
-
         assertEquals(numberOfElements, mtxLinkedList.size());
+
+        for (int j = 0; j < numberOfElements - 10; j++) {
+            mtxLinkedList.remove(j);
+        }
+        assertEquals(numberOfElements - 10, mtxLinkedList.size());
     }
 
     @Test
