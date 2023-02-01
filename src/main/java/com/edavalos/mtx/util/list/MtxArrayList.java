@@ -14,6 +14,12 @@ public final class MtxArrayList<T> {
         this.content = new Object[this.capacity];
     }
 
+    public MtxArrayList(int size) {
+        this.nextIdx = 0;
+        this.capacity = size;
+        this.content = new Object[this.capacity];
+    }
+
     public void add(T element) {
         if (this.nextIdx >= this.capacity) {
             int newCapacity = (int) Math.floor(this.capacity * SCALE_FACTOR);

@@ -181,4 +181,14 @@ public final class MtxArrayListTest {
             mtxArrayList.add(i);
         }
     }
+
+    @Test
+    public void testConstructor_customSize() {
+        MtxArrayList<Integer> customMtxArrayList;
+        int numberOfTests = 10;
+        for (int i = 0; i < numberOfTests; i++) {
+            customMtxArrayList = new MtxArrayList<>(i);
+            assertEquals(i, customMtxArrayList.getSpaceLeftBeforeArrayIncrease());
+        }
+    }
 }
