@@ -191,4 +191,13 @@ public final class MtxArrayListTest {
             assertEquals(i, customMtxArrayList.getSpaceLeftBeforeArrayIncrease());
         }
     }
+
+    @Test
+    public void testConstructor_startingContents() {
+        String[] sampleElements = {"One", "Two", "Three"};
+        String expectedElements = "[One, Two, Three]";
+
+        MtxArrayList<String> customMtxLinkedList = new MtxArrayList<>(sampleElements);
+        assertEquals(expectedElements, customMtxLinkedList.toString());
+    }
 }

@@ -145,4 +145,13 @@ public final class MtxLinkedListTest {
 
         assertEquals(numberOfElements, mtxLinkedListSpy.size());
     }
+
+    @Test
+    public void testConstructor_startingContents() {
+        String[] sampleElements = {"One", "Two", "Three"};
+        String expectedElements = "[One, Two, Three]";
+
+        MtxLinkedList<String> customMtxLinkedList = new MtxLinkedList<>(sampleElements);
+        assertEquals(expectedElements, customMtxLinkedList.toString());
+    }
 }

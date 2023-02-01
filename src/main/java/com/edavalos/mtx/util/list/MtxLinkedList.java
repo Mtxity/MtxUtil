@@ -19,6 +19,13 @@ public final class MtxLinkedList<T> {
         this.size = 0;
     }
 
+    public MtxLinkedList(T[] initialContents) {
+        this();
+        for (T element : initialContents) {
+            this.add(element);
+        }
+    }
+
     public void add(T element) {
         MtxNode newNode = new MtxNode(element);
 
