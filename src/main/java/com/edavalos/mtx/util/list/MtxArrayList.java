@@ -11,11 +11,11 @@ public final class MtxArrayList<T> {
     public MtxArrayList() {
         this.nextIdx = 0;
         this.capacity = DEFAULT_CAPACITY;
-        this.content = new Object[capacity];
+        this.content = new Object[this.capacity];
     }
 
     public void add(T element) {
-        if (this.nextIdx > this.capacity) {
+        if (this.nextIdx >= this.capacity) {
             int newCapacity = (int) Math.floor(this.capacity * SCALE_FACTOR);
             Object[] copy = new Object[newCapacity];
             System.arraycopy(this.content, 0, copy, 0, this.capacity);
@@ -29,7 +29,7 @@ public final class MtxArrayList<T> {
 
     boolean remove(T element) {
         boolean found = false;
-        for (int i = 0; i < this.capacity; i++) {
+        for (int i = 0; i < this.size(); i++) {
             Object nextVal = null;
             if (i + 1 < this.capacity) {
                 nextVal = this.content[i + 1];
@@ -44,6 +44,10 @@ public final class MtxArrayList<T> {
             }
         }
 
+        if (found) {
+            this.nextIdx --;
+        }
+
         return found;
     }
 
@@ -51,8 +55,8 @@ public final class MtxArrayList<T> {
     public String toString() {
         StringBuilder string = new StringBuilder("[");
 
-        for (Object element : this.content) {
-            string.append(element.toString()).append(", ");
+        for (int i = 0; i < this.size(); i++) {
+            string.append(this.content[i].toString()).append(", ");
         }
 
         string.append("]");
@@ -60,6 +64,6 @@ public final class MtxArrayList<T> {
     }
 
     public int size() {
-        return this.nextIdx - 1;
+        return this.nextIdx;
     }
 }
