@@ -1,32 +1,36 @@
 package com.edavalos.mtx.util.list;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
 
 public final class MtxHashList<T> {
-    private static String NULL_SPOT_MARKER = ";___-___-___;";
-
-    private HashMap<BigInteger, T> content;
-    private BigInteger nextSpot;
+    private HashMap<Integer, T> content;
+    private List<Integer> holes; // Keys to elements that were removed
+    private int nextSpot;
 
     public MtxHashList() {
         this.content = new HashMap<>();
-        this.nextSpot = BigInteger.valueOf(0);
+        this.holes = new ArrayList<>();
+        this.nextSpot = 0;
     }
 
     public MtxHashList(T[] initialContents) {
         this.content = new HashMap<>();
+        this.holes = new ArrayList<>();
+
         int idx = 0;
         for (T element : initialContents) {
-            this.content.put(BigInteger.valueOf(idx), element);
+            this.content.put(idx, element);
             idx ++;
         }
-        this.nextSpot = BigInteger.valueOf(idx);
+        this.nextSpot = idx;
     }
 
     public void add(T element) {
         this.content.put(this.nextSpot, element);
-        this.nextSpot = this.nextSpot.add(BigInteger.valueOf(1));
+        this.nextSpot ++;
     }
 
     public boolean remove(T element) {
@@ -34,13 +38,16 @@ public final class MtxHashList<T> {
             return false;
         }
 
-        for (BigInteger key : this.content.keySet()) {
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+
             if (this.content.get(key).equals(element)) {
-                this.content.replace(key, (T) NULL_SPOT_MARKER);
+                this.holes.add(key);
                 return true;
             }
         }
-
         return false;
     }
 
@@ -48,11 +55,12 @@ public final class MtxHashList<T> {
     public String toString() {
         StringBuilder string = new StringBuilder("[");
 
-        for (BigInteger key : this.content.keySet()) {
-            T element = this.content.get(key);
-            if (this.isNullSpot(element)) {
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
                 continue;
             }
+
+            T element = this.content.get(key);
             string.append(element.toString()).append(", ");
         }
 
@@ -61,17 +69,10 @@ public final class MtxHashList<T> {
     }
 
     public int size() {
-        return this.content.size();
+        return this.content.size() - this.holes.size();
     }
 
     public boolean isEmpty() {
-        return this.content.isEmpty();
-    }
-
-    private boolean isNullSpot(T possiblyNullSpotElement) {
-        if (possiblyNullSpotElement instanceof String nullSpotString) {
-            return nullSpotString.equals(NULL_SPOT_MARKER);
-        }
-        return false;
+        return this.size() == 0;
     }
 }
