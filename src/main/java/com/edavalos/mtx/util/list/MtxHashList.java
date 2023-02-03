@@ -77,6 +77,10 @@ public final class MtxHashList<T> {
     }
 
     public boolean contains(T element) {
+        return this.countOccurrences(element) > 0;
+    }
+
+    public int countOccurrences(T element) {
         int timesFound = 0;
         for (T thing : this.content.values()) {
             if (thing.equals(element)) {
@@ -90,6 +94,6 @@ public final class MtxHashList<T> {
             }
         }
 
-        return timesFound >= 1;
+        return Math.max(timesFound, 0);
     }
 }

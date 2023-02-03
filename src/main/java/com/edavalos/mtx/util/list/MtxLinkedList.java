@@ -103,4 +103,16 @@ public final class MtxLinkedList<T> {
         }
         return false;
     }
+
+    public int countOccurrences(T element) {
+        int count = 0;
+        MtxNode next = this.head;
+        while (next != null) {
+            if (next.content.equals(element)) {
+                count ++;
+            }
+            next = next.next;
+        }
+        return count;
+    }
 }

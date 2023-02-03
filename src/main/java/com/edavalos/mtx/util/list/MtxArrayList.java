@@ -93,4 +93,14 @@ public final class MtxArrayList<T> {
     public boolean contains(T element) {
         return Arrays.asList(this.content).contains(element);
     }
+
+    public int countOccurrences(T element) {
+        int count = 0;
+        for (int i = 0; i < this.nextIdx; i++) {
+            if (this.content[i].equals(element)) {
+                count ++;
+            }
+        }
+        return count;
+    }
 }
