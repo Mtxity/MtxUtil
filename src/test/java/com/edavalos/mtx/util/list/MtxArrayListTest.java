@@ -216,4 +216,22 @@ public final class MtxArrayListTest {
         mtxArrayList.remove(sample);
         assertTrue(mtxArrayList.isEmpty());
     }
+
+    @Test
+    public void testContains_yes() {
+        mtxArrayList.add('a');
+        mtxArrayList.add('b');
+        mtxArrayList.add('c');
+
+        assertTrue(mtxArrayList.contains('b'));
+    }
+
+    @Test
+    public void testContains_no() {
+        mtxArrayList.add('a');
+        mtxArrayList.add('b');
+        mtxArrayList.add('c');
+
+        assertFalse(mtxArrayList.contains('d'));
+    }
 }

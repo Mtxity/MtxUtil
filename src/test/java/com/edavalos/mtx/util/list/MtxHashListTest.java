@@ -200,4 +200,31 @@ public final class MtxHashListTest {
         mtxHashList.remove(sample);
         assertTrue(mtxHashList.isEmpty());
     }
+
+    @Test
+    public void testContains_yes() {
+        mtxHashList.add('a');
+        mtxHashList.add('b');
+        mtxHashList.add('c');
+
+        mtxHashList.remove('b');
+        mtxHashList.add('b');
+
+        assertTrue(mtxHashList.contains('b'));
+    }
+
+    @Test
+    public void testContains_no() {
+        mtxHashList.add('a');
+        mtxHashList.add('b');
+        mtxHashList.add('c');
+
+        mtxHashList.remove('b');
+        mtxHashList.add('b');
+        mtxHashList.remove('b');
+        mtxHashList.add('b');
+        mtxHashList.remove('b');
+
+        assertFalse(mtxHashList.contains('b'));
+    }
 }

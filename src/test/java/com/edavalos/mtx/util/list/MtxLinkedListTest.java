@@ -170,4 +170,22 @@ public final class MtxLinkedListTest {
         mtxLinkedList.remove(sample);
         assertTrue(mtxLinkedList.isEmpty());
     }
+
+    @Test
+    public void testContains_yes() {
+        mtxLinkedList.add('a');
+        mtxLinkedList.add('b');
+        mtxLinkedList.add('c');
+
+        assertTrue(mtxLinkedList.contains('b'));
+    }
+
+    @Test
+    public void testContains_no() {
+        mtxLinkedList.add('a');
+        mtxLinkedList.add('b');
+        mtxLinkedList.add('c');
+
+        assertFalse(mtxLinkedList.contains('d'));
+    }
 }
