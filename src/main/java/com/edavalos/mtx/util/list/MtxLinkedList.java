@@ -92,4 +92,15 @@ public final class MtxLinkedList<T> {
     public boolean isEmpty() {
         return this.head == null;
     }
+
+    public boolean contains(T element) {
+        MtxNode next = this.head;
+        while (next != null) {
+            if (next.content.equals(element)) {
+                return true;
+            }
+            next = next.next;
+        }
+        return false;
+    }
 }

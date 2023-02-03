@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.Arrays;
+
 public final class MtxArrayList<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final double SCALE_FACTOR = 1.8;
@@ -86,5 +88,9 @@ public final class MtxArrayList<T> {
 
     public boolean isEmpty() {
         return this.nextIdx == 0;
+    }
+
+    public boolean contains(T element) {
+        return Arrays.asList(this.content).contains(element);
     }
 }

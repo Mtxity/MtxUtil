@@ -75,4 +75,21 @@ public final class MtxHashList<T> {
     public boolean isEmpty() {
         return this.size() == 0;
     }
+
+    public boolean contains(T element) {
+        int timesFound = 0;
+        for (T thing : this.content.values()) {
+            if (thing.equals(element)) {
+                timesFound ++;
+            }
+        }
+
+        for (int key : this.holes) {
+            if (this.content.get(key).equals(element)) {
+                timesFound --;
+            }
+        }
+
+        return timesFound >= 1;
+    }
 }
