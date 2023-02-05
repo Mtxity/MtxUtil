@@ -234,4 +234,17 @@ public final class MtxArrayListTest {
 
         assertFalse(mtxArrayList.contains('d'));
     }
+
+    @Test
+    public void testCountOccurrences() {
+        assertEquals(0, mtxArrayList.countOccurrences('a'));
+
+        for (int i = 0; i < 15; i++) {
+            mtxArrayList.add('a');
+            mtxArrayList.add('b');
+
+            assertEquals(i + 1, mtxArrayList.countOccurrences('a'));
+            assertEquals((i + 1) * 2, mtxArrayList.size());
+        }
+    }
 }

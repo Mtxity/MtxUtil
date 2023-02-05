@@ -188,4 +188,17 @@ public final class MtxLinkedListTest {
 
         assertFalse(mtxLinkedList.contains('d'));
     }
+
+    @Test
+    public void testCountOccurrences() {
+        assertEquals(0, mtxLinkedList.countOccurrences('a'));
+
+        for (int i = 0; i < 15; i++) {
+            mtxLinkedList.add('a');
+            mtxLinkedList.add('b');
+
+            assertEquals(i + 1, mtxLinkedList.countOccurrences('a'));
+            assertEquals((i + 1) * 2, mtxLinkedList.size());
+        }
+    }
 }

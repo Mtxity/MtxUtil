@@ -227,4 +227,17 @@ public final class MtxHashListTest {
 
         assertFalse(mtxHashList.contains('b'));
     }
+
+    @Test
+    public void testCountOccurrences() {
+        assertEquals(0, mtxHashList.countOccurrences('a'));
+
+        for (int i = 0; i < 15; i++) {
+            mtxHashList.add('a');
+            mtxHashList.add('b');
+
+            assertEquals(i + 1, mtxHashList.countOccurrences('a'));
+            assertEquals((i + 1) * 2, mtxHashList.size());
+        }
+    }
 }
