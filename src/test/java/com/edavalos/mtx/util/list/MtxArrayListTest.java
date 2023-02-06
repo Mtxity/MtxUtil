@@ -284,4 +284,17 @@ public final class MtxArrayListTest {
 
         assertEquals(sampleList.hashCode(), mtxArrayList.hashCode());
     }
+
+    @Test
+    public void testIndexOf() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxArrayList.add(element);
+        }
+
+        for (int i = 0; i < sampleElements.length; i++) {
+            assertEquals(sampleElements[i], mtxArrayList.get(mtxArrayList.indexOf(sampleElements[i])));
+        }
+        assertEquals(-1, mtxArrayList.indexOf("Five"));
+    }
 }

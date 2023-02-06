@@ -290,4 +290,23 @@ public final class MtxHashListTest {
 
         assertEquals(sampleList.hashCode(), mtxHashList.hashCode());
     }
+
+    @Test
+    public void testIndexOf() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+        }
+        for (String element : sampleElements) {
+            mtxHashList.remove(element);
+        }
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+        }
+
+        for (int i = 0; i < sampleElements.length; i++) {
+            assertEquals(sampleElements[i], mtxHashList.get(mtxHashList.indexOf(sampleElements[i])));
+        }
+        assertEquals(-1, mtxHashList.indexOf("Five"));
+    }
 }

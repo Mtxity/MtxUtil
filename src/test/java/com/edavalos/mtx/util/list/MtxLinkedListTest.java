@@ -261,4 +261,17 @@ public final class MtxLinkedListTest {
 
         assertEquals(sampleList.hashCode(), mtxLinkedList.hashCode());
     }
+
+    @Test
+    public void testIndexOf() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxLinkedList.add(element);
+        }
+
+        for (int i = 0; i < sampleElements.length; i++) {
+            assertEquals(sampleElements[i], mtxLinkedList.get(mtxLinkedList.indexOf(sampleElements[i])));
+        }
+        assertEquals(-1, mtxLinkedList.indexOf("Five"));
+    }
 }
