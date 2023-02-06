@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.time;
 
+import java.text.ParseException;
 import java.time.LocalDateTime;
 
 /**
@@ -55,6 +56,35 @@ public final class MtxTime {
              LocalDateTime.now().getMinute(),
              LocalDateTime.now().getSecond(),
              0);
+    }
+
+    /**
+     * Constructs a new time length representing the given string. String must be in HH:MM:SS format and meet the following conditions:
+     * <ul>
+     *   <li>Minutes and seconds cannot be greater than 60</li>
+     *   <li>Hours cannot be greater than 24</li>
+     *   <li>No component can be negative. For negative MtxTimes input the values as positives then run 'flipDirection()'</li>
+     * </ul>
+     */
+    public MtxTime(String time) throws ParseException {
+        if (!MtxTimeUtil.isValidTime(time)) {
+            throw new ParseException(
+                    "This string could not be parsed into a time!\n" +
+                    "Time strings need to be in the format: HH:MM:SS and meet the following conditions:\n" +
+                    "  * Minutes and seconds cannot be greater than 60\n" +
+                    "  * Hours cannot be greater than 24\n" +
+                    "  * No component can be negative. For negative MtxTimes input the values as positives then run 'flipDirection()'",
+                    0
+            );
+        }
+
+        int[] timeComponents = MtxTimeUtil.extractTimeDigits(time);
+
+        this.days = 0;
+        this.hours = timeComponents[0];
+        this.minutes = timeComponents[1];
+        this.seconds = timeComponents[2];
+        this.backwards = false;
     }
 
     // ---------------------- Public Methods -----------------------
