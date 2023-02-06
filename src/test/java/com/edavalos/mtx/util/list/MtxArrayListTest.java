@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -264,5 +268,20 @@ public final class MtxArrayListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(5));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(6));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(-1));
+    }
+
+    @Test
+    public void testHashCode() {
+        List<String> sampleList = new ArrayList<>(){
+            {
+                add("One");
+                add("Two");
+                add("Six");
+            }
+        };
+
+        mtxArrayList = new MtxArrayList<>(sampleList.toArray(new String[0]));
+
+        assertEquals(sampleList.hashCode(), mtxArrayList.hashCode());
     }
 }

@@ -246,4 +246,19 @@ public final class MtxLinkedListTest {
 
         assertFalse(mtxLinkedList.equals(mtxLinkedList.toString()));
     }
+
+    @Test
+    public void testHashCode() {
+        List<String> sampleList = new LinkedList<>(){
+            {
+                add("One");
+                add("Two");
+                add("Six");
+            }
+        };
+
+        mtxLinkedList = new MtxLinkedList<>(sampleList.toArray(new String[0]));
+
+        assertEquals(sampleList.hashCode(), mtxLinkedList.hashCode());
+    }
 }

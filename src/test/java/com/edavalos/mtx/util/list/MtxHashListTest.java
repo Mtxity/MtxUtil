@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -267,5 +270,24 @@ public final class MtxHashListTest {
         assertEquals("Three", mtxHashList.get(1));
         assertEquals("Four", mtxHashList.get(2));
         assertEquals("One", mtxHashList.get(3));
+    }
+
+    @Test
+    public void testHashCode() {
+        List<String> sampleList = new ArrayList<>(){
+            {
+                add("One");
+                add("Two");
+                add("Six");
+            }
+        };
+
+        mtxHashList = new MtxHashList<>(sampleList.toArray(new String[0]));
+        mtxHashList.remove("Two");
+        mtxHashList.remove("Six");
+        mtxHashList.add("Two");
+        mtxHashList.add("Six");
+
+        assertEquals(sampleList.hashCode(), mtxHashList.hashCode());
     }
 }
