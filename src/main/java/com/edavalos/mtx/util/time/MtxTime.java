@@ -66,6 +66,50 @@ public final class MtxTime {
         return this.getTotalSeconds() > time.getTotalSeconds();
     }
 
+    public int getDays() {
+        return this.days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+        this.balance();
+    }
+
+    public int getHours() {
+        return this.hours;
+    }
+
+    public void setHours(int hours) {
+        this.hours = hours;
+        this.balance();
+    }
+
+    public int getMinutes() {
+        return this.minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+        this.balance();
+    }
+
+    public int getSeconds() {
+        return this.seconds;
+    }
+
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+        this.balance();
+    }
+
+    public boolean isBackwards() {
+        return this.backwards;
+    }
+
+    public void flipDirection() {
+        this.backwards = !this.backwards;
+    }
+
     // ---------------------- Private Methods ----------------------
 
     private void balance() {
