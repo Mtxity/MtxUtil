@@ -90,6 +90,30 @@ public final class MtxTime {
     // ---------------------- Public Methods -----------------------
 
     /**
+     * Adds the given time to this time
+     */
+    public void addTime(MtxTime time) {
+        if (time.isBackwards()) {
+            this.subtractTimeComponents(time);
+        } else {
+            this.addTimeComponents(time);
+        }
+        this.balance();
+    }
+
+    /**
+     * Subtracts the given time from this time
+     */
+    public void subtractTime(MtxTime time) {
+        if (time.isBackwards()) {
+            this.addTimeComponents(time);
+        } else {
+            this.subtractTimeComponents(time);
+        }
+        this.balance();
+    }
+
+    /**
      * @return true if this time is longer than the given time
      */
     public boolean isLongerThan(MtxTime time) {
@@ -220,5 +244,19 @@ public final class MtxTime {
         int totalHours = this.hours + (this.days * MAX_HOURS_LENGTH);
         int totalMinutes = this.minutes + (totalHours * MAX_MINUTES_LENGTH);
         return this.seconds + (totalMinutes * MAX_SECONDS_LENGTH);
+    }
+
+    public void addTimeComponents(MtxTime time) {
+        this.days += time.getDays();
+        this.hours += time.getHours();
+        this.minutes += time.getMinutes();
+        this.seconds += time.getSeconds();
+    }
+
+    public void subtractTimeComponents(MtxTime time) {
+        this.days -= time.getDays();
+        this.hours -= time.getHours();
+        this.minutes -= time.getMinutes();
+        this.seconds -= time.getSeconds();
     }
 }
