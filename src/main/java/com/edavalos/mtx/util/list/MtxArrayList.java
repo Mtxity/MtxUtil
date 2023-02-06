@@ -110,4 +110,14 @@ public final class MtxArrayList<T> {
         }
         return ((T) this.content[index]);
     }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        for (int i = 0; i < this.size(); i++) {
+            int elementHashCode = this.content[i] == null ? 0 : this.content[i].hashCode();
+            hashCode = (31 * hashCode) + elementHashCode;
+        }
+        return hashCode;
+    }
 }

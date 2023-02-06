@@ -110,4 +110,19 @@ public final class MtxHashList<T> {
 
         return this.content.get(index);
     }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+
+            T element = this.content.get(key);
+            int elementHashCode = element == null ? 0 : element.hashCode();
+            hashCode = (31 * hashCode) + elementHashCode;
+        }
+        return hashCode;
+    }
 }

@@ -131,6 +131,7 @@ public final class MtxLinkedList<T> {
         return next.content;
     }
 
+    // TODO: Move this method to MtxList and make it default
     @Override
     public boolean equals(Object o) {
         // TODO: Replace 'MtxLinkedList<?>' with 'MtxList<?>' once interface is done being implemented
@@ -177,5 +178,18 @@ public final class MtxLinkedList<T> {
         }
 
         return o.equals(this);
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        MtxNode next = this.head;
+        while (next != null) {
+            int elementHashCode = next.content == null ? 0 : next.content.hashCode();
+            hashCode = (31 * hashCode) + elementHashCode;
+
+            next = next.next;
+        }
+        return hashCode;
     }
 }
