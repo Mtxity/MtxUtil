@@ -246,14 +246,14 @@ public final class MtxTime {
         return this.seconds + (totalMinutes * MAX_SECONDS_LENGTH);
     }
 
-    public void addTimeComponents(MtxTime time) {
+    private void addTimeComponents(MtxTime time) {
         this.days += time.getDays();
         this.hours += time.getHours();
         this.minutes += time.getMinutes();
         this.seconds += time.getSeconds();
     }
 
-    public void subtractTimeComponents(MtxTime time) {
+    private void subtractTimeComponents(MtxTime time) {
         this.days -= time.getDays();
         this.hours -= time.getHours();
         this.minutes -= time.getMinutes();
