@@ -103,4 +103,11 @@ public final class MtxArrayList<T> {
         }
         return count;
     }
+
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.nextIdx) {
+            throw new IndexOutOfBoundsException(index);
+        }
+        return ((T) this.content[index]);
+    }
 }

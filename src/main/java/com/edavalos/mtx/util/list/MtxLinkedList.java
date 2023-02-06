@@ -115,4 +115,17 @@ public final class MtxLinkedList<T> {
         }
         return count;
     }
+
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        MtxNode next = this.head;
+        while (index > 0) {
+            next = next.next;
+            index --;
+        }
+        return next.content;
+    }
 }

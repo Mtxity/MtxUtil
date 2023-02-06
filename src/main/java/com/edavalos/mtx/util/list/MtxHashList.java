@@ -96,4 +96,18 @@ public final class MtxHashList<T> {
 
         return Math.max(timesFound, 0);
     }
+
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        for (int key : this.holes) {
+            if (key <= index) {
+                index ++;
+            }
+        }
+
+        return this.content.get(index);
+    }
 }
