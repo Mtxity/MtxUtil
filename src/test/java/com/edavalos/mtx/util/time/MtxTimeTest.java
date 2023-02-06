@@ -97,4 +97,98 @@ public final class MtxTimeTest {
             fail();
         }
     }
+
+    @Nested
+    class BalancePositiveTests {
+
+        @Test
+        public void testBalancePositive_overflowSeconds_oneMinuteOver() {
+            mtxTime = new MtxTime(0, 0, 70);
+            assertEquals(10, mtxTime.getSeconds());
+            assertEquals(1, mtxTime.getMinutes());
+        }
+
+        @Test
+        public void testBalancePositive_overflowSeconds_manyMinutesOver() {
+            mtxTime = new MtxTime(0, 0, 310);
+            assertEquals(10, mtxTime.getSeconds());
+            assertEquals(5, mtxTime.getMinutes());
+        }
+
+        @Test
+        public void testBalancePositive_overflowMinutes_oneHourOver() {
+            mtxTime = new MtxTime(0, 70, 0);
+            assertEquals(10, mtxTime.getMinutes());
+            assertEquals(1, mtxTime.getHours());
+        }
+
+        @Test
+        public void testBalancePositive_overflowMinutes_manyHoursOver() {
+            mtxTime = new MtxTime(0, 315, 0);
+            assertEquals(15, mtxTime.getMinutes());
+            assertEquals(5, mtxTime.getHours());
+        }
+
+        @Test
+        public void testBalancePositive_overflowHours_oneDayOver() {
+            mtxTime = new MtxTime(28, 0, 0);
+            assertEquals(4, mtxTime.getHours());
+            assertEquals(1, mtxTime.getDays());
+        }
+
+        @Test
+        public void testBalancePositive_overflowHours_manyDaysOver() {
+            mtxTime = new MtxTime(125, 0, 0);
+            assertEquals(5, mtxTime.getHours());
+            assertEquals(5, mtxTime.getDays());
+        }
+    }
+
+    @Nested
+    class BalanceNegativeTests {
+
+        @Test
+        public void testBalanceNegative_overflowSeconds_oneMinuteOver() {
+            mtxTime = new MtxTime(0, 2, -25);
+            assertEquals(35, mtxTime.getSeconds());
+            assertEquals(1, mtxTime.getMinutes());
+        }
+
+        @Test
+        public void testBalanceNegative_overflowSeconds_manyMinutesOver() {
+            mtxTime = new MtxTime(0, 6, -245);
+            assertEquals(55, mtxTime.getSeconds());
+            assertEquals(1, mtxTime.getMinutes());
+        }
+
+        @Test
+        public void testBalanceNegative_overflowMinutes_oneHourOver() {
+            mtxTime = new MtxTime(3, -40, 0);
+            assertEquals(20, mtxTime.getMinutes());
+            assertEquals(2, mtxTime.getHours());
+        }
+
+        @Test
+        public void testBalanceNegative_overflowMinutes_manyHoursOver() {
+            mtxTime = new MtxTime(6, -250, 0);
+            assertEquals(50, mtxTime.getMinutes());
+            assertEquals(1, mtxTime.getHours());
+        }
+
+        @Test
+        public void testBalanceNegative_overflowHours_oneDayOver() {
+            mtxTime = new MtxTime(-6, 0, 0);
+            assertEquals(18, mtxTime.getHours());
+            assertEquals(1, mtxTime.getDays());
+            assertTrue(mtxTime.isBackwards());
+        }
+
+        @Test
+        public void testBalanceNegative_overflowHours_manyDaysOver() {
+            mtxTime = new MtxTime(-145, 0, 0);
+            assertEquals(23, mtxTime.getHours());
+            assertEquals(7, mtxTime.getDays());
+            assertTrue(mtxTime.isBackwards());
+        }
+    }
 }
