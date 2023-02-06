@@ -7,10 +7,14 @@ import java.text.ParseException;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxTimeTest {
+    private static final String SAMPLE_TIME = "12:51";
+
     private MtxTime mtxTime;
 
     @Nested
@@ -75,6 +79,22 @@ public final class MtxTimeTest {
         @Test
         public void testConstructor_timeString_invalid() {
             assertThrows(ParseException.class, () -> mtxTime = new MtxTime(SAMPLE_INVALID_TIME));
+        }
+    }
+
+    @Test
+    public void testIsLongerThan() {
+        try {
+            mtxTime = new MtxTime(SAMPLE_TIME);
+            MtxTime longerTime = new MtxTime("12:52");
+            MtxTime shorterTime = new MtxTime("12:50");
+            MtxTime equalTime = new MtxTime(SAMPLE_TIME);
+
+            assertFalse(mtxTime.isLongerThan(longerTime));
+            assertTrue(mtxTime.isLongerThan(shorterTime));
+            assertFalse(mtxTime.isLongerThan(equalTime));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }
