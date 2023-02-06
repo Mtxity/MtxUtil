@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.List;
+
 public final class MtxLinkedList<T> {
     private class MtxNode {
         T content;
@@ -127,5 +129,53 @@ public final class MtxLinkedList<T> {
             index --;
         }
         return next.content;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        // TODO: Replace 'MtxLinkedList<?>' with 'MtxList<?>' once interface is done being implemented
+        if (o instanceof MtxLinkedList<?> otherList) {
+            if (otherList.size() != this.size()) {
+                return false;
+            }
+
+            for (int i = 0; i < this.size(); i++) {
+                if (!otherList.get(i).equals(this.get(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        if (o instanceof List<?> otherList) {
+            if (otherList.size() != this.size()) {
+                return false;
+            }
+
+            for (int i = 0; i < this.size(); i++) {
+                if (!otherList.get(i).equals(this.get(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        if (o instanceof Object[] array) {
+            if (array.length != this.size()) {
+                return false;
+            }
+
+            for (int i = 0; i < this.size(); i++) {
+                if (!array[i].equals(this.get(i))) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        return o.equals(this);
     }
 }

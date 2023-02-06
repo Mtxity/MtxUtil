@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -218,5 +221,29 @@ public final class MtxLinkedListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(5));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(6));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(-1));
+    }
+
+    @Test
+    public void testEquals() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        String[] otherList1 = {"Zero", "One", "Two", "Three", "Four", "Five"};
+        String[] otherList2 = {"Thero", "Won", "Too", "Free", "For"};
+        for (String element : sampleElements) {
+            mtxLinkedList.add(element);
+        }
+
+        assertTrue(mtxLinkedList.equals(new MtxLinkedList<>(sampleElements)));
+        assertTrue(mtxLinkedList.equals(List.of(sampleElements)));
+        assertTrue(mtxLinkedList.equals(sampleElements));
+
+        assertFalse(mtxLinkedList.equals(new MtxLinkedList<>(otherList1)));
+        assertFalse(mtxLinkedList.equals(List.of(otherList1)));
+        assertFalse(mtxLinkedList.equals(otherList1));
+
+        assertFalse(mtxLinkedList.equals(new MtxLinkedList<>(otherList2)));
+        assertFalse(mtxLinkedList.equals(List.of(otherList2)));
+        assertFalse(mtxLinkedList.equals(otherList2));
+
+        assertFalse(mtxLinkedList.equals(mtxLinkedList.toString()));
     }
 }
