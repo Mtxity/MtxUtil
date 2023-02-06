@@ -231,4 +231,46 @@ public final class MtxTimeTest {
             assertTrue(mtxTime.isBackwards());
         }
     }
+
+    @Nested
+    class AddTimeTests {
+        @BeforeEach
+        public void setUp() {
+            mtxTime = new MtxTime(15, 15, 15, 0);
+        }
+
+        @Test
+        public void testAddTime_noDayChange_noBalancing() {
+            MtxTime otherTime = new MtxTime(8, 10, 8);
+            mtxTime.addTime(otherTime);
+
+            assertEquals(23, mtxTime.getHours());
+            assertEquals(25, mtxTime.getMinutes());
+            assertEquals(23, mtxTime.getSeconds());
+            assertEquals(0, mtxTime.getDays());
+        }
+
+        @Test
+        public void testAddTime_noDayChange_yesBalancing() {
+            MtxTime otherTime = new MtxTime(7, 50, 58);
+            mtxTime.addTime(otherTime);
+
+            assertEquals(23, mtxTime.getHours());
+            assertEquals(6, mtxTime.getMinutes());
+            assertEquals(13, mtxTime.getSeconds());
+            assertEquals(0, mtxTime.getDays());
+        }
+
+        // TODO: Fix whatever is causing this to fail
+        @Test
+        public void testAddTime_yesDayChange() {
+            MtxTime otherTime = new MtxTime(50, 15, 15, 0);
+            mtxTime.addTime(otherTime);
+
+            assertEquals(5, mtxTime.getHours());
+            assertEquals(30, mtxTime.getMinutes());
+            assertEquals(30, mtxTime.getSeconds());
+            assertEquals(1, mtxTime.getDays());
+        }
+    }
 }
