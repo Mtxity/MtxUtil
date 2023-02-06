@@ -3,25 +3,18 @@ package com.edavalos.mtx.util;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 public final class MainTest {
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
-    @Mock
-    private Main mainMock;
-
     @BeforeEach
     public void setUp() {
-        mainMock = mock(Main.class);
-
         System.setOut(new PrintStream(outputStreamCaptor));
     }
 

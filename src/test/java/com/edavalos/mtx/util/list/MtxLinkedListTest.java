@@ -269,8 +269,8 @@ public final class MtxLinkedListTest {
             mtxLinkedList.add(element);
         }
 
-        for (int i = 0; i < sampleElements.length; i++) {
-            assertEquals(sampleElements[i], mtxLinkedList.get(mtxLinkedList.indexOf(sampleElements[i])));
+        for (String sampleElement : sampleElements) {
+            assertEquals(sampleElement, mtxLinkedList.get(mtxLinkedList.indexOf(sampleElement)));
         }
         assertEquals(-1, mtxLinkedList.indexOf("Five"));
     }

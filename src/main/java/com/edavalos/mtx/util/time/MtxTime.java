@@ -102,7 +102,6 @@ public final class MtxTime {
 
     public void setDays(int days) {
         this.days = days;
-        this.balance();
     }
 
     public int getHours() {

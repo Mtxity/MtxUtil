@@ -3,12 +3,6 @@ package com.edavalos.mtx.util.time;
 import java.util.regex.Pattern;
 
 public final class MtxTimeUtil {
-    public enum MtxTimePlace {
-        SECONDS,
-        MINUTES,
-        HOURS
-    }
-
     private static final Pattern REGEX_VALID_TIME = Pattern.compile("^(([0-1])?[0-9]|2[0-3]):([0-5])?[0-9](:([0-5])?[0-9])?$");
 
     private MtxTimeUtil() { }

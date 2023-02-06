@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.TreeSet;
 
 public final class MtxHashList<T> {
-    private HashMap<Integer, T> content;
-    private List<Integer> holes; // Keys to elements that were removed
+    private final HashMap<Integer, T> content;
+    private final List<Integer> holes; // Keys to elements that were removed
     private int nextSpot;
 
     public MtxHashList() {

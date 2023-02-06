@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -292,8 +291,8 @@ public final class MtxArrayListTest {
             mtxArrayList.add(element);
         }
 
-        for (int i = 0; i < sampleElements.length; i++) {
-            assertEquals(sampleElements[i], mtxArrayList.get(mtxArrayList.indexOf(sampleElements[i])));
+        for (String sampleElement : sampleElements) {
+            assertEquals(sampleElement, mtxArrayList.get(mtxArrayList.indexOf(sampleElement)));
         }
         assertEquals(-1, mtxArrayList.indexOf("Five"));
     }

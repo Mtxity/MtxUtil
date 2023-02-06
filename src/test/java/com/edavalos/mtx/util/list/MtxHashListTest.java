@@ -304,8 +304,8 @@ public final class MtxHashListTest {
             mtxHashList.add(element);
         }
 
-        for (int i = 0; i < sampleElements.length; i++) {
-            assertEquals(sampleElements[i], mtxHashList.get(mtxHashList.indexOf(sampleElements[i])));
+        for (String sampleElement : sampleElements) {
+            assertEquals(sampleElement, mtxHashList.get(mtxHashList.indexOf(sampleElement)));
         }
         assertEquals(-1, mtxHashList.indexOf("Five"));
     }
