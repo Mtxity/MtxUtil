@@ -120,4 +120,8 @@ public final class MtxArrayList<T> {
         }
         return hashCode;
     }
+
+    public int indexOf(T element) {
+        return Arrays.asList(this.content).indexOf(element);
+    }
 }

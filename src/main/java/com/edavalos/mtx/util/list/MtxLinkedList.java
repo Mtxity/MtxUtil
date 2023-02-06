@@ -192,4 +192,18 @@ public final class MtxLinkedList<T> {
         }
         return hashCode;
     }
+
+    public int indexOf(T element) {
+        int idx = 0;
+        MtxNode next = this.head;
+        while (next != null) {
+            if (element.equals(next.content)) {
+                return idx;
+            }
+
+            next = next.next;
+            idx ++;
+        }
+        return -1;
+    }
 }

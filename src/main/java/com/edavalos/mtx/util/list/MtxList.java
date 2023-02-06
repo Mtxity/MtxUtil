@@ -130,9 +130,8 @@ public interface MtxList<T> {
 
     /**
      * @return the index of the given element, or -1 if the element could not be found
-     * @throws IndexOutOfBoundsException when the index is larger than the size of this list minus one (or is negative)
      */
-    int indexOf(T element) throws IndexOutOfBoundsException;
+    int indexOf(T element);
 
     /**
      * @return the number of occurrences of the given element in this list

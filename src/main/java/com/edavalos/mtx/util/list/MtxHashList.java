@@ -125,4 +125,19 @@ public final class MtxHashList<T> {
         }
         return hashCode;
     }
+
+    public int indexOf(T element) {
+        int idx = 0;
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+
+            if (element.equals(this.content.get(key))) {
+                return idx;
+            }
+            idx ++;
+        }
+        return -1;
+    }
 }
