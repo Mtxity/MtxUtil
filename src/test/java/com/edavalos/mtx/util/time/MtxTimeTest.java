@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.time;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -188,6 +189,45 @@ public final class MtxTimeTest {
             mtxTime = new MtxTime(-145, 0, 0);
             assertEquals(23, mtxTime.getHours());
             assertEquals(7, mtxTime.getDays());
+            assertTrue(mtxTime.isBackwards());
+        }
+    }
+
+    @Nested
+    class SetterTests {
+        @BeforeEach
+        public void setUp() {
+            mtxTime = new MtxTime(0, 0, 0, 0);
+        }
+
+        @Test
+        public void testSetDays() {
+            mtxTime.setDays(10);
+            assertEquals(10, mtxTime.getDays());
+        }
+
+        @Test
+        public void testSetHours() {
+            mtxTime.setHours(11);
+            assertEquals(11, mtxTime.getHours());
+        }
+
+        @Test
+        public void testSetMinutes() {
+            mtxTime.setMinutes(12);
+            assertEquals(12, mtxTime.getMinutes());
+        }
+
+        @Test
+        public void testSetSeconds() {
+            mtxTime.setSeconds(13);
+            assertEquals(13, mtxTime.getSeconds());
+        }
+
+        @Test
+        public void testFlipDirection() {
+            assertFalse(mtxTime.isBackwards());
+            mtxTime.flipDirection();
             assertTrue(mtxTime.isBackwards());
         }
     }
