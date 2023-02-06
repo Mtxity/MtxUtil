@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxLinkedListTest {
@@ -200,5 +201,22 @@ public final class MtxLinkedListTest {
             assertEquals(i + 1, mtxLinkedList.countOccurrences('a'));
             assertEquals((i + 1) * 2, mtxLinkedList.size());
         }
+    }
+
+    @Test
+    public void testGet() {
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(0));
+
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxLinkedList.add(element);
+        }
+
+        assertEquals("Zero", mtxLinkedList.get(0));
+        assertEquals("Two", mtxLinkedList.get(2));
+        assertEquals("Four", mtxLinkedList.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(5));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(6));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(-1));
     }
 }

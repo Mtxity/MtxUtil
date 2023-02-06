@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxHashListTest {
@@ -239,5 +240,32 @@ public final class MtxHashListTest {
             assertEquals(i + 1, mtxHashList.countOccurrences('a'));
             assertEquals((i + 1) * 2, mtxHashList.size());
         }
+    }
+
+    @Test
+    public void testGet() {
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.get(0));
+
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+        }
+
+        assertEquals("Zero", mtxHashList.get(0));
+        assertEquals("Two", mtxHashList.get(2));
+        assertEquals("Four", mtxHashList.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.get(5));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.get(6));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.get(-1));
+
+        mtxHashList.remove("One");
+        mtxHashList.remove("Two");
+        mtxHashList.add("One");
+        assertEquals("[Zero, Three, Four, One]", mtxHashList.toString());
+
+        assertEquals("Zero", mtxHashList.get(0));
+        assertEquals("Three", mtxHashList.get(1));
+        assertEquals("Four", mtxHashList.get(2));
+        assertEquals("One", mtxHashList.get(3));
     }
 }

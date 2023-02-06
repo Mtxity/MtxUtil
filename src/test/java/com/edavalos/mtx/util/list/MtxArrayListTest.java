@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxArrayListTest {
@@ -246,5 +247,22 @@ public final class MtxArrayListTest {
             assertEquals(i + 1, mtxArrayList.countOccurrences('a'));
             assertEquals((i + 1) * 2, mtxArrayList.size());
         }
+    }
+
+    @Test
+    public void testGet() {
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(0));
+
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
+        for (String element : sampleElements) {
+            mtxArrayList.add(element);
+        }
+
+        assertEquals("Zero", mtxArrayList.get(0));
+        assertEquals("Two", mtxArrayList.get(2));
+        assertEquals("Four", mtxArrayList.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(5));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(6));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.get(-1));
     }
 }
