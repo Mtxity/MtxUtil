@@ -124,4 +124,10 @@ public final class MtxArrayList<T> {
     public int indexOf(T element) {
         return Arrays.asList(this.content).indexOf(element);
     }
+
+    public void clear() {
+        this.nextIdx = 0;
+        this.capacity = DEFAULT_CAPACITY;
+        this.content = new Object[this.capacity];
+    }
 }

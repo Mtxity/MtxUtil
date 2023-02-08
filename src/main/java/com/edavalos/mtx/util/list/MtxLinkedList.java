@@ -250,4 +250,9 @@ public final class MtxLinkedList<T> {
     public boolean removeAll(T[] elements) {
         return this.removeAll(Arrays.asList(elements));
     }
+
+    public void clear() {
+        this.head = null;
+        this.size = 0;
+    }
 }
