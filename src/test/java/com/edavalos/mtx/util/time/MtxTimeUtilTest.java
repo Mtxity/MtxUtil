@@ -90,4 +90,22 @@ public final class MtxTimeUtilTest {
             );
         }
     }
+
+    @Nested
+    class AddLeadingZeroTests {
+
+        @Test
+        public void testAddLeadingZero_noZeroNeeded() {
+            for (int i = 10; i < 20; i++) {
+                assertEquals(String.valueOf(i), MtxTimeUtil.addLeadingZero(i));
+            }
+        }
+
+        @Test
+        public void testAddLeadingZero_yesZeroNeeded() {
+            for (int i = 0; i < 10; i++) {
+                assertEquals("0" + i, MtxTimeUtil.addLeadingZero(i));
+            }
+        }
+    }
 }

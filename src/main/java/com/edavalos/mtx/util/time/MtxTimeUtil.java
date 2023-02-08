@@ -30,4 +30,10 @@ public final class MtxTimeUtil {
 
         return new int[]{hours, minutes, seconds};
     }
+
+    public static String addLeadingZero(int time) {
+        return (time < 10) ?
+                "0" + time :
+                String.valueOf(time);
+    }
 }
