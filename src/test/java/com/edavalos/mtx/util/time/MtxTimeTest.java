@@ -387,43 +387,43 @@ public final class MtxTimeTest {
         @Test
         public void testToString_hoursMinutes() {
             mtxTime = new MtxTime(8, 32);
-            String stringRepresentatiom = "08:32";
+            String stringRepresentation = "08:32";
 
-            assertEquals(stringRepresentatiom, mtxTime.toString());
+            assertEquals(stringRepresentation, mtxTime.toString());
         }
 
         @Test
         public void testToString_hoursMinutesSeconds() {
             mtxTime = new MtxTime(12, 32, 4);
-            String stringRepresentatiom = "12:32:04";
+            String stringRepresentation = "12:32:04";
 
-            assertEquals(stringRepresentatiom, mtxTime.toString());
+            assertEquals(stringRepresentation, mtxTime.toString());
         }
 
         @Test
         public void testToString_hoursMinutesSecondsDays() {
             mtxTime = new MtxTime(12, 32, 4, 20);
-            String stringRepresentatiom = "20d 12:32:04";
+            String stringRepresentation = "20d 12:32:04";
 
-            assertEquals(stringRepresentatiom, mtxTime.toString());
+            assertEquals(stringRepresentation, mtxTime.toString());
         }
 
         @Test
         public void testToString_negative_hoursMinutes() {
             mtxTime = new MtxTime(9, 14);
             mtxTime.flipDirection();
-            String stringRepresentatiom = "-09:14";
+            String stringRepresentation = "-09:14";
 
-            assertEquals(stringRepresentatiom, mtxTime.toString());
+            assertEquals(stringRepresentation, mtxTime.toString());
         }
 
         @Test
         public void testToString_negative_hoursMinutesDays() {
             mtxTime = new MtxTime(9, 14, 0, 6);
             mtxTime.flipDirection();
-            String stringRepresentatiom = "-6d 09:14";
+            String stringRepresentation = "-6d 09:14";
 
-            assertEquals(stringRepresentatiom, mtxTime.toString());
+            assertEquals(stringRepresentation, mtxTime.toString());
         }
     }
 
