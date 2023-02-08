@@ -426,4 +426,40 @@ public final class MtxTimeTest {
             assertEquals(stringRepresentatiom, mtxTime.toString());
         }
     }
+
+    @Nested
+    class EqualsTests {
+        @BeforeEach
+        public void setUp() {
+            mtxTime = new MtxTime(1, 2, 3, 4);
+        }
+
+        @Test
+        public void testEquals_trivial() {
+            assertFalse(mtxTime.equals(null));
+            assertFalse(mtxTime.equals("not an MtxTime"));
+        }
+
+        @Test
+        public void testEquals_nontrivial() {
+            MtxTime otherTime = new MtxTime(1, 0, 3, 4);
+            assertFalse(mtxTime.equals(otherTime));
+
+            otherTime.setMinutes(2);
+            assertTrue(mtxTime.equals(otherTime));
+        }
+    }
+
+    @Test
+    public void testHashCode() {
+        try {
+            mtxTime = new MtxTime(SAMPLE_TIME);
+
+            // I'm just going to trust Java on this one
+            int correctHash = 29036891;
+            assertEquals(correctHash, mtxTime.hashCode());
+        } catch (ParseException e) {
+            fail();
+        }
+    }
 }
