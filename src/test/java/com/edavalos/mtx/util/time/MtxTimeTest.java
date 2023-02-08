@@ -305,4 +305,79 @@ public final class MtxTimeTest {
             assertEquals(0, mtxTime.getDays());
         }
     }
+
+    @Nested
+    class SubtractTimeTests {
+        @BeforeEach
+        public void setUp() {
+            mtxTime = new MtxTime(15, 30, 30, 5);
+        }
+
+        @Test
+        public void testSubtractTime_noDayChange_noBalancing() {
+            MtxTime otherTime = new MtxTime(15, 10, 5);
+            mtxTime.subtractTime(otherTime);
+            // seconds: 30 -  5 = 25
+            // minutes: 30 - 10 = 20
+            //   hours: 15 - 15 =  0
+            //    days:  5 -  0 =  5
+
+            assertEquals(25, mtxTime.getSeconds());
+            assertEquals(20, mtxTime.getMinutes());
+            assertEquals(0, mtxTime.getHours());
+            assertEquals(5, mtxTime.getDays());
+        }
+
+        @Test
+        public void testSubtractTime_noDayChange_yesBalancing() {
+            MtxTime otherTime = new MtxTime(7, 50, 95);
+            mtxTime.subtractTime(otherTime);
+            // seconds: 30 - 95 = -65
+            //                    -65 - 120 = 55 (- 2 minutes)
+            // minutes: 30 - 50 = -20
+            //                    -20 -   2 = -22
+            //                    -22 = 38 (- 1 hour)
+            //   hours: 15 -  7 =   8
+            //                      8 - 1 = 7
+            //    days:  5 -  0 =  0
+
+            assertEquals(55, mtxTime.getSeconds());
+            assertEquals(38, mtxTime.getMinutes());
+            assertEquals(7, mtxTime.getHours());
+            assertEquals(5, mtxTime.getDays());
+        }
+
+        @Test
+        public void testSubtractTime_yesDayChange() {
+            MtxTime otherTime = new MtxTime(35, 0, 0);
+            mtxTime.subtractTime(otherTime);
+            // seconds: 30 -  0 = 30
+            // minutes: 30 -  0 = 30
+            //   hours: 15 - 35 = 15 - (1 day & 11 hours)
+            //                    15 - 11 = 4 (- 1 day)
+            //    days:  5 -  0 =  5
+            //                     5 - 1 = 4
+
+            assertEquals(30, mtxTime.getSeconds());
+            assertEquals(30, mtxTime.getMinutes());
+            assertEquals(4, mtxTime.getHours());
+            assertEquals(4, mtxTime.getDays());
+        }
+
+        @Test
+        public void testSubtractTime_subtractNegativeTime() {
+            MtxTime otherTime = new MtxTime(8, 8, 8);
+            otherTime.flipDirection();
+            mtxTime.subtractTime(otherTime);
+            // seconds: 30 +  8 = 38
+            // minutes: 30 +  8 = 38
+            //   hours: 15 +  8 = 23
+            //    days:  5 +  0 =  5
+
+            assertEquals(38, mtxTime.getSeconds());
+            assertEquals(38, mtxTime.getMinutes());
+            assertEquals(23, mtxTime.getHours());
+            assertEquals(5, mtxTime.getDays());
+        }
+    }
 }
