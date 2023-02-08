@@ -309,4 +309,17 @@ public final class MtxHashListTest {
         }
         assertEquals(-1, mtxHashList.indexOf("Five"));
     }
+
+    @Test
+    public void testClear() {
+        int numberOfElements = 10;
+        for (int i = 0; i < numberOfElements; i++) {
+            mtxHashList.add(i);
+        }
+        assertEquals(numberOfElements, mtxHashList.size());
+
+        mtxHashList.clear();
+        assertEquals(0, mtxHashList.size());
+        assertEquals("[]", mtxHashList.toString());
+    }
 }

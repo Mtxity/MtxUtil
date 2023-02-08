@@ -296,4 +296,17 @@ public final class MtxArrayListTest {
         }
         assertEquals(-1, mtxArrayList.indexOf("Five"));
     }
+
+    @Test
+    public void testClear() {
+        int numberOfElements = 10;
+        for (int i = 0; i < numberOfElements; i++) {
+            mtxArrayList.add(i);
+        }
+        assertEquals(numberOfElements, mtxArrayList.size());
+
+        mtxArrayList.clear();
+        assertEquals(0, mtxArrayList.size());
+        assertEquals("[]", mtxArrayList.toString());
+    }
 }

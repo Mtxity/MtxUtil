@@ -275,4 +275,17 @@ public final class MtxLinkedListTest {
         }
         assertEquals(-1, mtxLinkedList.indexOf("Five"));
     }
+
+    @Test
+    public void testClear() {
+        int numberOfElements = 10;
+        for (int i = 0; i < numberOfElements; i++) {
+            mtxLinkedList.add(i);
+        }
+        assertEquals(numberOfElements, mtxLinkedList.size());
+
+        mtxLinkedList.clear();
+        assertEquals(0, mtxLinkedList.size());
+        assertEquals("[]", mtxLinkedList.toString());
+    }
 }
