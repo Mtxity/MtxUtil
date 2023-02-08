@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -321,5 +322,31 @@ public final class MtxHashListTest {
         mtxHashList.clear();
         assertEquals(0, mtxHashList.size());
         assertEquals("[]", mtxHashList.toString());
+    }
+
+    @Test
+    public void testIterator() {
+        List<String> sampleElements = new LinkedList<>(){
+            {
+                add("One");
+                add("Two");
+                add("Three");
+                add("Four");
+            }
+        };
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+        }
+        mtxHashList.remove("Two");
+        mtxHashList.add("Two");
+        mtxHashList.remove("One");
+        mtxHashList.add("One");
+        assertEquals(sampleElements.size(), mtxHashList.size());
+
+        for (Object iteration : mtxHashList) {
+            assertTrue(sampleElements.contains(iteration));
+            sampleElements.remove(iteration);
+        }
+        assertEquals(0, sampleElements.size());
     }
 }
