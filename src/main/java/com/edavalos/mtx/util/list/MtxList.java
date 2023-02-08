@@ -75,16 +75,6 @@ public interface MtxList<T> {
     boolean removeAll(T[] elements);
 
     /**
-     * Removes all elements except this one from this list
-     */
-    void retainOnly(T element);
-
-    /**
-     * Removes all elements except these from this list
-     */
-    void retainOnly(Collection<T> elements);
-
-    /**
      * Sorts this list
      */
     void sort(Comparator<? super T> comparator);
