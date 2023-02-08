@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.time;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * A time is a vector with a length and direction falling on the 2D time number line.
@@ -165,22 +166,21 @@ public final class MtxTime {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                   .append((this.backwards ? "-" : ""))
-                   .append(
-                           (this.days > 0) ?
-                           this.days + "d + " :
-                           ""
-                   )
-                   .append(MtxTimeUtil.addLeadingZero(this.hours))
-                   .append(":")
-                   .append(MtxTimeUtil.addLeadingZero(this.minutes))
-                   .append(
-                           (this.seconds > 0) ?
-                           ":" + MtxTimeUtil.addLeadingZero(this.seconds) :
-                           ""
-                   )
-                   .toString();
+        StringBuilder timeStr = new StringBuilder();
+        if (this.backwards) {
+            timeStr.append("-");
+        }
+        if (this.days > 0) {
+            timeStr.append(this.days).append("d ");
+        }
+
+        timeStr.append(MtxTimeUtil.addLeadingZero(this.hours)).append(":");
+        timeStr.append(MtxTimeUtil.addLeadingZero(this.minutes));
+        if (this.seconds > 0) {
+            timeStr.append(":").append(MtxTimeUtil.addLeadingZero(this.seconds));
+        }
+
+        return timeStr.toString();
     }
 
     // ---------------------- Private Methods ----------------------
