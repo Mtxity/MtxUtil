@@ -1,8 +1,9 @@
 package com.edavalos.mtx.util.list;
 
 import java.util.Arrays;
+import java.util.Iterator;
 
-public final class MtxArrayList<T> {
+public final class MtxArrayList<T> implements Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final double SCALE_FACTOR = 1.8;
 
@@ -129,5 +130,22 @@ public final class MtxArrayList<T> {
         this.nextIdx = 0;
         this.capacity = DEFAULT_CAPACITY;
         this.content = new Object[this.capacity];
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx < size();
+            }
+
+            @Override
+            public T next() {
+                return ((T) content[this.idx++]);
+            }
+        };
     }
 }

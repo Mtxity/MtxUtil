@@ -2,10 +2,11 @@ package com.edavalos.mtx.util.list;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
-public final class MtxHashList<T> {
+public final class MtxHashList<T> implements Iterable<T> {
     private HashMap<Integer, T> content;
     private List<Integer> holes; // Keys to elements that were removed
     private int nextSpot;
@@ -145,5 +146,37 @@ public final class MtxHashList<T> {
         this.content = new HashMap<>();
         this.holes = new ArrayList<>();
         this.nextSpot = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private final List<T> elements = prepareIterator();
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx < size();
+            }
+
+            @Override
+            public T next() {
+                return elements.get(this.idx ++);
+            }
+
+            private List<T> prepareIterator() {
+                List<T> elements = new ArrayList<>();
+
+                for (int key : new TreeSet<>(content.keySet())) {
+                    if (holes.contains(key)) {
+                        continue;
+                    }
+
+                    elements.add(content.get(key));
+                }
+
+                return elements;
+            }
+        };
     }
 }

@@ -2,9 +2,10 @@ package com.edavalos.mtx.util.list;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
-public final class MtxLinkedList<T> {
+public final class MtxLinkedList<T> implements Iterable<T> {
     private class MtxNode {
         T content;
         MtxNode next;
@@ -254,5 +255,24 @@ public final class MtxLinkedList<T> {
     public void clear() {
         this.head = null;
         this.size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private MtxNode next = head;
+
+            @Override
+            public boolean hasNext() {
+                return this.next != null;
+            }
+
+            @Override
+            public T next() {
+                T element = this.next.content;
+                this.next = this.next.next;
+                return element;
+            }
+        };
     }
 }
