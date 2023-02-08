@@ -163,6 +163,26 @@ public final class MtxTime {
         this.backwards = !this.backwards;
     }
 
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                   .append((this.backwards ? "-" : ""))
+                   .append(
+                           (this.days > 0) ?
+                           this.days + "d + " :
+                           ""
+                   )
+                   .append(MtxTimeUtil.addLeadingZero(this.hours))
+                   .append(":")
+                   .append(MtxTimeUtil.addLeadingZero(this.minutes))
+                   .append(
+                           (this.seconds > 0) ?
+                           ":" + MtxTimeUtil.addLeadingZero(this.seconds) :
+                           ""
+                   )
+                   .toString();
+    }
+
     // ---------------------- Private Methods ----------------------
 
     private void balance() {
