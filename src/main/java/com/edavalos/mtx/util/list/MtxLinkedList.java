@@ -223,4 +223,31 @@ public final class MtxLinkedList<T> {
     public boolean containsAll(T[] elements) {
         return this.containsAll(Arrays.asList(elements));
     }
+
+    // TODO: Move this method to MtxList and make it default
+    public void addAll(Collection<T> elements) {
+        for (T element : elements) {
+            this.add(element);
+        }
+    }
+
+    // TODO: Move this method to MtxList and make it default
+    public void addAll(T[] elements) {
+        this.addAll(Arrays.asList(elements));
+    }
+
+    // TODO: Move this method to MtxList and make it default
+    public boolean removeAll(Collection<T> elements) {
+        for (T element : elements) {
+            if (!this.remove(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // TODO: Move this method to MtxList and make it default
+    public boolean removeAll(T[] elements) {
+        return this.removeAll(Arrays.asList(elements));
+    }
 }

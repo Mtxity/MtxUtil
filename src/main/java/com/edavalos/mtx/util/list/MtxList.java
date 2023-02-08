@@ -25,6 +25,7 @@ public interface MtxList<T> {
     /**
      * @return true if this list contains all the specified elements, false otherwise
      */
+    // TODO: Add unit tests
     boolean containsAll(Collection<T> elements);
     boolean containsAll(T[] elements);
 
@@ -53,8 +54,9 @@ public interface MtxList<T> {
     /**
      * Adds all elements to this list
      */
+    // TODO: Add unit tests
     void addAll(Collection<T> elements);
-    void addAll(T elements);
+    void addAll(T[] elements);
 
     /**
      * Removes an element from this list
@@ -64,9 +66,13 @@ public interface MtxList<T> {
 
     /**
      * Removes all elements from this list
-     * @return true if elements were all found (and removed), false if at least one element was not found
+     * @return true if elements were all found (and removed), false if at least one element was not found.
+     * Note that if an element is not found (and the method terminates and returns false), elements that
+     * came before it in the given list will still have been removed.
      */
+    // TODO: Add unit tests
     boolean removeAll(Collection<T> elements);
+    boolean removeAll(T[] elements);
 
     /**
      * Removes all elements except this one from this list
