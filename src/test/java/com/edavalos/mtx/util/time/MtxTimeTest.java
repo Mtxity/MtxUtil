@@ -243,10 +243,14 @@ public final class MtxTimeTest {
         public void testAddTime_noDayChange_noBalancing() {
             MtxTime otherTime = new MtxTime(8, 10, 8);
             mtxTime.addTime(otherTime);
+            // seconds: 15 +  8 = 23
+            // minutes: 15 + 10 = 25
+            //   hours: 15 +  8 = 23
+            //    days:  0 +  0 =  0
 
-            assertEquals(23, mtxTime.getHours());
-            assertEquals(25, mtxTime.getMinutes());
             assertEquals(23, mtxTime.getSeconds());
+            assertEquals(25, mtxTime.getMinutes());
+            assertEquals(23, mtxTime.getHours());
             assertEquals(0, mtxTime.getDays());
         }
 
@@ -254,23 +258,51 @@ public final class MtxTimeTest {
         public void testAddTime_noDayChange_yesBalancing() {
             MtxTime otherTime = new MtxTime(7, 50, 58);
             mtxTime.addTime(otherTime);
+            // seconds: 15 + 58 = 73
+            //                    73 % 60 = 13 rem 1
+            // minutes: 15 + 50 = 65
+            //                   (65 + 1) % 60 = 6 rem 1
+            //   hours: 15 +  7 = 22
+            //                   (22 + 1) = 23
+            //    days:  0 +  0 =  0
 
-            assertEquals(23, mtxTime.getHours());
-            assertEquals(6, mtxTime.getMinutes());
             assertEquals(13, mtxTime.getSeconds());
+            assertEquals(6, mtxTime.getMinutes());
+            assertEquals(23, mtxTime.getHours());
             assertEquals(0, mtxTime.getDays());
         }
 
-        // TODO: Fix whatever is causing this to fail
         @Test
         public void testAddTime_yesDayChange() {
             MtxTime otherTime = new MtxTime(50, 15, 15, 0);
             mtxTime.addTime(otherTime);
+            // seconds: 15 + 15 = 30
+            // minutes: 15 + 15 = 30
+            //   hours: 15 + 50 = 65
+            //                    65 % 24 = 17 rem 2
+            //    days:  0 +  0 =  0
+            //                    (0 + 2) = 2
 
-            assertEquals(5, mtxTime.getHours());
-            assertEquals(30, mtxTime.getMinutes());
             assertEquals(30, mtxTime.getSeconds());
-            assertEquals(1, mtxTime.getDays());
+            assertEquals(30, mtxTime.getMinutes());
+            assertEquals(17, mtxTime.getHours());
+            assertEquals(2, mtxTime.getDays());
+        }
+
+        @Test
+        public void testAddTime_addNegativeTime() {
+            MtxTime otherTime = new MtxTime(2, 5, 10, 0);
+            otherTime.flipDirection();
+            mtxTime.addTime(otherTime);
+            // seconds: 15 - 10 =  5
+            // minutes: 15 -  5 = 10
+            //   hours: 15 -  2 = 13
+            //    days:  0 -  0 =  0
+
+            assertEquals(5, mtxTime.getSeconds());
+            assertEquals(10, mtxTime.getMinutes());
+            assertEquals(13, mtxTime.getHours());
+            assertEquals(0, mtxTime.getDays());
         }
     }
 }
