@@ -183,6 +183,23 @@ public final class MtxTime {
         return timeStr.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MtxTime mtxTime = (MtxTime) o;
+        return days == mtxTime.days &&
+               hours == mtxTime.hours &&
+               minutes == mtxTime.minutes &&
+               seconds == mtxTime.seconds &&
+               backwards == mtxTime.backwards;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(days, hours, minutes, seconds, backwards);
+    }
+
     // ---------------------- Private Methods ----------------------
 
     private void balance() {
