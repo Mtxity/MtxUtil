@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public final class MtxLinkedList<T> {
@@ -205,5 +207,20 @@ public final class MtxLinkedList<T> {
             idx ++;
         }
         return -1;
+    }
+
+    // TODO: Move this method to MtxList and make it default
+    public boolean containsAll(Collection<T> elements) {
+        for (T element : elements) {
+            if (!this.contains(element)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // TODO: Move this method to MtxList and make it default
+    public boolean containsAll(T[] elements) {
+        return this.containsAll(Arrays.asList(elements));
     }
 }

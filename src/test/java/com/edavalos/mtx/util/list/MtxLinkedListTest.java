@@ -223,6 +223,7 @@ public final class MtxLinkedListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(-1));
     }
 
+    // TODO: Move this method to MtxListTest
     @Test
     public void testEquals() {
         String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
