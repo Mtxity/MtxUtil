@@ -138,5 +138,5 @@ public interface MtxList<T> {
      * @return a new list starting at the given fromIndex and ending at the given toIndex
      * @throws IndexOutOfBoundsException when the fromIndex or toIndex is larger than the size of this list minus one (or is negative)
      */
-    MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException;
+    MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException; // DONE
 }

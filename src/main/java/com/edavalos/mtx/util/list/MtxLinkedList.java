@@ -275,4 +275,34 @@ public final class MtxLinkedList<T> implements Iterable<T> {
             }
         };
     }
+
+    // TODO: Make this return MtxList<T> once interface is done being implemented
+    public MtxLinkedList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+        if (fromIndex < 0) {
+            throw new IndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > this.size()) {
+            throw new IndexOutOfBoundsException(toIndex);
+        }
+
+        MtxLinkedList<T> newList = new MtxLinkedList<>();
+        int idx = 0;
+        MtxNode next = this.head;
+        while (next != null) {
+            if (idx < fromIndex) {
+                next = next.next;
+                idx ++;
+                continue;
+            }
+            if (idx >= toIndex) {
+                break;
+            }
+
+            newList.add(next.content);
+            next = next.next;
+            idx ++;
+        }
+
+        return newList;
+    }
 }

@@ -179,4 +179,30 @@ public final class MtxHashList<T> implements Iterable<T> {
             }
         };
     }
+
+    // TODO: Make this return MtxList<T> once interface is done being implemented
+    public MtxHashList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+        if (fromIndex < 0) {
+            throw new IndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > this.size()) {
+            throw new IndexOutOfBoundsException(toIndex);
+        }
+
+        MtxHashList<T> newList = new MtxHashList<>();
+        int idx = 0;
+        for (T element : this) {
+            if (idx < fromIndex) {
+                idx ++;
+                continue;
+            }
+            if (idx >= toIndex) {
+                break;
+            }
+
+            newList.add(element);
+            idx ++;
+        }
+        return newList;
+    }
 }

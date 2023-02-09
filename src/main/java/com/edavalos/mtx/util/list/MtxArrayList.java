@@ -148,4 +148,20 @@ public final class MtxArrayList<T> implements Iterable<T> {
             }
         };
     }
+
+    // TODO: Make this return MtxList<T> once interface is done being implemented
+    public MtxArrayList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+        if (fromIndex < 0) {
+            throw new IndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > this.size()) {
+            throw new IndexOutOfBoundsException(toIndex);
+        }
+
+        MtxArrayList<T> newList = new MtxArrayList<>();
+        for (int i = fromIndex; i < toIndex; i++) {
+            newList.add(((T) this.content[i]));
+        }
+        return newList;
+    }
 }
