@@ -349,4 +349,30 @@ public final class MtxHashListTest {
         }
         assertEquals(0, sampleElements.size());
     }
+
+    @Test
+    public void testSubList() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        String startingContents = "[Zero, One, Two, Three, Four, Five, Six]";
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+            mtxHashList.remove(element);
+            mtxHashList.add(element);
+        }
+        assertEquals(startingContents, mtxHashList.toString());
+
+        String sub_0_to_3 = "[Zero, One, Two]";
+        assertEquals(sub_0_to_3, mtxHashList.subList(0, 3).toString());
+        String sub_1_to_5 = "[One, Two, Three, Four]";
+        assertEquals(sub_1_to_5, mtxHashList.subList(1, 5).toString());
+        String sub_3_to_7 = "[Three, Four, Five, Six]";
+        assertEquals(sub_3_to_7, mtxHashList.subList(3, 7).toString());
+        String sub_2_to_6 = "[Two, Three, Four, Five]";
+        assertEquals(sub_2_to_6, mtxHashList.subList(2, 6).toString());
+
+        assertEquals(startingContents, mtxHashList.subList(0, mtxHashList.size()).toString());
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.subList(-1, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.subList(1, 8));
+    }
 }
