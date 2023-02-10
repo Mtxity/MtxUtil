@@ -42,7 +42,7 @@ public interface MtxList<T> {
     /**
      * @return an identical copy of this list
      */
-    MtxList<T> copy();
+    MtxList<T> copy(); // DONE
 
     // ------------------ Modification Operations ------------------
 

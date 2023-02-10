@@ -351,4 +351,19 @@ public final class MtxLinkedListTest {
             assertEquals(contents[i], generatedArray[i]);
         }
     }
+
+    // TODO: Move this method to MtxListTest
+    @Test
+    public void testCopy() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        String startingContents = "[Zero, One, Two, Three, Four, Five, Six]";
+        for (String element : sampleElements) {
+            mtxLinkedList.add(element);
+        }
+
+        MtxLinkedList<Object> otherList = mtxLinkedList.copy();
+
+        assertEquals(mtxLinkedList.size(), otherList.size());
+        assertTrue(mtxLinkedList.equals(otherList));
+    }
 }

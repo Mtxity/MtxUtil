@@ -319,4 +319,9 @@ public final class MtxLinkedList<T> implements Iterable<T> {
 
         return (T[]) array;
     }
+
+    // TODO: Move this method to MtxList and make it default
+    public MtxLinkedList<T> copy() {
+        return this.subList(0, this.size());
+    }
 }
