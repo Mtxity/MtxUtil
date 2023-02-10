@@ -124,7 +124,7 @@ public interface MtxList<T> {
      * @return the element being removed
      * @throws IndexOutOfBoundsException when the index is larger than the size of this list minus one (or is negative)
      */
-    T removeAt(int index) throws IndexOutOfBoundsException;
+    T removeAt(int index) throws IndexOutOfBoundsException; // DONE
 
     /**
      * @return the index of the given element, or -1 if the element could not be found

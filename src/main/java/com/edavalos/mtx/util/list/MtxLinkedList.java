@@ -324,4 +324,32 @@ public final class MtxLinkedList<T> implements Iterable<T> {
     public MtxLinkedList<T> copy() {
         return this.subList(0, this.size());
     }
+
+    public T removeAt(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        if (index == 0) {
+            MtxNode head = this.head;
+            this.head = head.next;
+            this.size --;
+            return head.content;
+        }
+
+        int idx = 0;
+        MtxNode currentNode = this.head;
+        MtxNode previous = null;
+        while (idx < index) {
+            previous = currentNode;
+            currentNode = currentNode.next;
+            idx ++;
+        }
+
+        T element = currentNode.content;
+        previous.next = currentNode.next;
+        this.size --;
+
+        return element;
+    }
 }

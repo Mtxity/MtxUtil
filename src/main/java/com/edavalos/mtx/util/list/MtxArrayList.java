@@ -174,4 +174,18 @@ public final class MtxArrayList<T> implements Iterable<T> {
 
         return (T[]) array;
     }
+
+    public T removeAt(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        T element = ((T) this.content[index]);
+        for (int i = index; i < this.size(); i++) {
+            this.content[i] = this.content[i + 1];
+        }
+
+        this.nextIdx --;
+        return element;
+    }
 }

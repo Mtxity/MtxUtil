@@ -220,4 +220,22 @@ public final class MtxHashList<T> implements Iterable<T> {
 
         return listToUse.toArray(((T[]) new Object[0]));
     }
+
+    public T removeAt(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+        T[] tempArray = this.toArray();
+        this.clear();
+        int idx = 0;
+        for (T element : tempArray) {
+            this.content.put(idx, element);
+            idx ++;
+        }
+        this.nextSpot = idx;
+
+        T element = this.content.get(index);
+        this.holes.add(index);
+        return element;
+    }
 }
