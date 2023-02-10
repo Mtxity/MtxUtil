@@ -305,4 +305,18 @@ public final class MtxLinkedList<T> implements Iterable<T> {
 
         return newList;
     }
+
+    public T[] toArray() {
+        Object[] array = new Object[this.size()];
+
+        int idx = 0;
+        MtxNode next = this.head;
+        while (next != null) {
+            array[idx] = next.content;
+            next = next.next;
+            idx ++;
+        }
+
+        return (T[]) array;
+    }
 }

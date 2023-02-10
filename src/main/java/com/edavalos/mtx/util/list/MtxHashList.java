@@ -205,4 +205,19 @@ public final class MtxHashList<T> implements Iterable<T> {
         }
         return newList;
     }
+
+    public T[] toArray() {
+        List<T> listToUse = new ArrayList<>();
+
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+
+            T element = this.content.get(key);
+            listToUse.add(element);
+        }
+
+        return listToUse.toArray(((T[]) new Object[0]));
+    }
 }

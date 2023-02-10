@@ -164,4 +164,14 @@ public final class MtxArrayList<T> implements Iterable<T> {
         }
         return newList;
     }
+
+    public T[] toArray() {
+        Object[] array = new Object[this.size()];
+
+        for (int i = 0; i < this.size(); i++) {
+            array[i] = this.content[i];
+        }
+
+        return (T[]) array;
+    }
 }
