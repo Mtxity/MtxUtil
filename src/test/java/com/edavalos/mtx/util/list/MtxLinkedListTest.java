@@ -334,4 +334,21 @@ public final class MtxLinkedListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.subList(-1, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.subList(1, 8));
     }
+
+    @Test
+    public void testToArray() {
+        assertEquals(0, mtxLinkedList.toArray().length);
+
+        String[] contents = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : contents) {
+            mtxLinkedList.add(element);
+        }
+
+        Object[] generatedArray = mtxLinkedList.toArray();
+
+        assertEquals(contents.length, generatedArray.length);
+        for (int i = 0; i < contents.length; i++) {
+            assertEquals(contents[i], generatedArray[i]);
+        }
+    }
 }

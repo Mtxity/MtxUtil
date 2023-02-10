@@ -356,4 +356,21 @@ public final class MtxArrayListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.subList(-1, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.subList(1, 8));
     }
+
+    @Test
+    public void testToArray() {
+        assertEquals(0, mtxArrayList.toArray().length);
+
+        String[] contents = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : contents) {
+            mtxArrayList.add(element);
+        }
+
+        Object[] generatedArray = mtxArrayList.toArray();
+
+        assertEquals(contents.length, generatedArray.length);
+        for (int i = 0; i < contents.length; i++) {
+            assertEquals(contents[i], generatedArray[i]);
+        }
+    }
 }

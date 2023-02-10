@@ -375,4 +375,23 @@ public final class MtxHashListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.subList(-1, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.subList(1, 8));
     }
+
+    @Test
+    public void testToArray() {
+        assertEquals(0, mtxHashList.toArray().length);
+
+        String[] contents = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : contents) {
+            mtxHashList.add(element);
+            mtxHashList.remove(element);
+            mtxHashList.add(element);
+        }
+
+        Object[] generatedArray = mtxHashList.toArray();
+
+        assertEquals(contents.length, generatedArray.length);
+        for (int i = 0; i < contents.length; i++) {
+            assertEquals(contents[i], generatedArray[i]);
+        }
+    }
 }
