@@ -61,6 +61,7 @@ public interface MtxList<T> {
     /**
      * Removes an element from this list
      * @return true if element was found (and removed), false if element was not found
+     * @apiNote if the same element is in this list more than once, this only removes the first occurrence
      */
     boolean remove(T element); // DONE
 
@@ -69,6 +70,7 @@ public interface MtxList<T> {
      * @return true if elements were all found (and removed), false if at least one element was not found.
      * Note that if an element is not found (and the method terminates and returns false), elements that
      * came before it in the given list will still have been removed.
+     * @apiNote if an element from the given list is in this list more than once, this only removes the first occurrence
      */
     // TODO: Add unit tests
     boolean removeAll(Collection<T> elements); // DONE
@@ -126,6 +128,7 @@ public interface MtxList<T> {
 
     /**
      * @return the index of the given element, or -1 if the element could not be found
+     * @apiNote if the same element is in this list more than once, this only gets the index of the first occurrence
      */
     int indexOf(T element); // DONE
 
