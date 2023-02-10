@@ -394,4 +394,57 @@ public final class MtxHashListTest {
             assertEquals(contents[i], generatedArray[i]);
         }
     }
+
+    @Test
+    public void testRemoveAt() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+            mtxHashList.remove(element);
+            mtxHashList.add(element);
+        }
+        assertEquals(sampleElements.length, mtxHashList.size());
+        for (int i = 0; i < sampleElements.length; i++) {
+            assertEquals(sampleElements[i], mtxHashList.toArray()[i]);
+        }
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.removeAt(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.removeAt(mtxHashList.size()));
+
+        String removeTest1 = "Three";
+        String[] sampleElementsMinus1 = {"Zero", "One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest1, mtxHashList.removeAt(3));
+        assertEquals(sampleElementsMinus1.length, mtxHashList.size());
+        Object[] testArray1 = mtxHashList.toArray();
+        for (int i = 0; i < testArray1.length; i++) {
+            assertEquals(sampleElementsMinus1[i], testArray1[i]);
+        }
+
+        String removeTest2 = "Zero";
+        String[] sampleElementsMinus2 = {"One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest2, mtxHashList.removeAt(0));
+        assertEquals(sampleElementsMinus2.length, mtxHashList.size());
+        Object[] testArray2 = mtxHashList.toArray();
+        for (int i = 0; i < testArray2.length; i++) {
+            assertEquals(sampleElementsMinus2[i], testArray2[i]);
+        }
+
+        String removeTest3 = "Six";
+        String[] sampleElementsMinus3 = {"One", "Two", "Four", "Five"};
+        assertEquals(removeTest3, mtxHashList.removeAt(4));
+        assertEquals(sampleElementsMinus3.length, mtxHashList.size());
+        Object[] testArray3 = mtxHashList.toArray();
+        for (int i = 0; i < testArray3.length; i++) {
+            assertEquals(sampleElementsMinus3[i], testArray3[i]);
+        }
+
+        String newElement = "Eight";
+        String[] sampleElementsPlus1 = {"One", "Two", "Four", "Five", "Eight"};
+        mtxHashList.add(newElement);
+        assertEquals(mtxHashList.size(), sampleElementsPlus1.length);
+        Object[] testArray4 = mtxHashList.toArray();
+        for (int i = 0; i < testArray4.length; i++) {
+            assertEquals(sampleElementsPlus1[i], testArray4[i]);
+        }
+    }
 }

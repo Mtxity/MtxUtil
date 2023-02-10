@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -365,5 +366,53 @@ public final class MtxLinkedListTest {
 
         assertEquals(mtxLinkedList.size(), otherList.size());
         assertTrue(mtxLinkedList.equals(otherList));
+        assertEquals(startingContents, otherList.toString());
+    }
+
+    @Test
+    public void testRemoveAt() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : sampleElements) {
+            mtxLinkedList.add(element);
+        }
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.removeAt(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.removeAt(mtxLinkedList.size()));
+
+        String removeTest1 = "Three";
+        String[] sampleElementsMinus1 = {"Zero", "One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest1, mtxLinkedList.removeAt(3));
+        assertEquals(sampleElementsMinus1.length, mtxLinkedList.size());
+        Object[] testArray1 = mtxLinkedList.toArray();
+        for (int i = 0; i < testArray1.length; i++) {
+            assertEquals(sampleElementsMinus1[i], testArray1[i]);
+        }
+
+        String removeTest2 = "Zero";
+        String[] sampleElementsMinus2 = {"One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest2, mtxLinkedList.removeAt(0));
+        assertEquals(sampleElementsMinus2.length, mtxLinkedList.size());
+        Object[] testArray2 = mtxLinkedList.toArray();
+        for (int i = 0; i < testArray2.length; i++) {
+            assertEquals(sampleElementsMinus2[i], testArray2[i]);
+        }
+
+        String removeTest3 = "Six";
+        String[] sampleElementsMinus3 = {"One", "Two", "Four", "Five"};
+        assertEquals(removeTest3, mtxLinkedList.removeAt(4));
+        assertEquals(sampleElementsMinus3.length, mtxLinkedList.size());
+        Object[] testArray3 = mtxLinkedList.toArray();
+        for (int i = 0; i < testArray3.length; i++) {
+            assertEquals(sampleElementsMinus3[i], testArray3[i]);
+        }
+
+        String newElement = "Eight";
+        String[] sampleElementsPlus1 = {"One", "Two", "Four", "Five", "Eight"};
+        mtxLinkedList.add(newElement);
+        assertEquals(sampleElementsPlus1.length, mtxLinkedList.size());
+        Object[] testArray4 = mtxLinkedList.toArray();
+        for (int i = 0; i < testArray4.length; i++) {
+            assertEquals(sampleElementsPlus1[i], testArray4[i]);
+        }
     }
 }

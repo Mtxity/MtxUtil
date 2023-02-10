@@ -373,4 +373,51 @@ public final class MtxArrayListTest {
             assertEquals(contents[i], generatedArray[i]);
         }
     }
+
+    @Test
+    public void testRemoveAt() {
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        for (String element : sampleElements) {
+            mtxArrayList.add(element);
+        }
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.removeAt(-1));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxArrayList.removeAt(mtxArrayList.size()));
+
+        String removeTest1 = "Three";
+        String[] sampleElementsMinus1 = {"Zero", "One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest1, mtxArrayList.removeAt(3));
+        assertEquals(sampleElementsMinus1.length, mtxArrayList.size());
+        Object[] testArray1 = mtxArrayList.toArray();
+        for (int i = 0; i < testArray1.length; i++) {
+            assertEquals(sampleElementsMinus1[i], testArray1[i]);
+        }
+
+        String removeTest2 = "Zero";
+        String[] sampleElementsMinus2 = {"One", "Two", "Four", "Five", "Six"};
+        assertEquals(removeTest2, mtxArrayList.removeAt(0));
+        assertEquals(sampleElementsMinus2.length, mtxArrayList.size());
+        Object[] testArray2 = mtxArrayList.toArray();
+        for (int i = 0; i < testArray2.length; i++) {
+            assertEquals(sampleElementsMinus2[i], testArray2[i]);
+        }
+
+        String removeTest3 = "Six";
+        String[] sampleElementsMinus3 = {"One", "Two", "Four", "Five"};
+        assertEquals(removeTest3, mtxArrayList.removeAt(4));
+        assertEquals(sampleElementsMinus3.length, mtxArrayList.size());
+        Object[] testArray3 = mtxArrayList.toArray();
+        for (int i = 0; i < testArray3.length; i++) {
+            assertEquals(sampleElementsMinus3[i], testArray3[i]);
+        }
+
+        String newElement = "Eight";
+        String[] sampleElementsPlus1 = {"One", "Two", "Four", "Five", "Eight"};
+        mtxArrayList.add(newElement);
+        assertEquals(sampleElementsPlus1.length, mtxArrayList.size());
+        Object[] testArray4 = mtxArrayList.toArray();
+        for (int i = 0; i < testArray4.length; i++) {
+            assertEquals(sampleElementsPlus1[i], testArray4[i]);
+        }
+    }
 }
