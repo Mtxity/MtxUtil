@@ -352,4 +352,33 @@ public final class MtxLinkedList<T> implements Iterable<T> {
 
         return element;
     }
+
+    public T set(int index, T element) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        T content = null;
+        if (index == 0) {
+            if (this.head != null) {
+                content = this.head.content;
+                this.head.content = element;
+            }
+            return content;
+        }
+
+        int idx = 1;
+        MtxNode current = this.head.next;
+        while (current != null) {
+            if (idx == index) {
+                content = current.content;
+                current.content = element;
+                break;
+            }
+            current = current.next;
+            idx ++;
+        }
+
+        return content;
+    }
 }

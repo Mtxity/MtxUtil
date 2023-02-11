@@ -117,7 +117,7 @@ public interface MtxList<T> {
      * @return the old element before replacing it with the new one
      * @throws IndexOutOfBoundsException when the index is larger than the size of this list minus one (or is negative)
      */
-    T set(int index, T element) throws IndexOutOfBoundsException;
+    T set(int index, T element) throws IndexOutOfBoundsException; // DONE
 
     /**
      * Removes the element at the given index and shifts everything that comes after down by one

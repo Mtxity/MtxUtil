@@ -238,4 +238,19 @@ public final class MtxHashList<T> implements Iterable<T> {
         this.holes.add(index);
         return element;
     }
+
+    public T set(int index, T element) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        for (int key : this.holes) {
+            if (key <= index) {
+                index ++;
+            }
+        }
+
+        // HashMap.put() returns the previous value
+        return this.content.put(index, element);
+    }
 }

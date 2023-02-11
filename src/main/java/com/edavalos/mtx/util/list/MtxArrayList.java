@@ -188,4 +188,14 @@ public final class MtxArrayList<T> implements Iterable<T> {
         this.nextIdx --;
         return element;
     }
+
+    public T set(int index, T element) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        T oldElement = ((T) this.content[index]);
+        this.content[index] = element;
+        return oldElement;
+    }
 }
