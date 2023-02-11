@@ -4,12 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -448,5 +448,16 @@ public final class MtxLinkedListTest {
         String sampleStringTest3 = "[Thorough, One, Through, Three, Four, Five, Zinc]";
         assertEquals(testSet3_oldVal, mtxLinkedList.set(testSetIdx3, testSet3_newVal));
         assertEquals(sampleStringTest3, mtxLinkedList.toString());
+    }
+
+    @Test
+    public void testSort() {
+        Integer[] unsortedArray = {2, 7, 4, 0, 9, 1, 3, 8, 5, 6};
+        MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(unsortedArray);
+        integerMtxLinkedList.sort(Comparator.naturalOrder());
+
+        for (int i = 0; i < unsortedArray.length; i++) {
+            assertEquals(i, integerMtxLinkedList.get(i));
+        }
     }
 }

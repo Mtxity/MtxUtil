@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -453,5 +454,16 @@ public final class MtxArrayListTest {
         String sampleStringTest3 = "[Thorough, One, Through, Three, Four, Five, Zinc]";
         assertEquals(testSet3_oldVal, mtxArrayList.set(testSetIdx3, testSet3_newVal));
         assertEquals(sampleStringTest3, mtxArrayList.toString());
+    }
+
+    @Test
+    public void testSort() {
+        Integer[] unsortedArray = {2, 7, 4, 0, 9, 1, 3, 8, 5, 6};
+        MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(unsortedArray);
+        integerMtxArrayList.sort(Comparator.naturalOrder());
+
+        for (int i = 0; i < unsortedArray.length; i++) {
+            assertEquals(i, integerMtxArrayList.get(i));
+        }
     }
 }
