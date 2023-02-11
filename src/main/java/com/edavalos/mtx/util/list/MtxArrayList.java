@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.list;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public final class MtxArrayList<T> implements Iterable<T> {
@@ -197,5 +198,51 @@ public final class MtxArrayList<T> implements Iterable<T> {
         T oldElement = ((T) this.content[index]);
         this.content[index] = element;
         return oldElement;
+    }
+
+    // Based on https://www.baeldung.com/java-merge-sort
+    public void sort(Comparator<T> comparator) {
+        this.mergeSort(this.content, this.size(), comparator);
+    }
+
+    private void mergeSort(Object[] a, int n, Comparator<T> comparator) {
+        if (n < 2) {
+            return;
+        }
+
+        int mid = n / 2;
+        Object[] l = new Object[mid];
+        Object[] r = new Object[n - mid];
+
+        for (int i = 0; i < mid; i++) {
+            l[i] = a[i];
+        }
+        for (int j = mid; j < n; j++) {
+            r[j - mid] = a[j];
+        }
+        this.mergeSort(l, mid, comparator);
+        this.mergeSort(r, n - mid, comparator);
+
+        this.merge(a, l, r, mid, n - mid, comparator);
+    }
+
+    private void merge(Object[] a, Object[] l, Object[] r, int left, int right, Comparator<T> comparator) {
+        int i = 0;
+        int j = 0;
+        int k = 0;
+        while (i < left && j < right) {
+            if (comparator.compare(((T) l[i]), ((T) r[j])) <= 0) {
+                a[k++] = l[i++];
+            } else {
+                a[k++] = r[j++];
+            }
+        }
+
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+        while (j < right) {
+            a[k++] = r[j++];
+        }
     }
 }

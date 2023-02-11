@@ -79,7 +79,7 @@ public interface MtxList<T> {
     /**
      * Sorts this list
      */
-    void sort(Comparator<? super T> comparator);
+    void sort(Comparator<T> comparator); // DONE
 
     /**
      * Removes everything from this list

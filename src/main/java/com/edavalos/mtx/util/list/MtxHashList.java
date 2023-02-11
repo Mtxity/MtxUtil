@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.list;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -252,5 +253,18 @@ public final class MtxHashList<T> implements Iterable<T> {
 
         // HashMap.put() returns the previous value
         return this.content.put(index, element);
+    }
+
+    public void sort(Comparator<T> comparator) {
+        HashMap<Integer, T> sortedMap = new HashMap<>();
+        int idx = 0;
+        for (T value : this.content.values().stream().sorted(comparator).toList()) {
+            sortedMap.put(idx, value);
+            idx ++;
+        }
+
+        this.holes = new ArrayList<>();
+        this.content = sortedMap;
+        this.nextSpot = idx;
     }
 }

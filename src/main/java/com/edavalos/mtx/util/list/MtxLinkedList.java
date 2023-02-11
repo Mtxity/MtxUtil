@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.list;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -380,5 +381,24 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         }
 
         return content;
+    }
+
+    // Based on https://www.javatpoint.com/program-to-sort-the-elements-of-the-singly-linked-list
+    public void sort(Comparator<T> comparator) {
+        MtxNode current = this.head;
+        MtxNode index;
+
+        while(current != null) {
+            index = current.next;
+            while (index != null) {
+                if (comparator.compare(current.content, index.content) > 0) {
+                    T temp = current.content;
+                    current.content = index.content;
+                    index.content = temp;
+                }
+                index = index.next;
+            }
+            current = current.next;
+        }
     }
 }
