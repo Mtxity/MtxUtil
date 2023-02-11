@@ -447,4 +447,40 @@ public final class MtxHashListTest {
             assertEquals(sampleElementsPlus1[i], testArray4[i]);
         }
     }
+
+    @Test
+    public void testSet() {
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.set(-1, null));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxHashList.set(mtxHashList.size(), null));
+
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        String sampleElementsString = "[Zero, One, Two, Three, Four, Five, Six]";
+        for (String element : sampleElements) {
+            mtxHashList.add(element);
+            mtxHashList.remove(element);
+            mtxHashList.add(element);
+        }
+        assertEquals(sampleElementsString, mtxHashList.toString());
+
+        String testSet1_oldVal = "Zero";
+        String testSet1_newVal = "Thorough";
+        int testSetIdx1 = 0;
+        String sampleStringTest1 = "[Thorough, One, Two, Three, Four, Five, Six]";
+        assertEquals(testSet1_oldVal, mtxHashList.set(testSetIdx1, testSet1_newVal));
+        assertEquals(sampleStringTest1, mtxHashList.toString());
+
+        String testSet2_oldVal = "Two";
+        String testSet2_newVal = "Through";
+        int testSetIdx2 = 2;
+        String sampleStringTest2 = "[Thorough, One, Through, Three, Four, Five, Six]";
+        assertEquals(testSet2_oldVal, mtxHashList.set(testSetIdx2, testSet2_newVal));
+        assertEquals(sampleStringTest2, mtxHashList.toString());
+
+        String testSet3_oldVal = "Six";
+        String testSet3_newVal = "Zinc";
+        int testSetIdx3 = 6;
+        String sampleStringTest3 = "[Thorough, One, Through, Three, Four, Five, Zinc]";
+        assertEquals(testSet3_oldVal, mtxHashList.set(testSetIdx3, testSet3_newVal));
+        assertEquals(sampleStringTest3, mtxHashList.toString());
+    }
 }
