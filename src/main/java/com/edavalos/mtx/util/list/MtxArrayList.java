@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.list;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 public final class MtxArrayList<T> implements Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
@@ -244,5 +245,25 @@ public final class MtxArrayList<T> implements Iterable<T> {
         while (j < right) {
             a[k++] = r[j++];
         }
+    }
+
+    public boolean removeDuplicates() {
+        List<Object> newContents = Arrays.asList(new Object[this.size()]);
+        boolean foundDuplicate = false;
+
+        for (int i = 0; i < this.size(); i++) {
+            if (newContents.contains(this.content[i])) {
+                foundDuplicate = true;
+                this.nextIdx --;
+            } else {
+                newContents.add(this.content[i]);
+            }
+        }
+
+        if (foundDuplicate) {
+            this.content = newContents.toArray();
+            return true;
+        }
+        return false;
     }
 }

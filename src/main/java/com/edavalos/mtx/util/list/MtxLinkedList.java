@@ -388,7 +388,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         MtxNode current = this.head;
         MtxNode index;
 
-        while(current != null) {
+        while (current != null) {
             index = current.next;
             while (index != null) {
                 if (comparator.compare(current.content, index.content) > 0) {
@@ -400,5 +400,29 @@ public final class MtxLinkedList<T> implements Iterable<T> {
             }
             current = current.next;
         }
+    }
+
+    // Based on https://www.javatpoint.com/java-program-to-remove-duplicate-elements-from-a-singly-linked-list
+    public boolean removeDuplicates() {
+        MtxNode current = this.head;
+        MtxNode index;
+        boolean foundDuplicate = false;
+
+        while (current != null) {
+            MtxNode temp = current;
+            index = current.next;
+
+            while (index != null) {
+                if (current.content.equals(index.content)) {
+                    temp.next = index.next;
+                    foundDuplicate = true;
+                } else {
+                    temp = index;
+                }
+                index = index.next;
+            }
+            current = current.next;
+        }
+        return foundDuplicate;
     }
 }
