@@ -462,4 +462,63 @@ public final class MtxTimeTest {
             fail();
         }
     }
+
+    @Nested
+    class MultiplyTimeTests {
+        @BeforeEach
+        public void setUp() {
+            mtxTime = new MtxTime(2, 2, 2, 0);
+        }
+
+        @Test
+        public void testMultiplyTime_positiveFactor_noBalancing() {
+            int multiplyByFactor = 2;
+            mtxTime.multiplyBy(multiplyByFactor);
+            // seconds: 2 * 2 = 4
+            // minutes: 2 * 2 = 4
+            //   hours: 2 * 2 = 4
+
+            assertEquals(4, mtxTime.getSeconds());
+            assertEquals(4, mtxTime.getMinutes());
+            assertEquals(4, mtxTime.getHours());
+            assertEquals(0, mtxTime.getDays());
+        }
+
+        @Test
+        public void testMultiplyTime_positiveFactor_yesBalancing() {
+            int multiplyByFactor = 32;
+            mtxTime.multiplyBy(multiplyByFactor);
+            // seconds: 2 * 32 = 64
+            //                   64 % 60 = 4 rem 1
+            // minutes: 2 * 32 = 64
+            //                  (64 + 1) % 60 = 5 rem 1
+            //   hours: 2 * 32 = 64
+            //                  (64 + 1) % 24 = 17 rem 2
+            //    days: 0 * 32 = 0
+            //                   0 + 2 = 2
+
+            assertEquals(4, mtxTime.getSeconds());
+            assertEquals(5, mtxTime.getMinutes());
+            assertEquals(17, mtxTime.getHours());
+            assertEquals(2, mtxTime.getDays());
+        }
+
+        @Test
+        public void testMultiplyTime_negativeFactor() {
+            int multiplyByFactor = -5;
+            mtxTime.multiplyBy(multiplyByFactor);
+            // seconds: 2 * -5 = -10
+            //                   -10 - 60 = 50 (- 1 minute)
+            // minutes: 2 * -5 = -10
+            //                  (-10 + 1) - 60 = 49 (- 1 hour)
+            //   hours: 2 * -5 = -10
+            //                  (-10 + 1) - 24 = 13 (- 1 day)
+
+            assertEquals(50, mtxTime.getSeconds());
+            assertEquals(49, mtxTime.getMinutes());
+            assertEquals(13, mtxTime.getHours());
+            assertEquals(1, mtxTime.getDays());
+            assertTrue(mtxTime.isBackwards());
+        }
+    }
 }
