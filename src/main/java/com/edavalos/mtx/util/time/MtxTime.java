@@ -125,10 +125,12 @@ public final class MtxTime {
      * Multiplies this time by the given factor
      */
     public void multiplyBy(int factor) {
+        int newTotalSeconds = this.getTotalSeconds() * factor;
+
         this.days = 0;
         this.hours = 0;
         this.minutes = 0;
-        this.seconds = this.getTotalSeconds() * factor;
+        this.seconds = newTotalSeconds;
         this.backwards = false;
 
         this.balance();
