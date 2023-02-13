@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -267,13 +268,12 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
 
     @Override
     public boolean removeDuplicates() {
-        List<Object> newContents = Arrays.asList(new Object[this.size()]);
+        List<Object> newContents = new ArrayList<>();
         boolean foundDuplicate = false;
 
         for (int i = 0; i < this.size(); i++) {
             if (newContents.contains(this.content[i])) {
                 foundDuplicate = true;
-                this.nextIdx --;
             } else {
                 newContents.add(this.content[i]);
             }
@@ -281,6 +281,7 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
 
         if (foundDuplicate) {
             this.content = newContents.toArray();
+            this.nextIdx = this.content.length;
             return true;
         }
         return false;

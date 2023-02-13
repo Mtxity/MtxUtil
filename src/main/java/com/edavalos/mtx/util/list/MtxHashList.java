@@ -289,7 +289,7 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
 
     @Override
     public boolean removeDuplicates() {
-        List<Object> newContents = Arrays.asList(new Object[this.size()]);
+        List<Object> newContents = new ArrayList<>();
         boolean foundDuplicate = false;
 
         for (int key : new TreeSet<>(this.content.keySet())) {

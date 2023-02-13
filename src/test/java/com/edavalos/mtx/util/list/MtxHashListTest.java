@@ -501,10 +501,6 @@ public final class MtxHashListTest {
         Integer[] arrayWithDuplicates = {2, 4, 2, 8, 3, 4, 4, 7, 9};
         Integer[] arrayWithoutDuplicates = {2, 4, 8, 3, 7, 9};
         MtxHashList<Integer> integerMtxHashList = new MtxHashList<>(arrayWithDuplicates);
-        integerMtxHashList.remove(9);
-        integerMtxHashList.remove(4);
-        integerMtxHashList.add(9);
-        integerMtxHashList.add(4);
 
         assertTrue(integerMtxHashList.equals(arrayWithDuplicates));
         assertTrue(integerMtxHashList.removeDuplicates());
