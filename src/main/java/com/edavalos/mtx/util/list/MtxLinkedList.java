@@ -416,6 +416,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
                 if (current.content.equals(index.content)) {
                     temp.next = index.next;
                     foundDuplicate = true;
+                    this.size --;
                 } else {
                     temp = index;
                 }
