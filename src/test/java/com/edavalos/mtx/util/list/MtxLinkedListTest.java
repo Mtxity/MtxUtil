@@ -362,7 +362,7 @@ public final class MtxLinkedListTest {
             mtxLinkedList.add(element);
         }
 
-        MtxLinkedList<Object> otherList = mtxLinkedList.copy();
+        MtxList<Object> otherList = mtxLinkedList.copy();
 
         assertEquals(mtxLinkedList.size(), otherList.size());
         assertTrue(mtxLinkedList.equals(otherList));

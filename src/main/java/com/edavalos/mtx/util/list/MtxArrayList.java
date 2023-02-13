@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public final class MtxArrayList<T> implements Iterable<T> {
+public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
     private static final double SCALE_FACTOR = 1.8;
 
@@ -32,6 +32,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         System.arraycopy(initialContents, 0, this.content, 0, this.capacity);
     }
 
+    @Override
     public void add(T element) {
         if (this.nextIdx >= this.capacity) {
             int newCapacity = (int) Math.floor(this.capacity * SCALE_FACTOR);
@@ -45,6 +46,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         this.nextIdx ++;
     }
 
+    @Override
     public boolean remove(T element) {
         boolean found = false;
         for (int i = 0; i < this.size(); i++) {
@@ -81,6 +83,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return string.toString().replace(", ]", "]");
     }
 
+    @Override
     public int size() {
         return this.nextIdx;
     }
@@ -89,14 +92,17 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return this.capacity - this.nextIdx;
     }
 
+    @Override
     public boolean isEmpty() {
         return this.nextIdx == 0;
     }
 
+    @Override
     public boolean contains(T element) {
         return Arrays.asList(this.content).contains(element);
     }
 
+    @Override
     public int countOccurrences(T element) {
         int count = 0;
         for (int i = 0; i < this.nextIdx; i++) {
@@ -107,11 +113,17 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return count;
     }
 
+    @Override
     public T get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.nextIdx) {
             throw new IndexOutOfBoundsException(index);
         }
         return ((T) this.content[index]);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.equalsTo(o);
     }
 
     @Override
@@ -124,10 +136,12 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return hashCode;
     }
 
+    @Override
     public int indexOf(T element) {
         return Arrays.asList(this.content).indexOf(element);
     }
 
+    @Override
     public void clear() {
         this.nextIdx = 0;
         this.capacity = DEFAULT_CAPACITY;
@@ -151,8 +165,8 @@ public final class MtxArrayList<T> implements Iterable<T> {
         };
     }
 
-    // TODO: Make this return MtxList<T> once interface is done being implemented
-    public MtxArrayList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+    @Override
+    public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
         if (fromIndex < 0) {
             throw new IndexOutOfBoundsException(fromIndex);
         }
@@ -160,13 +174,14 @@ public final class MtxArrayList<T> implements Iterable<T> {
             throw new IndexOutOfBoundsException(toIndex);
         }
 
-        MtxArrayList<T> newList = new MtxArrayList<>();
+        MtxList<T> newList = new MtxArrayList<>();
         for (int i = fromIndex; i < toIndex; i++) {
             newList.add(((T) this.content[i]));
         }
         return newList;
     }
 
+    @Override
     public T[] toArray() {
         Object[] array = new Object[this.size()];
 
@@ -177,6 +192,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return (T[]) array;
     }
 
+    @Override
     public T removeAt(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -191,6 +207,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         return element;
     }
 
+    @Override
     public T set(int index, T element) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -202,6 +219,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
     }
 
     // Based on https://www.baeldung.com/java-merge-sort
+    @Override
     public void sort(Comparator<T> comparator) {
         this.mergeSort(this.content, this.size(), comparator);
     }
@@ -247,6 +265,7 @@ public final class MtxArrayList<T> implements Iterable<T> {
         }
     }
 
+    @Override
     public boolean removeDuplicates() {
         List<Object> newContents = Arrays.asList(new Object[this.size()]);
         boolean foundDuplicate = false;

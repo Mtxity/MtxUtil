@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.TreeSet;
 
-public final class MtxHashList<T> implements Iterable<T> {
+public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
     private HashMap<Integer, T> content;
     private List<Integer> holes; // Keys to elements that were removed
     private int nextSpot;
@@ -31,11 +31,13 @@ public final class MtxHashList<T> implements Iterable<T> {
         this.nextSpot = idx;
     }
 
+    @Override
     public void add(T element) {
         this.content.put(this.nextSpot, element);
         this.nextSpot ++;
     }
 
+    @Override
     public boolean remove(T element) {
         if (!this.content.containsValue(element)) {
             return false;
@@ -71,18 +73,22 @@ public final class MtxHashList<T> implements Iterable<T> {
         return string.toString().replace(", ]", "]");
     }
 
+    @Override
     public int size() {
         return this.content.size() - this.holes.size();
     }
 
+    @Override
     public boolean isEmpty() {
         return this.size() == 0;
     }
 
+    @Override
     public boolean contains(T element) {
         return this.countOccurrences(element) > 0;
     }
 
+    @Override
     public int countOccurrences(T element) {
         int timesFound = 0;
         for (T thing : this.content.values()) {
@@ -100,6 +106,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return Math.max(timesFound, 0);
     }
 
+    @Override
     public T get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -112,6 +119,11 @@ public final class MtxHashList<T> implements Iterable<T> {
         }
 
         return this.content.get(index);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.equalsTo(o);
     }
 
     @Override
@@ -129,6 +141,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return hashCode;
     }
 
+    @Override
     public int indexOf(T element) {
         int idx = 0;
         for (int key : new TreeSet<>(this.content.keySet())) {
@@ -144,6 +157,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return -1;
     }
 
+    @Override
     public void clear() {
         this.content = new HashMap<>();
         this.holes = new ArrayList<>();
@@ -182,8 +196,8 @@ public final class MtxHashList<T> implements Iterable<T> {
         };
     }
 
-    // TODO: Make this return MtxList<T> once interface is done being implemented
-    public MtxHashList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+    @Override
+    public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
         if (fromIndex < 0) {
             throw new IndexOutOfBoundsException(fromIndex);
         }
@@ -191,7 +205,7 @@ public final class MtxHashList<T> implements Iterable<T> {
             throw new IndexOutOfBoundsException(toIndex);
         }
 
-        MtxHashList<T> newList = new MtxHashList<>();
+        MtxList<T> newList = new MtxHashList<>();
         int idx = 0;
         for (T element : this) {
             if (idx < fromIndex) {
@@ -208,6 +222,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return newList;
     }
 
+    @Override
     public T[] toArray() {
         List<T> listToUse = new ArrayList<>();
 
@@ -223,6 +238,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return listToUse.toArray(((T[]) new Object[0]));
     }
 
+    @Override
     public T removeAt(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -241,6 +257,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return element;
     }
 
+    @Override
     public T set(int index, T element) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -256,6 +273,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         return this.content.put(index, element);
     }
 
+    @Override
     public void sort(Comparator<T> comparator) {
         HashMap<Integer, T> sortedMap = new HashMap<>();
         int idx = 0;
@@ -269,6 +287,7 @@ public final class MtxHashList<T> implements Iterable<T> {
         this.nextSpot = idx;
     }
 
+    @Override
     public boolean removeDuplicates() {
         List<Object> newContents = Arrays.asList(new Object[this.size()]);
         boolean foundDuplicate = false;

@@ -1,12 +1,9 @@
 package com.edavalos.mtx.util.list;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.List;
 
-public final class MtxLinkedList<T> implements Iterable<T> {
+public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
     private class MtxNode {
         T content;
         MtxNode next;
@@ -32,6 +29,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         }
     }
 
+    @Override
     public void add(T element) {
         MtxNode newNode = new MtxNode(element);
 
@@ -50,6 +48,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         this.size ++;
     }
 
+    @Override
     public boolean remove(T element) {
         if (this.head == null) {
             return false;
@@ -91,14 +90,17 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return string.toString().replace(", ]", "]");
     }
 
+    @Override
     public int size() {
         return this.size;
     }
 
+    @Override
     public boolean isEmpty() {
         return this.head == null;
     }
 
+    @Override
     public boolean contains(T element) {
         MtxNode next = this.head;
         while (next != null) {
@@ -110,6 +112,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return false;
     }
 
+    @Override
     public int countOccurrences(T element) {
         int count = 0;
         MtxNode next = this.head;
@@ -122,6 +125,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return count;
     }
 
+    @Override
     public T get(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException(index);
@@ -135,53 +139,9 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return next.content;
     }
 
-    // TODO: Move this method to MtxList and make it default
     @Override
     public boolean equals(Object o) {
-        // TODO: Replace 'MtxLinkedList<?>' with 'MtxList<?>' once interface is done being implemented
-        if (o instanceof MtxLinkedList<?> otherList) {
-            if (otherList.size() != this.size()) {
-                return false;
-            }
-
-            for (int i = 0; i < this.size(); i++) {
-                if (!otherList.get(i).equals(this.get(i))) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        if (o instanceof List<?> otherList) {
-            if (otherList.size() != this.size()) {
-                return false;
-            }
-
-            for (int i = 0; i < this.size(); i++) {
-                if (!otherList.get(i).equals(this.get(i))) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        if (o instanceof Object[] array) {
-            if (array.length != this.size()) {
-                return false;
-            }
-
-            for (int i = 0; i < this.size(); i++) {
-                if (!array[i].equals(this.get(i))) {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-
-        return o.equals(this);
+        return this.equalsTo(o);
     }
 
     @Override
@@ -197,6 +157,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return hashCode;
     }
 
+    @Override
     public int indexOf(T element) {
         int idx = 0;
         MtxNode next = this.head;
@@ -211,48 +172,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return -1;
     }
 
-    // TODO: Move this method to MtxList and make it default
-    public boolean containsAll(Collection<T> elements) {
-        for (T element : elements) {
-            if (!this.contains(element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // TODO: Move this method to MtxList and make it default
-    public boolean containsAll(T[] elements) {
-        return this.containsAll(Arrays.asList(elements));
-    }
-
-    // TODO: Move this method to MtxList and make it default
-    public void addAll(Collection<T> elements) {
-        for (T element : elements) {
-            this.add(element);
-        }
-    }
-
-    // TODO: Move this method to MtxList and make it default
-    public void addAll(T[] elements) {
-        this.addAll(Arrays.asList(elements));
-    }
-
-    // TODO: Move this method to MtxList and make it default
-    public boolean removeAll(Collection<T> elements) {
-        for (T element : elements) {
-            if (!this.remove(element)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // TODO: Move this method to MtxList and make it default
-    public boolean removeAll(T[] elements) {
-        return this.removeAll(Arrays.asList(elements));
-    }
-
+    @Override
     public void clear() {
         this.head = null;
         this.size = 0;
@@ -277,8 +197,8 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         };
     }
 
-    // TODO: Make this return MtxList<T> once interface is done being implemented
-    public MtxLinkedList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+    @Override
+    public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
         if (fromIndex < 0) {
             throw new IndexOutOfBoundsException(fromIndex);
         }
@@ -286,7 +206,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
             throw new IndexOutOfBoundsException(toIndex);
         }
 
-        MtxLinkedList<T> newList = new MtxLinkedList<>();
+        MtxList<T> newList = new MtxLinkedList<>();
         int idx = 0;
         MtxNode next = this.head;
         while (next != null) {
@@ -307,6 +227,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return newList;
     }
 
+    @Override
     public T[] toArray() {
         Object[] array = new Object[this.size()];
 
@@ -321,11 +242,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return (T[]) array;
     }
 
-    // TODO: Move this method to MtxList and make it default
-    public MtxLinkedList<T> copy() {
-        return this.subList(0, this.size());
-    }
-
+    @Override
     public T removeAt(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -354,6 +271,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
         return element;
     }
 
+    @Override
     public T set(int index, T element) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
             throw new IndexOutOfBoundsException(index);
@@ -384,6 +302,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
     }
 
     // Based on https://www.javatpoint.com/program-to-sort-the-elements-of-the-singly-linked-list
+    @Override
     public void sort(Comparator<T> comparator) {
         MtxNode current = this.head;
         MtxNode index;
@@ -403,6 +322,7 @@ public final class MtxLinkedList<T> implements Iterable<T> {
     }
 
     // Based on https://www.javatpoint.com/java-program-to-remove-duplicate-elements-from-a-singly-linked-list
+    @Override
     public boolean removeDuplicates() {
         MtxNode current = this.head;
         MtxNode index;
