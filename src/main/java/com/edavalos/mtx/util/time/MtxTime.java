@@ -121,6 +121,19 @@ public final class MtxTime {
         return this.getTotalSeconds() > time.getTotalSeconds();
     }
 
+    /**
+     * Multiplies this time by the given factor
+     */
+    public void multiplyBy(int factor) {
+        this.days = 0;
+        this.hours = 0;
+        this.minutes = 0;
+        this.seconds = this.getTotalSeconds() * factor;
+        this.backwards = false;
+
+        this.balance();
+    }
+
     public int getDays() {
         return this.days;
     }
