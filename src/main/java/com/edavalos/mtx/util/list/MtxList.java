@@ -26,9 +26,9 @@ public interface MtxList<T> {
 
     /**
      * @return true if this list contains all the specified elements, false otherwise
+     * @apiNote this ignores duplicates.
      */
-    // TODO: Add unit tests
-    default boolean containsAll(Collection<T> elements) {
+    default boolean containsAll(List<T> elements) {
         for (T element : elements) {
             if (!this.contains(element)) {
                 return false;
@@ -53,7 +53,6 @@ public interface MtxList<T> {
     /**
      * @return an identical copy of this list
      */
-    // TODO: Add unit tests
     default MtxList<T> copy() {
         return this.subList(0, this.size());
     }
@@ -68,7 +67,6 @@ public interface MtxList<T> {
     /**
      * Adds all elements to this list
      */
-    // TODO: Add unit tests
     default void addAll(Collection<T> elements) {
         for (T element : elements) {
             this.add(element);
@@ -92,14 +90,14 @@ public interface MtxList<T> {
      * came before it in the given list will still have been removed.
      * @apiNote if an element from the given list is in this list more than once, this only removes the first occurrence
      */
-    // TODO: Add unit tests
     default boolean removeAll(Collection<T> elements) {
+        boolean found = false;
         for (T element : elements) {
-            if (!this.remove(element)) {
-                return false;
+            if (this.remove(element)) {
+                found = true;
             }
         }
-        return true;
+        return found;
     }
     default boolean removeAll(T[] elements) {
         return this.removeAll(Arrays.asList(elements));

@@ -224,31 +224,6 @@ public final class MtxLinkedListTest {
         assertThrows(IndexOutOfBoundsException.class, () -> mtxLinkedList.get(-1));
     }
 
-    // TODO: Move this method to MtxListTest
-    @Test
-    public void testEquals() {
-        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four"};
-        String[] otherList1 = {"Zero", "One", "Two", "Three", "Four", "Five"};
-        String[] otherList2 = {"Thero", "Won", "Too", "Free", "For"};
-        for (String element : sampleElements) {
-            mtxLinkedList.add(element);
-        }
-
-        assertTrue(mtxLinkedList.equals(new MtxLinkedList<>(sampleElements)));
-        assertTrue(mtxLinkedList.equals(List.of(sampleElements)));
-        assertTrue(mtxLinkedList.equals(sampleElements));
-
-        assertFalse(mtxLinkedList.equals(new MtxLinkedList<>(otherList1)));
-        assertFalse(mtxLinkedList.equals(List.of(otherList1)));
-        assertFalse(mtxLinkedList.equals(otherList1));
-
-        assertFalse(mtxLinkedList.equals(new MtxLinkedList<>(otherList2)));
-        assertFalse(mtxLinkedList.equals(List.of(otherList2)));
-        assertFalse(mtxLinkedList.equals(otherList2));
-
-        assertFalse(mtxLinkedList.equals(mtxLinkedList.toString()));
-    }
-
     @Test
     public void testHashCode() {
         List<String> sampleList = new LinkedList<>(){
