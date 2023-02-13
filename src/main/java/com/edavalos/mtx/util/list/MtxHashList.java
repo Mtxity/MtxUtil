@@ -267,4 +267,23 @@ public final class MtxHashList<T> implements Iterable<T> {
         this.content = sortedMap;
         this.nextSpot = idx;
     }
+
+    public boolean removeDuplicates() {
+        List<Object> newContents = Arrays.asList(new Object[this.size()]);
+        boolean foundDuplicate = false;
+
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+
+            if (newContents.contains(this.content.get(key))) {
+                foundDuplicate = true;
+                this.holes.add(key);
+            } else {
+                newContents.add(this.content.get(key));
+            }
+        }
+        return foundDuplicate;
+    }
 }

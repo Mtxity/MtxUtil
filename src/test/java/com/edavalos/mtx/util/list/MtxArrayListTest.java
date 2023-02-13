@@ -466,4 +466,16 @@ public final class MtxArrayListTest {
             assertEquals(i, integerMtxArrayList.get(i));
         }
     }
+
+    @Test
+    public void testRemoveDuplicates() {
+        Integer[] arrayWithDuplicates = {2, 4, 2, 8, 3, 4, 4, 7, 9};
+        Integer[] arrayWithoutDuplicates = {2, 4, 8, 3, 7, 9};
+        MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(arrayWithDuplicates);
+
+        assertTrue(integerMtxArrayList.equals(arrayWithDuplicates));
+        assertTrue(integerMtxArrayList.removeDuplicates());
+        assertTrue(integerMtxArrayList.equals(arrayWithoutDuplicates));
+        assertFalse(integerMtxArrayList.removeDuplicates());
+    }
 }
