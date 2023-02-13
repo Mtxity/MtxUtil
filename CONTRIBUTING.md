@@ -1,7 +1,7 @@
 # Contribution Guidelines
 
 ## Branch Names
-Branches should be named after either their developer or purpose. Branch names should be camel case and not contain any spaces, dashes (`-`), or underscores (`_`).
+Branches should be named after either their developer or purpose. Branch names should be camel case and not contain any spaces, underscores (`_`), or dashes (`-`, except for in codespace names).
 
 ### Single purpose branches
 These branches are created for one change, followed by one pull request, and are typically deleted after merging.
