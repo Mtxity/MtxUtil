@@ -1,5 +1,9 @@
 package com.edavalos.mtx.util.list;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -14,17 +18,20 @@ public final class MtxStringList<T> implements Iterable<T> {
     private static final String EMPTY_STRING = "";
 
     private final MtxStringDecoder<T> mtxStringDecoder;
+    private final Class<T> classType;
     private String content;
     private int size;
 
-    public MtxStringList(MtxStringDecoder<T> stringDecoder) {
+    public MtxStringList(MtxStringDecoder<T> stringDecoder, Class<T> classType) {
         this.mtxStringDecoder = stringDecoder;
+        this.classType = classType;
         this.content = EMPTY_STRING;
         this.size = 0;
     }
 
-    public MtxStringList(MtxStringDecoder<T> stringDecoder, T[] initialContents) {
+    public MtxStringList(MtxStringDecoder<T> stringDecoder, Class<T> classType, T[] initialContents) {
         this.mtxStringDecoder = stringDecoder;
+        this.classType = classType;
         this.content = EMPTY_STRING;
         this.size = 0;
         this.addAll(initialContents);
@@ -76,5 +83,39 @@ public final class MtxStringList<T> implements Iterable<T> {
     @Override
     public String toString() {
         return "[" + this.content + "]";
+    }
+
+    public T[] toArray() {
+        List<T> elements = new ArrayList<>();
+        for (String piece : this.content.split(Pattern.quote(DELIMITER))) {
+            if (piece.length() < 1) {
+                continue;
+            }
+            T element = this.mtxStringDecoder.fromString(piece);
+            elements.add(element);
+        }
+        return elements.toArray(((T[]) Array.newInstance(classType, this.size)));
+    }
+
+    public int size() {
+        return this.size;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<>() {
+            private final T[] array = toArray();
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx < size();
+            }
+
+            @Override
+            public T next() {
+                return array[this.idx++];
+            }
+        };
     }
 }
