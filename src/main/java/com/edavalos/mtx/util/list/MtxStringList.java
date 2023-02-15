@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.list;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * Disclaimer: This implementation of MtxList is purposefully stupid
  * */
-public final class MtxStringList<T> implements Iterable<T> {
+public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
     public interface MtxStringDecoder<E> {
         E fromString(String stringRepresentation);
     }
@@ -81,8 +82,142 @@ public final class MtxStringList<T> implements Iterable<T> {
     }
 
     @Override
+    public boolean remove(T element) {
+        String toRemove = element.toString();
+        if (!this.content.contains(toRemove)) {
+            return false;
+        }
+
+        if (this.size == 1) {
+            this.content = this.content.replace(toRemove, "");
+        } else if (this.content.startsWith(toRemove)) {
+            this.content = this.content.replace(toRemove + DELIMITER, "");
+        } else {
+            this.content = this.content.replace(DELIMITER + toRemove, "");
+        }
+        this.size --;
+        return true;
+    }
+
+    @Override
+    public boolean removeDuplicates() {
+        String[] elementsAsStrings = this.content.split(DELIMITER);
+        List<String> newContents = new ArrayList<>();
+        boolean foundDuplicate = false;
+
+        for (int i = 0; i < this.size(); i++) {
+            if (newContents.contains(elementsAsStrings[i])) {
+                foundDuplicate = true;
+            } else {
+                newContents.add(elementsAsStrings[i]);
+            }
+        }
+
+        if (foundDuplicate) {
+            StringBuilder newElements = new StringBuilder();
+            for (int i = 0; i < newContents.size(); i++) {
+                if (i != 0) {
+                    newElements.append(DELIMITER);
+                }
+                newElements.append(newContents.get(i));
+            }
+            this.content = newElements.toString();
+            this.size = newContents.size();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void sort(Comparator<T> comparator) {
+        MtxArrayList<T> mtxArrayList = new MtxArrayList<>(this.toArray());
+        mtxArrayList.sort(comparator);
+
+        this.content = "";
+        this.size = 0;
+        this.addAll(mtxArrayList.toArray());
+        this.size = mtxArrayList.size();
+    }
+
+    @Override
+    public void clear() {
+        this.content = EMPTY_STRING;
+        this.size = 0;
+    }
+
+    @Override
     public String toString() {
         return "[" + this.content + "]";
+    }
+
+    @Override
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        return this.mtxStringDecoder.fromString(this.content.split(DELIMITER)[index]);
+    }
+
+    @Override
+    public T set(int index, T element) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        T foundElement = this.get(index);
+        String[] newStrings = this.content.split(foundElement.toString());
+        this.content = newStrings[0] + element.toString();
+        if (newStrings.length > 1) {
+            this.content += newStrings[1];
+        }
+        return foundElement;
+    }
+
+    // @TODO: Need to fix
+    @Override
+    public T removeAt(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size()) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        T foundElement = this.get(index);
+        String[] newStrings = this.content.split(foundElement.toString());
+        StringBuilder newVal = new StringBuilder(newStrings[0]);
+        for (int i = 2; i < newStrings.length; i++) {
+            newVal.append(newStrings[i]);
+        }
+        this.content = newVal.toString();
+        this.size --;
+        return foundElement;
+    }
+
+    @Override
+    public int indexOf(T element) {
+        String[] elementAsStrings = this.content.split(DELIMITER);
+        for (int i = 0; i < elementAsStrings.length; i++) {
+            if (elementAsStrings[i].equals(element.toString())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public int countOccurrences(T element) {
+        int count = 0;
+        for (String elementString : this.content.split(DELIMITER)) {
+            if (element.toString().equals(elementString)) {
+                count ++;
+            }
+        }
+        return count;
+    }
+
+    // @TODO: Need to implement
+    @Override
+    public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+        return null;
     }
 
     public T[] toArray() {
@@ -102,6 +237,16 @@ public final class MtxStringList<T> implements Iterable<T> {
     }
 
     @Override
+    public boolean isEmpty() {
+        return this.size() == 0;
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return this.content.contains(element.toString());
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new Iterator<>() {
             private final T[] array = toArray();
@@ -117,5 +262,10 @@ public final class MtxStringList<T> implements Iterable<T> {
                 return array[this.idx++];
             }
         };
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.equalsTo(o);
     }
 }
