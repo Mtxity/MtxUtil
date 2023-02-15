@@ -172,6 +172,20 @@ public final class MtxStringListTest {
     }
 
     @Test
+    public void testConstructor_startingString() {
+        String sampleElements = "i, j, k";
+        Character[] elementStream = {'i', 'j', 'k'};
+        String expectedElements = "[i, j, k]";
+
+        MtxStringList<Character> customMtxStringList = new MtxStringList<>(charStringDecoder, Character.class, sampleElements);
+        for (int i = 0; i < elementStream.length; i++) {
+            assertEquals(elementStream[i], customMtxStringList.get(i));
+        }
+        assertEquals(expectedElements, customMtxStringList.toString());
+        assertEquals(elementStream.length, customMtxStringList.size());
+    }
+
+    @Test
     public void testSize() {
         int numberOfElements = 20;
         for (int i = 0; i < numberOfElements; i++) {
