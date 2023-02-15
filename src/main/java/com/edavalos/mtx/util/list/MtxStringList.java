@@ -13,6 +13,10 @@ import java.util.regex.Pattern;
 public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
     public interface MtxStringDecoder<E> {
         E fromString(String stringRepresentation);
+
+        default String convertToString(E element) {
+            return element.toString();
+        }
     }
 
     private static final String DELIMITER = ", ";
@@ -40,7 +44,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
 
     // @TODO: Add a check to prevent unserializable elements from being added & throw an exception if one is added
     public void add(T element) {
-        if (element.toString().contains(DELIMITER)) {
+        if (this.mtxStringDecoder.convertToString(element).contains(DELIMITER)) {
             throw new IllegalArgumentException(
                     "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
                     "to be in an element of this MtxList"
@@ -51,13 +55,13 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
             this.content += DELIMITER;
         }
 
-        this.content += element.toString();
+        this.content += this.mtxStringDecoder.convertToString(element);
         this.size ++;
     }
 
     public void addAll(T[] elements) {
         for (T element : elements) {
-            if (element.toString().contains(DELIMITER)) {
+            if (this.mtxStringDecoder.convertToString(element).contains(DELIMITER)) {
                 throw new IllegalArgumentException(
                         "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
                                 "to be in an element of this MtxList"
@@ -74,7 +78,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
             if (i != 0) {
                 newElements.append(DELIMITER);
             }
-            newElements.append(elements[i].toString());
+            newElements.append(this.mtxStringDecoder.convertToString(elements[i]));
         }
 
         this.content += newElements.toString();
@@ -83,7 +87,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
 
     @Override
     public boolean remove(T element) {
-        String toRemove = element.toString();
+        String toRemove = this.mtxStringDecoder.convertToString(element);
         if (!this.content.contains(toRemove)) {
             return false;
         }
@@ -166,8 +170,8 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         }
 
         T foundElement = this.get(index);
-        String[] newStrings = this.content.split(foundElement.toString());
-        this.content = newStrings[0] + element.toString();
+        String[] newStrings = this.content.split(this.mtxStringDecoder.convertToString(foundElement));
+        this.content = newStrings[0] + this.mtxStringDecoder.convertToString(element);
         if (newStrings.length > 1) {
             this.content += newStrings[1];
         }
@@ -182,7 +186,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         }
 
         T foundElement = this.get(index);
-        String[] newStrings = this.content.split(foundElement.toString());
+        String[] newStrings = this.content.split(this.mtxStringDecoder.convertToString(foundElement));
         StringBuilder newVal = new StringBuilder(newStrings[0]);
         for (int i = 2; i < newStrings.length; i++) {
             newVal.append(newStrings[i]);
@@ -196,7 +200,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
     public int indexOf(T element) {
         String[] elementAsStrings = this.content.split(DELIMITER);
         for (int i = 0; i < elementAsStrings.length; i++) {
-            if (elementAsStrings[i].equals(element.toString())) {
+            if (elementAsStrings[i].equals(this.mtxStringDecoder.convertToString(element))) {
                 return i;
             }
         }
