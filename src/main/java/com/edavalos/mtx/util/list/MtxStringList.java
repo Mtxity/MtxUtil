@@ -238,10 +238,24 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         return count;
     }
 
-    // @TODO: Need to implement
     @Override
     public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
-        return null;
+        if (fromIndex < 0) {
+            throw new IndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > this.size()) {
+            throw new IndexOutOfBoundsException(toIndex);
+        }
+
+        List<String> newContents = new ArrayList<>();
+        for (T element : this.toArray()) {
+            newContents.add(this.mtxStringDecoder.convertToString(element));
+        }
+        MtxList<T> newContents2 = new MtxStringList<>(this.mtxStringDecoder, this.classType);
+        for (int j = fromIndex; j < toIndex; j++) {
+            newContents2.add(this.mtxStringDecoder.fromString(newContents.get(j)));
+        }
+        return newContents2;
     }
 
     public T[] toArray() {

@@ -404,4 +404,30 @@ public final class MtxStringListTest {
             assertEquals(sampleElementsPlus1[i], testArray4[i]);
         }
     }
+
+    @Test
+    public void testSubList() {
+        MtxStringList<String> stringMtxStringList = new MtxStringList<>(stringStringDecoder, String.class);
+
+        String[] sampleElements = {"Zero", "One", "Two", "Three", "Four", "Five", "Six"};
+        String startingContents = "[Zero, One, Two, Three, Four, Five, Six]";
+        for (String element : sampleElements) {
+            stringMtxStringList.add(element);
+        }
+        assertEquals(startingContents, stringMtxStringList.toString());
+
+        String sub_0_to_3 = "[Zero, One, Two]";
+        assertEquals(sub_0_to_3, stringMtxStringList.subList(0, 3).toString());
+        String sub_1_to_5 = "[One, Two, Three, Four]";
+        assertEquals(sub_1_to_5, stringMtxStringList.subList(1, 5).toString());
+        String sub_3_to_7 = "[Three, Four, Five, Six]";
+        assertEquals(sub_3_to_7, stringMtxStringList.subList(3, 7).toString());
+        String sub_2_to_6 = "[Two, Three, Four, Five]";
+        assertEquals(sub_2_to_6, stringMtxStringList.subList(2, 6).toString());
+
+        assertEquals(startingContents, stringMtxStringList.subList(0, stringMtxStringList.size()).toString());
+
+        assertThrows(IndexOutOfBoundsException.class, () -> stringMtxStringList.subList(-1, 1));
+        assertThrows(IndexOutOfBoundsException.class, () -> stringMtxStringList.subList(1, 8));
+    }
 }
