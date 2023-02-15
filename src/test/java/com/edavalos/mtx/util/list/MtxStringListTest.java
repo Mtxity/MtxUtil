@@ -7,11 +7,33 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class MtxStringListTest {
-    private MtxStringList<Object> mtxStringList;
+    private final MtxStringList.MtxStringDecoder<String> stringStringDecoder = new MtxStringList.MtxStringDecoder<String>() {
+        @Override
+        public String fromString(String stringRepresentation) {
+            return stringRepresentation;
+        }
+    };
+    private final MtxStringList.MtxStringDecoder<Integer> intStringDecoder = new MtxStringList.MtxStringDecoder<Integer>() {
+        @Override
+        public Integer fromString(String stringRepresentation) {
+            return Integer.valueOf(stringRepresentation);
+        }
+    };
+    private final MtxStringList.MtxStringDecoder<Character> charStringDecoder = new MtxStringList.MtxStringDecoder<Character>() {
+        @Override
+        public Character fromString(String stringRepresentation) {
+            if (stringRepresentation.length() != 1) {
+                return null;
+            }
+            return stringRepresentation.charAt(0);
+        }
+    };
+
+    private MtxStringList<Integer> mtxStringList;
 
     @BeforeEach
     public void setUp() {
-        mtxStringList = new MtxStringList<>();
+        mtxStringList = new MtxStringList<>(intStringDecoder);
     }
 
     @Nested
@@ -54,7 +76,7 @@ public final class MtxStringListTest {
         String[] sampleElements = {"One", "Two", "Three"};
         String expectedElements = "[One, Two, Three]";
 
-        MtxStringList<String> customMtxStringList = new MtxStringList<>(sampleElements);
+        MtxStringList<String> customMtxStringList = new MtxStringList<>(stringStringDecoder, sampleElements);
         assertEquals(expectedElements, customMtxStringList.toString());
     }
 }

@@ -5,19 +5,26 @@ import java.util.regex.Pattern;
 /**
  * Disclaimer: This implementation of MtxList is purposefully stupid
  * */
-public final class MtxStringList<T> {
+public final class MtxStringList<T> implements Iterable<T> {
+    public interface MtxStringDecoder<E> {
+        E fromString(String stringRepresentation);
+    }
+
     private static final String DELIMITER = ", ";
     private static final String EMPTY_STRING = "";
 
+    private final MtxStringDecoder<T> mtxStringDecoder;
     private String content;
     private int size;
 
-    public MtxStringList() {
+    public MtxStringList(MtxStringDecoder<T> stringDecoder) {
+        this.mtxStringDecoder = stringDecoder;
         this.content = EMPTY_STRING;
         this.size = 0;
     }
 
-    public MtxStringList(T[] initialContents) {
+    public MtxStringList(MtxStringDecoder<T> stringDecoder, T[] initialContents) {
+        this.mtxStringDecoder = stringDecoder;
         this.content = EMPTY_STRING;
         this.size = 0;
         this.addAll(initialContents);
