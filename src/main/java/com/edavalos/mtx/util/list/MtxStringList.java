@@ -42,26 +42,39 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.addAll(initialContents);
     }
 
-    // @TODO: Add a check to prevent unserializable elements from being added & throw an exception if one is added
     public void add(T element) {
-        if (this.mtxStringDecoder.convertToString(element).contains(DELIMITER)) {
-            throw new IllegalArgumentException(
-                    "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
-                    "to be in an element of this MtxList"
-            );
-        }
-
         if (this.size != 0) {
             this.content += DELIMITER;
         }
 
-        this.content += this.mtxStringDecoder.convertToString(element);
+        String elementAsString;
+        try {
+            elementAsString = this.mtxStringDecoder.convertToString(element);
+        } catch (Exception e) {
+            throw new IllegalArgumentException(this.classType.getName() + " is not serializable!");
+        }
+
+        if (elementAsString.contains(DELIMITER)) {
+            throw new IllegalArgumentException(
+                    "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
+                            "to be in an element of this MtxList"
+            );
+        }
+
+        this.content += elementAsString;
         this.size ++;
     }
 
     public void addAll(T[] elements) {
         for (T element : elements) {
-            if (this.mtxStringDecoder.convertToString(element).contains(DELIMITER)) {
+            String elementAsString;
+            try {
+                elementAsString = this.mtxStringDecoder.convertToString(element);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(this.classType.getName() + " is not serializable!");
+            }
+
+            if (elementAsString.contains(DELIMITER)) {
                 throw new IllegalArgumentException(
                         "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
                                 "to be in an element of this MtxList"

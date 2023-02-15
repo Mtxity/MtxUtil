@@ -60,6 +60,23 @@ public final class MtxStringListTest {
         assertThrows(IllegalArgumentException.class, () -> stringMtxStringList.add("delim, eter"));
     }
 
+    @Test
+    public void testAdd_nonSerializableElement_throwException() {
+        MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<Double>() {
+            @Override
+            public Double fromString(String stringRepresentation) {
+                return Double.valueOf(stringRepresentation);
+            }
+
+            @Override
+            public String convertToString(Double value) {
+                throw new RuntimeException("No.");
+            }
+        }, Double.class);
+
+        assertThrows(IllegalArgumentException.class, () -> doubleMtxStringList.add(3.0));
+    }
+
     @Nested
     class AddAllTests {
         private MtxStringList<String> stringMtxStringList;
@@ -90,6 +107,23 @@ public final class MtxStringListTest {
             stringMtxStringList.addAll(sampleStrings);
 
             assertTrue(stringMtxStringList.equals(new String[]{"Foo", "Bar", "Fizz"}));
+        }
+
+        @Test
+        public void testAddAll_nonSerializableElement_throwException() {
+            MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<Double>() {
+                @Override
+                public Double fromString(String stringRepresentation) {
+                    return Double.valueOf(stringRepresentation);
+                }
+
+                @Override
+                public String convertToString(Double value) {
+                    throw new RuntimeException("Nope...");
+                }
+            }, Double.class);
+
+            assertThrows(IllegalArgumentException.class, () -> doubleMtxStringList.addAll(new Double[]{3.0, 4.0, 5.0}));
         }
     }
 
@@ -146,10 +180,10 @@ public final class MtxStringListTest {
         }
         assertEquals(numberOfElements, mtxStringList.size());
 
-//        for (int j = 0; j < numberOfElements - 10; j++) {
-//            mtxStringList.remove(j);
-//        }
-//        assertEquals(numberOfElements - 10, mtxStringList.size());
+        for (int j = 0; j < numberOfElements - 10; j++) {
+            mtxStringList.remove(j);
+        }
+        assertEquals(numberOfElements - 10, mtxStringList.size());
     }
 
     @Test
