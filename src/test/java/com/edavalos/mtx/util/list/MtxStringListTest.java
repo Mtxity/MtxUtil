@@ -356,7 +356,6 @@ public final class MtxStringListTest {
         assertEquals(sampleStringTest3, stringMtxStringList.toString());
     }
 
-    // @TODO: Need to fix
     @Test
     public void testRemoveAt() {
         MtxStringList<String> stringMtxStringList = new MtxStringList<>(stringStringDecoder, String.class);

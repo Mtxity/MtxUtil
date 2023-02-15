@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.list;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -178,7 +179,6 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         return foundElement;
     }
 
-    // @TODO: Need to fix
     @Override
     public T removeAt(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index >= this.size()) {
@@ -186,12 +186,32 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         }
 
         T foundElement = this.get(index);
-        String[] newStrings = this.content.split(this.mtxStringDecoder.convertToString(foundElement));
-        StringBuilder newVal = new StringBuilder(newStrings[0]);
-        for (int i = 2; i < newStrings.length; i++) {
-            newVal.append(newStrings[i]);
+        if (this.size() == 1) {
+            this.content = "";
+            this.size = 0;
+            return foundElement;
         }
-        this.content = newVal.toString();
+        String foundElementString = this.mtxStringDecoder.convertToString(foundElement);
+
+        if (index == 0) {
+            this.content = this.content.substring(foundElementString.length() + 2);
+            this.size --;
+            return foundElement;
+        }
+
+        if (index == this.size() - 1) {
+            String[] strings = this.content.split(
+                    DELIMITER + foundElementString
+            );
+            this.content = strings[0];
+            this.size --;
+            return foundElement;
+        }
+
+        String[] strings = this.content.split(
+                DELIMITER + foundElementString
+        );
+        this.content = strings[0] + strings[1];
         this.size --;
         return foundElement;
     }
