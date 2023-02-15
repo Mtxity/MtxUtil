@@ -37,6 +37,16 @@ public final class MtxStringListTest {
 
             assertEquals(expected, actual);
         }
+
+        @Test
+        public void testToString_singletonList() {
+            mtxStringList.add(3);
+
+            String expected = "[3]";
+            String actual = mtxStringList.toString();
+
+            assertEquals(expected, actual);
+        }
     }
 
     @Test

@@ -1,49 +1,73 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.regex.Pattern;
+
 /**
  * Disclaimer: This implementation of MtxList is purposefully stupid
  * */
 public final class MtxStringList<T> {
-    private static final String DELIMITER = "~";
-    private static final String EMPTY = "";
+    private static final String DELIMITER = ", ";
+    private static final String EMPTY_STRING = "";
+
     private String content;
     private int size;
 
     public MtxStringList() {
-        this.content = EMPTY;
+        this.content = EMPTY_STRING;
         this.size = 0;
     }
 
     public MtxStringList(T[] initialContents) {
-        this.content = EMPTY;
+        this.content = EMPTY_STRING;
         this.size = 0;
-        for (T element: initialContents) {
-            this.add(element);
-        }
-
-        if (!this.content.equals(EMPTY)) {
-            this.content = this.content.substring(0, this.content.length() - DELIMITER.length());
-        }
+        this.addAll(initialContents);
     }
 
-    // @TODO: Make a "more efficient" version of this
     // @TODO: Add a check to prevent unserializable elements from being added & throw an exception if one is added
     public void add(T element) {
-        if (element.toString().equals(DELIMITER)) {
+        if (element.toString().contains(DELIMITER)) {
             throw new IllegalArgumentException(
-                    "The string '" + DELIMITER + "' is this MtxStringList's delimiter and therefore is not allowed" +
-                    "to be an element in this MtxList"
+                    "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
+                    "to be in an element of this MtxList"
             );
         }
 
-        this.content += element.toString() + DELIMITER;
+        if (this.size != 0) {
+            this.content += DELIMITER;
+        }
+
+        this.content += element.toString();
         this.size ++;
+    }
+
+    public void addAll(T[] elements) {
+        for (T element : elements) {
+            if (element.toString().contains(DELIMITER)) {
+                throw new IllegalArgumentException(
+                        "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
+                                "to be in an element of this MtxList"
+                );
+            }
+        }
+
+        if (this.size != 0) {
+            this.content += DELIMITER;
+        }
+
+        StringBuilder newElements = new StringBuilder();
+        for (int i = 0; i < elements.length; i++) {
+            if (i != 0) {
+                newElements.append(DELIMITER);
+            }
+            newElements.append(elements[i].toString());
+        }
+
+        this.content += newElements.toString();
+        this.size += elements.length;
     }
 
     @Override
     public String toString() {
-        return "[" +
-            this.content.replaceAll(DELIMITER, ", ").substring(0, (this.size * 3) - 2)
-        + "]";
+        return "[" + this.content + "]";
     }
 }
