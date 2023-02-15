@@ -42,6 +42,18 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.addAll(initialContents);
     }
 
+    public MtxStringList(MtxStringDecoder<T> stringDecoder, Class<T> classType, String initialContents) {
+        this.mtxStringDecoder = stringDecoder;
+        this.classType = classType;
+        this.content = initialContents;
+
+        while (initialContents.contains(DELIMITER)) {
+            this.size ++;
+            initialContents = initialContents.replaceFirst(DELIMITER, ".");
+        }
+        this.size ++;
+    }
+
     public void add(T element) {
         if (this.size != 0) {
             this.content += DELIMITER;
