@@ -43,6 +43,56 @@ public final class MtxStringListTest {
         mtxStringList = new MtxStringList<>(intStringDecoder, Integer.class);
     }
 
+    @Test
+    public void testAdd() {
+        int elementsToAdd = 8;
+        for (int i = 0; i < elementsToAdd; i++) {
+            assertEquals(i, mtxStringList.size());
+            mtxStringList.add(i);
+        }
+
+        assertEquals("[0, 1, 2, 3, 4, 5, 6, 7]", mtxStringList.toString());
+    }
+
+    @Test
+    public void testAdd_argContainingDelimiter() {
+        MtxStringList<String> stringMtxStringList = new MtxStringList<>(stringStringDecoder, String.class);
+        assertThrows(IllegalArgumentException.class, () -> stringMtxStringList.add("delim, eter"));
+    }
+
+    @Nested
+    class AddAllTests {
+        private MtxStringList<String> stringMtxStringList;
+
+        @BeforeEach
+        public void setUp() {
+            stringMtxStringList = new MtxStringList<>(stringStringDecoder, String.class);
+        }
+
+        @Test
+        public void testAddAll() {
+            String[] sampleStrings = {"one", "two", "three"};
+            stringMtxStringList.addAll(sampleStrings);
+
+            assertTrue(stringMtxStringList.equals(sampleStrings));
+        }
+
+        @Test
+        public void testAddAll_argContainingDelimiter() {
+            String[] sampleStrings = {"one", "two", "thr, ee"};
+            assertThrows(IllegalArgumentException.class, () -> stringMtxStringList.addAll(sampleStrings));
+        }
+
+        @Test
+        public void testAddAll_addToNonEmptyList() {
+            stringMtxStringList.add("Foo");
+            String[] sampleStrings = {"Bar", "Fizz"};
+            stringMtxStringList.addAll(sampleStrings);
+
+            assertTrue(stringMtxStringList.equals(new String[]{"Foo", "Bar", "Fizz"}));
+        }
+    }
+
     @Nested
     class ToStringTests {
 
@@ -403,6 +453,14 @@ public final class MtxStringListTest {
         for (int i = 0; i < testArray4.length; i++) {
             assertEquals(sampleElementsPlus1[i], testArray4[i]);
         }
+    }
+
+    @Test
+    public void testRemoveAt_oneElement() {
+        assertEquals(0, mtxStringList.size());
+        mtxStringList.add(9);
+        mtxStringList.removeAt(0);
+        assertEquals(0, mtxStringList.size());
     }
 
     @Test
