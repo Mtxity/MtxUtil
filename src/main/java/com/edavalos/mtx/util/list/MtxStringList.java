@@ -54,6 +54,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.size ++;
     }
 
+    @Override
     public void add(T element) {
         if (this.size != 0) {
             this.content += DELIMITER;
@@ -77,6 +78,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.size ++;
     }
 
+    @Override
     public void addAll(T[] elements) {
         for (T element : elements) {
             String elementAsString;
@@ -282,6 +284,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         return newContents2;
     }
 
+    @Override
     public T[] toArray() {
         List<T> elements = new ArrayList<>();
         for (String piece : this.content.split(Pattern.quote(DELIMITER))) {
