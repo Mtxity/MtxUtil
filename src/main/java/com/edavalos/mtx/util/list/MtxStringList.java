@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
  * Disclaimer: This implementation of MtxList is purposefully stupid
  * */
 public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
+    @FunctionalInterface
     public interface MtxStringDecoder<E> {
         E fromString(String stringRepresentation);
 
