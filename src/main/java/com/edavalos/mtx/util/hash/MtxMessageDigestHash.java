@@ -5,28 +5,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public abstract class MtxMessageDigestHash extends MtxHash {
-    public enum MdHashingAlgorithm {
-        SHA256("SHA-256", 5),
-        SHA3("SHA3-256", 2),
-        MD5("MD5", 9);
-
-        private final String name;
-        private final int degree;
-
-        MdHashingAlgorithm(String name, int degreeInThousands) {
-            this.name = name;
-            this.degree = degreeInThousands;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-
-        public int getDegree() {
-            return this.degree;
-        }
-    }
-
     private int degreeToHash;
     private MessageDigest messageDigest;
 
@@ -34,6 +12,7 @@ public abstract class MtxMessageDigestHash extends MtxHash {
         super(newSalt, algorithmToUse);
     }
 
+    @Override
     protected void initialize() throws NoSuchAlgorithmException {
         this.degreeToHash = super.existingAlg.getDegree();
         this.messageDigest = MessageDigest.getInstance(super.existingAlg.getName());
