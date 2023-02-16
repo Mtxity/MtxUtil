@@ -42,6 +42,8 @@ Notes:
   * Classes should not contain any `static` methods unless the class is a utility class, marked by having a private constructor.
   * `private` methods that are directly used by one or more `public` methods for a single purpose may go under that method instead of at the bottom section.
   * `public` methods that extend on the functionality of an overridden method (by overloading it, for example) may go under that method instead of in the public method section.
+  * All `static` variables should be `final`.
+  * No variables should be `public` unless it is a utility class and the variable is `static final`. Use getters and setters for `private` variables.
 
 ### Class naming
   * All class names should start with `Mtx`
