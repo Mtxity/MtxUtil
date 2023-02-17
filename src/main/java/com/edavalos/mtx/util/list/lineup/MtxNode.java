@@ -15,10 +15,6 @@ public class MtxNode<E> {
         return this.content;
     }
 
-    public MtxNode<E> getNext() {
-        return this.next;
-    }
-
     public void setNext(MtxNode<E> next) {
         this.next = next;
     }
