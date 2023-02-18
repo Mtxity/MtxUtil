@@ -57,68 +57,6 @@ public interface MtxList<T> {
         return this.subList(0, this.size());
     }
 
-    // ------------------ Modification Operations ------------------
-
-    /**
-     * Adds an element to this list
-     */
-    void add(T element);
-
-    /**
-     * Adds all elements to this list
-     */
-    default void addAll(Collection<T> elements) {
-        for (T element : elements) {
-            this.add(element);
-        }
-    }
-    default void addAll(T[] elements) {
-        this.addAll(Arrays.asList(elements));
-    }
-
-    /**
-     * Removes an element from this list
-     * @return true if element was found (and removed), false if element was not found
-     * @apiNote if the same element is in this list more than once, this only removes the first occurrence
-     */
-    boolean remove(T element);
-
-    /**
-     * Removes all elements from this list
-     * @return true if elements were all found (and removed), false if at least one element was not found.
-     * Note that if an element is not found (and the method terminates and returns false), elements that
-     * came before it in the given list will still have been removed.
-     * @apiNote if an element from the given list is in this list more than once, this only removes the first occurrence
-     */
-    default boolean removeAll(Collection<T> elements) {
-        boolean found = false;
-        for (T element : elements) {
-            if (this.remove(element)) {
-                found = true;
-            }
-        }
-        return found;
-    }
-    default boolean removeAll(T[] elements) {
-        return this.removeAll(Arrays.asList(elements));
-    }
-
-    /**
-     * Removes all duplicate elements from this list
-     * @return true if at least one element was found two or more times in this list and all but one of it were removed.
-     */
-    boolean removeDuplicates();
-
-    /**
-     * Sorts this list
-     */
-    void sort(Comparator<T> comparator);
-
-    /**
-     * Removes everything from this list
-     */
-    void clear();
-
     /**
      * @return true if all elements in this list satisfy .equals() with objects in given list/array, false otherwise.
      * Also returns false if given object is not a List, MtxList, or array.
@@ -182,6 +120,68 @@ public interface MtxList<T> {
      */
     @Override
     String toString();
+
+    // ------------------ Modification Operations ------------------
+
+    /**
+     * Adds an element to this list
+     */
+    void add(T element);
+
+    /**
+     * Adds all elements to this list
+     */
+    default void addAll(Collection<T> elements) {
+        for (T element : elements) {
+            this.add(element);
+        }
+    }
+    default void addAll(T[] elements) {
+        this.addAll(Arrays.asList(elements));
+    }
+
+    /**
+     * Removes an element from this list
+     * @return true if element was found (and removed), false if element was not found
+     * @apiNote if the same element is in this list more than once, this only removes the first occurrence
+     */
+    boolean remove(T element);
+
+    /**
+     * Removes all elements from this list
+     * @return true if elements were all found (and removed), false if at least one element was not found.
+     * Note that if an element is not found (and the method terminates and returns false), elements that
+     * came before it in the given list will still have been removed.
+     * @apiNote if an element from the given list is in this list more than once, this only removes the first occurrence
+     */
+    default boolean removeAll(Collection<T> elements) {
+        boolean found = false;
+        for (T element : elements) {
+            if (this.remove(element)) {
+                found = true;
+            }
+        }
+        return found;
+    }
+    default boolean removeAll(T[] elements) {
+        return this.removeAll(Arrays.asList(elements));
+    }
+
+    /**
+     * Removes all duplicate elements from this list
+     * @return true if at least one element was found two or more times in this list and all but one of it were removed.
+     */
+    boolean removeDuplicates();
+
+    /**
+     * Sorts this list
+     */
+    void sort(Comparator<T> comparator);
+
+    /**
+     * Removes everything from this list
+     */
+    void clear();
 
     // --------------- Positional Access Operations ----------------
 
