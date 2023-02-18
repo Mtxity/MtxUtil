@@ -92,7 +92,26 @@ public final class MtxLinkedSet<T> implements MtxSet<T> {
 
     @Override
     public boolean add(T element) {
-        // @TODO
+        MtxNode newNode = new MtxNode(element);
+
+        if (this.head == null) {
+            this.head = newNode;
+            this.size = 1;
+            return true;
+        }
+
+        if (this.contains(element)) {
+            return false;
+        }
+
+        MtxNode last = this.head;
+        while (last.next != null) {
+            last = last.next;
+        }
+
+        last.next = newNode;
+        this.size ++;
+        return true;
     }
 
     /**
@@ -110,7 +129,30 @@ public final class MtxLinkedSet<T> implements MtxSet<T> {
 
     @Override
     public boolean remove(T element) {
-        // @TODO
+        if (this.head == null) {
+            return false;
+        }
+
+        if (this.head.content.equals(element)) {
+            this.head = this.head.next;
+            this.size --;
+            return true;
+        }
+
+        MtxNode currentNode = this.head;
+        MtxNode previous = null;
+        while (currentNode != null && !currentNode.content.equals(element)) {
+            previous = currentNode;
+            currentNode = currentNode.next;
+        }
+
+        if (currentNode != null) {
+            previous.next = currentNode.next;
+            this.size --;
+            return true;
+        }
+
+        return false;
     }
 
     @Override
