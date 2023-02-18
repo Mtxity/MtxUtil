@@ -103,8 +103,9 @@ public interface MtxSet<T> extends Iterable<T> {
 
     /**
      * Adds an element to this set. If it already exists in the set, nothing happens.
+     * @return true if element was added to the set, false if it was already in it.
      */
-    void add(T element);
+    boolean add(T element);
 
     /**
      * Removes an element from this set
