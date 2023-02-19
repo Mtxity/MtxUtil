@@ -9,6 +9,7 @@ public final class MtxRequestReader {
     private static final int QUERY_IDX = 1;
     private static final int HTTP_VER_IDX = 2;
     private static final String METHOD_TAG = "method:";
+    private static final String NO_METHOD_PLACEHOLDER = "~~";
 
     private final RequestMethod requestMethod;
     private final String httpVersion;
@@ -18,8 +19,12 @@ public final class MtxRequestReader {
 
     //sample: "GET /test/14x%20d/twelve?key1=value1&key2=value2 HTTP/1.1"
     public MtxRequestReader(String requestLine) {
+        if (requestLine.startsWith("/")) {
+            requestLine = NO_METHOD_PLACEHOLDER + " " + requestLine;
+        }
+
         String[] components = (METHOD_TAG + requestLine).split(" ");
-        components[QUERY_IDX] = components[QUERY_IDX].replaceAll(Pattern.quote("%20"), " ");
+        components[QUERY_IDX] = components[QUERY_IDX].replaceFirst(Pattern.quote("/"), "").replaceAll(Pattern.quote("%20"), " ");
         this.requestMethod = this.getRequestMethodEnum(components[METHOD_IDX]);
         this.httpVersion = components[HTTP_VER_IDX];
 
@@ -42,9 +47,6 @@ public final class MtxRequestReader {
 
     private RequestMethod getRequestMethodEnum(String method) {
         method = method.replace(METHOD_TAG, "");
-        if (method.equals("")) {
-            return RequestMethod.UNKNOWN;
-        }
 
         RequestMethod methodEnum;
         try {
@@ -58,6 +60,11 @@ public final class MtxRequestReader {
     private Map<String, String> parseQueryParams(String queryParams) {
         HashMap<String, String> params = new HashMap<>();
         for (String param : queryParams.split(Pattern.quote("&"))) {
+            if (param.endsWith("=")) {
+                params.put(param.replace("=", ""), null);
+                continue;
+            }
+
             String[] kv = param.split(Pattern.quote("="));
             if (kv.length < 2) {
                 params.put(param, null);
@@ -79,12 +86,19 @@ public final class MtxRequestReader {
     }
 
     public String[] getFixedParams() {
+        if (this.fixedParams.length == 1 && this.fixedParams[0].equals("")) {
+            return new String[0];
+        }
         return this.fixedParams;
     }
 
     public String getQueryParam(String key) {
         if (this.hasQueryParams) {
-            return this.queryParams.getOrDefault(key, key);
+            if (this.queryParams.get(key) == null) {
+                return key;
+            } else {
+                return this.queryParams.get(key);
+            }
         } else {
             return null;
         }
