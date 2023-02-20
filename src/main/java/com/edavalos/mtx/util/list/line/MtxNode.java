@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.list.lineup;
+package com.edavalos.mtx.util.list.line;
 
 public class MtxNode<E> {
     private final E content;
