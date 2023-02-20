@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.list.lineup;
+package com.edavalos.mtx.util.list.line;
 
 import com.edavalos.mtx.util.list.MtxArrayList;
 import com.edavalos.mtx.util.list.MtxList;
