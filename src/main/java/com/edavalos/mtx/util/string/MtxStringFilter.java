@@ -61,4 +61,43 @@ public final class MtxStringFilter {
     public MtxStringFilter() {
         this(DEFAULT_FILTERING_POLICY, DEFAULT_CHAR_REPLACEMENT, new ArrayList<>());
     }
+
+    // ---------------------- Public Methods -----------------------
+
+    public String filter(String unfilteredString) {
+        return null;
+    }
+
+    public StringFilteringPolicy getFilteringPolicy() {
+        return this.filteringPolicy;
+    }
+
+    public char getCharReplacement() {
+        return this.charReplacement;
+    }
+
+    public List<String> getForbiddenWords() {
+        return this.forbiddenWords;
+    }
+
+    public void setForbiddenWords(List<String> forbiddenWords) {
+        this.forbiddenWords = forbiddenWords;
+    }
+
+    public void setForbiddenWords(String[] forbiddenWords) {
+        this.forbiddenWords = new ArrayList<>(Arrays.asList(forbiddenWords));
+    }
+
+    public boolean addForbiddenWord(String newForbiddenWord) {
+        if (this.forbiddenWords.contains(newForbiddenWord)) {
+            return false;
+        } else {
+            this.forbiddenWords.add(newForbiddenWord);
+            return true;
+        }
+    }
+
+    public boolean removeForbiddenWord(String forbiddenWord) {
+        return this.forbiddenWords.remove(forbiddenWord);
+    }
 }
