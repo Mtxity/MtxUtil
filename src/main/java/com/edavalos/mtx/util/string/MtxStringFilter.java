@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.string;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public final class MtxStringFilter {
     private static final char DEFAULT_CHAR_REPLACEMENT = '*';
@@ -65,7 +66,37 @@ public final class MtxStringFilter {
     // ---------------------- Public Methods -----------------------
 
     public String filter(String unfilteredString) {
-        return null;
+        return switch (this.filteringPolicy) {
+            case EXACT_STRICT -> {
+                for (String forbiddenWord : this.forbiddenWords) {
+                    unfilteredString = unfilteredString.replaceAll(Pattern.quote(forbiddenWord), buildCensor(forbiddenWord.length()));
+                }
+                yield unfilteredString;
+            }
+            case EXACT_ISOLATED -> {
+                String[] words = unfilteredString.split(" ");
+                for (int i = 0; i < words.length; i++) {
+                    for (String forbiddenWord : this.forbiddenWords) {
+                        if (words[i].equalsIgnoreCase(forbiddenWord)) {
+                            words[i] = buildCensor(forbiddenWord.length());
+                        }
+                    }
+                }
+                yield this.join(words);
+            }
+            case PARTIAL_ISOLATED -> {
+                String[] words = unfilteredString.split(" ");
+                for (int i = 0; i < words.length; i++) {
+                    String literal = words[i].replaceAll("[^a-zA-Z0-9]", "");
+                    for (String forbiddenWord : this.forbiddenWords) {
+                        if (literal.equalsIgnoreCase(forbiddenWord)) {
+                            words[i] = buildCensor(words[i].length());
+                        }
+                    }
+                }
+                yield this.join(words);
+            }
+        };
     }
 
     public StringFilteringPolicy getFilteringPolicy() {
@@ -99,5 +130,23 @@ public final class MtxStringFilter {
 
     public boolean removeForbiddenWord(String forbiddenWord) {
         return this.forbiddenWords.remove(forbiddenWord);
+    }
+
+    // ------------------ Private Helper Methods -------------------
+
+    private String buildCensor(int length) {
+        StringBuilder censor = new StringBuilder();
+        for (int i = 0; i < length; i++) {
+            censor.append(this.charReplacement);
+        }
+        return censor.toString();
+    }
+
+    private String join(String[] stringArray) {
+        StringBuilder strings = new StringBuilder();
+        for (int i = 0; i < stringArray.length; i++) {
+            strings.append(stringArray[i] + " ");
+        }
+        return strings.toString().strip();
     }
 }
