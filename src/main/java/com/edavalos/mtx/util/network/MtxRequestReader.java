@@ -14,8 +14,10 @@ public final class MtxRequestReader {
     private final RequestMethod requestMethod;
     private final String httpVersion;
     private final String[] fixedParams;
+    private final String anchor;
     private final Map<String, String> queryParams;
     private final boolean hasQueryParams;
+    private final boolean hasAnchor;
 
     //sample: "GET /test/14x%20d/twelve?key1=value1&key2=value2 HTTP/1.1"
     public MtxRequestReader(String requestLine) {
@@ -40,6 +42,21 @@ public final class MtxRequestReader {
             this.fixedParams = components[QUERY_IDX].split(Pattern.quote("/"));
             this.queryParams = new HashMap<>();
             this.hasQueryParams = false;
+        }
+
+        String lastParam = this.fixedParams[this.fixedParams.length - 1];
+        if (this.getAnchorFromLastFixedParam(lastParam) == null) {
+            this.anchor = "";
+            this.hasAnchor = false;
+        } else {
+            this.anchor = this.getAnchorFromLastFixedParam(lastParam);
+            this.hasAnchor = true;
+        }
+
+        if (this.fixedParams.length == 1 && lastParam.equals("#")) {
+            this.fixedParams[this.fixedParams.length - 1] = "";
+        } else {
+            this.fixedParams[this.fixedParams.length - 1] = lastParam.split(Pattern.quote("#"))[0];
         }
     }
 
@@ -75,6 +92,19 @@ public final class MtxRequestReader {
         return params;
     }
 
+    private String getAnchorFromLastFixedParam(String lastFixedParam) {
+        if (!lastFixedParam.contains("#")) {
+            return null;
+        }
+
+        String[] components = lastFixedParam.split(Pattern.quote("#"));
+        if (components.length <= 1) {
+            return null;
+        } else {
+            return components[1];
+        }
+    }
+
     // ---------------------- Public Methods -----------------------
 
     public RequestMethod getRequestMethod() {
@@ -108,7 +138,15 @@ public final class MtxRequestReader {
         return this.queryParams;
     }
 
+    public String getAnchor() {
+        return this.anchor;
+    }
+
     public boolean hasQueryParams() {
         return this.hasQueryParams;
+    }
+
+    public boolean hasAnchor() {
+        return this.hasAnchor;
     }
 }
