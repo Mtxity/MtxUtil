@@ -4,10 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,7 +22,7 @@ public final class MtxStringFilterTest {
         public void testConstructor_withPolicy_withCharReplacement_withWordList() {
             StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
             char expectedReplacementChar = '~';
-            List<String> expectedWords = new ArrayList<>(){
+            Set<String> expectedWords = new HashSet<>(){
                 {
                     add("word1");
                     add("word2");
@@ -33,7 +33,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(expectedWords, mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -46,7 +46,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -58,14 +58,14 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(new ArrayList<String>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
         public void testConstructor_withPolicy_noCharReplacement_withWordList() {
             StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
             char expectedReplacementChar = '*';
-            List<String> expectedWords = new ArrayList<>(){
+            Set<String> expectedWords = new HashSet<>(){
                 {
                     add("word1");
                     add("word2");
@@ -76,7 +76,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(expectedWords, mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -89,7 +89,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -101,14 +101,14 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(new ArrayList<String>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
         public void testConstructor_noPolicy_withCharReplacement_withWordList() {
             StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
             char expectedReplacementChar = '~';
-            List<String> expectedWords = new ArrayList<>(){
+            Set<String> expectedWords = new HashSet<>(){
                 {
                     add("word1");
                     add("word2");
@@ -119,7 +119,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(expectedWords, mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -132,7 +132,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -144,14 +144,14 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(new ArrayList<>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
         public void testConstructor_noPolicy_noCharReplacement_withWordList() {
             StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
             char expectedReplacementChar = '*';
-            List<String> expectedWords = new ArrayList<>(){
+            Set<String> expectedWords = new HashSet<>(){
                 {
                     add("word1");
                     add("word2");
@@ -162,7 +162,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(expectedWords, mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -175,7 +175,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         }
 
         @Test
@@ -187,7 +187,7 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
             assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
-            assertArrayEquals(new ArrayList<>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+            assertTrue(setsAreEqual(new HashSet<>(), mtxStringFilter.getForbiddenWords()));
         }
     }
 
@@ -294,7 +294,7 @@ public final class MtxStringFilterTest {
     public void testSetForbiddenWords_list() {
         mtxStringFilter = new MtxStringFilter();
 
-        List<String> expectedWords = new ArrayList<>(){
+        Set<String> expectedWords = new HashSet<>(){
             {
                 add("word1");
                 add("word2");
@@ -302,7 +302,7 @@ public final class MtxStringFilterTest {
         };
         mtxStringFilter.setForbiddenWords(expectedWords);
 
-        assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        assertTrue(setsAreEqual(expectedWords, mtxStringFilter.getForbiddenWords()));
     }
 
     @Test
@@ -312,7 +312,7 @@ public final class MtxStringFilterTest {
         String[] expectedWords = new String[] {"word1", "word2"};
         mtxStringFilter.setForbiddenWords(expectedWords);
 
-        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
     }
 
     @Test
@@ -324,7 +324,7 @@ public final class MtxStringFilterTest {
         String[] expectedWords = new String[] {"word1", "word2", "word3"};
 
         assertTrue(mtxStringFilter.addForbiddenWord(newWord));
-        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         assertFalse(mtxStringFilter.addForbiddenWord(newWord));
     }
 
@@ -337,7 +337,24 @@ public final class MtxStringFilterTest {
         String[] expectedWords = new String[] {"word2"};
 
         assertTrue(mtxStringFilter.removeForbiddenWord(wordToRemove));
-        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertTrue(setsAreEqual(new HashSet<>(List.of(expectedWords)), mtxStringFilter.getForbiddenWords()));
         assertFalse(mtxStringFilter.removeForbiddenWord(wordToRemove));
+    }
+
+    private boolean setsAreEqual(Set<String> set1, Set<String> set2) {
+        if (set1.size() != set2.size()) {
+            return false;
+        }
+        for (String string1 : set1) {
+            if (!set2.contains(string1)) {
+                return false;
+            }
+        }
+        for (String string2 : set2) {
+            if (!set1.contains(string2)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
