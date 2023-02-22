@@ -4,10 +4,192 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStringFilterTest {
     private MtxStringFilter mtxStringFilter;
+
+    @Nested
+    class ConstructorTests {
+
+        @Test
+        public void testConstructor_withPolicy_withCharReplacement_withWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
+            char expectedReplacementChar = '~';
+            List<String> expectedWords = new ArrayList<>(){
+                {
+                    add("word1");
+                    add("word2");
+                }
+            };
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy, expectedReplacementChar, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_withPolicy_withCharReplacement_withWordArray() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
+            char expectedReplacementChar = '~';
+            String[] expectedWords = new String[] {"word1", "word2"};
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy, expectedReplacementChar, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_withPolicy_withCharReplacement_noWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
+            char expectedReplacementChar = '~';
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy, expectedReplacementChar);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(new ArrayList<String>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_withPolicy_noCharReplacement_withWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_STRICT;
+            char expectedReplacementChar = '*';
+            List<String> expectedWords = new ArrayList<>(){
+                {
+                    add("word1");
+                    add("word2");
+                }
+            };
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_withPolicy_noCharReplacement_withWordArray() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.PARTIAL_ISOLATED;
+            char expectedReplacementChar = '*';
+            String[] expectedWords = new String[] {"word1", "word2"};
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_withPolicy_noCharReplacement_noWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.PARTIAL_ISOLATED;
+            char expectedReplacementChar = '*';
+
+            mtxStringFilter = new MtxStringFilter(expectedPolicy);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(new ArrayList<String>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_withCharReplacement_withWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = '~';
+            List<String> expectedWords = new ArrayList<>(){
+                {
+                    add("word1");
+                    add("word2");
+                }
+            };
+
+            mtxStringFilter = new MtxStringFilter(expectedReplacementChar, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_withCharReplacement_withWordArray() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = '~';
+            String[] expectedWords = new String[] {"word1", "word2"};
+
+            mtxStringFilter = new MtxStringFilter(expectedReplacementChar, expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_withCharReplacement_noWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = ':';
+
+            mtxStringFilter = new MtxStringFilter(expectedReplacementChar);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(new ArrayList<>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_noCharReplacement_withWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = '*';
+            List<String> expectedWords = new ArrayList<>(){
+                {
+                    add("word1");
+                    add("word2");
+                }
+            };
+
+            mtxStringFilter = new MtxStringFilter(expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_noCharReplacement_withWordArray() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = '*';
+            String[] expectedWords = new String[] {"word1", "word2"};
+
+            mtxStringFilter = new MtxStringFilter(expectedWords);
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        }
+
+        @Test
+        public void testConstructor_noPolicy_noCharReplacement_noWordList() {
+            StringFilteringPolicy expectedPolicy = StringFilteringPolicy.EXACT_ISOLATED;
+            char expectedReplacementChar = '*';
+
+            mtxStringFilter = new MtxStringFilter();
+
+            assertEquals(expectedPolicy, mtxStringFilter.getFilteringPolicy());
+            assertEquals(expectedReplacementChar, mtxStringFilter.getCharReplacement());
+            assertArrayEquals(new ArrayList<>().toArray(), mtxStringFilter.getForbiddenWords().toArray());
+        }
+    }
 
     @Nested
     class FilterTests_exactStrict {
@@ -106,5 +288,56 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedCensor, mtxStringFilter.filter(sampleString));
         }
+    }
+
+    @Test
+    public void testSetForbiddenWords_list() {
+        mtxStringFilter = new MtxStringFilter();
+
+        List<String> expectedWords = new ArrayList<>(){
+            {
+                add("word1");
+                add("word2");
+            }
+        };
+        mtxStringFilter.setForbiddenWords(expectedWords);
+
+        assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+    }
+
+    @Test
+    public void testSetForbiddenWords_array() {
+        mtxStringFilter = new MtxStringFilter();
+
+        String[] expectedWords = new String[] {"word1", "word2"};
+        mtxStringFilter.setForbiddenWords(expectedWords);
+
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+    }
+
+    @Test
+    public void testAddForbiddenWord() {
+        String[] startingWords = new String[] {"word1", "word2"};
+        mtxStringFilter = new MtxStringFilter(startingWords);
+
+        String newWord = "word3";
+        String[] expectedWords = new String[] {"word1", "word2", "word3"};
+
+        assertTrue(mtxStringFilter.addForbiddenWord(newWord));
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertFalse(mtxStringFilter.addForbiddenWord(newWord));
+    }
+
+    @Test
+    public void testRemoveForbiddenWord() {
+        String[] startingWords = new String[] {"word1", "word2"};
+        mtxStringFilter = new MtxStringFilter(startingWords);
+
+        String wordToRemove = "word1";
+        String[] expectedWords = new String[] {"word2"};
+
+        assertTrue(mtxStringFilter.removeForbiddenWord(wordToRemove));
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertFalse(mtxStringFilter.removeForbiddenWord(wordToRemove));
     }
 }
