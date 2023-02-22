@@ -132,17 +132,13 @@ public final class MtxStringFilter {
     // ------------------ Private Helper Methods -------------------
 
     private String buildCensor(int length) {
-        StringBuilder censor = new StringBuilder();
-        for (int i = 0; i < length; i++) {
-            censor.append(this.charReplacement);
-        }
-        return censor.toString();
+        return String.valueOf(this.charReplacement).repeat(Math.max(0, length));
     }
 
     private String join(String[] stringArray) {
         StringBuilder strings = new StringBuilder();
-        for (int i = 0; i < stringArray.length; i++) {
-            strings.append(stringArray[i] + " ");
+        for (String s : stringArray) {
+            strings.append(s).append(" ");
         }
         return strings.toString().strip();
     }
