@@ -9,6 +9,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStringFilterTest {
     private MtxStringFilter mtxStringFilter;
@@ -286,5 +288,56 @@ public final class MtxStringFilterTest {
 
             assertEquals(expectedCensor, mtxStringFilter.filter(sampleString));
         }
+    }
+
+    @Test
+    public void testSetForbiddenWords_list() {
+        mtxStringFilter = new MtxStringFilter();
+
+        List<String> expectedWords = new ArrayList<>(){
+            {
+                add("word1");
+                add("word2");
+            }
+        };
+        mtxStringFilter.setForbiddenWords(expectedWords);
+
+        assertArrayEquals(expectedWords.toArray(), mtxStringFilter.getForbiddenWords().toArray());
+    }
+
+    @Test
+    public void testSetForbiddenWords_array() {
+        mtxStringFilter = new MtxStringFilter();
+
+        String[] expectedWords = new String[] {"word1", "word2"};
+        mtxStringFilter.setForbiddenWords(expectedWords);
+
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+    }
+
+    @Test
+    public void testAddForbiddenWord() {
+        String[] startingWords = new String[] {"word1", "word2"};
+        mtxStringFilter = new MtxStringFilter(startingWords);
+
+        String newWord = "word3";
+        String[] expectedWords = new String[] {"word1", "word2", "word3"};
+
+        assertTrue(mtxStringFilter.addForbiddenWord(newWord));
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertFalse(mtxStringFilter.addForbiddenWord(newWord));
+    }
+
+    @Test
+    public void testRemoveForbiddenWord() {
+        String[] startingWords = new String[] {"word1", "word2"};
+        mtxStringFilter = new MtxStringFilter(startingWords);
+
+        String wordToRemove = "word1";
+        String[] expectedWords = new String[] {"word2"};
+
+        assertTrue(mtxStringFilter.removeForbiddenWord(wordToRemove));
+        assertArrayEquals(expectedWords, mtxStringFilter.getForbiddenWords().toArray());
+        assertFalse(mtxStringFilter.removeForbiddenWord(wordToRemove));
     }
 }
