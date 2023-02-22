@@ -188,4 +188,134 @@ public final class MtxRequestReaderTest {
         assertFalse(mtxRequestReader.hasQueryParams());
         assertNull(mtxRequestReader.getQueryParam("anything"));
     }
+
+    @Test
+    public void testConstructor_hasFixedParams_hasQueryParams_hasAnchor() {
+        String testCase = "GET /fixedParam1/fixedParam2#header?qpk1=qpv1&qpk2=qpv2 HTTP/1.1";
+        String[] expectedFixedParams = {"fixedParam1", "fixedParam2"};
+        String expectedAnchor = "header";
+        Map<String, String> expectedQueryParams = new HashMap<>(){
+            {
+                put("qpk1", "qpv1");
+                put("qpk2", "qpv2");
+            }
+        };
+
+        mtxRequestReader = new MtxRequestReader(testCase);
+
+        assertArrayEquals(expectedFixedParams, mtxRequestReader.getFixedParams());
+        assertEquals(expectedQueryParams, mtxRequestReader.getAllQueryParams());
+        assertTrue(mtxRequestReader.hasQueryParams());
+
+        for (String key : expectedQueryParams.keySet()) {
+            assertEquals(expectedQueryParams.get(key), mtxRequestReader.getQueryParam(key));
+        }
+
+        assertEquals(expectedAnchor, mtxRequestReader.getAnchor());
+        assertTrue(mtxRequestReader.hasAnchor());
+    }
+
+    @Test
+    public void testConstructor_hasFixedParams_hasQueryParams_hasNullAnchor() {
+        String testCase = "GET /fixedParam1/fixedParam2#?qpk1=qpv1&qpk2=qpv2 HTTP/1.1";
+        String[] expectedFixedParams = {"fixedParam1", "fixedParam2"};
+        String expectedAnchor = "";
+        Map<String, String> expectedQueryParams = new HashMap<>(){
+            {
+                put("qpk1", "qpv1");
+                put("qpk2", "qpv2");
+            }
+        };
+
+        mtxRequestReader = new MtxRequestReader(testCase);
+
+        assertArrayEquals(expectedFixedParams, mtxRequestReader.getFixedParams());
+        assertEquals(expectedQueryParams, mtxRequestReader.getAllQueryParams());
+        assertTrue(mtxRequestReader.hasQueryParams());
+
+        for (String key : expectedQueryParams.keySet()) {
+            assertEquals(expectedQueryParams.get(key), mtxRequestReader.getQueryParam(key));
+        }
+
+        assertEquals(expectedAnchor, mtxRequestReader.getAnchor());
+        assertFalse(mtxRequestReader.hasAnchor());
+    }
+
+    @Test
+    public void testConstructor_hasFixedParams_hasQueryParams_noAnchor() {
+        String testCase = "GET /fixedParam1/fixedParam2?qpk1=qpv1&qpk2=qpv2 HTTP/1.1";
+        String[] expectedFixedParams = {"fixedParam1", "fixedParam2"};
+        String expectedAnchor = "";
+        Map<String, String> expectedQueryParams = new HashMap<>(){
+            {
+                put("qpk1", "qpv1");
+                put("qpk2", "qpv2");
+            }
+        };
+
+        mtxRequestReader = new MtxRequestReader(testCase);
+
+        assertArrayEquals(expectedFixedParams, mtxRequestReader.getFixedParams());
+        assertEquals(expectedQueryParams, mtxRequestReader.getAllQueryParams());
+        assertTrue(mtxRequestReader.hasQueryParams());
+
+        for (String key : expectedQueryParams.keySet()) {
+            assertEquals(expectedQueryParams.get(key), mtxRequestReader.getQueryParam(key));
+        }
+
+        assertEquals(expectedAnchor, mtxRequestReader.getAnchor());
+        assertFalse(mtxRequestReader.hasAnchor());
+    }
+
+    @Test
+    public void testConstructor_noFixedParams_hasQueryParams_hasAnchor() {
+        String testCase = "GET /#header?qpk1=qpv1&qpk2=qpv2 HTTP/1.1";
+        String[] expectedFixedParams = {};
+        String expectedAnchor = "header";
+        Map<String, String> expectedQueryParams = new HashMap<>(){
+            {
+                put("qpk1", "qpv1");
+                put("qpk2", "qpv2");
+            }
+        };
+
+        mtxRequestReader = new MtxRequestReader(testCase);
+
+        assertArrayEquals(expectedFixedParams, mtxRequestReader.getFixedParams());
+        assertEquals(expectedQueryParams, mtxRequestReader.getAllQueryParams());
+        assertTrue(mtxRequestReader.hasQueryParams());
+
+        for (String key : expectedQueryParams.keySet()) {
+            assertEquals(expectedQueryParams.get(key), mtxRequestReader.getQueryParam(key));
+        }
+
+        assertEquals(expectedAnchor, mtxRequestReader.getAnchor());
+        assertTrue(mtxRequestReader.hasAnchor());
+    }
+
+    @Test
+    public void testConstructor_noFixedParams_hasQueryParams_hasNullAnchor() {
+        String testCase = "GET /#?qpk1=qpv1&qpk2=qpv2 HTTP/1.1";
+        String[] expectedFixedParams = {};
+        String expectedAnchor = "";
+        Map<String, String> expectedQueryParams = new HashMap<>(){
+            {
+                put("qpk1", "qpv1");
+                put("qpk2", "qpv2");
+            }
+        };
+
+        mtxRequestReader = new MtxRequestReader(testCase);
+
+        assertArrayEquals(expectedFixedParams, mtxRequestReader.getFixedParams());
+        assertEquals(expectedQueryParams, mtxRequestReader.getAllQueryParams());
+        assertTrue(mtxRequestReader.hasQueryParams());
+
+        for (String key : expectedQueryParams.keySet()) {
+            assertEquals(expectedQueryParams.get(key), mtxRequestReader.getQueryParam(key));
+        }
+
+        assertEquals(expectedAnchor, mtxRequestReader.getAnchor());
+        assertFalse(mtxRequestReader.hasAnchor());
+    }
 }
