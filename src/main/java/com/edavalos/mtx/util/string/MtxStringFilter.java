@@ -18,7 +18,7 @@ public final class MtxStringFilter {
     public MtxStringFilter(StringFilteringPolicy filteringPolicy, char charReplacement, Set<String> forbiddenWords) {
         this.filteringPolicy = filteringPolicy;
         this.charReplacement = charReplacement;
-        this.forbiddenWords = new HashSet<>(forbiddenWords);
+        this.forbiddenWords = forbiddenWords;
     }
 
     public MtxStringFilter(StringFilteringPolicy filteringPolicy, char charReplacement, String[] forbiddenWords) {
