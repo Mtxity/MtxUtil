@@ -48,6 +48,18 @@ public final class MtxInsecureEncryptorTest {
     }
 
     @Test
+    public void testEncrypt_manyTimes() {
+        String originalString = "Random start string.";
+        int timesToEncrypt = 200;
+
+        String encryptedString = originalString;
+        for (int i = 0; i < timesToEncrypt; i++) {
+            encryptedString = MtxInsecureEncryptor.encrypt(encryptedString);
+            assertNotEquals(originalString, encryptedString, "on iteration " + i);
+        }
+    }
+
+    @Test
     public void testEncryptDecrypt_oneValue() {
         assertEquals(LOREM_IPSUM, MtxInsecureEncryptor.decrypt(MtxInsecureEncryptor.encrypt(LOREM_IPSUM)));
     }
