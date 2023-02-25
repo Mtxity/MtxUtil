@@ -70,4 +70,20 @@ public final class MtxInsecureEncryptorTest {
             assertEquals(string, MtxInsecureEncryptor.decrypt(MtxInsecureEncryptor.encrypt(string)));
         }
     }
+
+    @Test
+    public void testEncryptDecrypt_manyTimes() {
+        String originalString = "Random start string.";
+        int timesToEncrypt = 200;
+
+        String encryptedString = originalString;
+        for (int i = 0; i < timesToEncrypt; i++) {
+            encryptedString = MtxInsecureEncryptor.encrypt(encryptedString);
+        }
+        for (int j = 0; j < timesToEncrypt; j++) {
+            encryptedString = MtxInsecureEncryptor.decrypt(encryptedString);
+        }
+
+        assertEquals(originalString, encryptedString);
+    }
 }

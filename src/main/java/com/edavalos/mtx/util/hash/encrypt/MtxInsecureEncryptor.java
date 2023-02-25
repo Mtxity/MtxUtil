@@ -46,6 +46,13 @@ public final class MtxInsecureEncryptor {
         int l = deconstructedEncryptedString.length;
         int a = (int) Math.floor(Math.sqrt(l));
         int b = (int) Math.ceil(Math.sqrt(l));
+        while (a != b) {
+            if (Math.min(b, a) == b) {
+                b++;
+            } else {
+                a++;
+            }
+        }
 
         // Generate decryption matrix
         char[][] matrix = new char[a][b];
