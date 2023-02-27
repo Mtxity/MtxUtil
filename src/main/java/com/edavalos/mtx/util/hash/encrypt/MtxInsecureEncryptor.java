@@ -55,7 +55,7 @@ public final class MtxInsecureEncryptor {
         }
 
         // Generate decryption matrix
-        char[][] matrix = new char[a][b];
+        char[][] matrix = new char[b][a];
         int k = 0;
         for (int row = 0; row < b; row++) {
             for (int col = 0; col < a; col++) {
