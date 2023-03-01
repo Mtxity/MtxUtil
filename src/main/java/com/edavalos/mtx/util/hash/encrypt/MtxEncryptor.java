@@ -15,12 +15,26 @@ public final class MtxEncryptor {
 
     private MtxEncryptor() { }
 
-    public static String encrypt(String stringToEncrypt, String key) {
+    public static String encrypt(String stringToEncrypt, String key) throws Exception {
+        SecretKey symmetricKey = createAesKey(key);
 
+        byte[] initializationVector = createInitializationVector();
+        byte[] cipherText = do_AESEncryption(stringToEncrypt, symmetricKey, initializationVector);
+        return new String(cipherText);
+    }
+
+    public static String decrypt(String stringToDecrypt, String key) throws Exception {
+        SecretKey symmetricKey;
+        symmetricKey = createAesKey(key);
+
+        return do_AESDecryption(
+                stringToDecrypt.getBytes(),
+                symmetricKey,
+                createInitializationVector());
     }
 
     private static SecretKey createAesKey(String keyLiteral) throws NoSuchAlgorithmException {
-        SecureRandom securerandom = new SecureRandom();
+        SecureRandom securerandom = new SecureRandom(keyLiteral.getBytes());
         KeyGenerator keygenerator = KeyGenerator.getInstance(AES);
 
         keygenerator.init(256, securerandom);
@@ -36,25 +50,34 @@ public final class MtxEncryptor {
         return initializationVector;
     }
 
-    public static byte[] do_AESEncryption(
+    private static byte[] do_AESEncryption(
             String plainText,
+            SecretKey secretKey,
+            byte[] initializationVector) throws Exception
+    {
+        Cipher cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
+
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
+
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
+
+        return cipher.doFinal(plainText.getBytes());
+    }
+
+    private static String do_AESDecryption(
+            byte[] cipherText,
             SecretKey secretKey,
             byte[] initializationVector)
             throws Exception
     {
-        Cipher cipher
-                = Cipher.getInstance(
-                AES_CIPHER_ALGORITHM);
+        Cipher cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
 
-        IvParameterSpec ivParameterSpec
-                = new IvParameterSpec(
-                initializationVector);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(initializationVector);
 
-        cipher.init(Cipher.ENCRYPT_MODE,
-                secretKey,
-                ivParameterSpec);
+        cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
 
-        return cipher.doFinal(
-                plainText.getBytes());
+        byte[] result = cipher.doFinal(cipherText);
+
+        return new String(result);
     }
 }
