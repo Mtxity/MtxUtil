@@ -2,11 +2,12 @@ package com.edavalos.mtx.util.hash.encrypt;
 
 public final class MtxInsecureEncryptor {
     private static final char WHITESPACE = ' ';
+    private static final char WHITESPACE_PLACEHOLDER = 'փ';
 
     private MtxInsecureEncryptor() { }
 
     public static String encrypt(String string) {
-        char[] deconstructedString = string.toCharArray();
+        char[] deconstructedString = string.replaceAll(String.valueOf(WHITESPACE), String.valueOf(WHITESPACE_PLACEHOLDER)).toCharArray();
         int l = deconstructedString.length;
         int x = (int) Math.ceil(Math.sqrt(l));
 
@@ -62,6 +63,6 @@ public final class MtxInsecureEncryptor {
             }
         }
 
-        return decryptedString.toString().stripTrailing();
+        return decryptedString.toString().stripTrailing().replaceAll(String.valueOf(WHITESPACE_PLACEHOLDER), String.valueOf(WHITESPACE));
     }
 }
