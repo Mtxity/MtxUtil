@@ -7,6 +7,7 @@ import javax.crypto.spec.IvParameterSpec;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+// Based on: https://www.geeksforgeeks.org/symmetric-encryption-cryptography-in-java/
 public final class MtxEncryptor {
     private static final String AES = "AES";
     // We are using a Block cipher (CBC mode)
@@ -34,7 +35,7 @@ public final class MtxEncryptor {
 
         return initializationVector;
     }
-    
+
     public static byte[] do_AESEncryption(
             String plainText,
             SecretKey secretKey,
