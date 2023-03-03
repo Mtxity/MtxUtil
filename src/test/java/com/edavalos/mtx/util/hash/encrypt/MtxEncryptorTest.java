@@ -13,19 +13,10 @@ public final class MtxEncryptorTest {
     public void test_poc() {
         String test = "test test test t";
         String keyString = "keyz";
-//        try {
-//            SecretKey key = MtxEncryptor.getNewSecretKey(keyString);
-////            SecretKey key = MtxEncryptor.getNewSecretKey();
-//            assertEquals(test, MtxEncryptor.decrypt(MtxEncryptor.encrypt(test, key), key));
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-
         try {
-            SecretKey key = MtxEncryptor.getNewSecretKey();
-            byte[] initializationVector = MtxEncryptor.createInitializationVector();
-            byte[] cipherText = MtxEncryptor.encrypt(test, key, initializationVector);
-            String decryptedText = MtxEncryptor.decrypt(cipherText, key, initializationVector);
+            MtxEncryptionKey key = MtxEncryptor.generateNewKey(keyString);
+            byte[] cipherText = MtxEncryptor.encrypt(test, key);
+            String decryptedText = MtxEncryptor.decrypt(cipherText, key);
             assertEquals(test, decryptedText);
         } catch (Exception e) {
             throw new RuntimeException(e);

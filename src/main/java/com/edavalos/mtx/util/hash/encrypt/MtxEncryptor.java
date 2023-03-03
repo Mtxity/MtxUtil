@@ -16,25 +16,25 @@ public final class MtxEncryptor {
 
     private MtxEncryptor() { }
 
-    public static byte[] encrypt(String stringToEncrypt, SecretKey key, byte[] initVec) throws Exception {
-        return do_AESEncryption(stringToEncrypt, key, initVec);
+    // ---------------------- Public Methods -----------------------
+
+    public static MtxEncryptionKey generateNewKey() throws NoSuchAlgorithmException {
+        return new MtxEncryptionKey(createAesKey(), createInitializationVector());
     }
 
-    public static String decrypt(byte[] stringToDecrypt, SecretKey key, byte[] initVec) throws Exception {
-        return do_AESDecryption(
-                stringToDecrypt,
-                key,
-                initVec
-        );
+    public static MtxEncryptionKey generateNewKey(String seed) throws NoSuchAlgorithmException {
+        return new MtxEncryptionKey(createAesKey(seed), createInitializationVector());
     }
 
-    public static SecretKey getNewSecretKey(String seed) throws NoSuchAlgorithmException {
-        return createAesKey(seed);
+    public static byte[] encrypt(String stringToEncrypt, MtxEncryptionKey mtxEncryptionKey) throws Exception {
+        return do_AESEncryption(stringToEncrypt, mtxEncryptionKey.key(), mtxEncryptionKey.initializationVector());
     }
 
-    public static SecretKey getNewSecretKey() throws NoSuchAlgorithmException {
-        return createAesKey();
+    public static String decrypt(byte[] stringToDecrypt, MtxEncryptionKey mtxEncryptionKey) throws Exception {
+        return do_AESDecryption(stringToDecrypt, mtxEncryptionKey.key(), mtxEncryptionKey.initializationVector());
     }
+
+    // ------------------ Private Helper Methods -------------------
 
     private static SecretKey createAesKey(String keySeed) throws NoSuchAlgorithmException {
         SecureRandom securerandom = new SecureRandom(keySeed.getBytes());
