@@ -17,4 +17,30 @@ public final class MtxAdjacencyListGraph {
         adjacencyVertices.values().stream().forEach(e -> e.remove(v));
         adjacencyVertices.remove(new MtxVertex(label));
     }
+
+    public void addEdge(String label1, String label2) {
+        MtxVertex v1 = new MtxVertex(label1);
+        MtxVertex v2 = new MtxVertex(label2);
+        adjacencyVertices.get(v1).add(v2);
+        adjacencyVertices.get(v2).add(v1);
+    }
+
+    public void removeEdge(String label1, String label2) {
+        MtxVertex v1 = new MtxVertex(label1);
+        MtxVertex v2 = new MtxVertex(label2);
+
+        List<MtxVertex> eV1 = adjacencyVertices.get(v1);
+        List<MtxVertex> eV2 = adjacencyVertices.get(v2);
+
+        if (eV1 != null) {
+            eV1.remove(v2);
+        }
+        if (eV2 != null) {
+            eV2.remove(v2);
+        }
+    }
+
+    public List<MtxVertex> getAdjVertex(String label) {
+        return adjacencyVertices.get(new MtxVertex(label));
+    }
 }
