@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.hash.encrypt;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,6 +49,7 @@ public final class MtxInsecureEncryptorTest {
     }
 
     @Test
+    @DisplayName("Ensure that a string encrypted over and over will never be its original value")
     public void testEncrypt_manyTimes() {
         String originalString = "Random start string.";
         int timesToEncrypt = 200;
@@ -72,6 +74,7 @@ public final class MtxInsecureEncryptorTest {
     }
 
     @Test
+    @DisplayName("Ensure that if a string is encrypted n times, it will return to its original value after decrypting it n times")
     public void testEncryptDecrypt_manyTimes() {
         String originalString = "Random start string.";
         int timesToEncrypt = 200;
