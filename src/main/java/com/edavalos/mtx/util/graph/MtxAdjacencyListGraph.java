@@ -2,8 +2,10 @@ package com.edavalos.mtx.util.graph;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
@@ -58,6 +60,25 @@ public final class MtxAdjacencyListGraph {
                 visited.add(vertex);
                 for (MtxVertex v : graph.getAdjVertex(vertex)) {
                     stack.push(v.label());
+                }
+            }
+        }
+        return visited;
+    }
+
+    public Set<String> breadthFirstTraversal(MtxAdjacencyListGraph graph, String root) {
+        Set<String> visited = new LinkedHashSet<>();
+        Queue<String> queue = new LinkedList<>();
+
+        visited.add(root);
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            String vertex = queue.poll();
+            for (MtxVertex v : graph.getAdjVertex(vertex)) {
+                if (!visited.contains(v.label())) {
+                    visited.add(v.label());
+                    queue.add(v.label());
                 }
             }
         }
