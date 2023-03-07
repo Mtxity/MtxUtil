@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,38 +12,48 @@ import java.util.Stack;
 
 // Based on: https://www.baeldung.com/java-graphs
 public final class MtxAdjacencyListGraph {
-    private Map<MtxVertex, List<MtxVertex>> adjacencyVertices;
+    private final Map<MtxVertex, List<MtxVertex>> adjacencyVertices;
 
-    public void addVertex(String label) {
-        adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>());
+    public MtxAdjacencyListGraph() {
+        this.adjacencyVertices = new HashMap<>();
     }
 
-    public void removeVertex(String label) {
+    public List<MtxVertex> addVertex(String label) {
+        return adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>());
+    }
+
+    public List<MtxVertex> removeVertex(String label) {
         MtxVertex v = new MtxVertex(label);
         adjacencyVertices.values().stream().forEach(e -> e.remove(v));
-        adjacencyVertices.remove(new MtxVertex(label));
+        return adjacencyVertices.remove(new MtxVertex(label));
     }
 
-    public void addEdge(String label1, String label2) {
+    public boolean addEdge(String label1, String label2) {
         MtxVertex v1 = new MtxVertex(label1);
         MtxVertex v2 = new MtxVertex(label2);
+        if (adjacencyVertices.get(v1) == null || adjacencyVertices.get(v2) == null) {
+             return false;
+        }
         adjacencyVertices.get(v1).add(v2);
         adjacencyVertices.get(v2).add(v1);
+        return true;
     }
 
-    public void removeEdge(String label1, String label2) {
+    public boolean removeEdge(String label1, String label2) {
         MtxVertex v1 = new MtxVertex(label1);
         MtxVertex v2 = new MtxVertex(label2);
 
         List<MtxVertex> eV1 = adjacencyVertices.get(v1);
         List<MtxVertex> eV2 = adjacencyVertices.get(v2);
 
+        boolean containedEdge = false;
         if (eV1 != null) {
-            eV1.remove(v2);
+            containedEdge = eV1.remove(v2);
         }
         if (eV2 != null) {
-            eV2.remove(v2);
+            containedEdge = containedEdge || eV2.remove(v2);
         }
+        return containedEdge;
     }
 
     public List<MtxVertex> getAdjVertex(String label) {
