@@ -17,6 +17,8 @@ These are simplified versions of their equivalent Java standard library implemen
 
 Both of these support `size()` and `toString()`
 
+## Sets
+
 ## Time
 `MtxTime` is an object for keeping a record of a time vector, with operations to modify it accordingly. It can be instantiated with a string to parse into a time, or directly with integers for each component. It will also self balance (so that its hours are no greater than 23 and its seconds and minutes are no greater than 59).
 
@@ -35,3 +37,11 @@ These are its implementations:
 * `MtxSha3Hash` - hashes strings with the SHA3-256 algorithm. Hashes value 2,000 times.
 * `MtxMD5Hash` - hashes strings with the MD5 algorithm. Hashes value 9,000 times.
 * `MtxHashmapHash` - hashes strings with the algorithm that Java hashmaps use. Hashes value 20,000 times.
+
+## Encryption
+
+## String Filters
+
+## HTTP Request Reader
+
+## Graphs
