@@ -95,4 +95,9 @@ public final class MtxAdjacencyListGraph {
         }
         return visited;
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }
