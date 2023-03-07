@@ -18,6 +18,14 @@ public final class MtxAdjacencyListGraph {
         this.adjacencyVertices = new HashMap<>();
     }
 
+    public MtxAdjacencyListGraph(String... vertices) {
+        this();
+
+        for (String vertex : vertices) {
+            this.addVertex(vertex);
+        }
+    }
+
     public List<MtxVertex> addVertex(String label) {
         return adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>());
     }
