@@ -106,6 +106,16 @@ public final class MtxAdjacencyListGraph {
 
     @Override
     public String toString() {
-        return "";
+        StringBuilder stringRep = new StringBuilder();
+        for (MtxVertex vertex : this.adjacencyVertices.keySet()) {
+            stringRep.append(vertex.label() + " -> ");
+
+            String[] vertexArray = new String[this.adjacencyVertices.get(vertex).size()];
+            for (int i = 0; i < this.adjacencyVertices.get(vertex).size(); i++) {
+                vertexArray[i] = this.adjacencyVertices.get(vertex).get(i).label();
+            }
+            stringRep.append(String.join(", ", vertexArray)).append("\n");
+        }
+        return stringRep.toString();
     }
 }
