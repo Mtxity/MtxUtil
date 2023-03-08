@@ -65,6 +65,7 @@ public final class MtxStaticAdjacencyMatrixGraph {
     }
 
     private boolean flipEdge(String label1, String label2, boolean direction) {
+        // no null labels
         if (!this.vertexIdxMap.containsKey(label1) || !this.vertexIdxMap.containsKey(label2)) {
             return false;
         }
