@@ -26,14 +26,14 @@ public final class MtxAdjacencyListGraph {
         }
     }
 
-    public List<MtxVertex> addVertex(String label) {
-        return adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>());
+    public boolean addVertex(String label) {
+        return adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>()) == null;
     }
 
-    public List<MtxVertex> removeVertex(String label) {
+    public boolean removeVertex(String label) {
         MtxVertex v = new MtxVertex(label);
         adjacencyVertices.values().stream().forEach(e -> e.remove(v));
-        return adjacencyVertices.remove(new MtxVertex(label));
+        return adjacencyVertices.remove(new MtxVertex(label)) != null;
     }
 
     public boolean addEdge(String label1, String label2) {
