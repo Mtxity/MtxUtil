@@ -51,14 +51,19 @@ public final class MtxStaticAdjacencyMatrixGraphTest {
 
     @Test
     public void testToString() {
-        String expected =
-                """
-                Bob Alice Mark Rob Maria\s
-                Bob: 0 1 0 1 0\s
-                Alice: 1 0 1 0 1\s
-                Mark: 0 1 0 1 0\s
-                Rob: 1 0 1 0 1\s
-                Maria: 0 1 0 1 0""";
+        String expected = "+------+------+------+------+------+------+\n" +
+                          "|      |   Bob| Alice|  Mark|   Rob| Maria|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|   Bob|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "| Alice|     1|     0|     1|     0|     1|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|  Mark|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|   Rob|     1|     0|     1|     0|     1|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "| Maria|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+";
         assertEquals(expected, mtxStaticAdjacencyMatrixGraph.toString());
     }
 }

@@ -1,0 +1,45 @@
+package com.edavalos.mtx.util.string;
+
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public final class MtxMatrixFormatterTest {
+    private final String[][] sampleMatrix = {
+            {"", "Bob", "Alice", "Mark", "Rob", "Maria"},
+            {"Bob", "0", "1", "0", "1", "0"},
+            {"Alice", "1", "0", "1", "0", "1"},
+            {"Mark", "0", "1", "0", "1", "0"},
+            {"Rob", "1", "0", "1", "0", "1"},
+            {"Maria", "0", "1", "0", "1", "0"},
+    };
+
+    @Test
+    public void testFormat() {
+        String expected = "         Bob Alice  Mark   Rob Maria\n" +
+                          "   Bob     0     1     0     1     0\n" +
+                          " Alice     1     0     1     0     1\n" +
+                          "  Mark     0     1     0     1     0\n" +
+                          "   Rob     1     0     1     0     1\n" +
+                          " Maria     0     1     0     1     0";
+        assertEquals(expected, MtxMatrixFormatter.format(sampleMatrix));
+    }
+
+    @Test
+    public void testFormatBorder() {
+        String expected = "+------+------+------+------+------+------+\n" +
+                          "|      |   Bob| Alice|  Mark|   Rob| Maria|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|   Bob|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "| Alice|     1|     0|     1|     0|     1|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|  Mark|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "|   Rob|     1|     0|     1|     0|     1|\n" +
+                          "+------+------+------+------+------+------+\n" +
+                          "| Maria|     0|     1|     0|     1|     0|\n" +
+                          "+------+------+------+------+------+------+";
+        assertEquals(expected, MtxMatrixFormatter.formatBorder(sampleMatrix));
+    }
+}
