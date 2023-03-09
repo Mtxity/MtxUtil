@@ -19,14 +19,20 @@ public final class MtxMatrixFormatter {
     public static String formatBorder(String[][] mat) {
         int maxLen = findMaxLengthInMatrix(mat) + 1;
 
-        String s = "";
+        String s = "+";
+        for (int i = 0; i < mat[0].length; i++) {
+            s += repeatString("-", maxLen) + "+";
+        }
+        s += "\n";
+
         for (String[] row : mat) {
+            s += "|";
             for (String col : row) {
                 s += padString(col, maxLen) + "|";
             }
-            s += "\n";
-            for (int i = 0; i < (maxLen * row.length) + row.length; i++) {
-                s += "-";
+            s += "\n+";
+            for (int i = 0; i < row.length; i++) {
+                s += repeatString("-", maxLen) + "+";
             }
             s += "\n";
         }
@@ -45,5 +51,9 @@ public final class MtxMatrixFormatter {
 
     private static String padString(String s, int length) {
         return new String(new char[length - s.length()]).replace('\0', ' ') + s;
+    }
+
+    private static String repeatString(String s, int times) {
+        return new String(new char[times]).replace("\0", s);
     }
 }
