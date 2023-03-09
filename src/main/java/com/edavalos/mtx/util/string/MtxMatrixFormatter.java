@@ -16,6 +16,23 @@ public final class MtxMatrixFormatter {
         return s;
     }
 
+    public static String formatBorder(String[][] mat) {
+        int maxLen = findMaxLengthInMatrix(mat) + 1;
+
+        String s = "";
+        for (String[] row : mat) {
+            for (String col : row) {
+                s += padString(col, maxLen) + "|";
+            }
+            s += "\n";
+            for (int i = 0; i < (maxLen * row.length) + row.length; i++) {
+                s += "-";
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
     private static int findMaxLengthInMatrix(String[][] mat) {
         int len = 0;
         for (String[] row : mat) {
