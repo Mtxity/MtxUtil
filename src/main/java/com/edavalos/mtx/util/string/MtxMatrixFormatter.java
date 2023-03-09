@@ -13,7 +13,7 @@ public final class MtxMatrixFormatter {
             }
             s += "\n";
         }
-        return s;
+        return s.stripTrailing();
     }
 
     public static String formatBorder(String[][] mat) {
@@ -36,7 +36,7 @@ public final class MtxMatrixFormatter {
             }
             s += "\n";
         }
-        return s;
+        return s.stripTrailing();
     }
 
     private static int findMaxLengthInMatrix(String[][] mat) {
