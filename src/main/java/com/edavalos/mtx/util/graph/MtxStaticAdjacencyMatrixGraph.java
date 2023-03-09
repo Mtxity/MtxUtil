@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.graph;
 
+import com.edavalos.mtx.util.string.MtxMatrixFormatter;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -97,19 +99,18 @@ public final class MtxStaticAdjacencyMatrixGraph {
     // @TODO: Format this nicely
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
-        for (int k = 0; k < this.vertices; k++) {
-            s.append(this.idxVertexMap.get(k) + " ");
+        String[][] matrix = new String[this.vertices + 1][this.vertices + 1];
+        matrix[0][0] = "";
+        for (int k = 1; k < this.vertices + 1; k++) {
+            matrix[0][k] = this.idxVertexMap.get(k - 1);
         }
-        s.append("\n");
 
-        for (int i = 0; i < this.vertices; i++) {
-            s.append(this.idxVertexMap.get(i) + ": ");
-            for (boolean j : this.adjacencyMatrix[i]) {
-                s.append((j ? 1 : 0) + " ");
+        for (int row = 1; row < this.vertices + 1; row++) {
+            matrix[row][0] = this.idxVertexMap.get(row - 1);
+            for (int col = 1; col < this.vertices + 1; col++) {
+                matrix[row][col] = this.adjacencyMatrix[row - 1][col - 1] ? "1" : "0";
             }
-            s.append("\n");
         }
-        return s.toString().stripTrailing();
+        return MtxMatrixFormatter.formatBorder(matrix);
     }
 }
