@@ -93,4 +93,9 @@ public final class MtxAdjacencyMatrixGraph {
         this.adjacencyMatrix.get(idx2).set(idx1, direction);
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "";
+    }
 }
