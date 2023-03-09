@@ -6,37 +6,37 @@ public final class MtxMatrixFormatter {
     public static String format(String[][] matrix) {
         int maxLen = findMaxLengthInMatrix(matrix) + 1;
 
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (String[] row : matrix) {
             for (String col : row) {
-                s += padString(col, maxLen);
+                s.append(padString(col, maxLen));
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s.stripTrailing();
+        return s.toString().stripTrailing();
     }
 
     public static String formatBorder(String[][] mat) {
         int maxLen = findMaxLengthInMatrix(mat) + 1;
 
-        String s = "+";
+        StringBuilder s = new StringBuilder("+");
         for (int i = 0; i < mat[0].length; i++) {
-            s += repeatString("-", maxLen) + "+";
+            s.append(repeatString("-", maxLen)).append("+");
         }
-        s += "\n";
+        s.append("\n");
 
         for (String[] row : mat) {
-            s += "|";
+            s.append("|");
             for (String col : row) {
-                s += padString(col, maxLen) + "|";
+                s.append(padString(col, maxLen)).append("|");
             }
-            s += "\n+";
+            s.append("\n+");
             for (int i = 0; i < row.length; i++) {
-                s += repeatString("-", maxLen) + "+";
+                s.append(repeatString("-", maxLen)).append("+");
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s.stripTrailing();
+        return s.toString().stripTrailing();
     }
 
     private static int findMaxLengthInMatrix(String[][] mat) {
