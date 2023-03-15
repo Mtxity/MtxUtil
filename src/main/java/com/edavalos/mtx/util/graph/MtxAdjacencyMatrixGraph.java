@@ -13,17 +13,28 @@ public final class MtxAdjacencyMatrixGraph {
     private final Map<Integer, String> idxVertexMap;
     private int nextSpot;
 
-    public MtxAdjacencyMatrixGraph() {
+    public MtxAdjacencyMatrixGraph(int startingVertexCount) {
         this.adjacencyMatrix = new ArrayList<>();
-        this.vertices = 0;
+        this.vertices = startingVertexCount;
         this.vertexIdMap = new HashMap<>();
         this.idxVertexMap = new HashMap<>();
         this.nextSpot = 0;
+
+        for (int i = 0; i < startingVertexCount; i++) {
+            ArrayList<Boolean> newRow = new ArrayList<>();
+            for (int j = 0; j < startingVertexCount; j++) {
+                newRow.add(false);
+            }
+            this.adjacencyMatrix.add(newRow);
+        }
+    }
+
+    public MtxAdjacencyMatrixGraph() {
+        this(0);
     }
 
     public MtxAdjacencyMatrixGraph(String... vertices) {
-        this();
-        this.vertices = vertices.length;
+        this(vertices.length);
 
         for (String vertex : vertices) {
             //add
@@ -42,12 +53,27 @@ public final class MtxAdjacencyMatrixGraph {
         }
 
         // no duplicate labels
-        if (this.vertexIdMap.containsKey(label)) {
+        if (this.vertexIdMap.containsKey(label) || this.idxVertexMap.containsValue(label)) {
             return false;
         }
 
         this.vertexIdMap.put(label, this.nextSpot);
         this.idxVertexMap.put(this.nextSpot, label);
+
+        if (this.nextSpot >= this.vertices) {
+            for (List<Boolean> row : this.adjacencyMatrix) {
+                row.add(false);
+            }
+
+            ArrayList<Boolean> newRow = new ArrayList<>();
+            for (int i = 0; i < this.vertices; i++) {
+                newRow.add(false);
+            }
+            this.adjacencyMatrix.add(newRow);
+
+            this.vertices ++;
+        }
+
         this.nextSpot ++;
         return true;
     }
@@ -64,7 +90,7 @@ public final class MtxAdjacencyMatrixGraph {
         }
 
         // no nonexistent labels
-        if (!this.vertexIdMap.containsKey(label)) {
+        if (!this.vertexIdMap.containsKey(label) || !this.idxVertexMap.containsValue(label)) {
             return false;
         }
 
@@ -83,6 +109,16 @@ public final class MtxAdjacencyMatrixGraph {
     private boolean flipEdge(String label1, String label2, boolean direction) {
         // no nonexistent labels
         if (!this.vertexIdMap.containsKey(label1) || !this.vertexIdMap.containsKey(label2)) {
+            return false;
+        }
+
+        // no null labels
+        if (label1 == null || "".equals(label1) || label2 == null || "".equals(label2)) {
+            return false;
+        }
+
+        // no using the null placeholder
+        if (EMPTY_MARKER.equals(label1) || EMPTY_MARKER.equals(label2)) {
             return false;
         }
 
