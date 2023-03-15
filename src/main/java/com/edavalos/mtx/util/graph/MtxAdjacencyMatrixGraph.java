@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,14 +10,14 @@ public final class MtxAdjacencyMatrixGraph {
     private static final String EMPTY_MARKER = "_BLANK_";
     private final List<List<Boolean>> adjacencyMatrix;
     private int vertices;
-    private final Map<String, Integer> vertexIdMap;
+    private final Map<String, Integer> vertexIdxMap;
     private final Map<Integer, String> idxVertexMap;
     private int nextSpot;
 
     public MtxAdjacencyMatrixGraph(int startingVertexCount) {
         this.adjacencyMatrix = new ArrayList<>();
         this.vertices = startingVertexCount;
-        this.vertexIdMap = new HashMap<>();
+        this.vertexIdxMap = new HashMap<>();
         this.idxVertexMap = new HashMap<>();
         this.nextSpot = 0;
 
@@ -53,14 +54,15 @@ public final class MtxAdjacencyMatrixGraph {
         }
 
         // no duplicate labels
-        if (this.vertexIdMap.containsKey(label) || this.idxVertexMap.containsValue(label)) {
+        if (this.vertexIdxMap.containsKey(label) || this.idxVertexMap.containsValue(label)) {
             return false;
         }
 
-        this.vertexIdMap.put(label, this.nextSpot);
+        this.vertexIdxMap.put(label, this.nextSpot);
         this.idxVertexMap.put(this.nextSpot, label);
 
         if (this.nextSpot >= this.vertices) {
+            this.vertices ++;
             for (List<Boolean> row : this.adjacencyMatrix) {
                 row.add(false);
             }
@@ -70,8 +72,6 @@ public final class MtxAdjacencyMatrixGraph {
                 newRow.add(false);
             }
             this.adjacencyMatrix.add(newRow);
-
-            this.vertices ++;
         }
 
         this.nextSpot ++;
@@ -90,11 +90,11 @@ public final class MtxAdjacencyMatrixGraph {
         }
 
         // no nonexistent labels
-        if (!this.vertexIdMap.containsKey(label) || !this.idxVertexMap.containsValue(label)) {
+        if (!this.vertexIdxMap.containsKey(label) || !this.idxVertexMap.containsValue(label)) {
             return false;
         }
 
-        this.idxVertexMap.remove(this.vertexIdMap.remove(label), label);
+        this.idxVertexMap.remove(this.vertexIdxMap.remove(label), label);
         return true;
     }
 
@@ -108,7 +108,7 @@ public final class MtxAdjacencyMatrixGraph {
 
     private boolean flipEdge(String label1, String label2, boolean direction) {
         // no nonexistent labels
-        if (!this.vertexIdMap.containsKey(label1) || !this.vertexIdMap.containsKey(label2)) {
+        if (!this.vertexIdxMap.containsKey(label1) || !this.vertexIdxMap.containsKey(label2)) {
             return false;
         }
 
@@ -122,12 +122,39 @@ public final class MtxAdjacencyMatrixGraph {
             return false;
         }
 
-        int idx1 = this.vertexIdMap.get(label1);
-        int idx2 = this.vertexIdMap.get(label2);
+        int idx1 = this.vertexIdxMap.get(label1);
+        int idx2 = this.vertexIdxMap.get(label2);
 
         this.adjacencyMatrix.get(idx1).set(idx2, direction);
         this.adjacencyMatrix.get(idx2).set(idx1, direction);
         return true;
+    }
+
+    public List<MtxVertex> getAdjVertex(String label) {
+        // no null labels
+        if (label == null || "".equals(label)) {
+            return null;
+        }
+
+        // no using the null placeholder
+        if (EMPTY_MARKER.equals(label)) {
+            return null;
+        }
+
+        // no nonexistent labels
+        if (!this.vertexIdxMap.containsKey(label) || !this.idxVertexMap.containsValue(label)) {
+            return null;
+        }
+
+        LinkedList<MtxVertex> vertexList = new LinkedList<>();
+        int innerIdx = 0;
+        for (boolean vertexIdx : this.adjacencyMatrix.get(this.vertexIdxMap.get(label))) {
+            if (vertexIdx) {
+                vertexList.add(new MtxVertex(this.idxVertexMap.get(innerIdx)));
+            }
+            innerIdx ++;
+        }
+        return vertexList;
     }
 
     @Override
