@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.Stack;
 
 // Based on: https://www.baeldung.com/java-graphs
-public final class MtxAdjacencyListGraph {
+public final class MtxAdjacencyListGraph implements MtxGraph {
     private final Map<MtxVertex, List<MtxVertex>> adjacencyVertices;
 
     public MtxAdjacencyListGraph() {
@@ -26,16 +26,19 @@ public final class MtxAdjacencyListGraph {
         }
     }
 
+    @Override
     public boolean addVertex(String label) {
         return adjacencyVertices.putIfAbsent(new MtxVertex(label), new ArrayList<>()) == null;
     }
 
+    @Override
     public boolean removeVertex(String label) {
         MtxVertex v = new MtxVertex(label);
         adjacencyVertices.values().stream().forEach(e -> e.remove(v));
         return adjacencyVertices.remove(new MtxVertex(label)) != null;
     }
 
+    @Override
     public boolean addEdge(String label1, String label2) {
         MtxVertex v1 = new MtxVertex(label1);
         MtxVertex v2 = new MtxVertex(label2);
@@ -47,6 +50,7 @@ public final class MtxAdjacencyListGraph {
         return true;
     }
 
+    @Override
     public boolean removeEdge(String label1, String label2) {
         MtxVertex v1 = new MtxVertex(label1);
         MtxVertex v2 = new MtxVertex(label2);
@@ -64,6 +68,7 @@ public final class MtxAdjacencyListGraph {
         return containedEdge;
     }
 
+    @Override
     public List<MtxVertex> getAdjVertex(String label) {
         return adjacencyVertices.get(new MtxVertex(label));
     }

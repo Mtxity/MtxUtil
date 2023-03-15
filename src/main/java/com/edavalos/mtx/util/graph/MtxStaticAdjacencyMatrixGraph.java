@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 // Based on https://www.programiz.com/dsa/graph-adjacency-matrix
-public final class MtxStaticAdjacencyMatrixGraph {
+public final class MtxStaticAdjacencyMatrixGraph implements MtxGraph {
     private final boolean[][] adjacencyMatrix;
     private final int vertices;
     private final Map<String, Integer> vertexIdxMap;
@@ -31,6 +31,7 @@ public final class MtxStaticAdjacencyMatrixGraph {
         }
     }
 
+    @Override
     public boolean addVertex(String label) {
         // no null labels
         if (label == null || "".equals(label)) {
@@ -53,15 +54,18 @@ public final class MtxStaticAdjacencyMatrixGraph {
         return true;
     }
 
+    @Override
     public boolean removeVertex(String label) {
         // no removing vertices
         return false;
     }
 
+    @Override
     public boolean addEdge(String label1, String label2) {
         return flipEdge(label1, label2, true);
     }
 
+    @Override
     public boolean removeEdge(String label1, String label2) {
         return flipEdge(label1, label2, false);
     }
@@ -80,6 +84,7 @@ public final class MtxStaticAdjacencyMatrixGraph {
         return true;
     }
 
+    @Override
     public List<MtxVertex> getAdjVertex(String label) {
         if (this.vertexIdxMap.get(label) == null) {
             return null;

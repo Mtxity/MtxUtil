@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public final class MtxAdjacencyMatrixGraph {
+public final class MtxAdjacencyMatrixGraph implements MtxGraph {
     private static final String EMPTY_MARKER = "_BLANK_";
     private final List<List<Boolean>> adjacencyMatrix;
     private int vertices;
@@ -44,6 +44,7 @@ public final class MtxAdjacencyMatrixGraph {
         }
     }
 
+    @Override
     public boolean addVertex(String label) {
         // no null labels
         if (label == null || "".equals(label)) {
@@ -80,6 +81,7 @@ public final class MtxAdjacencyMatrixGraph {
         return true;
     }
 
+    @Override
     public boolean removeVertex(String label) {
         // no null labels
         if (label == null || "".equals(label)) {
@@ -100,10 +102,12 @@ public final class MtxAdjacencyMatrixGraph {
         return true;
     }
 
+    @Override
     public boolean addEdge(String label1, String label2) {
         return flipEdge(label1, label2, true);
     }
 
+    @Override
     public boolean removeEdge(String label1, String label2) {
         return flipEdge(label1, label2, false);
     }
@@ -132,6 +136,7 @@ public final class MtxAdjacencyMatrixGraph {
         return true;
     }
 
+    @Override
     public List<MtxVertex> getAdjVertex(String label) {
         // no null labels
         if (label == null || "".equals(label)) {
