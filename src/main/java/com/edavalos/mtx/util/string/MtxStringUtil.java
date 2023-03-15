@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.string;
 import java.util.regex.Pattern;
 
 public final class MtxStringUtil {
+    private static final char SEPARATOR_CHAR = 'ҁ';
+
     private MtxStringUtil() { }
 
     public static boolean isEmpty(String string) {
@@ -15,14 +17,12 @@ public final class MtxStringUtil {
         }
 
         if (chars.length == 1) {
-            return string.split(Pattern.quote(String.valueOf(chars[0])));
+            return string.split(Pattern.quote(String.valueOf(chars[0])), 2);
         }
 
-        StringBuilder spliterator = new StringBuilder();
-        for (char c : chars) {
-            spliterator.append(c).append("|");
+        for (char separator : chars) {
+            string = string.replaceFirst(Pattern.quote(String.valueOf(separator)), String.valueOf(SEPARATOR_CHAR));
         }
-        spliterator.deleteCharAt(spliterator.length() - 1);
-        return string.split(spliterator.toString());
+        return string.split(Pattern.quote(String.valueOf(SEPARATOR_CHAR)));
     }
 }
