@@ -33,6 +33,14 @@ public interface MtxGraph {
      */
     List<MtxVertex> getAdjVertex(String label);
 
+    default boolean isAdjacent(String label1, String label2) {
+        List<MtxVertex> adjacentTo1 = this.getAdjVertex(label1);
+        List<MtxVertex> adjacentTo2 = this.getAdjVertex(label2);
+
+        return adjacentTo1.contains(new MtxVertex(label2)) &&
+               adjacentTo2.contains(new MtxVertex(label1));
+    }
+
     /**
      * @return a string representation of this list
      */
