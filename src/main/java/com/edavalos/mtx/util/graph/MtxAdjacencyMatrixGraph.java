@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.graph;
 
+import com.edavalos.mtx.util.string.MtxMatrixFormatter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -159,6 +161,21 @@ public final class MtxAdjacencyMatrixGraph {
 
     @Override
     public String toString() {
-        return "";
+        int strMatSize = this.vertexIdxMap.keySet().size() + 1;
+        String[][] matrix = new String[strMatSize][strMatSize];
+        matrix[0][0] = "";
+        for (Map.Entry<String, Integer> pair : this.vertexIdxMap.entrySet()) {
+            matrix[0][pair.getValue() + 1] = pair.getKey();
+        }
+
+        for (int row = 0; row < this.adjacencyMatrix.size(); row++) {
+            matrix[row + 1][0] = this.idxVertexMap.get(row);
+            for (int col = 0; col < this.adjacencyMatrix.size(); col++) {
+                if (this.idxVertexMap.containsKey(col)) {
+                    matrix[row + 1][col + 1] = this.adjacencyMatrix.get(row).get(col) ? "1" : "0";
+                }
+            }
+        }
+        return MtxMatrixFormatter.formatBorder(matrix);
     }
 }
