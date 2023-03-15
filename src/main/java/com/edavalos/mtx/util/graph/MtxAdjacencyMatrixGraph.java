@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.graph;
 
 import com.edavalos.mtx.util.string.MtxMatrixFormatter;
+import com.edavalos.mtx.util.string.MtxStringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,7 +48,7 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
     @Override
     public boolean addVertex(String label) {
         // no null labels
-        if (label == null || "".equals(label)) {
+        if (MtxStringUtil.isEmpty(label)) {
             return false;
         }
 
@@ -84,7 +85,7 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
     @Override
     public boolean removeVertex(String label) {
         // no null labels
-        if (label == null || "".equals(label)) {
+        if (MtxStringUtil.isEmpty(label)) {
             return false;
         }
 
@@ -119,7 +120,7 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
         }
 
         // no null labels
-        if (label1 == null || "".equals(label1) || label2 == null || "".equals(label2)) {
+        if (MtxStringUtil.isEmpty(label1) || MtxStringUtil.isEmpty(label2)) {
             return false;
         }
 
@@ -139,7 +140,7 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
     @Override
     public List<MtxVertex> getAdjVertex(String label) {
         // no null labels
-        if (label == null || "".equals(label)) {
+        if (MtxStringUtil.isEmpty(label)) {
             return null;
         }
 

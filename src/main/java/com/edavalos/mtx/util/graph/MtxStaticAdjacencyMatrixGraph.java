@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.graph;
 
 import com.edavalos.mtx.util.string.MtxMatrixFormatter;
+import com.edavalos.mtx.util.string.MtxStringUtil;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,7 +35,7 @@ public final class MtxStaticAdjacencyMatrixGraph implements MtxGraph {
     @Override
     public boolean addVertex(String label) {
         // no null labels
-        if (label == null || "".equals(label)) {
+        if (MtxStringUtil.isEmpty(label)) {
             return false;
         }
 
