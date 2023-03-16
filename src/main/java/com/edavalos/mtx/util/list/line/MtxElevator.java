@@ -39,6 +39,34 @@ public final class MtxElevator<C> {
         return contentsManager.modifyContents(this.contents);
     }
 
+    public int queueSize() {
+        return this.floorQueue.size();
+    }
+
+    public int getCurrentFloor() {
+        return this.currentFloor;
+    }
+
+    public int getDirection() {
+        return this.direction;
+    }
+
+    public int getFloors() {
+        return this.floors;
+    }
+
+    public C getContents() {
+        return this.contents;
+    }
+
+    public void setContents(C contents) {
+        this.contents = contents;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
     @Override
     public String toString() {
         return "";
