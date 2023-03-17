@@ -17,7 +17,7 @@ public final class MtxElevator<C> {
 
     // Typical order of operations for an elevator:
     // 1. queue floors (can happen whenever)
-    // 2. move to next stop
+    // 2. move to next floor
     // 3. interact with contents
     // 4. go to step 2.
 
@@ -42,19 +42,24 @@ public final class MtxElevator<C> {
     }
 
     public void queueFloor(int startingFloor, int destinationFloor) {
+        if (startingFloor < 0 || destinationFloor < 0) {
+            throw new IndexOutOfBoundsException("Negative numbers are not allowed: " +
+                                                startingFloor + ", " + destinationFloor);
+        }
+
         if (startingFloor == destinationFloor) {
             // Already at destination
             return;
         }
-        if (startingFloor > destinationFloor) {
+        if (startingFloor < destinationFloor) {
             this.upwardsFloorQueue.add(destinationFloor);
         }
-        if (startingFloor < destinationFloor) {
+        if (startingFloor > destinationFloor) {
             this.downwardsFloorQueue.add(destinationFloor);
         }
     }
 
-    public void moveToNextStop() {
+    public void moveToNextFloor() {
         // Already there
         if (this.upwardsFloorQueue.contains(this.currentFloor)) {
             this.upwardsFloorQueue.remove(this.currentFloor);
@@ -73,13 +78,15 @@ public final class MtxElevator<C> {
                 }
                 // Move up to next floor and remove it from queue
                 this.currentFloor = this.upwardsFloorQueue.remove(i);
-                return;
+                break;
             }
             // If no floors higher than current are found, switch direction
-            if (this.downwardsFloorQueue.isEmpty()) {
-                this.direction = 0;
-            } else {
-                this.direction = -1;
+            if (this.upwardsFloorQueue.isEmpty()) {
+                if (this.downwardsFloorQueue.isEmpty()) {
+                    this.direction = 0;
+                } else {
+                    this.direction = -1;
+                }
             }
             return;
         }
@@ -92,7 +99,7 @@ public final class MtxElevator<C> {
                 this.direction = 1;
             }
             // Move down to next floor and remove it from queue
-            this.currentFloor = this.downwardsFloorQueue.remove(0);
+            this.currentFloor = this.downwardsFloorQueue.remove(this.downwardsFloorQueue.size() - 1);
 
             // If no floors lower than current are found, switch direction
             if (this.downwardsFloorQueue.isEmpty()) {
@@ -109,10 +116,10 @@ public final class MtxElevator<C> {
         // Standing still
         if (!this.upwardsFloorQueue.isEmpty()) {
             this.direction = 1;
-            this.moveToNextStop();
+            this.moveToNextFloor();
         } else if (!this.downwardsFloorQueue.isEmpty()) {
             this.direction = -1;
-            this.moveToNextStop();
+            this.moveToNextFloor();
         }
     }
 
@@ -146,6 +153,14 @@ public final class MtxElevator<C> {
 
     public void setDirection(int direction) {
         this.direction = direction;
+    }
+
+    protected List<Integer> getUpwardsFloorQueue() {
+        return this.upwardsFloorQueue;
+    }
+
+    protected List<Integer> getDownwardsFloorQueue() {
+        return this.downwardsFloorQueue;
     }
 
     @Override
