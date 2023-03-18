@@ -67,4 +67,10 @@ public final class MtxElevatorTest {
         }
     }
 
+    @Test
+    public void testQueueSize() {
+        int expectedQueueSize = UPWARD_FLOOR_QUEUE.size() + DOWNWARD_FLOOR_QUEUE.size();
+        assertEquals(expectedQueueSize, mtxElevator.queueSize());
+    }
+
 }
