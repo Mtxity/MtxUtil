@@ -55,4 +55,35 @@ public final class MtxStringUtil {
         }
         return s + new String(new char[length - s.length()]).replace('\0', ' ');
     }
+
+    public static String centerPad(String s, int length) {
+        if (length <= 0) {
+            return "";
+        }
+        if (length == s.length()) {
+            return s;
+        }
+
+        if (length < s.length()) {
+            int lengthDifference = s.length() - length;
+            boolean front = true;
+            while (lengthDifference > 0) {
+                if (front) {
+                    s = s.substring(1);
+                    front = false;
+                } else {
+                    s = s.substring(0, s.length() - 1);
+                    front = true;
+                }
+                lengthDifference --;
+            }
+            return s;
+        }
+
+        int extraLength = length - s.length();
+        int leftPad = ((int) Math.ceil(((double) extraLength) / 2));
+        int rightPad = ((int) Math.floor(((double) extraLength) / 2));
+
+        return repeat(" ", leftPad) + s + repeat(" ", rightPad);
+    }
 }
