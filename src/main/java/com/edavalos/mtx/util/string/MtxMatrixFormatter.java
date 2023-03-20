@@ -21,7 +21,7 @@ public final class MtxMatrixFormatter {
 
         StringBuilder s = new StringBuilder("+");
         for (int i = 0; i < mat[0].length; i++) {
-            s.append(repeatString("-", maxLen)).append("+");
+            s.append(MtxStringUtil.repeat("-", maxLen)).append("+");
         }
         s.append("\n");
 
@@ -32,7 +32,7 @@ public final class MtxMatrixFormatter {
             }
             s.append("\n+");
             for (int i = 0; i < row.length; i++) {
-                s.append(repeatString("-", maxLen)).append("+");
+                s.append(MtxStringUtil.repeat("-", maxLen)).append("+");
             }
             s.append("\n");
         }
@@ -51,9 +51,5 @@ public final class MtxMatrixFormatter {
 
     private static String padString(String s, int length) {
         return new String(new char[length - s.length()]).replace('\0', ' ') + s;
-    }
-
-    private static String repeatString(String s, int times) {
-        return new String(new char[times]).replace("\0", s);
     }
 }

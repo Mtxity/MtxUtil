@@ -25,4 +25,8 @@ public final class MtxStringUtil {
         }
         return string.split(Pattern.quote(String.valueOf(SEPARATOR_CHAR)));
     }
+
+    public static String repeat(String s, int times) {
+        return new String(new char[times]).replace("\0", s);
+    }
 }
