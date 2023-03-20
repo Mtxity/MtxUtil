@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,6 +56,38 @@ public final class MtxStringUtilTest {
         public void testSplitAtChars_multipleArg() {
             String[] expected = new String[]{"s", "t", "r", "i", "n", "g", "e", "x", "a", "m", "p", "l", "e"};
             assertArrayEquals(expected, MtxStringUtil.splitAtChars(sampleString, specialChars));
+        }
+    }
+
+    @Nested
+    class RepeatTests {
+        String starting = "x";
+
+        @Test
+        public void testRepeat_oneTime() {
+            String expected = "x";
+            int times = 1;
+
+            assertEquals(expected, MtxStringUtil.repeat(starting, times));
+        }
+
+        @Test
+        public void testRepeat_zeroTimes() {
+            String expected = "";
+            int times = 0;
+
+            assertEquals(expected, MtxStringUtil.repeat(starting, times));
+        }
+
+        @Test
+        public void testRepeat_nTimes() {
+            String expected = "";
+            int times = 10;
+
+            for (int i = 0; i < times; i++) {
+                assertEquals(expected, MtxStringUtil.repeat(starting, i));
+                expected += starting;
+            }
         }
     }
 }
