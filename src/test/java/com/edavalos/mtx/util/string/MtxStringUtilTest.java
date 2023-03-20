@@ -91,23 +91,85 @@ public final class MtxStringUtilTest {
         }
     }
 
-    @Test
-    public void testLeftPad() {
-        String val = "x";
-        String expected = "    " + val;
-        int length = 5;
+    @Nested
+    class LeftPadTests {
+        String val = "12345";
 
-        assertEquals(expected, MtxStringUtil.leftPad(val, length));
-        assertEquals(length, MtxStringUtil.leftPad(val, length).length());
+        @Test
+        public void testLeftPad_longerLength() {
+            String expected = "     " + val;
+            int length = 5 + val.length();
+
+            assertEquals(expected, MtxStringUtil.leftPad(val, length));
+            assertEquals(length, MtxStringUtil.leftPad(val, length).length());
+        }
+
+        @Test
+        public void testLeftPad_sameLength() {
+            String expected = val;
+            int length = val.length();
+
+            assertEquals(expected, MtxStringUtil.leftPad(val, length));
+            assertEquals(length, MtxStringUtil.leftPad(val, length).length());
+        }
+
+        @Test
+        public void testLeftPad_shorterLength() {
+            String expected = "345";
+            int length = val.length() - 2;
+
+            assertEquals(expected, MtxStringUtil.leftPad(val, length));
+            assertEquals(length, MtxStringUtil.leftPad(val, length).length());
+        }
+
+        @Test
+        public void testLeftPad_negativeLength() {
+            String expected = "";
+            int length = -1;
+
+            assertEquals(expected, MtxStringUtil.leftPad(val, length));
+            assertEquals(0, MtxStringUtil.leftPad(val, length).length());
+        }
     }
 
-    @Test
-    public void testRightPad() {
-        String val = "x";
-        String expected = val + "    ";
-        int length = 5;
+    @Nested
+    class RightPadTests {
+        String val = "12345";
 
-        assertEquals(expected, MtxStringUtil.rightPad(val, length));
-        assertEquals(length, MtxStringUtil.rightPad(val, length).length());
+        @Test
+        public void testRightPad_longerLength() {
+            String expected = val + "     ";
+            int length = 5 + val.length();
+
+            assertEquals(expected, MtxStringUtil.rightPad(val, length));
+            assertEquals(length, MtxStringUtil.rightPad(val, length).length());
+        }
+
+        @Test
+        public void testRightPad_sameLength() {
+            String expected = val;
+            int length = val.length();
+
+            assertEquals(expected, MtxStringUtil.rightPad(val, length));
+            assertEquals(length, MtxStringUtil.rightPad(val, length).length());
+        }
+
+        @Test
+        public void testRightPad_shorterLength() {
+            String expected = "123";
+            int length = val.length() - 2;
+
+            assertEquals(expected, MtxStringUtil.rightPad(val, length));
+            assertEquals(length, MtxStringUtil.rightPad(val, length).length());
+        }
+
+        @Test
+        public void testRightPad_negativeLength() {
+            String expected = "";
+            int length = -1;
+
+            assertEquals(expected, MtxStringUtil.rightPad(val, length));
+            assertEquals(0, MtxStringUtil.rightPad(val, length).length());
+        }
     }
 }

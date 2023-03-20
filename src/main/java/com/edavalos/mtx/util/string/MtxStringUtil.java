@@ -31,10 +31,28 @@ public final class MtxStringUtil {
     }
 
     public static String leftPad(String s, int length) {
+        if (length <= 0) {
+            return "";
+        }
+        if (length < s.length()) {
+            return s.substring(s.length() - length);
+        }
+        if (length == s.length()) {
+            return s;
+        }
         return new String(new char[length - s.length()]).replace('\0', ' ') + s;
     }
 
     public static String rightPad(String s, int length) {
+        if (length <= 0) {
+            return "";
+        }
+        if (length < s.length()) {
+            return s.substring(0, length);
+        }
+        if (length == s.length()) {
+            return s;
+        }
         return s + new String(new char[length - s.length()]).replace('\0', ' ');
     }
 }
