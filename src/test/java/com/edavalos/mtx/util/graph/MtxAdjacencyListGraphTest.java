@@ -153,4 +153,14 @@ public final class MtxAdjacencyListGraphTest {
         assertFalse(mtxAdjacencyListGraph.isAdjacent(noAdj1[0], noAdj1[1]));
         assertFalse(mtxAdjacencyListGraph.isAdjacent(noAdj2[0], noAdj2[1]));
     }
+
+    @Test
+    public void testDepthFirstTraversal() {
+        assertEquals("[Bob, Rob, Maria, Alice, Mark]", mtxAdjacencyListGraph.depthFirstTraversal("Bob").toString());
+    }
+
+    @Test
+    public void testBreadthFirstTraversal() {
+        assertEquals("[Bob, Alice, Rob, Mark, Maria]", mtxAdjacencyListGraph.breadthFirstTraversal("Bob").toString());
+    }
 }
