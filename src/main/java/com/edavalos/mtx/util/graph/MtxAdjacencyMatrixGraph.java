@@ -41,7 +41,7 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
         this(vertices.length);
 
         for (String vertex : vertices) {
-            //add
+            this.addVertex(vertex);
         }
     }
 
@@ -116,16 +116,6 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
     private boolean flipEdge(String label1, String label2, boolean direction) {
         // no nonexistent labels
         if (!this.vertexIdxMap.containsKey(label1) || !this.vertexIdxMap.containsKey(label2)) {
-            return false;
-        }
-
-        // no null labels
-        if (MtxStringUtil.isEmpty(label1) || MtxStringUtil.isEmpty(label2)) {
-            return false;
-        }
-
-        // no using the null placeholder
-        if (EMPTY_MARKER.equals(label1) || EMPTY_MARKER.equals(label2)) {
             return false;
         }
 

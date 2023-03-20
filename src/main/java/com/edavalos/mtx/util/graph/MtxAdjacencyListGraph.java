@@ -57,15 +57,11 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
 
         List<MtxVertex> eV1 = adjacencyVertices.get(v1);
         List<MtxVertex> eV2 = adjacencyVertices.get(v2);
+        if (eV1 == null || eV2 == null) {
+            return false;
+        }
 
-        boolean containedEdge = false;
-        if (eV1 != null) {
-            containedEdge = eV1.remove(v2);
-        }
-        if (eV2 != null) {
-            containedEdge = containedEdge || eV2.remove(v2);
-        }
-        return containedEdge;
+        return eV1.remove(v2) && eV2.remove(v1);
     }
 
     @Override
