@@ -33,4 +33,8 @@ public final class MtxStringUtil {
     public static String leftPad(String s, int length) {
         return new String(new char[length - s.length()]).replace('\0', ' ') + s;
     }
+
+    public static String rightPad(String s, int length) {
+        return s + new String(new char[length - s.length()]).replace('\0', ' ');
+    }
 }
