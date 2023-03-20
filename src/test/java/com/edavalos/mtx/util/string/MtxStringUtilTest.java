@@ -172,4 +172,63 @@ public final class MtxStringUtilTest {
             assertEquals(0, MtxStringUtil.rightPad(val, length).length());
         }
     }
+
+    @Nested
+    class CenterPadTests {
+        String val = "12345";
+
+        @Test
+        public void testCenterPad_longerLength_evenNumber() {
+            String expected = "   " + val + "   ";
+            int length = 3 + val.length() + 3;
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(length, MtxStringUtil.centerPad(val, length).length());
+        }
+
+        @Test
+        public void testCenterPad_longerLength_oddNumber() {
+            String expected = "    " + val + "   ";
+            int length = 4 + val.length() + 3;
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(length, MtxStringUtil.centerPad(val, length).length());
+        }
+
+        @Test
+        public void testCenterPad_sameLength() {
+            String expected = val;
+            int length = val.length();
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(length, MtxStringUtil.centerPad(val, length).length());
+        }
+
+        @Test
+        public void testCenterPad_shorterLength_evenNumber() {
+            String expected = "234";
+            int length = val.length() - 2;
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(length, MtxStringUtil.centerPad(val, length).length());
+        }
+
+        @Test
+        public void testCenterPad_shorterLength_oddNumber() {
+            String expected = "34";
+            int length = val.length() - 3;
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(length, MtxStringUtil.centerPad(val, length).length());
+        }
+
+        @Test
+        public void testCenterPad_negativeLength() {
+            String expected = "";
+            int length = -1;
+
+            assertEquals(expected, MtxStringUtil.centerPad(val, length));
+            assertEquals(0, MtxStringUtil.centerPad(val, length).length());
+        }
+    }
 }
