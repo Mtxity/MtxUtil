@@ -29,4 +29,8 @@ public final class MtxStringUtil {
     public static String repeat(String s, int times) {
         return new String(new char[times]).replace("\0", s);
     }
+
+    public static String leftPad(String s, int length) {
+        return new String(new char[length - s.length()]).replace('\0', ' ') + s;
+    }
 }

@@ -9,7 +9,7 @@ public final class MtxMatrixFormatter {
         StringBuilder s = new StringBuilder();
         for (String[] row : matrix) {
             for (String col : row) {
-                s.append(padString(col, maxLen));
+                s.append(MtxStringUtil.leftPad(col, maxLen));
             }
             s.append("\n");
         }
@@ -28,7 +28,7 @@ public final class MtxMatrixFormatter {
         for (String[] row : mat) {
             s.append("|");
             for (String col : row) {
-                s.append(padString(col, maxLen)).append("|");
+                s.append(MtxStringUtil.leftPad(col, maxLen)).append("|");
             }
             s.append("\n+");
             for (int i = 0; i < row.length; i++) {
@@ -47,9 +47,5 @@ public final class MtxMatrixFormatter {
             }
         }
         return len;
-    }
-
-    private static String padString(String s, int length) {
-        return new String(new char[length - s.length()]).replace('\0', ' ') + s;
     }
 }
