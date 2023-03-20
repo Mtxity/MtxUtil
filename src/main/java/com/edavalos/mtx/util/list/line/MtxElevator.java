@@ -130,37 +130,37 @@ public final class MtxElevator<C> {
 //            this.direction = -1;
 //            this.moveToNextFloor();
 //        }
-        // Going up
-        if (this.direction == 1) {
-            Collections.sort(this.upwardsFloorQueue);
-            for (int i = 0; i < this.upwardsFloorQueue.size(); i++) {
-                if (this.upwardsFloorQueue.get(i) >= this.currentFloor) {
-                    this.currentFloor = this.upwardsFloorQueue.remove(i);
-                    return;
-                }
-            }
-        }
-        // Going down
-        else if (this.direction == -1) {
-            Collections.sort(this.downwardsFloorQueue);
-            Collections.reverse(this.downwardsFloorQueue);
-            for (int i = this.downwardsFloorQueue.size() - 1; i <= 0; i--) {
-                if (this.downwardsFloorQueue.get(i) <= this.currentFloor) {
-                    this.currentFloor = this.downwardsFloorQueue.remove(i);
-                    return;
-                }
-            }
-        }
-        // Standing still
-        else {
-            if (!this.upwardsFloorQueue.isEmpty()) {
-                this.direction = 1;
-                this.moveToNextFloor();
-            } else if (!this.downwardsFloorQueue.isEmpty()) {
-                this.direction = -1;
-                this.moveToNextFloor();
-            }
-        }
+//        // Going up
+//        if (this.direction == 1) {
+//            Collections.sort(this.upwardsFloorQueue);
+//            for (int i = 0; i < this.upwardsFloorQueue.size(); i++) {
+//                if (this.upwardsFloorQueue.get(i) >= this.currentFloor) {
+//                    this.currentFloor = this.upwardsFloorQueue.remove(i);
+//                    return;
+//                }
+//            }
+//        }
+//        // Going down
+//        else if (this.direction == -1) {
+//            Collections.sort(this.downwardsFloorQueue);
+//            Collections.reverse(this.downwardsFloorQueue);
+//            for (int i = this.downwardsFloorQueue.size() - 1; i <= 0; i--) {
+//                if (this.downwardsFloorQueue.get(i) <= this.currentFloor) {
+//                    this.currentFloor = this.downwardsFloorQueue.remove(i);
+//                    return;
+//                }
+//            }
+//        }
+//        // Standing still
+//        else {
+//            if (!this.upwardsFloorQueue.isEmpty()) {
+//                this.direction = 1;
+//                this.moveToNextFloor();
+//            } else if (!this.downwardsFloorQueue.isEmpty()) {
+//                this.direction = -1;
+//                this.moveToNextFloor();
+//            }
+//        }
 
     }
 
