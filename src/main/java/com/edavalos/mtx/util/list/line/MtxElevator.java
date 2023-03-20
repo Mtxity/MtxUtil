@@ -141,7 +141,7 @@ public final class MtxElevator<C> {
             }
         }
         // Going down
-        if (this.direction == -1) {
+        else if (this.direction == -1) {
             Collections.sort(this.downwardsFloorQueue);
             Collections.reverse(this.downwardsFloorQueue);
             for (int i = this.downwardsFloorQueue.size() - 1; i <= 0; i--) {
@@ -152,14 +152,16 @@ public final class MtxElevator<C> {
             }
         }
         // Standing still
-        if (!this.upwardsFloorQueue.isEmpty()) {
-            this.direction = 1;
-            this.moveToNextFloor();
-        } else if (!this.downwardsFloorQueue.isEmpty()) {
-            this.direction = -1;
-            this.moveToNextFloor();
+        else {
+            if (!this.upwardsFloorQueue.isEmpty()) {
+                this.direction = 1;
+                this.moveToNextFloor();
+            } else if (!this.downwardsFloorQueue.isEmpty()) {
+                this.direction = -1;
+                this.moveToNextFloor();
+            }
         }
-        
+
     }
 
     public C interactWithContents(MtxElevatorContentsManager<C> contentsManager) {
