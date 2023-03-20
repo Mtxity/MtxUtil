@@ -45,7 +45,7 @@ public final class MtxStaticAdjacencyMatrixGraph implements MtxGraph {
         }
 
         // no going over matrix size
-        if (this.nextSpot == this.vertices) {
+        if (this.nextSpot == this.adjacencyMatrix.length) {
             throw new IndexOutOfBoundsException(this.nextSpot);
         }
 
