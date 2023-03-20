@@ -90,4 +90,24 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Test
+    public void testLeftPad() {
+        String val = "x";
+        String expected = "    " + val;
+        int length = 5;
+
+        assertEquals(expected, MtxStringUtil.leftPad(val, length));
+        assertEquals(length, MtxStringUtil.leftPad(val, length).length());
+    }
+
+    @Test
+    public void testRightPad() {
+        String val = "x";
+        String expected = val + "    ";
+        int length = 5;
+
+        assertEquals(expected, MtxStringUtil.rightPad(val, length));
+        assertEquals(length, MtxStringUtil.rightPad(val, length).length());
+    }
 }
