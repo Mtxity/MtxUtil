@@ -2,7 +2,9 @@ package com.edavalos.mtx.util.list.line;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public final class MtxElevator<C> {
     @FunctionalInterface
@@ -21,9 +23,14 @@ public final class MtxElevator<C> {
     // 3. interact with contents
     // 4. go to step 2.
 
+    private static final int SWITCH_DIRECTIONS_MARKER = -1;
+
     private final int floors;
-    private final List<Integer> upwardsFloorQueue;
-    private final List<Integer> downwardsFloorQueue;
+    private final List<Integer> floorQueue;
+    private final Queue<Integer> currentDirectionEnRoute;
+    private final Queue<Integer> oppositeDirectionEnRoute;
+    private final Queue<Integer> currentDirectionBacklog;
+    private final Queue<Integer> oppositeDirectionBacklog;
     // @TODO: Make this an enum
     private int direction;
     private int currentFloor;
@@ -35,8 +42,11 @@ public final class MtxElevator<C> {
         }
 
         this.floors = floors;
-        this.upwardsFloorQueue = new ArrayList<>();
-        this.downwardsFloorQueue = new ArrayList<>();
+        this.floorQueue = new ArrayList<>();
+        this.currentDirectionEnRoute = new LinkedList<>();
+        this.oppositeDirectionEnRoute = new LinkedList<>();
+        this.currentDirectionBacklog = new LinkedList<>();
+        this.oppositeDirectionBacklog = new LinkedList<>();
         this.direction = 0;
         this.currentFloor = 0;
         this.contents = null;
@@ -53,18 +63,26 @@ public final class MtxElevator<C> {
             return;
         }
 
-        int newDirection = 0;
-        if (startingFloor < destinationFloor) {
-            this.upwardsFloorQueue.add(destinationFloor);
-            newDirection = 1;
-        }
-        if (startingFloor > destinationFloor) {
-            this.downwardsFloorQueue.add(destinationFloor);
-            newDirection = -1;
-        }
+        int floorDirection = (startingFloor < destinationFloor) ? 1 : -1;
 
-        if (this.direction == 0) {
-            this.direction = newDirection;
+        // Going up
+        if (this.direction == 1) {
+            // Going current direction
+            if (floorDirection == 1) {
+                // En route
+                if (this.currentFloor < destinationFloor) {
+                    this.currentDirectionEnRoute.add(destinationFloor);
+                }
+                // Backtracking
+                else {
+                    this.currentDirectionBacklog.add(destinationFloor);
+                }
+            }
+            // Going opposite direction
+            else {
+                // En route
+
+            }
         }
     }
 
