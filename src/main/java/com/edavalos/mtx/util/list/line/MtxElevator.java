@@ -25,10 +25,10 @@ public final class MtxElevator<C> {
     private static final int SWITCH_DIRECTIONS_MARKER = -1;
 
     private final int floors;
-    private final Queue<Integer> thisRideUp;
-    private final Queue<Integer> nextRideUp;
-    private final Queue<Integer> thisRideDown;
-    private final Queue<Integer> nextRideDown;
+    private List<Integer> thisRideUp;
+    private List<Integer> nextRideUp;
+    private List<Integer> thisRideDown;
+    private List<Integer> nextRideDown;
     // @TODO: Make this an enum
     private int direction;
     private int currentFloor;
@@ -65,10 +65,19 @@ public final class MtxElevator<C> {
             return;
         }
 
+        // If elevator is standing still and has a queue, go in that direction
+        if (this.direction == 0) {
+            if (!this.thisRideUp.isEmpty()) {
+                this.direction = 1;
+            } else if (!this.thisRideDown.isEmpty()) {
+                this.direction = -1;
+            }
+        }
+
         int floorDirection = (startingFloor < destinationFloor) ? 1 : -1;
 
-        // Elevator going up (or standing still)
-        if (this.direction == 1 || this.direction == 0) {
+        // Elevator going up
+        if (this.direction == 1) {
             // Going up
             if (floorDirection == 1) {
                 // Both stops above
@@ -86,11 +95,6 @@ public final class MtxElevator<C> {
             else {
                 this.thisRideDown.add(startingFloor);
                 this.thisRideDown.add(destinationFloor);
-            }
-
-            // If elevator is standing still, go up
-            if (this.direction == 0) {
-                this.direction = 1;
             }
         }
         // Elevator going down
@@ -116,8 +120,52 @@ public final class MtxElevator<C> {
         }
     }
 
-    public void moveToNextFloor() {
+    public boolean moveToNextFloor() {
+        boolean moved = false;
 
+        // If elevator is standing still and has a queue, go in that direction
+        if (this.direction == 0) {
+            if (!this.thisRideUp.isEmpty()) {
+                this.direction = 1;
+            } else if (!this.thisRideDown.isEmpty()) {
+                this.direction = -1;
+            }
+            // If there is no queue, do nothing
+            else {
+                return false;
+            }
+        }
+
+        // Elevator going up
+        if (this.direction == 1) {
+            if (!this.thisRideUp.isEmpty()) {
+                this.currentFloor = this.thisRideUp.remove(0);
+                moved = true;
+            }
+
+            // Last floor in thisRideUp
+            if (this.thisRideUp.isEmpty()) {
+                this.thisRideUp = this.nextRideUp;
+                // Only go down if there's a queue going down
+                this.direction = this.thisRideDown.isEmpty() ? 0 : -1;
+            }
+        }
+        // Elevator going down
+        else if (this.direction == -1) {
+            if (!this.thisRideDown.isEmpty()) {
+                this.currentFloor = this.thisRideDown.remove(0);
+                moved = true;
+            }
+
+            // Last floor in thisRideDown
+            if (this.thisRideDown.isEmpty()) {
+                this.thisRideDown = this.nextRideDown;
+                // Only go up if there's a queue going up
+                this.direction = this.thisRideUp.isEmpty() ? 0 : 1;
+            }
+        }
+
+        return moved;
     }
 
     public C interactWithContents(MtxElevatorContentsManager<C> contentsManager) {
