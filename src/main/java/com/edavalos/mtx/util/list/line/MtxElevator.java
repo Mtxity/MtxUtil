@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public final class MtxElevator<C> {
     @FunctionalInterface
@@ -107,7 +106,7 @@ public final class MtxElevator<C> {
                     this.addIfUnique(this.thisRideDown, startingFloor, true);
                     this.addIfUnique(this.thisRideDown, destinationFloor, false);
                 }
-                // First stop below
+                // First stop above
                 else {
                     this.addIfUnique(this.nextRideDown, startingFloor, true);
                     this.addIfUnique(this.nextRideDown, destinationFloor, false);
@@ -228,6 +227,7 @@ public final class MtxElevator<C> {
         return downwardsQueue;
     }
 
+    // @TODO: Make a string representation
     @Override
     public String toString() {
         return "";
