@@ -44,6 +44,8 @@ These are its implementations:
 
 ## Matrix Formatting
 
+## String Utilities
+
 ## HTTP Request Reader
 
 ## Graphs
