@@ -178,4 +178,11 @@ public final class MtxElevatorTest {
         assertEquals(9, mtxElevator.getCurrentFloor());
     }
 
+    @Test
+    public void testToString() {
+        mtxElevator.queueFloor(1, 5);
+        assertEquals("[2, 5, 8, 9, 5, 5]", mtxElevator.toString());
+        mtxElevator.setDirection(1);
+        assertEquals("[5, 2, 5, 8, 9, 5]", mtxElevator.toString());
+    }
 }

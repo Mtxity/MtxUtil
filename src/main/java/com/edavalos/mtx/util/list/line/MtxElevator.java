@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.list.line;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -227,9 +228,20 @@ public final class MtxElevator<C> {
         return downwardsQueue;
     }
 
-    // @TODO: Make a string representation
     @Override
     public String toString() {
-        return "";
+        List<Integer> queue = new ArrayList<>();
+        if (this.direction == 1 || this.direction == 0) {
+            queue.addAll(this.thisRideUp);
+            queue.addAll(this.thisRideDown);
+            queue.addAll(this.nextRideUp);
+            queue.addAll(this.nextRideDown);
+        } else {
+            queue.addAll(this.thisRideDown);
+            queue.addAll(this.thisRideUp);
+            queue.addAll(this.nextRideDown);
+            queue.addAll(this.nextRideUp);
+        }
+        return Arrays.toString(queue.toArray());
     }
 }
