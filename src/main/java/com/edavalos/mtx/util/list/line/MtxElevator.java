@@ -34,7 +34,6 @@ public final class MtxElevator<C> {
     private List<Integer> nextRideUp;
     private List<Integer> thisRideDown;
     private List<Integer> nextRideDown;
-    // @TODO: Make this an enum
     private MtxElevatorDirection direction;
     private int currentFloor;
     private C contents;
