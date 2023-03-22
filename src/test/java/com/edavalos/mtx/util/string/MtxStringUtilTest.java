@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStringUtilTest {
@@ -229,6 +230,51 @@ public final class MtxStringUtilTest {
 
             assertEquals(expected, MtxStringUtil.centerPad(val, length));
             assertEquals(0, MtxStringUtil.centerPad(val, length).length());
+        }
+    }
+
+    @Nested
+    class ToIntTests {
+
+        @Test
+        public void testToInt_nullValue() {
+            assertNull(MtxStringUtil.toInt(null));
+            assertNull(MtxStringUtil.toInt(""));
+        }
+
+        @Test
+        public void testToInt_notAnInt() {
+            assertNull(MtxStringUtil.toInt("string"));
+            assertNull(MtxStringUtil.toInt("1.2"));
+        }
+
+        @Test
+        public void testToInt() {
+            assertEquals(5, MtxStringUtil.toInt("5"));
+            assertEquals(5, MtxStringUtil.toInt("5.0"));
+        }
+    }
+
+    @Nested
+    class ToDoubleTests {
+
+        @Test
+        public void testToDouble_nullValue() {
+            assertNull(MtxStringUtil.toDouble(null));
+            assertNull(MtxStringUtil.toDouble(""));
+        }
+
+        @Test
+        public void testToDouble_notADouble() {
+            assertNull(MtxStringUtil.toDouble("string"));
+            assertNull(MtxStringUtil.toDouble("1.2."));
+        }
+
+        @Test
+        public void testToDouble() {
+            assertEquals(5, MtxStringUtil.toDouble("5"));
+            assertEquals(5, MtxStringUtil.toDouble("5.0"));
+            assertEquals(5.5, MtxStringUtil.toDouble("5.5"));
         }
     }
 }
