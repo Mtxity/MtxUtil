@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.list.line;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -65,16 +66,16 @@ public final class MtxElevator<C> {
             return;
         }
 
+        int floorDirection = (startingFloor < destinationFloor) ? 1 : -1;
+
         // If elevator is standing still and has a queue, go in that direction
         if (this.direction == 0) {
-            if (!this.thisRideUp.isEmpty()) {
+            if (floorDirection == 1) {
                 this.direction = 1;
-            } else if (!this.thisRideDown.isEmpty()) {
+            } else {
                 this.direction = -1;
             }
         }
-
-        int floorDirection = (startingFloor < destinationFloor) ? 1 : -1;
 
         // Elevator going up
         if (this.direction == 1) {
@@ -82,19 +83,19 @@ public final class MtxElevator<C> {
             if (floorDirection == 1) {
                 // Both stops above
                 if (destinationFloor > this.currentFloor && startingFloor >= this.currentFloor) {
-                    this.thisRideUp.add(startingFloor);
-                    this.thisRideUp.add(destinationFloor);
+                    this.addIfUnique(this.thisRideUp, startingFloor, true);
+                    this.addIfUnique(this.thisRideUp, destinationFloor, false);
                 }
                 // First stop below
                 else {
-                    this.nextRideUp.add(startingFloor);
-                    this.nextRideUp.add(destinationFloor);
+                    this.addIfUnique(this.nextRideUp, startingFloor, true);
+                    this.addIfUnique(this.nextRideUp, destinationFloor, false);
                 }
             }
             // Going down
             else {
-                this.thisRideDown.add(startingFloor);
-                this.thisRideDown.add(destinationFloor);
+                this.addIfUnique(this.thisRideDown, startingFloor, true);
+                this.addIfUnique(this.thisRideDown, destinationFloor, false);
             }
         }
         // Elevator going down
@@ -103,21 +104,23 @@ public final class MtxElevator<C> {
             if (floorDirection == -1) {
                 // Both stops below
                 if (destinationFloor < this.currentFloor && startingFloor <= this.currentFloor) {
-                    this.thisRideDown.add(startingFloor);
-                    this.thisRideDown.add(destinationFloor);
+                    this.addIfUnique(this.thisRideDown, startingFloor, true);
+                    this.addIfUnique(this.thisRideDown, destinationFloor, false);
                 }
                 // First stop below
                 else {
-                    this.nextRideDown.add(startingFloor);
-                    this.nextRideDown.add(destinationFloor);
+                    this.addIfUnique(this.nextRideDown, startingFloor, true);
+                    this.addIfUnique(this.nextRideDown, destinationFloor, false);
                 }
             }
             // Going up
             else {
-                this.thisRideUp.add(startingFloor);
-                this.thisRideUp.add(destinationFloor);
+                this.addIfUnique(this.thisRideUp, startingFloor, true);
+                this.addIfUnique(this.thisRideUp, destinationFloor, false);
             }
         }
+        Collections.sort(this.thisRideUp);
+        Collections.sort(this.thisRideDown);
     }
 
     public boolean moveToNextFloor() {
@@ -139,6 +142,7 @@ public final class MtxElevator<C> {
         // Elevator going up
         if (this.direction == 1) {
             if (!this.thisRideUp.isEmpty()) {
+                Collections.sort(this.thisRideUp);
                 this.currentFloor = this.thisRideUp.remove(0);
                 moved = true;
             }
@@ -153,7 +157,8 @@ public final class MtxElevator<C> {
         // Elevator going down
         else if (this.direction == -1) {
             if (!this.thisRideDown.isEmpty()) {
-                this.currentFloor = this.thisRideDown.remove(0);
+                Collections.sort(this.thisRideDown);
+                this.currentFloor = this.thisRideDown.remove(this.thisRideDown.size() - 1);
                 moved = true;
             }
 
@@ -166,6 +171,12 @@ public final class MtxElevator<C> {
         }
 
         return moved;
+    }
+
+    private void addIfUnique(List<Integer> queue, int i, boolean isStartFloor) {
+        if (!queue.contains(i) && !(isStartFloor && this.currentFloor != i)) {
+            queue.add(i);
+        }
     }
 
     public C interactWithContents(MtxElevatorContentsManager<C> contentsManager) {
