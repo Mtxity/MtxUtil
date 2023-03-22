@@ -89,4 +89,31 @@ public final class MtxStringUtil {
 
         return repeat(" ", leftPad) + s + repeat(" ", rightPad);
     }
+
+    public static Integer toInt(String s) {
+        Double v = toDouble(s);
+        if (v == null) {
+            return null;
+        }
+
+        if (v == Math.floor(v) && v == Math.ceil(v)) {
+            return Integer.parseInt(v.toString().substring(0, v.toString().indexOf('.')));
+        } else {
+            return null;
+        }
+    }
+
+    public static Double toDouble(String s) {
+        if (isEmpty(s)) {
+            return null;
+        }
+
+        double i;
+        try {
+            i = Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            return null;
+        }
+        return i;
+    }
 }
