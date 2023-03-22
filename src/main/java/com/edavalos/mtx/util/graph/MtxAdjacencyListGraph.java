@@ -57,15 +57,11 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
 
         List<MtxVertex> eV1 = adjacencyVertices.get(v1);
         List<MtxVertex> eV2 = adjacencyVertices.get(v2);
+        if (eV1 == null || eV2 == null) {
+            return false;
+        }
 
-        boolean containedEdge = false;
-        if (eV1 != null) {
-            containedEdge = eV1.remove(v2);
-        }
-        if (eV2 != null) {
-            containedEdge = containedEdge || eV2.remove(v2);
-        }
-        return containedEdge;
+        return eV1.remove(v2) && eV2.remove(v1);
     }
 
     @Override
@@ -73,7 +69,7 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
         return adjacencyVertices.get(new MtxVertex(label));
     }
 
-    public Set<String> depthFirstTraversal(MtxAdjacencyListGraph graph, String root) {
+    public Set<String> depthFirstTraversal(String root) {
         Set<String> visited = new LinkedHashSet<>();
         Stack<String> stack = new Stack<>();
 
@@ -82,7 +78,7 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
             String vertex = stack.pop();
             if (!visited.contains(vertex)) {
                 visited.add(vertex);
-                for (MtxVertex v : graph.getAdjVertex(vertex)) {
+                for (MtxVertex v : this.getAdjVertex(vertex)) {
                     stack.push(v.label());
                 }
             }
@@ -90,7 +86,7 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
         return visited;
     }
 
-    public Set<String> breadthFirstTraversal(MtxAdjacencyListGraph graph, String root) {
+    public Set<String> breadthFirstTraversal(String root) {
         Set<String> visited = new LinkedHashSet<>();
         Queue<String> queue = new LinkedList<>();
 
@@ -99,7 +95,7 @@ public final class MtxAdjacencyListGraph implements MtxGraph {
 
         while (!queue.isEmpty()) {
             String vertex = queue.poll();
-            for (MtxVertex v : graph.getAdjVertex(vertex)) {
+            for (MtxVertex v : this.getAdjVertex(vertex)) {
                 if (!visited.contains(v.label())) {
                     visited.add(v.label());
                     queue.add(v.label());
