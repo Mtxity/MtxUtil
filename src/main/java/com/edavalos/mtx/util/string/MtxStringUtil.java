@@ -3,6 +3,9 @@ package com.edavalos.mtx.util.string;
 import java.util.regex.Pattern;
 
 public final class MtxStringUtil {
+    public static final String EMPTY = "";
+    public static final String NEWLINE = String.valueOf('\n');
+
     private static final char SEPARATOR_CHAR = 'ҁ';
 
     private MtxStringUtil() { }
