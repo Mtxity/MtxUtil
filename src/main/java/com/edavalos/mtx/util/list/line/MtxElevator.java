@@ -12,6 +12,12 @@ public final class MtxElevator<C> {
         T modifyContents(T contents);
     }
 
+    public enum MtxElevatorDirection{
+        UP,
+        DOWN,
+        STILL
+    }
+
     // Direction key:
     //  1 : going up
     //  0 : standing still
@@ -23,15 +29,13 @@ public final class MtxElevator<C> {
     // 3. interact with contents
     // 4. go to step 2.
 
-    private static final int SWITCH_DIRECTIONS_MARKER = -1;
-
     private final int floors;
     private List<Integer> thisRideUp;
     private List<Integer> nextRideUp;
     private List<Integer> thisRideDown;
     private List<Integer> nextRideDown;
     // @TODO: Make this an enum
-    private int direction;
+    private MtxElevatorDirection direction;
     private int currentFloor;
     private C contents;
 
@@ -45,7 +49,7 @@ public final class MtxElevator<C> {
         this.nextRideUp = new LinkedList<>();
         this.thisRideDown = new LinkedList<>();
         this.nextRideDown = new LinkedList<>();
-        this.direction = 0;
+        this.direction = MtxElevatorDirection.STILL;
         this.currentFloor = 0;
         this.contents = null;
     }
@@ -69,16 +73,16 @@ public final class MtxElevator<C> {
         int floorDirection = (startingFloor < destinationFloor) ? 1 : -1;
 
         // If elevator is standing still and has a queue, go in that direction
-        if (this.direction == 0) {
+        if (this.direction == MtxElevatorDirection.STILL) {
             if (floorDirection == 1) {
-                this.direction = 1;
+                this.direction = MtxElevatorDirection.UP;
             } else {
-                this.direction = -1;
+                this.direction = MtxElevatorDirection.DOWN;
             }
         }
 
         // Elevator going up
-        if (this.direction == 1) {
+        if (this.direction == MtxElevatorDirection.UP) {
             // Going up
             if (floorDirection == 1) {
                 // Both stops above
@@ -127,11 +131,11 @@ public final class MtxElevator<C> {
         boolean moved = false;
 
         // If elevator is standing still and has a queue, go in that direction
-        if (this.direction == 0) {
+        if (this.direction == MtxElevatorDirection.STILL) {
             if (!this.thisRideUp.isEmpty()) {
-                this.direction = 1;
+                this.direction = MtxElevatorDirection.UP;
             } else if (!this.thisRideDown.isEmpty()) {
-                this.direction = -1;
+                this.direction = MtxElevatorDirection.DOWN;
             }
             // If there is no queue, do nothing
             else {
@@ -140,7 +144,7 @@ public final class MtxElevator<C> {
         }
 
         // Elevator going up
-        if (this.direction == 1) {
+        if (this.direction == MtxElevatorDirection.UP) {
             if (!this.thisRideUp.isEmpty()) {
                 Collections.sort(this.thisRideUp);
                 this.currentFloor = this.thisRideUp.remove(0);
@@ -151,11 +155,11 @@ public final class MtxElevator<C> {
             if (this.thisRideUp.isEmpty()) {
                 this.thisRideUp = this.nextRideUp;
                 // Only go down if there's a queue going down
-                this.direction = this.thisRideDown.isEmpty() ? 0 : -1;
+                this.direction = this.thisRideDown.isEmpty() ? MtxElevatorDirection.STILL : MtxElevatorDirection.DOWN;
             }
         }
         // Elevator going down
-        else if (this.direction == -1) {
+        else if (this.direction == MtxElevatorDirection.DOWN) {
             if (!this.thisRideDown.isEmpty()) {
                 Collections.sort(this.thisRideDown);
                 this.currentFloor = this.thisRideDown.remove(this.thisRideDown.size() - 1);
@@ -166,7 +170,7 @@ public final class MtxElevator<C> {
             if (this.thisRideDown.isEmpty()) {
                 this.thisRideDown = this.nextRideDown;
                 // Only go up if there's a queue going up
-                this.direction = this.thisRideUp.isEmpty() ? 0 : 1;
+                this.direction = this.thisRideUp.isEmpty() ? MtxElevatorDirection.STILL : MtxElevatorDirection.UP;
             }
         }
 
@@ -194,7 +198,7 @@ public final class MtxElevator<C> {
         return this.currentFloor;
     }
 
-    public int getDirection() {
+    public MtxElevatorDirection getDirection() {
         return this.direction;
     }
 
@@ -210,7 +214,7 @@ public final class MtxElevator<C> {
         this.contents = contents;
     }
 
-    public void setDirection(int direction) {
+    public void setDirection(MtxElevatorDirection direction) {
         this.direction = direction;
     }
 
@@ -231,7 +235,7 @@ public final class MtxElevator<C> {
     @Override
     public String toString() {
         List<Integer> queue = new ArrayList<>();
-        if (this.direction == 1 || this.direction == 0) {
+        if (this.direction == MtxElevatorDirection.UP || this.direction == MtxElevatorDirection.STILL) {
             queue.addAll(this.thisRideUp);
             queue.addAll(this.thisRideDown);
             queue.addAll(this.nextRideUp);

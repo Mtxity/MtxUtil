@@ -65,7 +65,7 @@ public final class MtxElevatorTest {
     public void testQueueFloor_firstStopBelow_goingUp() {
         mtxElevator.moveToNextFloor();
         mtxElevator.moveToNextFloor();
-        mtxElevator.setDirection(1);
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.UP);
         mtxElevator.queueFloor(5, 10);
         assertArrayEquals(new Integer[]{2,5}, mtxElevator.getDownwardsFloorQueue().toArray());
     }
@@ -82,7 +82,7 @@ public final class MtxElevatorTest {
     public void testQueueFloor_oppositeDirection() {
         mtxElevator.moveToNextFloor();
         mtxElevator.moveToNextFloor();
-        mtxElevator.setDirection(1);
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.UP);
         mtxElevator.queueFloor(10, 4);
         assertArrayEquals(new Integer[]{2,4,5}, mtxElevator.getDownwardsFloorQueue().toArray());
     }
@@ -119,14 +119,14 @@ public final class MtxElevatorTest {
 
     @Test
     public void testMoveToNextFloor_standingStill() {
-        mtxElevator.setDirection(0);
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.STILL);
         mtxElevator.moveToNextFloor();
-        assertEquals(-1, mtxElevator.getDirection());
+        assertEquals(MtxElevator.MtxElevatorDirection.DOWN, mtxElevator.getDirection());
 
         mtxElevator.queueFloor(9,10);
-        mtxElevator.setDirection(0);
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.STILL);
         mtxElevator.moveToNextFloor();
-        assertEquals(1, mtxElevator.getDirection());
+        assertEquals(MtxElevator.MtxElevatorDirection.UP, mtxElevator.getDirection());
     }
 
     @Test
@@ -163,9 +163,9 @@ public final class MtxElevatorTest {
 
     @Test
     public void testSetDirection() {
-        assertEquals(-1, mtxElevator.getDirection());
-        mtxElevator.setDirection(1);
-        assertEquals(1, mtxElevator.getDirection());
+        assertEquals(MtxElevator.MtxElevatorDirection.DOWN, mtxElevator.getDirection());
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.UP);
+        assertEquals(MtxElevator.MtxElevatorDirection.UP, mtxElevator.getDirection());
     }
 
     @Test
@@ -182,7 +182,7 @@ public final class MtxElevatorTest {
     public void testToString() {
         mtxElevator.queueFloor(1, 5);
         assertEquals("[2, 5, 8, 9, 5, 5]", mtxElevator.toString());
-        mtxElevator.setDirection(1);
+        mtxElevator.setDirection(MtxElevator.MtxElevatorDirection.UP);
         assertEquals("[5, 2, 5, 8, 9, 5]", mtxElevator.toString());
     }
 }
