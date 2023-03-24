@@ -144,4 +144,28 @@ public final class MtxStringUtil {
         System.arraycopy(arr2, 0, arr1plus2, arr1.length, arr2.length);
         return arr1plus2;
     }
+
+    public static int countOccurrencesOf(String string, String sub) {
+        if (isEmpty(string) || isEmpty(sub)) {
+            return 0;
+        }
+        if (sub.length() > string.length()) {
+            return 0;
+        }
+        if (sub.length() == string.length()) {
+            return sub.equals(string) ? 1 : 0;
+        }
+
+        int count = 0;
+        int startingIdx = 0;
+        int endingIdx = sub.length();
+        while (endingIdx <= string.length()) {
+            if (sub.equals(string.substring(startingIdx, endingIdx))) {
+                count ++;
+            }
+            startingIdx ++;
+            endingIdx ++;
+        }
+        return count;
+    }
 }
