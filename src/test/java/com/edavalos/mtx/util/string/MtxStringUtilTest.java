@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.string;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -334,6 +336,58 @@ public final class MtxStringUtilTest {
 
             assertArrayEquals(arr1plus3, MtxStringUtil.mergeStringArrays(arr1, arr3, true));
             assertArrayEquals(arr3plus1, MtxStringUtil.mergeStringArrays(arr3, arr1, true));
+        }
+    }
+
+    @Nested
+    class CountOccurrencesOfTests {
+        String sampleString = "acoustic acceleration contraption";
+
+        @Test
+        public void testCountOccurrencesOf_nullValues() {
+            assertEquals(0, MtxStringUtil.countOccurrencesOf("", ""));
+            assertEquals(0, MtxStringUtil.countOccurrencesOf(null, null));
+        }
+
+        @Test
+        public void testCountOccurrencesOf_substringLongerThanString() {
+            assertEquals(0, MtxStringUtil.countOccurrencesOf(sampleString, sampleString + " detection"));
+        }
+
+        @Test
+        public void testCountOccurrencesOf_substringSameLengthAsString() {
+            String sampleSubString = "ocoostic ecceleration contraptium";
+            assertEquals(sampleString.length(), sampleSubString.length());
+
+            assertEquals(1, MtxStringUtil.countOccurrencesOf(sampleString, sampleString));
+            assertEquals(0, MtxStringUtil.countOccurrencesOf(sampleString, sampleSubString));
+        }
+
+        @Test
+        public void testCountOccurrencesOf() {
+            Map<String, Integer> testCases = new HashMap<>() {{
+                put("acoustic", 1);
+                put("acoustic ", 1);
+                put("acceleration", 1);
+                put(" acceleration", 1);
+                put("contraption", 1);
+                put("ac", 2);
+                put("a", 4);
+                put("t", 4);
+                put(" ", 2);
+                put("x", 0);
+                put("ra", 2);
+                put("ti", 3);
+                put("tio", 2);
+                put("tion", 2);
+            }};
+
+            for (Map.Entry<String, Integer> testCase : testCases.entrySet()) {
+                assertEquals(
+                        testCase.getValue(),
+                        MtxStringUtil.countOccurrencesOf(sampleString, testCase.getKey())
+                );
+            }
         }
     }
 }
