@@ -277,4 +277,59 @@ public final class MtxStringUtilTest {
             assertEquals(5.5, MtxStringUtil.toDouble("5.5"));
         }
     }
+
+    @Nested
+    class MergeStringArraysTests {
+        String[] arr1 = new String[] {"a", "b", "c"};
+        String[] arr2 = new String[] {"c", "d", "e"};
+        String[] arr3 = new String[] {"c", "d", "e", "f"};
+
+        @Test
+        public void testMergeStringArrays_nullValues() {
+            assertArrayEquals(arr2, MtxStringUtil.mergeStringArrays(null, arr2, false));
+            assertArrayEquals(arr2, MtxStringUtil.mergeStringArrays(new String[0], arr2, false));
+            assertArrayEquals(arr1, MtxStringUtil.mergeStringArrays(arr1, null, false));
+            assertArrayEquals(arr1, MtxStringUtil.mergeStringArrays(arr1, new String[0], false));
+            assertNull(MtxStringUtil.mergeStringArrays(null, null, false));
+        }
+
+        @Test
+        public void testMergeStringArrays_dontRemoveDuplicates_sameLengthArrays() {
+            String[] arr1plus2 = new String[] {"a", "b", "c", "c", "d", "e"};
+            String[] arr2plus1 = new String[] {"c", "d", "e", "a", "b", "c"};
+            String[] arr1plus1 = new String[] {"a", "b", "c", "a", "b", "c"};
+
+            assertArrayEquals(arr1plus2, MtxStringUtil.mergeStringArrays(arr1, arr2, false));
+            assertArrayEquals(arr2plus1, MtxStringUtil.mergeStringArrays(arr2, arr1, false));
+            assertArrayEquals(arr1plus1, MtxStringUtil.mergeStringArrays(arr1, arr1, false));
+        }
+
+        @Test
+        public void testMergeStringArrays_removeDuplicates_sameLengthArrays() {
+            String[] arr1plus2 = new String[] {"a", "b", "c", "d", "e"};
+            String[] arr2plus1 = new String[] {"c", "d", "e", "a", "b"};
+
+            assertArrayEquals(arr1plus2, MtxStringUtil.mergeStringArrays(arr1, arr2, true));
+            assertArrayEquals(arr2plus1, MtxStringUtil.mergeStringArrays(arr2, arr1, true));
+            assertArrayEquals(arr1,      MtxStringUtil.mergeStringArrays(arr1, arr1, true));
+        }
+
+        @Test
+        public void testMergeStringArrays_dontRemoveDuplicates_differentLengthArrays() {
+            String[] arr1plus3 = new String[] {"a", "b", "c", "c", "d", "e", "f"};
+            String[] arr3plus1 = new String[] {"c", "d", "e", "f", "a", "b", "c"};
+
+            assertArrayEquals(arr1plus3, MtxStringUtil.mergeStringArrays(arr1, arr3, false));
+            assertArrayEquals(arr3plus1, MtxStringUtil.mergeStringArrays(arr3, arr1, false));
+        }
+
+        @Test
+        public void testMergeStringArrays_removeDuplicates_differentLengthArrays() {
+            String[] arr1plus3 = new String[] {"a", "b", "c", "d", "e", "f"};
+            String[] arr3plus1 = new String[] {"c", "d", "e", "f", "a", "b"};
+
+            assertArrayEquals(arr1plus3, MtxStringUtil.mergeStringArrays(arr1, arr3, true));
+            assertArrayEquals(arr3plus1, MtxStringUtil.mergeStringArrays(arr3, arr1, true));
+        }
+    }
 }
