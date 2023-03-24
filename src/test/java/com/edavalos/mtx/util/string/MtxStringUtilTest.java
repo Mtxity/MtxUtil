@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -438,6 +439,92 @@ public final class MtxStringUtilTest {
         public void testAreParenthesisValid_invalidInput() {
             for (String testCase : invalidTestCases) {
                 assertFalse(MtxStringUtil.areParenthesisValid(testCase));
+            }
+        }
+    }
+
+    @Nested
+    class ReverseTests {
+        String sampleForward = "abc def ghi jkl mno pqr";
+        String sampleBackward = "rqp onm lkj ihg fed cba";
+        String[] palindromes = new String[] {
+                "kayak",
+                "hannah",
+                "12:21",
+                "SATIREv vERITAS",
+                "x"
+        };
+
+        @Test
+        public void testReverse_emptyInput() {
+            assertEquals("", MtxStringUtil.reverse(""));
+        }
+
+        @Test
+        public void testReverse() {
+            assertEquals(sampleBackward, MtxStringUtil.reverse(sampleForward));
+            assertEquals(sampleForward, MtxStringUtil.reverse(sampleBackward));
+
+            assertNotEquals(sampleForward, MtxStringUtil.reverse(sampleForward));
+            assertNotEquals(sampleBackward, MtxStringUtil.reverse(sampleBackward));
+        }
+
+        @Test
+        public void testReverse_palindromes() {
+            for (String testCase : palindromes) {
+                assertEquals(testCase, MtxStringUtil.reverse(testCase));
+            }
+        }
+    }
+
+    @Nested
+    class IsValidIpAddressTests {
+        String[] validIpAddresses = new String[] {
+                "0.0.0.0",
+                "255.255.255.255",
+                "192.168.1.57"
+        };
+        String[] wrongLength = new String[] {
+                "32.34.68.92.56",
+                "2.3.4",
+                "192367"
+        };
+        String[] hasInvalidChars = new String[] {
+                "-32.34.5.56",
+                "2..3.4",
+                "abc.def.ghi.jkl"
+        };
+        String[] wrongSize = new String[] {
+                "0.0.-7.0",
+                "255.256.255.255",
+                "192.168.1.575354"
+        };
+
+        @Test
+        public void testIsValidIpAddress_validInput() {
+            for (String ipAddress : validIpAddresses) {
+                assertTrue(MtxStringUtil.isValidIpAddress(ipAddress));
+            }
+        }
+
+        @Test
+        public void testIsValidIpAddress_invalidInput_wrongLength() {
+            for (String ipAddress : wrongLength) {
+                assertFalse(MtxStringUtil.isValidIpAddress(ipAddress));
+            }
+        }
+
+        @Test
+        public void testIsValidIpAddress_invalidInput_invalidChars() {
+            for (String ipAddress : hasInvalidChars) {
+                assertFalse(MtxStringUtil.isValidIpAddress(ipAddress));
+            }
+        }
+
+        @Test
+        public void testIsValidIpAddress_invalidInput_wrongSize() {
+            for (String ipAddress : wrongSize) {
+                assertFalse(MtxStringUtil.isValidIpAddress(ipAddress));
             }
         }
     }
