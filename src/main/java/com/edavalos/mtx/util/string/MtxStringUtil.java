@@ -213,4 +213,22 @@ public final class MtxStringUtil {
         }
         return reversedString.toString();
     }
+
+    public static boolean isValidIpAddress(String string) {
+        String[] address = string.split(Pattern.quote("."));
+        if (address.length != 4) {
+            return false;
+        }
+
+        for (String addressPart : address) {
+            Integer numericalValue = toInt(addressPart);
+            if (numericalValue == null) {
+                return false;
+            }
+            if (numericalValue > 255 || numericalValue < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
