@@ -390,4 +390,55 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Nested
+    class AreParenthesisValidTests {
+        String[] validTestCases = new String[] {
+                "test()",
+                "(test)",
+                "f(){ }",
+                "f(g(x))",
+                "{{}}",
+                "{[]}",
+                "((((()))))",
+                "(({{[{[]}]}}))",
+                "{}[]()",
+                "[][][][][][][][][]"
+        };
+        String[] invalidTestCases = new String[] {
+                "test(",
+                ")test(",
+                ")(",
+                "(",
+                ")",
+                "()()()(",
+                ")()()()()",
+                "[[ ]]]",
+                "{{ }}}",
+                "[{ }]]",
+                "(({))",
+                "([)]",
+                "[{]}",
+                "{([})]"
+        };
+
+        @Test
+        public void testAreParenthesisValid_emptyInput() {
+            assertTrue(MtxStringUtil.areParenthesisValid(""));
+        }
+
+        @Test
+        public void testAreParenthesisValid_validInput() {
+            for (String testCase : validTestCases) {
+                assertTrue(MtxStringUtil.areParenthesisValid(testCase));
+            }
+        }
+
+        @Test
+        public void testAreParenthesisValid_invalidInput() {
+            for (String testCase : invalidTestCases) {
+                assertFalse(MtxStringUtil.areParenthesisValid(testCase));
+            }
+        }
+    }
 }
