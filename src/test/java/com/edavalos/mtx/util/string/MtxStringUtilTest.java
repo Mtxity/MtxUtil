@@ -252,6 +252,8 @@ public final class MtxStringUtilTest {
         public void testToInt() {
             assertEquals(5, MtxStringUtil.toInt("5"));
             assertEquals(5, MtxStringUtil.toInt("5.0"));
+            assertEquals(-5, MtxStringUtil.toInt("-5"));
+            assertEquals(-5, MtxStringUtil.toInt("-5.0"));
         }
     }
 
@@ -274,7 +276,9 @@ public final class MtxStringUtilTest {
         public void testToDouble() {
             assertEquals(5, MtxStringUtil.toDouble("5"));
             assertEquals(5, MtxStringUtil.toDouble("5.0"));
+            assertEquals(5.0, MtxStringUtil.toDouble("5.0"));
             assertEquals(5.5, MtxStringUtil.toDouble("5.5"));
+            assertEquals(-5.5, MtxStringUtil.toDouble("-5.5"));
         }
     }
 
