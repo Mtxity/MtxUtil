@@ -1,5 +1,8 @@
 package com.edavalos.mtx.util.string;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public final class MtxStringUtil {
@@ -115,5 +118,30 @@ public final class MtxStringUtil {
             return null;
         }
         return i;
+    }
+
+    public static String[] mergeStringArrays(String[] arr1, String[] arr2, boolean removeDuplicates) {
+        if (arr1 == null || arr1.length == 0) {
+            return arr2;
+        }
+        if (arr2 == null || arr2.length == 0) {
+            return arr1;
+        }
+
+        if (removeDuplicates) {
+            List<String> arr1List = Arrays.asList(arr1);
+            List<String> arr2EditableList = new ArrayList<>(Arrays.asList(arr2));
+            for (String arr2Elem : arr2) {
+                if (arr1List.contains(arr2Elem)) {
+                    arr2EditableList.remove(arr2Elem);
+                }
+            }
+            arr2 = arr2EditableList.toArray(new String[0]);
+        }
+
+        String[] arr1plus2 = new String[arr1.length + arr2.length];
+        System.arraycopy(arr1, 0, arr1plus2, 0, arr1.length);
+        System.arraycopy(arr2, 0, arr1plus2, arr1.length, arr2.length);
+        return arr1plus2;
     }
 }
