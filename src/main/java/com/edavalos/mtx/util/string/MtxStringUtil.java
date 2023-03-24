@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.string;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 public final class MtxStringUtil {
@@ -167,5 +168,41 @@ public final class MtxStringUtil {
             endingIdx ++;
         }
         return count;
+    }
+
+    public static boolean areParenthesisValid(String string) {
+        Stack<Character> parenthesis = new Stack<>();
+
+        for (char c : string.toCharArray()) {
+            switch (c) {
+                case '(', '[', '{' -> parenthesis.push(c);
+
+                case ')' -> {
+                    if (parenthesis.size() == 0) {
+                        return false;
+                    }
+                    if (parenthesis.pop() != '(') {
+                        return false;
+                    }
+                }
+                case ']' -> {
+                    if (parenthesis.size() == 0) {
+                        return false;
+                    }
+                    if (parenthesis.pop() != '[') {
+                        return false;
+                    }
+                }
+                case '}' -> {
+                    if (parenthesis.size() == 0) {
+                        return false;
+                    }
+                    if (parenthesis.pop() != '{') {
+                        return false;
+                    }
+                }
+            }
+        }
+        return parenthesis.isEmpty();
     }
 }
