@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Ordered implementation of MtxSet backed by a linked list.
+ * Ordered and auto-sorted implementation of MtxSet backed by a linked list.
  */
 public final class MtxSortedLinkedSet<T> implements MtxSet<T> {
     private class MtxNode {
