@@ -528,4 +528,32 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Nested
+    class SplitAtCommasTests {
+
+        @Test
+        public void testSplitAtCommas_withClosingQuotes() {
+            String row = "foo,bar,c;qual=\"baz,blurb\",d;junk=\"quux,syzygy\"";
+            String[] expected = new String[] {"foo", "bar", "c;qual=\"baz,blurb\"", "d;junk=\"quux,syzygy\""};
+
+            assertArrayEquals(expected, MtxStringUtil.splitAtCommas(row));
+        }
+
+        @Test
+        public void testSplitAtCommas_noClosingQuotes() {
+            String row = "foo,bar,c;qual=\"baz,blurb\",d;junk=\"quux,syzygy";
+            String[] expected = new String[] {"foo,bar,c;qual=\"baz", "blurb\",d;junk=\"quux", "syzygy"};
+
+            assertArrayEquals(expected, MtxStringUtil.splitAtCommas(row));
+        }
+
+        @Test
+        public void testSplitAtCommas_fakeQuotes() {
+            String row = "abc\\\"def,ghi";
+            String[] expected = new String[] {"abc\\\"def", "ghi"};
+
+            assertArrayEquals(expected, MtxStringUtil.splitAtCommas(row));
+        }
+    }
 }
