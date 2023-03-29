@@ -231,4 +231,9 @@ public final class MtxStringUtil {
         }
         return true;
     }
+
+    // taken from https://stackoverflow.com/a/1757107
+    public static String[] splitAtCommas(String string) {
+        return string.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
+    }
 }
