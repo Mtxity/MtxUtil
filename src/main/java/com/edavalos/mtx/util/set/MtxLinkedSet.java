@@ -7,8 +7,8 @@ import java.util.Set;
 /**
  * Ordered implementation of MtxSet backed by a linked list.
  */
-public final class MtxLinkedSet<T> implements MtxSet<T> {
-    private class MtxNode {
+public class MtxLinkedSet<T> implements MtxSet<T> {
+    protected class MtxNode {
         T content;
         MtxNode next;
 
@@ -18,9 +18,9 @@ public final class MtxLinkedSet<T> implements MtxSet<T> {
         }
     }
 
-    private final Class<T> type;
-    private MtxNode head;
-    private int size;
+    protected final Class<T> type;
+    protected MtxNode head;
+    protected int size;
 
     public MtxLinkedSet(Class<T> type) {
         this.type = type;
