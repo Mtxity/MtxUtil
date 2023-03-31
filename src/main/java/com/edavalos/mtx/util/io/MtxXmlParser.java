@@ -28,7 +28,7 @@ public class MtxXmlParser {
             throw new ParseException(tag, tag.indexOf('<'));
         } else if (tag.contains(">")) {
             throw new ParseException(tag, tag.indexOf('>'));
-        } else if (MtxStringUtil.countOccurrencesOf(tag, "/") != 1) {
+        } else if (MtxStringUtil.countOccurrencesOf(tag, "/") > 1) {
             throw new ParseException(tag, tag.indexOf('/'));
         }
 

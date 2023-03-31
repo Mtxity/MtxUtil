@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -15,6 +16,7 @@ public final class MtxXmlParserTest {
     public void testParseOpeningTag() {
         try {
             HashMap<String, String> kv = MtxXmlParser.parseOpeningTag("<test k1=\"v1\" />");
+            assertArrayEquals(kv.keySet().toArray(), MtxXmlParser.parseOpeningTag("<test k1=\"v1\" >").keySet().toArray());
             assertEquals(2, kv.size());
             assertEquals("test", kv.get(".NAME"));
             assertEquals("v1", kv.get("k1"));
