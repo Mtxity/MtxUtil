@@ -70,4 +70,8 @@ public class MtxXmlParser {
 
         return tagContentsMap;
     }
+
+    protected static boolean parseClosingTag(String tag) {
+        return Pattern.matches("</[ ]*[^<> \"]+>", tag);
+    }
 }
