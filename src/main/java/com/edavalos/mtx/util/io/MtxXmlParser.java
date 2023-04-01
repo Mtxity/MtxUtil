@@ -7,13 +7,13 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class MtxXmlParser {
-    private enum MtxXmlTagType {
+    protected enum MtxXmlTagType {
         OPENING,
         CLOSING,
         INLINE
     }
 
-    private record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType nodeType) { }
+    protected record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType tagType) { }
 
     private static final String TAG_NAME_MARKER = ".NAME";
 
@@ -21,6 +21,24 @@ public class MtxXmlParser {
 
     public MtxXmlParser(String filePath) {
         this.contents = new HashMap<>();
+    }
+
+    protected static MtxXmlTag parseTag(String tag) throws ParseException {
+        HashMap<String, String> fields;
+        MtxXmlTagType tagType;
+        if (tag.startsWith("</")) {
+            if (!parseClosingTag(tag)) {
+                throw new ParseException(tag, 0);
+            }
+            tagType = MtxXmlTagType.CLOSING;
+            fields = new HashMap<>();
+            fields.put(TAG_NAME_MARKER, tag.replace("</", "").replace(">", ""));
+
+        } else {
+            tagType = tag.contains("/>") ? MtxXmlTagType.INLINE : MtxXmlTagType.OPENING;
+            fields = parseOpeningTag(tag);
+        }
+        return new MtxXmlTag(fields.get(TAG_NAME_MARKER), fields, tagType);
     }
 
     protected static HashMap<String, String> parseOpeningTag(String tag) throws ParseException {
