@@ -57,3 +57,10 @@ These are its implementations:
 ## Graphs
 
 ## Elevator
+
+## File Parsers
+These will take care of boilerplate file scanning as well as content parsing.
+
+Currently these are supported:
+* `MtxFileReader` - basic scanning of `txt` files. Will take in a filepath and provide a string array of rows.
+* `MtxCsvParser` - Will take in a filepath to a `csv` file and provide a 2D string array representing the matrix in the file.
