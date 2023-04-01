@@ -35,4 +35,32 @@ public final class MtxXmlParserTest {
         assertFalse(MtxXmlParser.parseClosingTag("</te st>"));
         assertFalse(MtxXmlParser.parseClosingTag("</\"test\">"));
     }
+
+    @Test
+    public void testParseTag() {
+        try {
+            String openingTagStr = "<testO k1=\"v1\" k2=\"v2\">";
+            String inlineTagStr  = "<testI k1=\"v1\" />";
+            String closingTagStr = "</testC>";
+
+            MtxXmlParser.MtxXmlTag openingTag = MtxXmlParser.parseTag(openingTagStr);
+            MtxXmlParser.MtxXmlTag inlineTag  = MtxXmlParser.parseTag(inlineTagStr);
+            MtxXmlParser.MtxXmlTag closingTag = MtxXmlParser.parseTag(closingTagStr);
+
+            assertEquals("testO", openingTag.name());
+            assertEquals("testI", inlineTag.name());
+            assertEquals("testC", closingTag.name());
+
+            assertEquals(3, openingTag.fields().size());
+            assertEquals(2, inlineTag.fields().size());
+            assertEquals(1, closingTag.fields().size());
+
+            assertEquals(MtxXmlParser.MtxXmlTagType.OPENING, openingTag.tagType());
+            assertEquals(MtxXmlParser.MtxXmlTagType.INLINE,  inlineTag.tagType());
+            assertEquals(MtxXmlParser.MtxXmlTagType.CLOSING, closingTag.tagType());
+        } catch (ParseException e) {
+            System.out.println(e.getErrorOffset());
+            throw new RuntimeException(e);
+        }
+    }
 }
