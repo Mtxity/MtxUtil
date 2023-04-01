@@ -7,6 +7,14 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class MtxXmlParser {
+    private enum MtxXmlNodeType {
+        OPENING,
+        CLOSING,
+        INLINE
+    }
+
+    private record MtxXmlNode(String name, HashMap<String, String> fields, MtxXmlNodeType nodeType) { }
+
     private static final String TAG_NAME_MARKER = ".NAME";
 
     private final HashMap<String, Object> contents;
