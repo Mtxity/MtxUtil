@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxXmlParserTest {
@@ -19,12 +20,47 @@ public final class MtxXmlParserTest {
             HashMap<String, String> kv = MtxXmlParser.parseOpeningTag("<test k1=\"v1\" />");
             assertArrayEquals(kv.keySet().toArray(), MtxXmlParser.parseOpeningTag("<test k1=\"v1\" >").keySet().toArray());
             assertEquals(2, kv.size());
-            assertEquals("test", kv.get(".NAME"));
+            assertEquals("test", kv.get(MtxXmlParser.TAG_NAME_MARKER));
             assertEquals("v1", kv.get("k1"));
         } catch (ParseException e) {
             System.out.println(e.getErrorOffset());
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void testParseOpeningTag_hasError() {
+        // Stray periods
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<.test k1=\"v1\" >"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test .k1=\"v1\" >"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test k1=.\"v1\" >"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test k1=\"v1\" .>"));
+
+        // No closing bracket
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test k1=\"v1\""));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test k1=\"v1\" /"));
+
+        // No opening bracket
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("test k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("f<test k1=\"v1\">"));
+
+        // Stray brackets
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<t<est k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test <k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test> k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test k1=\"v1\">>"));
+
+        // Stray forward slash
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test /k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<test /k1=\"v1\"/>"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<te\"st k1=\"v1\"/>"));
+
+        // Blank tag
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("< >"));
+
+        // Blank name
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("< k1=\"v1\">"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseOpeningTag("<  k1=\"v1\">"));
     }
 
     @Test
@@ -81,5 +117,18 @@ public final class MtxXmlParserTest {
             System.out.println(e.getErrorOffset());
             throw new RuntimeException(e);
         }
+    }
+
+    @Test
+    public void testParseTag_hasError() {
+        // No closing bracket
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<test k1=\"v1\" "));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<test k1=\"v1\""));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("</test k1=\"v1\""));
+
+        // Incorrect closing bracket
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test ->"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test >"));
+        assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test"));
     }
 }
