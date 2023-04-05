@@ -2,8 +2,12 @@ package com.edavalos.mtx.util.io;
 
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class MtxXmlParser {
@@ -18,10 +22,34 @@ public class MtxXmlParser {
 
     protected static final String TAG_NAME_MARKER = ".NAME_FOR_INTERNAL_USE";
 
-    private final HashMap<String, Object> contents;
+    private final String contents;
 
-    public MtxXmlParser(String filePath) {
-        this.contents = new HashMap<>();
+    public MtxXmlParser(String filePath) throws IOException {
+        Scanner fileScanner;
+
+        try {
+            fileScanner = new Scanner(new File(filePath));
+        } catch (FileNotFoundException e) {
+            throw new IOException("The file '" + filePath + "' could not be found.");
+        }
+
+        StringBuilder contentsBuilder = new StringBuilder();
+        while (fileScanner.hasNextLine()) {
+            contentsBuilder.append(fileScanner.nextLine());
+        }
+        this.contents = contentsBuilder.toString();
+    }
+
+    /**
+     * Separates input into array of tags. Splits text between these: "><" (ignoring whitespaces and newlines)
+     * @return An array of tags, with possible valid strings in between them
+     */
+    protected static String[] separateParts(String stream) {
+        String spliterator = ">" + MtxStringUtil.SEPARATOR_CHAR + "<";
+        return stream
+               .replaceAll("\n", "")
+               .replaceAll(">[ ]*<", spliterator)
+               .split(String.valueOf(MtxStringUtil.SEPARATOR_CHAR));
     }
 
     protected static MtxXmlTag parseTag(String tag) throws ParseException {
