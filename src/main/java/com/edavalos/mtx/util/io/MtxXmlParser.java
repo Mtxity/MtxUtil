@@ -10,7 +10,8 @@ public class MtxXmlParser {
     protected enum MtxXmlTagType {
         OPENING,
         CLOSING,
-        INLINE
+        INLINE,
+        COMMENT
     }
 
     protected record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType tagType) { }
@@ -33,6 +34,14 @@ public class MtxXmlParser {
             tagType = MtxXmlTagType.CLOSING;
             fields = new HashMap<>();
             fields.put(TAG_NAME_MARKER, tag.replace("</", "").replace(">", ""));
+
+        } else if (tag.startsWith("<!")) {
+            if (!parseCommentTag(tag)) {
+                throw new ParseException(tag, 0);
+            }
+            tagType = MtxXmlTagType.COMMENT;
+            fields = new HashMap<>();
+            fields.put(TAG_NAME_MARKER, null);
 
         } else {
             tagType = tag.contains("/>") ? MtxXmlTagType.INLINE : MtxXmlTagType.OPENING;
@@ -99,5 +108,9 @@ public class MtxXmlParser {
 
     protected static boolean parseClosingTag(String tag) {
         return Pattern.matches("</[ ]*[^<> \"]+>", tag);
+    }
+
+    protected static boolean parseCommentTag(String tag) {
+        return Pattern.matches("<!--[^\"]*-->", tag);
     }
 }
