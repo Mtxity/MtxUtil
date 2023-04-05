@@ -131,4 +131,36 @@ public final class MtxXmlParserTest {
         assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test >"));
         assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test"));
     }
+
+    @Test
+    public void testSeparateParts() {
+        String sampleXml = "<n1><n2> <n3 t=\"2\"></n3><o1></o1>  </n2></n1>";
+        String[] sampleXmlDeconstructed = new String[] {
+                "<n1>",
+                    "<n2>",
+                        "<n3 t=\"2\">",
+                        "</n3>",
+                        "<o1>",
+                        "</o1>",
+                    "</n2>",
+                "</n1>",
+        };
+
+        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+    }
+
+    @Test
+    public void testSeparateParts_withTextInBetween() {
+        String sampleXml = "<n1 k=\"a\"><n2><n3>inner spot a</n3><o1>inner spot b</o1></n2></n1>";
+        String[] sampleXmlDeconstructed = new String[] {
+                "<n1 k=\"a\">",
+                    "<n2>",
+                        "<n3>inner spot a</n3>",
+                        "<o1>inner spot b</o1>",
+                    "</n2>",
+                "</n1>",
+        };
+
+        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+    }
 }
