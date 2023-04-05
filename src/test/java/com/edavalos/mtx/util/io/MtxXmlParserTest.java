@@ -8,6 +8,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxXmlParserTest {
@@ -37,27 +38,45 @@ public final class MtxXmlParserTest {
     }
 
     @Test
+    public void testParseCommentTag() {
+        assertTrue(MtxXmlParser.parseCommentTag("<!-- test -->"));
+        assertTrue(MtxXmlParser.parseCommentTag("<!--test-->"));
+        assertTrue(MtxXmlParser.parseCommentTag("<!----test-->"));
+        assertTrue(MtxXmlParser.parseCommentTag("<!---->"));
+
+        assertFalse(MtxXmlParser.parseCommentTag("<!-- test ->"));
+        assertFalse(MtxXmlParser.parseCommentTag("<!- test -->"));
+        assertFalse(MtxXmlParser.parseCommentTag("<!-- test --"));
+        assertFalse(MtxXmlParser.parseCommentTag("<-- test -->"));
+    }
+
+    @Test
     public void testParseTag() {
         try {
             String openingTagStr = "<testO k1=\"v1\" k2=\"v2\">";
             String inlineTagStr  = "<testI k1=\"v1\" />";
             String closingTagStr = "</testC>";
+            String commentTagStr = "<!-- testCm -->";
 
             MtxXmlParser.MtxXmlTag openingTag = MtxXmlParser.parseTag(openingTagStr);
             MtxXmlParser.MtxXmlTag inlineTag  = MtxXmlParser.parseTag(inlineTagStr);
             MtxXmlParser.MtxXmlTag closingTag = MtxXmlParser.parseTag(closingTagStr);
+            MtxXmlParser.MtxXmlTag commentTag = MtxXmlParser.parseTag(commentTagStr);
 
             assertEquals("testO", openingTag.name());
             assertEquals("testI", inlineTag.name());
             assertEquals("testC", closingTag.name());
+            assertNull(commentTag.name());
 
             assertEquals(3, openingTag.fields().size());
             assertEquals(2, inlineTag.fields().size());
             assertEquals(1, closingTag.fields().size());
+            assertEquals(1, commentTag.fields().size());
 
             assertEquals(MtxXmlParser.MtxXmlTagType.OPENING, openingTag.tagType());
             assertEquals(MtxXmlParser.MtxXmlTagType.INLINE,  inlineTag.tagType());
             assertEquals(MtxXmlParser.MtxXmlTagType.CLOSING, closingTag.tagType());
+            assertEquals(MtxXmlParser.MtxXmlTagType.COMMENT, commentTag.tagType());
         } catch (ParseException e) {
             System.out.println(e.getErrorOffset());
             throw new RuntimeException(e);
