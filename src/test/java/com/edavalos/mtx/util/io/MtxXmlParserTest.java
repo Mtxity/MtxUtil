@@ -193,6 +193,51 @@ public final class MtxXmlParserTest {
 
             assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
         }
+
+        @Test
+        public void testSeparateParts_withTextInBetween_withCommentsInBetween_center() {
+            String sampleXml = "<n1 k=\"a\"><n2><n3>inner <!-- test --> spot a</n3><o1>inner spot b</o1></n2></n1>";
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1 k=\"a\">",
+                        "<n2>",
+                            "<n3>inner <!-- test --> spot a</n3>",
+                            "<o1>inner spot b</o1>",
+                        "</n2>",
+                    "</n1>",
+            };
+
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
+
+        @Test
+        public void testSeparateParts_withTextInBetween_withCommentsInBetween_right() {
+            String sampleXml = "<n1 k=\"a\"><n2><n3>inner spot a <!-- test --></n3><o1>inner spot b</o1></n2></n1>";
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1 k=\"a\">",
+                        "<n2>",
+                            "<n3>inner spot a <!-- test --></n3>",
+                            "<o1>inner spot b</o1>",
+                        "</n2>",
+                    "</n1>",
+            };
+
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
+
+        @Test
+        public void testSeparateParts_withTextInBetween_withCommentsInBetween_left() {
+            String sampleXml = "<n1 k=\"a\"><n2><n3><!-- test --> inner spot a</n3><o1>inner spot b</o1></n2></n1>";
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1 k=\"a\">",
+                        "<n2>",
+                            "<n3><!-- test --> inner spot a</n3>",
+                            "<o1>inner spot b</o1>",
+                        "</n2>",
+                    "</n1>",
+            };
+
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
     }
 
     @Nested
