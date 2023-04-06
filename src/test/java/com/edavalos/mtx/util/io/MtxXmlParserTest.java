@@ -141,12 +141,12 @@ public final class MtxXmlParserTest {
             String sampleXml = "<n1><n2> <n3 t=\"2\"></n3><o1></o1>  </n2></n1>";
             String[] sampleXmlDeconstructed = new String[]{
                     "<n1>",
-                    "<n2>",
-                    "<n3 t=\"2\">",
-                    "</n3>",
-                    "<o1>",
-                    "</o1>",
-                    "</n2>",
+                        "<n2>",
+                            "<n3 t=\"2\">",
+                            "</n3>",
+                            "<o1>",
+                            "</o1>",
+                        "</n2>",
                     "</n1>",
             };
 
@@ -158,10 +158,10 @@ public final class MtxXmlParserTest {
             String sampleXml = "<n1 k=\"a\"><n2><n3>inner spot a</n3><o1>inner spot b</o1></n2></n1>";
             String[] sampleXmlDeconstructed = new String[]{
                     "<n1 k=\"a\">",
-                    "<n2>",
-                    "<n3>inner spot a</n3>",
-                    "<o1>inner spot b</o1>",
-                    "</n2>",
+                        "<n2>",
+                            "<n3>inner spot a</n3>",
+                            "<o1>inner spot b</o1>",
+                        "</n2>",
                     "</n1>",
             };
 
@@ -172,22 +172,22 @@ public final class MtxXmlParserTest {
         public void testSeparateParts_withSpacesInBetween() {
             String sampleXml =
                     """
-                            <n1>
-                                <n2>
-                                    <n3 t="2">
-                                    </n3>
-                                    <o1></o1>
-                                </n2>
-                            </n1>
-                            """;
+                    <n1>
+                        <n2>
+                            <n3 t="2">
+                            </n3>
+                            <o1></o1>
+                        </n2>
+                    </n1>
+                    """;
             String[] sampleXmlDeconstructed = new String[]{
                     "<n1>",
-                    "<n2>",
-                    "<n3 t=\"2\">",
-                    "</n3>",
-                    "<o1>",
-                    "</o1>",
-                    "</n2>",
+                        "<n2>",
+                            "<n3 t=\"2\">",
+                            "</n3>",
+                            "<o1>",
+                            "</o1>",
+                        "</n2>",
                     "</n1>",
             };
 
