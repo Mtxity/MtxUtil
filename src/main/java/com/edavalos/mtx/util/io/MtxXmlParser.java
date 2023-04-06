@@ -73,8 +73,13 @@ public class MtxXmlParser {
      *         Length == xmlParts.length + n*2 (where n is number of strings between tags)
      */
     protected static String[] isolateText(String[] xmlParts) {
+        final String COMMENT_OPEN_REPLACEMENT = "Ͼ";
+        final String COMMENT_CLOSE_REPLACEMENT = "Ͽ";
         List<String> isolatedParts = new ArrayList<>();
         for (String xmlPart : xmlParts) {
+            xmlPart = xmlPart
+                      .replaceAll(Pattern.quote("<!"), COMMENT_OPEN_REPLACEMENT)
+                      .replaceAll(Pattern.quote("->"), COMMENT_CLOSE_REPLACEMENT);
             int openingBracketCount = MtxStringUtil.countOccurrencesOf(xmlPart, "<");
             int closingBracketCount = MtxStringUtil.countOccurrencesOf(xmlPart, ">");
             boolean containsClosingBracket = xmlPart.contains("</");
@@ -84,11 +89,11 @@ public class MtxXmlParser {
                 String[] innerParts = MtxStringUtil.splitAtChars(strippedXmlPart, '>', '<');
                 assert innerParts.length == 3;
                 isolatedParts.add("<" + innerParts[0] + ">");
-                isolatedParts.add(innerParts[1]);
+                isolatedParts.add(innerParts[1].replaceAll(Pattern.quote(COMMENT_OPEN_REPLACEMENT), "<!").replaceAll(Pattern.quote(COMMENT_CLOSE_REPLACEMENT), "->"));
                 isolatedParts.add("<" + innerParts[2] + ">");
 
             } else {
-                isolatedParts.add(xmlPart);
+                isolatedParts.add(xmlPart.replaceAll(Pattern.quote(COMMENT_OPEN_REPLACEMENT), "<!").replaceAll(Pattern.quote(COMMENT_CLOSE_REPLACEMENT), "->"));
             }
         }
         return isolatedParts.toArray(new String[0]);
