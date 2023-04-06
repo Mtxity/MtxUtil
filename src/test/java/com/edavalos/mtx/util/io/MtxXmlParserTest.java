@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.io;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Nested;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -132,62 +133,66 @@ public final class MtxXmlParserTest {
         assertThrows(ParseException.class, () -> MtxXmlParser.parseTag("<!-- test"));
     }
 
-    @Test
-    public void testSeparateParts() {
-        String sampleXml = "<n1><n2> <n3 t=\"2\"></n3><o1></o1>  </n2></n1>";
-        String[] sampleXmlDeconstructed = new String[] {
-                "<n1>",
+    @Nested
+    class SeparatePartsTests {
+
+        @Test
+        public void testSeparateParts() {
+            String sampleXml = "<n1><n2> <n3 t=\"2\"></n3><o1></o1>  </n2></n1>";
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1>",
                     "<n2>",
-                        "<n3 t=\"2\">",
-                        "</n3>",
-                        "<o1>",
-                        "</o1>",
+                    "<n3 t=\"2\">",
+                    "</n3>",
+                    "<o1>",
+                    "</o1>",
                     "</n2>",
-                "</n1>",
-        };
+                    "</n1>",
+            };
 
-        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
-    }
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
 
-    @Test
-    public void testSeparateParts_withTextInBetween() {
-        String sampleXml = "<n1 k=\"a\"><n2><n3>inner spot a</n3><o1>inner spot b</o1></n2></n1>";
-        String[] sampleXmlDeconstructed = new String[] {
-                "<n1 k=\"a\">",
+        @Test
+        public void testSeparateParts_withTextInBetween() {
+            String sampleXml = "<n1 k=\"a\"><n2><n3>inner spot a</n3><o1>inner spot b</o1></n2></n1>";
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1 k=\"a\">",
                     "<n2>",
-                        "<n3>inner spot a</n3>",
-                        "<o1>inner spot b</o1>",
+                    "<n3>inner spot a</n3>",
+                    "<o1>inner spot b</o1>",
                     "</n2>",
-                "</n1>",
-        };
+                    "</n1>",
+            };
 
-        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
-    }
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
 
-    @Test
-    public void testSeparateParts_withSpacesInBetween() {
-        String sampleXml =
-                """
-                <n1>
-                    <n2>
-                        <n3 t="2">
-                        </n3>
-                        <o1></o1>
-                    </n2>
-                </n1>
-                """;
-        String[] sampleXmlDeconstructed = new String[] {
-                "<n1>",
+        @Test
+        public void testSeparateParts_withSpacesInBetween() {
+            String sampleXml =
+                    """
+                            <n1>
+                                <n2>
+                                    <n3 t="2">
+                                    </n3>
+                                    <o1></o1>
+                                </n2>
+                            </n1>
+                            """;
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1>",
                     "<n2>",
-                        "<n3 t=\"2\">",
-                        "</n3>",
-                        "<o1>",
-                        "</o1>",
+                    "<n3 t=\"2\">",
+                    "</n3>",
+                    "<o1>",
+                    "</o1>",
                     "</n2>",
-                "</n1>",
-        };
+                    "</n1>",
+            };
 
-        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+            assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
+        }
     }
 
     @Test
