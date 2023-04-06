@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -42,6 +44,7 @@ public class MtxXmlParser {
 
     /**
      * Separates input into array of tags. Splits text between these: "><" (ignoring whitespaces and newlines)
+     * @param stream A string containing XML text
      * @return An array of tags, with possible valid strings in between them
      */
     protected static String[] separateParts(String stream) {
@@ -50,6 +53,34 @@ public class MtxXmlParser {
                .replaceAll("\n", "")
                .replaceAll(">[ ]*<", spliterator)
                .split(String.valueOf(MtxStringUtil.SEPARATOR_CHAR));
+    }
+
+    /**
+     * Converts this: {"<tag>text</tag>"} into this: {"<tag>", "text", "</tag>"}
+     * @param xmlParts An array of tags, with possible valid strings in between them
+     * @return An array equal to xmlParts but with text between tags separated.
+     *         Length == xmlParts.length + n*2 (where n is number of strings between tags)
+     */
+    protected static String[] isolateText(String[] xmlParts) {
+        List<String> isolatedParts = new ArrayList<>();
+        for (String xmlPart : xmlParts) {
+            int openingBracketCount = MtxStringUtil.countOccurrencesOf(xmlPart, "<");
+            int closingBracketCount = MtxStringUtil.countOccurrencesOf(xmlPart, ">");
+            boolean containsClosingBracket = xmlPart.contains("</");
+            // If xmlPart fits format of: <tag>text</tag>
+            if (openingBracketCount == 2 && closingBracketCount == 2 && containsClosingBracket) {
+                String strippedXmlPart = xmlPart.substring(1, xmlPart.length() - 1);
+                String[] innerParts = MtxStringUtil.splitAtChars(strippedXmlPart, '>', '<');
+                assert innerParts.length == 3;
+                isolatedParts.add("<" + innerParts[0] + ">");
+                isolatedParts.add(innerParts[1]);
+                isolatedParts.add("<" + innerParts[2] + ">");
+
+            } else {
+                isolatedParts.add(xmlPart);
+            }
+        }
+        return isolatedParts.toArray(new String[0]);
     }
 
     protected static MtxXmlTag parseTag(String tag) throws ParseException {
