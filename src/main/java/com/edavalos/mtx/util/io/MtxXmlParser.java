@@ -22,6 +22,10 @@ public class MtxXmlParser {
 
     protected record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType tagType) { }
 
+    protected class MtxXmlNode {
+//        private final
+    }
+
     protected static final String TAG_NAME_MARKER = ".NAME_FOR_INTERNAL_USE";
 
     private final String contents;
@@ -48,10 +52,17 @@ public class MtxXmlParser {
      * @return An array of tags, with possible valid strings in between them
      */
     protected static String[] separateParts(String stream) {
+        final String COMMENT_OPEN_REPLACEMENT = "Ͼ";
+        final String COMMENT_CLOSE_REPLACEMENT = "Ͽ";
+        stream = stream
+                 .replaceAll(Pattern.quote("<!"), COMMENT_OPEN_REPLACEMENT)
+                 .replaceAll(Pattern.quote("->"), COMMENT_CLOSE_REPLACEMENT);
         String spliterator = ">" + MtxStringUtil.SEPARATOR_CHAR + "<";
         return stream
                .replaceAll("\n", "")
                .replaceAll(">[ ]*<", spliterator)
+               .replaceAll(COMMENT_OPEN_REPLACEMENT, "<!")
+               .replaceAll(COMMENT_CLOSE_REPLACEMENT, "->")
                .split(String.valueOf(MtxStringUtil.SEPARATOR_CHAR));
     }
 
