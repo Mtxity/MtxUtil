@@ -189,4 +189,44 @@ public final class MtxXmlParserTest {
 
         assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.separateParts(sampleXml));
     }
+
+    @Test
+    public void testIsolateText_noTextInBetween() {
+        String[] sampleXmlDeconstructed = new String[] {
+                "<n1 k=\"a\">",
+                "<n2>",
+                "<n3>",
+                "</n3>",
+                "<o1>",
+                "</o1>",
+                "</n2>",
+                "</n1>",
+        };
+        assertArrayEquals(sampleXmlDeconstructed, MtxXmlParser.isolateText(sampleXmlDeconstructed));
+    }
+
+    @Test
+    public void testIsolateText_withTextInBetween() {
+        String[] sampleXmlDeconstructed = new String[] {
+                "<n1 k=\"a\">",
+                "<n2>",
+                "<n3>inner spot a</n3>",
+                "<o1>inner spot b</o1>",
+                "</n2>",
+                "</n1>",
+        };
+        String[] sampleXmlDeconstructedWithSplitStrings = new String[] {
+                "<n1 k=\"a\">",
+                "<n2>",
+                "<n3>",
+                "inner spot a",
+                "</n3>",
+                "<o1>",
+                "inner spot b",
+                "</o1>",
+                "</n2>",
+                "</n1>",
+        };
+        assertArrayEquals(sampleXmlDeconstructedWithSplitStrings, MtxXmlParser.isolateText(sampleXmlDeconstructed));
+    }
 }
