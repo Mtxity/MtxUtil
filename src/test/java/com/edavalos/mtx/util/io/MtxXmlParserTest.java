@@ -316,6 +316,35 @@ public final class MtxXmlParserTest {
             };
             assertArrayEquals(sampleXmlDeconstructedWithSplitStrings, MtxXmlParser.isolateText(sampleXmlDeconstructed));
         }
+
+        @Test
+        public void testIsolateText_withTextInBetween_withNestedTags() {
+            String[] sampleXmlDeconstructed = new String[]{
+                    "<n1 k=\"a\">",
+                    "<n2>",
+                    "<n3>inner<a1>test</a1>text</n3>",
+                    "<o1>inner spot b</o1>",
+                    "</n2>",
+                    "</n1>",
+            };
+            String[] sampleXmlDeconstructedWithSplitStrings = new String[]{
+                    "<n1 k=\"a\">",
+                    "<n2>",
+                    "<n3>",
+                    "inner",
+                    "<a1>",
+                    "test",
+                    "</a1>",
+                    "text",
+                    "</n3>",
+                    "<o1>",
+                    "inner spot b",
+                    "</o1>",
+                    "</n2>",
+                    "</n1>",
+            };
+            assertArrayEquals(sampleXmlDeconstructedWithSplitStrings, MtxXmlParser.isolateText(sampleXmlDeconstructed));
+        }
     }
 
     @Test
