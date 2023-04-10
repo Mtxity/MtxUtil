@@ -231,6 +231,7 @@ public final class MtxStringUtil {
         return true;
     }
 
+    // taken from https://howtodoinjava.com/java/regex/us-postal-zip-code-validation/
     public static boolean isValidZipcode(String string) {
         return Pattern.matches("^[0-9]{5}(?:-[0-9]{4})?$", string);
     }
