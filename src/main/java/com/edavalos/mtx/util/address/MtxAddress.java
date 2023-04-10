@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.address;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import com.edavalos.mtx.util.string.MtxStringUtil;
@@ -11,7 +13,18 @@ public record MtxAddress(
         String cityName,
         String state,
         String zipCode
-) {
+    ) {
+
+    public MtxAddress(
+            int buildingNumber,
+            String streetName,
+            String optionalUnitAbbrevAndNumber,
+            String cityName,
+            String state,
+            int zipCode
+    ) {
+        this(buildingNumber, streetName, optionalUnitAbbrevAndNumber, cityName, state, String.valueOf(zipCode));
+    }
 
     public MtxAddress {
         Objects.requireNonNull(streetName);
