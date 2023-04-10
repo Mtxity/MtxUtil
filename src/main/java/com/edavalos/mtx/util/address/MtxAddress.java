@@ -5,28 +5,28 @@ import java.util.Objects;
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
 public record MtxAddress(
-    int buildingNumber,
-    String streetName,
-    String optionalUnitAbbrevAndNumber,
-    String cityName,
-    String state,
-    String zipCode
-  ) {
+        int buildingNumber,
+        String streetName,
+        String optionalUnitAbbrevAndNumber,
+        String cityName,
+        String state,
+        String zipCode
+) {
 
     public MtxAddress {
-      Objects.requireNonNull(streetName);
-      Objects.requireNonNull(cityName);
-      Objects.requireNonNull(state);
-      Objects.requireNonNull(zipCode);
+        Objects.requireNonNull(streetName);
+        Objects.requireNonNull(cityName);
+        Objects.requireNonNull(state);
+        Objects.requireNonNull(zipCode);
 
-      if (!MtxStringUtil.isValidZipcode(zipCode)) {
-        throw new IllegalArgumentException(zipCode);
-      }
+        if (!MtxStringUtil.isValidZipcode(zipCode)) {
+            throw new IllegalArgumentException(zipCode);
+        }
     }
 
     @Override
     public String toString() {
-      return this.buildingNumber + this.streetName + this.optionalUnitAbbrevAndNumber + "\n" +
-             this.cityName + ", " + this.state + this.zipCode;
+        return this.buildingNumber + this.streetName + this.optionalUnitAbbrevAndNumber + "\n" +
+                this.cityName + ", " + this.state + this.zipCode;
     }
 }
