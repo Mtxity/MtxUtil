@@ -556,4 +556,45 @@ public final class MtxStringUtilTest {
             assertArrayEquals(expected, MtxStringUtil.splitAtCommas(row));
         }
     }
+
+    @Nested
+    class IsValidZipcodeTests {
+        String[] validZipcodesNoExtension = new String[] {
+                "12345",
+                "67890",
+                "11697"
+        };
+        String[] validZipcodesWithExtension = new String[] {
+                "12345-6789",
+                "67890-1234",
+                "11697-4413"
+        };
+        String[] invalidZipcodes = new String[] {
+                "123456",
+                "1234",
+                "12345-678",
+                "12345-67890"
+        };
+
+        @Test
+        public void testIsValidZipcode_validZipcode() {
+            for (String zipcode : validZipcodesNoExtension) {
+                assertTrue(MtxStringUtil.isValidZipcode(zipcode));
+            }
+        }
+
+        @Test
+        public void testIsValidZipcode_validZipcode_withExtension() {
+            for (String zipcode : validZipcodesWithExtension) {
+                assertTrue(MtxStringUtil.isValidZipcode(zipcode));
+            }
+        }
+
+        @Test
+        public void testIsValidIpAddress_invalidZipcode() {
+            for (String zipcode : invalidZipcodes) {
+                assertFalse(MtxStringUtil.isValidZipcode(zipcode));
+            }
+        }
+    }
 }
