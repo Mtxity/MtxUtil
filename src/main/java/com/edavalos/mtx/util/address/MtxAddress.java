@@ -26,7 +26,8 @@ public record MtxAddress(
 
     @Override
     public String toString() {
-        return this.buildingNumber + this.streetName + this.optionalUnitAbbrevAndNumber + "\n" +
-                this.cityName + ", " + this.state + this.zipCode;
+        String unitNumber = this.optionalUnitAbbrevAndNumber == null ? "" : " " + this.optionalUnitAbbrevAndNumber;
+        return this.buildingNumber + " " + this.streetName + unitNumber + "\n" +
+               this.cityName + ", " + this.state + " " + this.zipCode;
     }
 }
