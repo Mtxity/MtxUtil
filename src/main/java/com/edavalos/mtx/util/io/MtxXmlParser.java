@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -97,6 +98,10 @@ public class MtxXmlParser {
         this.contents = contentsBuilder.toString();
     }
 
+    private void doWork() {
+//        String[]
+    }
+
     /**
      * Separates input into array of tags. Splits text between these: "><" (ignoring whitespaces and newlines)
      * @param stream A string containing XML text
@@ -126,6 +131,7 @@ public class MtxXmlParser {
     protected static String[] isolateText(String[] xmlParts) {
         final String COMMENT_OPEN_REPLACEMENT = "Ͼ";
         final String COMMENT_CLOSE_REPLACEMENT = "Ͽ";
+        final String TAG_MARKER = "፮";
         List<String> isolatedParts = new ArrayList<>();
         for (String xmlPart : xmlParts) {
             xmlPart = xmlPart
@@ -143,10 +149,20 @@ public class MtxXmlParser {
                 isolatedParts.add(innerParts[1].replaceAll(Pattern.quote(COMMENT_OPEN_REPLACEMENT), "<!").replaceAll(Pattern.quote(COMMENT_CLOSE_REPLACEMENT), "->"));
                 isolatedParts.add("<" + innerParts[2] + ">");
 
+            } else if (openingBracketCount >= 2 && containsClosingBracket && openingBracketCount == closingBracketCount) {
+                String[] nestedXmlParts = xmlPart
+                                          .replaceAll(Pattern.quote("<"), TAG_MARKER + "<")
+                                          .replaceAll(Pattern.quote(">"), ">" + TAG_MARKER)
+                                          .replaceAll(Pattern.quote(COMMENT_OPEN_REPLACEMENT), "<!")
+                                          .replaceAll(Pattern.quote(COMMENT_CLOSE_REPLACEMENT), "->")
+                                          .split(TAG_MARKER);
+                isolatedParts.addAll(Arrays.asList(nestedXmlParts));
+
             } else {
                 isolatedParts.add(xmlPart.replaceAll(Pattern.quote(COMMENT_OPEN_REPLACEMENT), "<!").replaceAll(Pattern.quote(COMMENT_CLOSE_REPLACEMENT), "->"));
             }
         }
+        isolatedParts.removeIf(isolatedPart -> isolatedPart.length() == 0);
         return isolatedParts.toArray(new String[0]);
     }
 
