@@ -348,6 +348,13 @@ public final class MtxXmlParserTest {
     }
 
     @Test
+    public void testDeleteComments() {
+        String stringWithComment = "<n3>inne<!-- test -->r spot a</n3>";
+        String stringWithoutComment = "<n3>inner spot a</n3>";
+        assertEquals(stringWithoutComment, MtxXmlParser.deleteComments(stringWithComment));
+    }
+
+    @Test
     public void testConstructor_fileNotFound() {
         String fakeFilePath = "something/else.txt";
         String expectedErrorMsg = "The file '" + fakeFilePath + "' could not be found.";
@@ -357,7 +364,7 @@ public final class MtxXmlParserTest {
         try {
             mtxXmlParser = new MtxXmlParser(fakeFilePath);
             fail();
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             assertEquals(expectedErrorMsg, e.getMessage());
         }
     }
@@ -377,7 +384,7 @@ public final class MtxXmlParserTest {
 
         try {
             mtxXmlParser = new MtxXmlParser(CURRENT_FILE_PATH + SAMPLE_XML_FILENAME);
-        } catch (IOException e) {
+        } catch (IOException | ParseException e) {
             fail();
         }
 

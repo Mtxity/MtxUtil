@@ -18,7 +18,8 @@ public class MtxXmlParser {
         OPENING,
         CLOSING,
         INLINE,
-        COMMENT
+        COMMENT,
+        TEXT
     }
 
     protected record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType tagType) { }
@@ -82,7 +83,7 @@ public class MtxXmlParser {
 
     private final String contents;
 
-    public MtxXmlParser(String filePath) throws IOException {
+    public MtxXmlParser(String filePath) throws IOException, ParseException {
         Scanner fileScanner;
 
         try {
@@ -96,10 +97,18 @@ public class MtxXmlParser {
             contentsBuilder.append(fileScanner.nextLine());
         }
         this.contents = contentsBuilder.toString();
+
+        this.doWork();
     }
 
-    private void doWork() {
-//        String[]
+    private void doWork() throws ParseException {
+        String[] xmlParts = separateParts(this.contents);
+        String[] xmlTagStrings = isolateText(xmlParts);
+
+        List<MtxXmlTag> xmlTags = new ArrayList<>();
+        for (String xmlTagString : xmlTagStrings) {
+            MtxXmlTag xmlTag = parseTag(deleteComments(xmlTagString));
+        }
     }
 
     /**
@@ -166,6 +175,10 @@ public class MtxXmlParser {
         return isolatedParts.toArray(new String[0]);
     }
 
+    protected static String deleteComments(String s) {
+        return s.replaceAll("<!--[^\"]*-->", "");
+    }
+
     protected static MtxXmlTag parseTag(String tag) throws ParseException {
         HashMap<String, String> fields;
         MtxXmlTagType tagType;
@@ -184,6 +197,9 @@ public class MtxXmlParser {
             tagType = MtxXmlTagType.COMMENT;
             fields = new HashMap<>();
             fields.put(TAG_NAME_MARKER, null);
+
+        } else if (!tag.contains("<") && !tag.contains(">")) {
+            return new MtxXmlTag(null, null, MtxXmlTagType.TEXT);
 
         } else {
             tagType = tag.contains("/>") ? MtxXmlTagType.INLINE : MtxXmlTagType.OPENING;
