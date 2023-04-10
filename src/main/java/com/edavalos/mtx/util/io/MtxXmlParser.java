@@ -9,7 +9,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -248,5 +247,10 @@ public class MtxXmlParser {
 
     protected static boolean parseCommentTag(String tag) {
         return Pattern.matches("<!--[^\"]*-->", tag);
+    }
+
+    @Override
+    public String toString() {
+        return this.contents;
     }
 }
