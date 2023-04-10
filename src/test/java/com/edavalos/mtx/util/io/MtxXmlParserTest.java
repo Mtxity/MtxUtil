@@ -3,9 +3,12 @@ package com.edavalos.mtx.util.io;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Nested;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -17,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxXmlParserTest {
     private static final String CURRENT_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\java\\com\\edavalos\\mtx\\util\\io\\";
+    private static final String SAMPLE_XML_FILENAME = "sampleXmlFile.xml";
 
     private MtxXmlParser mtxXmlParser;
 
@@ -327,5 +331,27 @@ public final class MtxXmlParserTest {
         } catch (IOException e) {
             assertEquals(expectedErrorMsg, e.getMessage());
         }
+    }
+
+    @Test
+    public void testToString() {
+        StringBuilder expectedText = new StringBuilder();
+        try {
+            Scanner fileScanner = new Scanner(new File(CURRENT_FILE_PATH + SAMPLE_XML_FILENAME));
+            while (fileScanner.hasNextLine()) {
+                expectedText.append(fileScanner.nextLine());
+            }
+            fileScanner.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            mtxXmlParser = new MtxXmlParser(CURRENT_FILE_PATH + SAMPLE_XML_FILENAME);
+        } catch (IOException e) {
+            fail();
+        }
+
+        assertEquals(expectedText.toString(), mtxXmlParser.toString());
     }
 }

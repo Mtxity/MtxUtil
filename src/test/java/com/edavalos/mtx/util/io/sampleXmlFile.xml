@@ -1,0 +1,28 @@
+<laptops>
+    <laptop name="Dell">
+        <price value="5000" />
+        <ram value="8GB"/>
+        <ssd value="250GB" duration="1"/>
+        <usage level="easy">
+            Good for personal use
+        </usage>
+    </laptop>
+    <laptop name="Lenovo">
+        <price value="3800" />
+        <ram value="4GB"/>
+        <hdd value="200GB" duration="2"/>
+        <usage level="hard">
+            More common in office settings <extra>unrelated info</extra> Works as tablet
+        </usage>
+        <!-- Comment -->
+    </laptop>
+    <laptop name="Mac">
+        <price value="6000" />
+        <ram value="12GB"/>
+        <hdd value="500GB" duration="2"/>
+        <usage level="medium">
+            Art and design mainly
+            <!-- Comment in tag -->
+        </usage>
+    </laptop>
+</laptops>
