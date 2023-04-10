@@ -231,6 +231,10 @@ public final class MtxStringUtil {
         return true;
     }
 
+    public static boolean isValidZipcode(String string) {
+        return Pattern.matches("^[0-9]{5}(?:-[0-9]{4})?$", string);
+    }
+
     // taken from https://stackoverflow.com/a/1757107
     public static String[] splitAtCommas(String string) {
         return string.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
