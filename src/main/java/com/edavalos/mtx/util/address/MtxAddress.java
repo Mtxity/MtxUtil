@@ -25,4 +25,10 @@ public record MtxAddress(
         throw new ParseException(zipCode, 0);
       }
     }
+
+    @Override
+    public String toString() {
+      return this.buildingNumber + this.streetName + this.optionalUnitAbbrevAndNumber + "\n" +
+             this.cityName + ", " + this.state + this.zipCode;
+    }
 }
