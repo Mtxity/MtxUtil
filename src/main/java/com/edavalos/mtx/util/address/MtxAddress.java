@@ -1,6 +1,9 @@
 package com.edavalos.mtx.util.address;
 
+import java.text.ParseException;
 import java.util.Objects;
+
+import com.edavalos.mtx.util.string.MtxStringUtil;
 
 public record MtxAddress(
     int buildingNumber,
@@ -8,7 +11,7 @@ public record MtxAddress(
     String optionalUnitAbbrevAndNumber,
     String cityName,
     String state,
-    int zipCode
+    String zipCode
   ) {
 
     public MtxAddress {
@@ -18,7 +21,8 @@ public record MtxAddress(
       Objects.requireNonNull(state);
       Objects.requireNonNull(zipCode);
 
-      // Validate zipcode
-      // Validate state abbrev
+      if (!MtxStringUtil.isValidZipcode(zipCode)) {
+        throw new ParseException(zipCode, 0);
+      }
     }
 }
