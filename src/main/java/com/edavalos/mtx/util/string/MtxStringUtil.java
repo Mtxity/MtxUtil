@@ -240,4 +240,20 @@ public final class MtxStringUtil {
     public static String[] splitAtCommas(String string) {
         return string.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
     }
+
+    public static String convertToMockingCase(String string) {
+        StringBuilder mockingString = new StringBuilder();
+
+        boolean nextCaseIsUpper = true;
+        for (char c : string.toCharArray()) {
+            if (Character.isLetter(c)) {
+                mockingString.append(nextCaseIsUpper ? Character.toUpperCase(c) : Character.toLowerCase(c));
+                nextCaseIsUpper = !nextCaseIsUpper;
+
+            } else {
+                mockingString.append(c);
+            }
+        }
+        return mockingString.toString();
+    }
 }
