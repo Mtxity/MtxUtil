@@ -597,4 +597,55 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Nested
+    class ConvertToMockingCaseTests {
+        HashMap<String, String> lettersOnlyTestCases = new HashMap<>(){{
+            put("String", "StRiNg");
+            put("abcdef", "AbCdEf");
+            put("aBcDeF", "AbCdEf");
+            put("AAAAAA", "AaAaAa");
+        }};
+        HashMap<String, String> otherTestCases = new HashMap<>(){{
+            put("a b c", "A b C");
+            put("va/lue.s", "Va/LuE.s");
+            put("lorem ipsum", "LoReM iPsUm");
+        }};
+        String[] noLettersTestCases = new String[] {
+                "123456",
+                "!@#$%",
+                "   ",
+                "0 1 0"
+        };
+
+        @Test
+        public void testConvertToMockingCase_singleWords() {
+            for (Map.Entry<String, String> testCase : lettersOnlyTestCases.entrySet()) {
+                assertEquals(
+                        testCase.getValue(),
+                        MtxStringUtil.convertToMockingCase(testCase.getKey())
+                );
+            }
+        }
+
+        @Test
+        public void testConvertToMockingCase_nonLetterChars() {
+            for (Map.Entry<String, String> testCase : otherTestCases.entrySet()) {
+                assertEquals(
+                        testCase.getValue(),
+                        MtxStringUtil.convertToMockingCase(testCase.getKey())
+                );
+            }
+        }
+
+        @Test
+        public void testConvertToMockingCase_noLetters() {
+            for (String testCase : noLettersTestCases) {
+                assertEquals(
+                        testCase,
+                        MtxStringUtil.convertToMockingCase(testCase)
+                );
+            }
+        }
+    }
 }
