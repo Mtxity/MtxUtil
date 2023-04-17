@@ -6,6 +6,18 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class MtxJsonParser {
+    protected enum MtxJsonTokenType {
+        OPENING_BRACKET, // opens a section
+        CLOSING_BRACKET, // closes a section
+        OPENING_BRACE,   // opens a list
+        CLOSING_BRACE,   // closes a list
+        STRING,          // key or value
+        COLON,           // separates a key and value
+        COMMA;           // separates values in a list
+        // Keys must be strings. Values can be a string, list or section.
+        // Lists can contain any type of value.
+    }
+
     private final String rawStream;
 
     public MtxJsonParser(String filePath) throws IOException {
@@ -40,6 +52,8 @@ public class MtxJsonParser {
         }
         return newString.toString();
     }
+
+    protected static
 
     public String getRawStream() {
         return this.rawStream;
