@@ -98,22 +98,28 @@ public class MtxJsonParser {
     }
 
     protected static boolean isMtxJsonTokenListValid(List<MtxJsonToken> tokenList) {
+        if (tokenList.get(0).tokenType != MtxJsonTokenType.OPENING_BRACKET) {
+            return false;
+        }
+
         int idx = -1;
+        int depth = 0;
         boolean valid = false;
         for (MtxJsonToken token : tokenList) {
             idx ++;
             if (idx + 1 == tokenList.size()) {
-                valid = token.tokenType == MtxJsonTokenType.CLOSING_BRACKET && tokenList.size() > 1;
+                valid = token.tokenType == MtxJsonTokenType.CLOSING_BRACKET && depth == 1;
                 break;
             }
 
-            MtxJsonTokenType nextToken = tokenList.get(idx + 1).tokenType;
-            if (token.tokenType != null) {
+            if (token.tokenType != null && tokenList.get(idx + 1).tokenType != null) {
+                MtxJsonTokenType nextToken = tokenList.get(idx + 1).tokenType;
                 switch (token.tokenType) {
                     case OPENING_BRACKET -> {
                         switch (nextToken) {
                             // Valid tokens after opening bracket: {
                             case STRING -> {
+                                depth ++;
                                 continue;
                             }
                             default -> {
@@ -125,6 +131,7 @@ public class MtxJsonParser {
                         switch (nextToken) {
                             // Valid tokens after closing bracket: }
                             case COMMA, CLOSING_BRACKET, CLOSING_BRACE -> {
+                                depth --;
                                 continue;
                             }
                             default -> {
