@@ -199,6 +199,72 @@ public class MtxJsonParser {
         }
         return valid;
     }
+//
+//    protected static LinkedHashMap<String, Object> parseFull(List<MtxJsonToken> tokenList) {
+//        LinkedHashMap<String, Object> json = new LinkedHashMap<>();
+//
+//        int idx = 1;
+//        for (MtxJsonToken token : tokenList.subList(1, tokenList.size() - 1)) {
+//
+//        }
+//    }
+//
+//    protected static void parseJsonTokenListBlock(List<MtxJsonToken> tokenList,
+//                                                  LinkedHashMap<String, Object> currentBlock) {
+//        int idx = 0;
+//        String currentKey = null;
+//        boolean inList = false;
+//        for (MtxJsonToken token : tokenList) {
+//            switch (token.tokenType) {
+//                case STRING -> {
+//                    if (idx == 0) {
+//                        currentKey = token.value;
+//                        idx ++;
+//                    } else {
+//                        currentBlock.put(currentKey, token.value);
+//                        idx = 0;
+//                    }
+//                }
+//                case COLON -> {
+//                    idx ++;
+//                }
+//                case OPENING_BRACE -> {
+//                    if (!inList) {
+//                        inList = true;
+//
+//                    }
+//                }
+//                case OPENING_BRACKET -> {
+//                    int from = idx;
+//                    int to = findClosingBracket(tokenList, idx);
+//                    LinkedHashMap<String, Object> innerBlock = new LinkedHashMap<>();
+//                    parseJsonTokenListBlock(tokenList.subList(from, to), innerBlock);
+//                    currentBlock.put(currentKey, innerBlock);
+//                    idx = to;
+//                }
+//            }
+//            if (token.tokenType() == MtxJsonTokenType.OPENING_BRACE) {
+//            }
+//        }
+//    }
+//
+//    private static int findClosingBracket(List<MtxJsonToken> tokenList, int statingIdx) {
+//        int count = 0;
+//        int depth = 0;
+//        for (int i = statingIdx; i < tokenList.size(); i++) {
+//            if (tokenList.get(i).tokenType == MtxJsonTokenType.OPENING_BRACKET) {
+//                depth ++;
+//            } else if (tokenList.get(i).tokenType == MtxJsonTokenType.CLOSING_BRACE) {
+//                if (depth == 0) {
+//                    return count;
+//                } else {
+//                    depth --;
+//                }
+//            }
+//            count ++;
+//        }
+//        return count;
+//    }
 
     public String getRawStream() {
         return this.rawStream;
