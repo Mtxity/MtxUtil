@@ -648,4 +648,50 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Nested
+    class IsPalindromeTests {
+        String[] samplePalindomesEvenLength = new String[] {
+                "hannah",
+                "SATIREv  vERITAS",
+                ""
+        };
+        String[] samplePalindomesOddLength = new String[] {
+                "kayak",
+                "12:21",
+                "SATIREv vERITAS",
+                "x"
+        };
+        String[] sampleNonPalindomes = new String[] {
+                "random word",
+                "phrase",
+                "hello there",
+                "test",
+                "xcs",
+                "CaPs TeSt",
+                "Lorem Ipsum",
+                "xd"
+        };
+
+        @Test
+        public void testIsPalindrome_palindromes_evenLength() {
+            for (String testCase : samplePalindomesEvenLength) {
+                assertTrue(MtxStringUtil.isPalindrome(testCase));
+            }
+        }
+
+        @Test
+        public void testIsPalindrome_palindromes_oddLength() {
+            for (String testCase : samplePalindomesOddLength) {
+                assertTrue(MtxStringUtil.isPalindrome(testCase));
+            }
+        }
+
+        @Test
+        public void testIsPalindrome_notPalindromes() {
+            for (String testCase : sampleNonPalindomes) {
+                assertFalse(MtxStringUtil.isPalindrome(testCase));
+            }
+        }
+    }
 }
