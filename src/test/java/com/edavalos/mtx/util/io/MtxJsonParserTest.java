@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.io;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,7 +12,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxJsonParserTest {
@@ -222,5 +225,103 @@ public final class MtxJsonParserTest {
     @Test
     public void testTokenizeRawJson_noClosingQuotes() {
         assertThrows(ParseException.class, () -> MtxJsonParser.tokenizeRawJson("\"test"));
+    }
+
+    @Nested
+    class IsMtxJsonTokenListValidTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_OPENING_BRACKET = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_CLOSING_BRACKET = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_OPENING_BRACE = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_CLOSING_BRACE = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_STRING = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_COLON = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_AFTER_COMMA = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_LENGTH = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_CLOSING = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_INVALID_NULL = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(null, null));
+            add(new MtxJsonParser.MtxJsonToken(null, null));
+        }};
+
+        @Test
+        public void testIsMtxJsonTokenListValid_validSampleJsonTokenList() {
+            assertTrue(MtxJsonParser.isMtxJsonTokenListValid(SAMPLE_JSON_TOKENS));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterOpeningBracket() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_OPENING_BRACKET));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterClosingBracket() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_CLOSING_BRACKET));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterOpeningBrace() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_OPENING_BRACE));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterClosingBrace() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_CLOSING_BRACE));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterString() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_STRING));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterColon() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_COLON));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidAfterComma() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_AFTER_COMMA));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidLength() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_LENGTH));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_invalidClosing() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_CLOSING));
+        }
+
+        @Test
+        public void testIsMtxJsonTokenListValid_invalidSampleJsonTokenList_null() {
+            assertFalse(MtxJsonParser.isMtxJsonTokenListValid(TOKENS_INVALID_NULL));
+        }
     }
 }
