@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -94,6 +95,102 @@ public class MtxJsonParser {
         }
 
         return tokens;
+    }
+
+    protected static boolean isMtxJsonTokenListValid(List<MtxJsonToken> tokenList) {
+        int idx = -1;
+        boolean valid = false;
+        for (MtxJsonToken token : tokenList) {
+            idx ++;
+            if (idx + 1 == tokenList.size()) {
+                valid = token.tokenType == MtxJsonTokenType.CLOSING_BRACKET && tokenList.size() > 1;
+                break;
+            }
+
+            MtxJsonTokenType nextToken = tokenList.get(idx + 1).tokenType;
+            if (token.tokenType != null) {
+                switch (token.tokenType) {
+                    case OPENING_BRACKET -> {
+                        switch (nextToken) {
+                            // Valid tokens after opening bracket: {
+                            case STRING -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case CLOSING_BRACKET -> {
+                        switch (nextToken) {
+                            // Valid tokens after closing bracket: }
+                            case COMMA, CLOSING_BRACKET, CLOSING_BRACE -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case OPENING_BRACE -> {
+                        switch (nextToken) {
+                            // Valid tokens after opening brace: [
+                            case STRING, OPENING_BRACKET -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case CLOSING_BRACE -> {
+                        switch (nextToken) {
+                            // Valid tokens after closing brace: ]
+                            case COMMA, CLOSING_BRACKET -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case STRING -> {
+                        switch (nextToken) {
+                            // Valid tokens after string: "
+                            case COLON, COMMA, CLOSING_BRACKET, CLOSING_BRACE -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case COLON -> {
+                        switch (nextToken) {
+                            // Valid tokens after colon: :
+                            case STRING, OPENING_BRACKET, OPENING_BRACE -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                    case COMMA -> {
+                        switch (nextToken) {
+                            // Valid tokens after comma: ,
+                            case STRING, OPENING_BRACKET -> {
+                                continue;
+                            }
+                            default -> {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return valid;
     }
 
     public String getRawStream() {
