@@ -349,4 +349,21 @@ public final class MtxJsonParserTest {
             assertFalse(MtxJsonParser.isMtxJsonTokenListValid(SAMPLE_JSON_TOKENS.subList(1, SAMPLE_JSON_TOKENS.size())));
         }
     }
+
+    @Nested
+    class StripExternalBracketsTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_SAMPLE = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_EXPECTED = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample"));
+        }};
+
+        @Test
+        public void testStripExternalBrackets() {
+            assertArrayEquals(TOKENS_EXPECTED.toArray(), MtxJsonParser.stripExternalBrackets(TOKENS_SAMPLE).toArray());
+        }
+    }
 }
