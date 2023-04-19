@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.string;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
@@ -268,5 +269,26 @@ public final class MtxStringUtil {
             end --;
         }
         return true;
+    }
+
+    public static char mostCommonChar(String string) {
+        HashMap<Character, Integer> tallyMap = new HashMap<>();
+        for (char c : string.toCharArray()) {
+            if (!tallyMap.containsKey(c)) {
+                tallyMap.put(c, 1);
+            } else {
+                int occurrences = tallyMap.get(c);
+                tallyMap.put(c, occurrences + 1);
+            }
+        }
+        char mostCommon = string.charAt(0);
+        int largest = 0;
+        for (char d : tallyMap.keySet()) {
+            if (tallyMap.get(d) > largest) {
+                largest = tallyMap.get(d);
+                mostCommon = d;
+            }
+        }
+        return mostCommon;
     }
 }
