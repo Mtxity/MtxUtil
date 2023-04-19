@@ -23,6 +23,35 @@ public class MtxJsonParser {
     }
 
     protected record MtxJsonToken(MtxJsonTokenType tokenType, String value) { }
+//
+//    protected class MtxJsonContent {
+//        private final String name;
+//
+//        public MtxJsonContent(String name) {
+//            this.name = name;
+//        }
+//
+//        public String getName() {
+//            return this.name;
+//        }
+//    }
+//
+//    protected class MtxJsonStringContent extends MtxJsonContent {
+//        private final String value;
+//
+//        public MtxJsonStringContent(String name, String value) {
+//            super(name);
+//            this.value = value;
+//        }
+//
+//        public String getValue() {
+//            return this.value;
+//        }
+//    }
+//
+//    protected class MtxJsonObjectContent extends MtxJsonContent {
+//        private final
+//    }
 
     private final String rawStream;
 
@@ -199,71 +228,15 @@ public class MtxJsonParser {
         }
         return valid;
     }
+
+    protected static List<MtxJsonToken> stripExternalBrackets(List<MtxJsonToken> tokenList) {
+        assert tokenList.get(0).tokenType == MtxJsonTokenType.OPENING_BRACKET;
+        assert tokenList.get(tokenList.size() - 1).tokenType == MtxJsonTokenType.CLOSING_BRACKET;
+        return tokenList.subList(1, tokenList.size() - 1);
+    }
+
+//    protected static List<List<MtxJsonToken>> nestLists(List<MtxJsonToken> tokenList) {
 //
-//    protected static LinkedHashMap<String, Object> parseFull(List<MtxJsonToken> tokenList) {
-//        LinkedHashMap<String, Object> json = new LinkedHashMap<>();
-//
-//        int idx = 1;
-//        for (MtxJsonToken token : tokenList.subList(1, tokenList.size() - 1)) {
-//
-//        }
-//    }
-//
-//    protected static void parseJsonTokenListBlock(List<MtxJsonToken> tokenList,
-//                                                  LinkedHashMap<String, Object> currentBlock) {
-//        int idx = 0;
-//        String currentKey = null;
-//        boolean inList = false;
-//        for (MtxJsonToken token : tokenList) {
-//            switch (token.tokenType) {
-//                case STRING -> {
-//                    if (idx == 0) {
-//                        currentKey = token.value;
-//                        idx ++;
-//                    } else {
-//                        currentBlock.put(currentKey, token.value);
-//                        idx = 0;
-//                    }
-//                }
-//                case COLON -> {
-//                    idx ++;
-//                }
-//                case OPENING_BRACE -> {
-//                    if (!inList) {
-//                        inList = true;
-//
-//                    }
-//                }
-//                case OPENING_BRACKET -> {
-//                    int from = idx;
-//                    int to = findClosingBracket(tokenList, idx);
-//                    LinkedHashMap<String, Object> innerBlock = new LinkedHashMap<>();
-//                    parseJsonTokenListBlock(tokenList.subList(from, to), innerBlock);
-//                    currentBlock.put(currentKey, innerBlock);
-//                    idx = to;
-//                }
-//            }
-//            if (token.tokenType() == MtxJsonTokenType.OPENING_BRACE) {
-//            }
-//        }
-//    }
-//
-//    private static int findClosingBracket(List<MtxJsonToken> tokenList, int statingIdx) {
-//        int count = 0;
-//        int depth = 0;
-//        for (int i = statingIdx; i < tokenList.size(); i++) {
-//            if (tokenList.get(i).tokenType == MtxJsonTokenType.OPENING_BRACKET) {
-//                depth ++;
-//            } else if (tokenList.get(i).tokenType == MtxJsonTokenType.CLOSING_BRACE) {
-//                if (depth == 0) {
-//                    return count;
-//                } else {
-//                    depth --;
-//                }
-//            }
-//            count ++;
-//        }
-//        return count;
 //    }
 
     public String getRawStream() {
