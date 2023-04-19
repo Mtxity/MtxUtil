@@ -693,5 +693,17 @@ public final class MtxStringUtilTest {
                 assertFalse(MtxStringUtil.isPalindrome(testCase));
             }
         }
+
+        @Nested
+        class MostCommonCharTests {
+
+            @Test
+            public void testMostCommonChar() {
+                String testCase = "abcadaccefghftcli";
+                char testMostCommon = 'c';
+
+                assertEquals(testMostCommon, MtxStringUtil.mostCommonChar(testCase));
+            }
+        }
     }
 }
