@@ -13,6 +13,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -364,6 +365,150 @@ public final class MtxJsonParserTest {
         @Test
         public void testStripExternalBrackets() {
             assertArrayEquals(TOKENS_EXPECTED.toArray(), MtxJsonParser.stripExternalBrackets(TOKENS_SAMPLE).toArray());
+        }
+    }
+
+    @Nested
+    class GetInnerTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_NO_CLOSING_BRACE = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+        }};
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_NO_CLOSING_BRACKET = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+        }};
+
+        @Nested
+        class GetInnerListTests {
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample1"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_INNER = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_MULTIPLE = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample1"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_MULTIPLE_INNER = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+            }};
+
+            @Test
+            public void testInnerList_one() {
+                assertArrayEquals(TOKENS_OPEN_CLOSE_INNER.toArray(), MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE, 1).toArray());
+            }
+
+            @Test
+            public void testInnerList_multiple() {
+                assertArrayEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER.toArray(), MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE_MULTIPLE, 1).toArray());
+            }
+        }
+
+        @Nested
+        class GetInnerObjectTests {
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample1"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_INNER = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_MULTIPLE = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample1"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            }};
+            private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OPEN_CLOSE_MULTIPLE_INNER = new ArrayList<>() {{
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample2"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ":"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "sample3"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+                add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            }};
+
+            @Test
+            public void testInnerList_one() {
+                assertArrayEquals(TOKENS_OPEN_CLOSE_INNER.toArray(), MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE, 1).toArray());
+            }
+
+            @Test
+            public void testInnerList_multiple() {
+                assertArrayEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER.toArray(), MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE_MULTIPLE, 1).toArray());
+            }
+        }
+
+        @Test
+        public void testInner_NoClosing() {
+            assertNull(MtxJsonParser.getInnerObject(TOKENS_NO_CLOSING_BRACKET, 0));
+            assertNull(MtxJsonParser.getInnerList(TOKENS_NO_CLOSING_BRACE, 0));
         }
     }
 }
