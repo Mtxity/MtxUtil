@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class MtxJsonParser {
     protected enum MtxJsonTokenType {
@@ -52,6 +54,7 @@ public class MtxJsonParser {
 //    protected class MtxJsonObjectContent extends MtxJsonContent {
 //        private final
 //    }
+    protected record MtxJsonObject(String tag, Object contents) { }
 
     private final String rawStream;
 
@@ -238,6 +241,123 @@ public class MtxJsonParser {
 //    protected static List<List<MtxJsonToken>> nestLists(List<MtxJsonToken> tokenList) {
 //
 //    }
+//    protected static void doWork(List<MtxJsonToken> tokenList) {
+//            doWork(tokenList, false);
+//    }
+//
+//    protected static void doWork(List<MtxJsonToken> tokenList, boolean inList) {
+//        boolean writingTag = true;
+//        String currentKey;
+//        Object currentVal;
+//        LinkedList<Object> currentList = null;
+//        for (MtxJsonToken token : tokenList) {
+//            if (writingTag) {
+//                assert token.tokenType == MtxJsonTokenType.STRING;
+//                currentKey = token.value;
+//                writingTag = false;
+//                continue;
+//            }
+//
+//            switch (token.tokenType) {
+//                case COLON -> {
+//                    assert !writingTag && !inList;
+//                    continue;
+//                }
+//                case STRING -> {
+//                    assert !writingTag;
+//                    if (!inList) {
+//                        currentVal = token.value;
+//                        writingTag = true;
+//                    } else {
+//                        assert currentList != null;
+//                        currentList.add(token.value);
+//                    }
+//                }
+//                case OPENING_BRACE -> {
+//                    assert !writingTag;
+//                    if (!inList) {
+//                        inList = true;
+//                        currentList = new LinkedList<Object>();
+//                    } else {
+//                        // @todo recursively insert list contents into currentList
+//                        // get closing bracket, form a token list from here to there, and call this method again
+//                    }
+//                }
+//                case OPENING_BRACKET -> {
+//                    assert !writingTag;
+//
+//                }
+//            }
+//        }
+//    }
+
+//    protected static MtxJsonObject doWork(List<MtxJsonToken> tokenList) {
+//        for (int i = 0; i < tokenList.size(); i++) {
+//
+//        }
+//    }
+
+    protected static List<MtxJsonToken> getInnerList(List<MtxJsonToken> tokenList, int openingBracePosition) {
+        return getInner(tokenList, openingBracePosition, true);
+    }
+
+    protected static List<MtxJsonToken> getInnerObject(List<MtxJsonToken> tokenList, int openingBracketPosition) {
+        return getInner(tokenList, openingBracketPosition, false);
+    }
+
+    private static List<MtxJsonToken> getInner(List<MtxJsonToken> tokenList, int openingPosition, boolean isBrace) {
+        if (isBrace) {
+            assert tokenList.get(openingPosition).tokenType == MtxJsonTokenType.OPENING_BRACE;
+        }
+        else {
+            assert tokenList.get(openingPosition).tokenType == MtxJsonTokenType.OPENING_BRACKET;
+        }
+
+        List<MtxJsonToken> subList = new ArrayList<>();
+        int openersFound = 0;
+        for (MtxJsonToken token : tokenList.subList(openingPosition + 1, tokenList.size())) {
+            switch (token.tokenType) {
+                case OPENING_BRACE -> {
+                    if (isBrace) {
+                        openersFound ++;
+                    }
+                    subList.add(token);
+                }
+                case OPENING_BRACKET -> {
+                    if (!isBrace) {
+                        openersFound ++;
+                    }
+                    subList.add(token);
+                }
+                case CLOSING_BRACE -> {
+                    if (isBrace) {
+                        if (openersFound == 0) {
+                            return subList;
+                        } else {
+                            openersFound --;
+                            subList.add(token);
+                        }
+                    } else {
+                        subList.add(token);
+                    }
+                }
+                case CLOSING_BRACKET -> {
+                    if (!isBrace) {
+                        if (openersFound == 0) {
+                            return subList;
+                        } else {
+                            openersFound --;
+                            subList.add(token);
+                        }
+                    } else {
+                        subList.add(token);
+                    }
+                }
+                default -> subList.add(token);
+            }
+        }
+        return null;
+    }
 
     public String getRawStream() {
         return this.rawStream;
