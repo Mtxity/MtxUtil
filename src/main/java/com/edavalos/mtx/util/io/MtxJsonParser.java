@@ -308,9 +308,55 @@ public class MtxJsonParser {
                     i += unprocessedInnerInnerList.size();
                     innerList.add(processList(unprocessedInnerInnerList));
                 }
+                case OPENING_BRACKET -> {
+                    List<MtxJsonToken> unprocessedInnerInnerObject = getInnerObject(tokenList, i);
+                    i += unprocessedInnerInnerObject.size();
+                    innerList.add(processObject(unprocessedInnerInnerObject));
+                }
             }
         }
         return innerList;
+    }
+
+    protected static LinkedHashMap<String, Object> processObject(List<MtxJsonToken> tokenList) {
+        boolean isCurrentTokenKey = true;
+        String currentKey = null;
+        LinkedHashMap<String, Object> innerObject = new LinkedHashMap<>();
+        for (int i = 0; i < tokenList.size(); i++) {
+            MtxJsonToken token = tokenList.get(i);
+            switch (token.tokenType) {
+                case STRING -> {
+                    if (isCurrentTokenKey) {
+                        currentKey = token.value;
+                        isCurrentTokenKey = false;
+                    } else {
+                        innerObject.put(currentKey, token.value);
+
+                        currentKey = null;
+                        isCurrentTokenKey = true;
+                    }
+                }
+                case OPENING_BRACE -> {
+                    assert !isCurrentTokenKey;
+                    List<MtxJsonToken> unprocessedInnerList = getInnerList(tokenList, i);
+                    i += unprocessedInnerList.size();
+                    innerObject.put(currentKey, processList(unprocessedInnerList));
+
+                    currentKey = null;
+                    isCurrentTokenKey = true;
+                }
+                case OPENING_BRACKET -> {
+                    assert !isCurrentTokenKey;
+                    List<MtxJsonToken> unprocessedInnerObject = getInnerObject(tokenList, i);
+                    i += unprocessedInnerObject.size();
+                    innerObject.put(currentKey, processObject(unprocessedInnerObject));
+
+                    currentKey = null;
+                    isCurrentTokenKey = true;
+                }
+            }
+        }
+        return innerObject;
     }
 
     protected static List<MtxJsonToken> getInnerList(List<MtxJsonToken> tokenList, int openingBracePosition) {

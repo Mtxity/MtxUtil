@@ -515,7 +515,6 @@ public final class MtxJsonParserTest {
     @Nested
     class ProcessListTests {
         private static final List<MtxJsonParser.MtxJsonToken> TOKENS_LIST = new ArrayList<>() {{
-//            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "a"));
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "b"));
@@ -529,7 +528,6 @@ public final class MtxJsonParserTest {
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "e"));
             add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
-//            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
         }};
 
         private static final LinkedList<Object> PARSED_JSON_LIST = new LinkedList<>() {{
@@ -545,8 +543,64 @@ public final class MtxJsonParserTest {
         }};
 
         @Test
-        public void testProcessList() {
+        public void testProcessList_NoObjects() {
             assertEquals(PARSED_JSON_LIST, MtxJsonParser.processList(TOKENS_LIST));
+        }
+    }
+
+    @Nested
+    class ProcessObjectTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OBJECT = new ArrayList<>() {{
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "a"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "a"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "b"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "b"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "c"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "d"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "d"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "1"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "1"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "2"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "2"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "e"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "e"));
+        }};
+
+        private static final LinkedHashMap<String, Object> PARSED_JSON_OBJECT = new LinkedHashMap<>() {{
+            put("a", "a");
+            put("b", "b");
+            put("c", new LinkedHashMap<String, Object>() {{
+                put("d", new LinkedList<Object>() {{
+                    add("d");
+                    add(new LinkedHashMap<String, Object>() {{
+                        put("1", "1");
+                        put("2", "2");
+                    }});
+                }});
+            }});
+            put("e", "e");
+        }};
+
+        @Test
+        public void testProcessObject() {
+            assertEquals(PARSED_JSON_OBJECT, MtxJsonParser.processObject(TOKENS_OBJECT));
         }
     }
 }
