@@ -24,60 +24,62 @@ public class MtxXmlParser {
 
     protected record MtxXmlTag(String name, HashMap<String, String> fields, MtxXmlTagType tagType) { }
 
-    protected class MtxXmlNode {
-        private final List<MtxXmlNode> innerNodes;
+    // @Todo: Finish implementing MtxXmlParser - use MtxJsonParser as an example
 
-        public MtxXmlNode() {
-            this.innerNodes = new ArrayList<>();
-        }
-
-        public void addInnerNode(MtxXmlNode innerNode) {
-            this.innerNodes.add(innerNode);
-        }
-
-        public List<MtxXmlNode> getInnerNodes() {
-            return this.innerNodes;
-        }
-    }
-
-    protected class MtxXmlTextNode extends MtxXmlNode {
-        private final String text;
-
-        public MtxXmlTextNode(String text) {
-            this.text = text;
-        }
-
-        public String getText() {
-            return this.text;
-        }
-    }
-
-    protected class MtxXmlElementNode extends MtxXmlNode {
-        private final HashMap<String, String> attributes;
-        private final String name;
-
-        public MtxXmlElementNode(String name) {
-            this.name = name;
-            this.attributes = new HashMap<>();
-        }
-
-        public void addAttribute(String attribute, String value) {
-            this.attributes.put(attribute, value);
-        }
-
-        public void setAttributes(HashMap<String, String> attributes) {
-            this.attributes.clear();
-            this.attributes.putAll(attributes);
-        }
-
-        public HashMap<String, String> getAttributes() {
-            return this.attributes;
-        }
-
-        public String getName() {
-            return this.name;
-        }
-    }
+//    protected class MtxXmlNode {
+//        private final List<MtxXmlNode> innerNodes;
+//
+//        public MtxXmlNode() {
+//            this.innerNodes = new ArrayList<>();
+//        }
+//
+//        public void addInnerNode(MtxXmlNode innerNode) {
+//            this.innerNodes.add(innerNode);
+//        }
+//
+//        public List<MtxXmlNode> getInnerNodes() {
+//            return this.innerNodes;
+//        }
+//    }
+//
+//    protected class MtxXmlTextNode extends MtxXmlNode {
+//        private final String text;
+//
+//        public MtxXmlTextNode(String text) {
+//            this.text = text;
+//        }
+//
+//        public String getText() {
+//            return this.text;
+//        }
+//    }
+//
+//    protected class MtxXmlElementNode extends MtxXmlNode {
+//        private final HashMap<String, String> attributes;
+//        private final String name;
+//
+//        public MtxXmlElementNode(String name) {
+//            this.name = name;
+//            this.attributes = new HashMap<>();
+//        }
+//
+//        public void addAttribute(String attribute, String value) {
+//            this.attributes.put(attribute, value);
+//        }
+//
+//        public void setAttributes(HashMap<String, String> attributes) {
+//            this.attributes.clear();
+//            this.attributes.putAll(attributes);
+//        }
+//
+//        public HashMap<String, String> getAttributes() {
+//            return this.attributes;
+//        }
+//
+//        public String getName() {
+//            return this.name;
+//        }
+//    }
 
     protected static final String TAG_NAME_MARKER = ".NAME_FOR_INTERNAL_USE";
 
