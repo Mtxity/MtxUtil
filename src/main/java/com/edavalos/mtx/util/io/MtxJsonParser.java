@@ -26,6 +26,7 @@ public class MtxJsonParser {
     protected record MtxJsonToken(MtxJsonTokenType tokenType, String value) { }
 
     private final String rawStream;
+    private LinkedHashMap<String, Object> parsedJson;
 
     public MtxJsonParser(String filePath) throws IOException {
         Scanner fileScanner;
@@ -43,6 +44,26 @@ public class MtxJsonParser {
         fileScanner.close();
 
         this.rawStream = stream.toString();
+        this.parsedJson = null;
+    }
+
+    public LinkedHashMap<String, Object> getParsedJson() throws ParseException {
+        if (parsedJson != null) {
+            return this.parsedJson;
+        }
+
+        // Remove spaces from raw json string & tokenize it
+        List<MtxJsonToken> jsonTokenList = tokenizeRawJson(removeSpaces(this.rawStream));
+
+        // Validate json token order
+        if (!isMtxJsonTokenListValid(jsonTokenList)) {
+            throw new ParseException(this.rawStream, 0);
+        }
+
+        // Remove first & last brackets from token list & process it
+        this.parsedJson = processObject(stripExternalBrackets(jsonTokenList));
+
+        return this.parsedJson;
     }
 
     protected static String removeSpaces(String s) {
