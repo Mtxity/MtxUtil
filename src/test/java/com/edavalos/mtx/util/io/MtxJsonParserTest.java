@@ -511,4 +511,42 @@ public final class MtxJsonParserTest {
             assertNull(MtxJsonParser.getInnerList(TOKENS_NO_CLOSING_BRACE, 0));
         }
     }
+
+    @Nested
+    class ProcessListTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_LIST = new ArrayList<>() {{
+//            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "a"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "b"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "c"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "d"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "e"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+//            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+        }};
+
+        private static final LinkedList<Object> PARSED_JSON_LIST = new LinkedList<>() {{
+            add("a");
+            add("b");
+            add(new LinkedList<Object>() {{
+                add("c");
+                add(new LinkedList<Object>() {{
+                    add("d");
+                }});
+                add("e");
+            }});
+        }};
+
+        @Test
+        public void testProcessList() {
+            assertEquals(PARSED_JSON_LIST, MtxJsonParser.processList(TOKENS_LIST));
+        }
+    }
 }
