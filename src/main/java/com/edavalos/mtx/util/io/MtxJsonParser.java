@@ -9,7 +9,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Stack;
 
 public class MtxJsonParser {
     protected enum MtxJsonTokenType {
@@ -25,36 +24,6 @@ public class MtxJsonParser {
     }
 
     protected record MtxJsonToken(MtxJsonTokenType tokenType, String value) { }
-//
-//    protected class MtxJsonContent {
-//        private final String name;
-//
-//        public MtxJsonContent(String name) {
-//            this.name = name;
-//        }
-//
-//        public String getName() {
-//            return this.name;
-//        }
-//    }
-//
-//    protected class MtxJsonStringContent extends MtxJsonContent {
-//        private final String value;
-//
-//        public MtxJsonStringContent(String name, String value) {
-//            super(name);
-//            this.value = value;
-//        }
-//
-//        public String getValue() {
-//            return this.value;
-//        }
-//    }
-//
-//    protected class MtxJsonObjectContent extends MtxJsonContent {
-//        private final
-//    }
-    protected record MtxJsonObject(String tag, Object contents) { }
 
     private final String rawStream;
 
@@ -237,65 +206,6 @@ public class MtxJsonParser {
         assert tokenList.get(tokenList.size() - 1).tokenType == MtxJsonTokenType.CLOSING_BRACKET;
         return tokenList.subList(1, tokenList.size() - 1);
     }
-
-//    protected static List<List<MtxJsonToken>> nestLists(List<MtxJsonToken> tokenList) {
-//
-//    }
-//    protected static void doWork(List<MtxJsonToken> tokenList) {
-//            doWork(tokenList, false);
-//    }
-//
-//    protected static void doWork(List<MtxJsonToken> tokenList, boolean inList) {
-//        boolean writingTag = true;
-//        String currentKey;
-//        Object currentVal;
-//        LinkedList<Object> currentList = null;
-//        for (MtxJsonToken token : tokenList) {
-//            if (writingTag) {
-//                assert token.tokenType == MtxJsonTokenType.STRING;
-//                currentKey = token.value;
-//                writingTag = false;
-//                continue;
-//            }
-//
-//            switch (token.tokenType) {
-//                case COLON -> {
-//                    assert !writingTag && !inList;
-//                    continue;
-//                }
-//                case STRING -> {
-//                    assert !writingTag;
-//                    if (!inList) {
-//                        currentVal = token.value;
-//                        writingTag = true;
-//                    } else {
-//                        assert currentList != null;
-//                        currentList.add(token.value);
-//                    }
-//                }
-//                case OPENING_BRACE -> {
-//                    assert !writingTag;
-//                    if (!inList) {
-//                        inList = true;
-//                        currentList = new LinkedList<Object>();
-//                    } else {
-//                        // @todo recursively insert list contents into currentList
-//                        // get closing bracket, form a token list from here to there, and call this method again
-//                    }
-//                }
-//                case OPENING_BRACKET -> {
-//                    assert !writingTag;
-//
-//                }
-//            }
-//        }
-//    }
-
-//    protected static MtxJsonObject doWork(List<MtxJsonToken> tokenList) {
-//        for (int i = 0; i < tokenList.size(); i++) {
-//
-//        }
-//    }
 
     protected static LinkedList<Object> processList(List<MtxJsonToken> tokenList) {
         LinkedList<Object> innerList = new LinkedList<>();

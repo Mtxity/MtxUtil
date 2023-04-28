@@ -219,7 +219,7 @@ public final class MtxJsonParserTest {
     @Test
     public void testTokenizeRawJson() {
         try {
-            assertArrayEquals(SAMPLE_JSON_TOKENS.toArray(), MtxJsonParser.tokenizeRawJson(SAMPLE_JSON_STRING).toArray());
+            assertEquals(SAMPLE_JSON_TOKENS, MtxJsonParser.tokenizeRawJson(SAMPLE_JSON_STRING));
         } catch (ParseException e) {
             fail();
         }
