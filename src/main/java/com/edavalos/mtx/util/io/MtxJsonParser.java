@@ -297,6 +297,22 @@ public class MtxJsonParser {
 //        }
 //    }
 
+    protected static LinkedList<Object> processList(List<MtxJsonToken> tokenList) {
+        LinkedList<Object> innerList = new LinkedList<>();
+        for (int i = 0; i < tokenList.size(); i++) {
+            MtxJsonToken token = tokenList.get(i);
+            switch (token.tokenType) {
+                case STRING -> innerList.add(token.value);
+                case OPENING_BRACE -> {
+                    List<MtxJsonToken> unprocessedInnerInnerList = getInnerList(tokenList, i);
+                    i += unprocessedInnerInnerList.size();
+                    innerList.add(processList(unprocessedInnerInnerList));
+                }
+            }
+        }
+        return innerList;
+    }
+
     protected static List<MtxJsonToken> getInnerList(List<MtxJsonToken> tokenList, int openingBracePosition) {
         return getInner(tokenList, openingBracePosition, true);
     }
