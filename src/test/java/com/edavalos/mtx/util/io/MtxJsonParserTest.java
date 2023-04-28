@@ -364,7 +364,7 @@ public final class MtxJsonParserTest {
 
         @Test
         public void testStripExternalBrackets() {
-            assertArrayEquals(TOKENS_EXPECTED.toArray(), MtxJsonParser.stripExternalBrackets(TOKENS_SAMPLE).toArray());
+            assertEquals(TOKENS_EXPECTED, MtxJsonParser.stripExternalBrackets(TOKENS_SAMPLE));
         }
     }
 
@@ -438,12 +438,12 @@ public final class MtxJsonParserTest {
 
             @Test
             public void testInnerList_one() {
-                assertArrayEquals(TOKENS_OPEN_CLOSE_INNER.toArray(), MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE, 1).toArray());
+                assertEquals(TOKENS_OPEN_CLOSE_INNER, MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE, 1));
             }
 
             @Test
             public void testInnerList_multiple() {
-                assertArrayEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER.toArray(), MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE_MULTIPLE, 1).toArray());
+                assertEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER, MtxJsonParser.getInnerList(TOKENS_OPEN_CLOSE_MULTIPLE, 1));
             }
         }
 
@@ -496,12 +496,12 @@ public final class MtxJsonParserTest {
 
             @Test
             public void testInnerList_one() {
-                assertArrayEquals(TOKENS_OPEN_CLOSE_INNER.toArray(), MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE, 1).toArray());
+                assertEquals(TOKENS_OPEN_CLOSE_INNER, MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE, 1));
             }
 
             @Test
             public void testInnerList_multiple() {
-                assertArrayEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER.toArray(), MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE_MULTIPLE, 1).toArray());
+                assertEquals(TOKENS_OPEN_CLOSE_MULTIPLE_INNER, MtxJsonParser.getInnerObject(TOKENS_OPEN_CLOSE_MULTIPLE, 1));
             }
         }
 
