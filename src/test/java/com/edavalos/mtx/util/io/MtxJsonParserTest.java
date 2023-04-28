@@ -10,7 +10,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -612,5 +611,41 @@ public final class MtxJsonParserTest {
         LinkedHashMap<String, Object> parsedJson = MtxJsonParser.processObject(strippedTokenList);
 
         assertEquals(SAMPLE_PARSED_JSON, parsedJson);
+    }
+
+    @Nested
+    class GetParsedJsonTests {
+
+        @Test
+        public void testGetParsedJson() {
+            try {
+                mtxJsonParser = new MtxJsonParser(CURRENT_FILE_PATH + SAMPLE_JSON_FILENAME);
+                assertEquals(SAMPLE_PARSED_JSON, mtxJsonParser.getParsedJson());
+            } catch (IOException | ParseException e) {
+                fail();
+            }
+        }
+
+        @Test
+        public void testGetParsedJson_invalidJsonTokenOrder() {
+            String nonJsonFilename = "sampleXmlFile.xml";
+            try {
+                mtxJsonParser = new MtxJsonParser(CURRENT_FILE_PATH + nonJsonFilename);
+                assertThrows(ParseException.class, () -> mtxJsonParser.getParsedJson());
+            } catch (IOException e) {
+                fail();
+            }
+        }
+
+        @Test
+        public void testGetParsedJson_alreadyLoaded() {
+            try {
+                mtxJsonParser = new MtxJsonParser(CURRENT_FILE_PATH + SAMPLE_JSON_FILENAME);
+                mtxJsonParser.getParsedJson();
+                assertEquals(SAMPLE_PARSED_JSON, mtxJsonParser.getParsedJson());
+            } catch (IOException | ParseException e) {
+                fail();
+            }
+        }
     }
 }
