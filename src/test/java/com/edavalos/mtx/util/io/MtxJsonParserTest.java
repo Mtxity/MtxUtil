@@ -166,6 +166,8 @@ public final class MtxJsonParserTest {
                             }});
                             put("GlossSee", "markup");
                         }});
+                    }});
+                    add(new LinkedHashMap<String, Object>() {{
                         put("GlossEntry2", new LinkedHashMap<String, Object>() {{
                             put("ID", "SQLM");
                             put("SortAs", "SQLM");
@@ -602,5 +604,13 @@ public final class MtxJsonParserTest {
         public void testProcessObject() {
             assertEquals(PARSED_JSON_OBJECT, MtxJsonParser.processObject(TOKENS_OBJECT));
         }
+    }
+
+    @Test
+    public void testParseTokens() {
+        List<MtxJsonParser.MtxJsonToken> strippedTokenList = MtxJsonParser.stripExternalBrackets(SAMPLE_JSON_TOKENS);
+        LinkedHashMap<String, Object> parsedJson = MtxJsonParser.processObject(strippedTokenList);
+
+        assertEquals(SAMPLE_PARSED_JSON, parsedJson);
     }
 }
