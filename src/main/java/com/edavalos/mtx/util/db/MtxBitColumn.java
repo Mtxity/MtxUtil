@@ -34,6 +34,10 @@ public final class MtxBitColumn {
      * @return Old value of bit at this column
      */
     public boolean setBit(int column, boolean newValue) {
+        if (column >= 32) {
+            throw new IndexOutOfBoundsException(column);
+        }
+
         boolean previousVal = this.getBit(column);
         if (newValue) {
             this.value = this.value + ((int) Math.pow(2, column));
@@ -49,6 +53,10 @@ public final class MtxBitColumn {
      * @return Value of bit at this column
      */
     public boolean getBit(int column) {
+        if (column >= 32) {
+            throw new IndexOutOfBoundsException(column);
+        }
+
         // SQL equivalent: BITWISE_AND(this.value, CAST(POWER(2, column) AS INT)) > 0
         int deconstructed = (this.value & ((int) Math.pow(2, column)));
         return deconstructed > 0 && deconstructed != this.value;
@@ -96,6 +104,10 @@ public final class MtxBitColumn {
     // ---------------------- Private Methods ----------------------
 
     protected int convertBooleanArrayToInt(boolean[] booleans) {
+        if (booleans.length != 32) {
+            throw new IndexOutOfBoundsException(booleans.length);
+        }
+
         int i = 0;
         for (int j = 0; j < 31; j++) {
             if (booleans[j]) {
