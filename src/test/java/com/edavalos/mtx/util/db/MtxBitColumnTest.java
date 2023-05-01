@@ -19,7 +19,7 @@ public final class MtxBitColumnTest {
 
     @Test
     public void testSetAndGetBit() {
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 32; i++) {
             assertFalse(mtxBitColumn.getBit(i));
         }
 
@@ -28,7 +28,7 @@ public final class MtxBitColumnTest {
             assertFalse(mtxBitColumn.setBit(bitToTest, true));
         }
 
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 32; i++) {
             if (Arrays.binarySearch(bitsToTest, i) < 0) {
                 assertFalse(mtxBitColumn.getBit(i));
             } else {
@@ -39,13 +39,18 @@ public final class MtxBitColumnTest {
         bitsToTest = new int[] {3, 6, 10, 17, 25, 30};
         assertTrue(mtxBitColumn.setBit(24, false));
 
-        for (int i = 0; i < 31; i++) {
+        for (int i = 0; i < 32; i++) {
             if (Arrays.binarySearch(bitsToTest, i) < 0) {
                 assertFalse(mtxBitColumn.getBit(i));
             } else {
                 assertTrue(mtxBitColumn.getBit(i));
             }
         }
+
+        assertFalse(mtxBitColumn.setBit(31, true));
+        assertTrue(mtxBitColumn.getBit(31));
+        assertTrue(mtxBitColumn.getBit(30));
+        assertFalse(mtxBitColumn.getBit(29));
     }
 
     @Test

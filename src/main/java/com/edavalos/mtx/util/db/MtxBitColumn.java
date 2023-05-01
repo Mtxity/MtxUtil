@@ -50,7 +50,8 @@ public final class MtxBitColumn {
      */
     public boolean getBit(int column) {
         // SQL equivalent: BITWISE_AND(this.value, CAST(POWER(2, column) AS INT)) > 0
-        return (this.value & ((int) Math.pow(2, column))) > 0;
+        int deconstructed = (this.value & ((int) Math.pow(2, column)));
+        return deconstructed > 0 && deconstructed != this.value;
     }
 
     /**
