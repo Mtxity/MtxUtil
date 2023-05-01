@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -45,5 +46,35 @@ public final class MtxBitColumnTest {
                 assertTrue(mtxBitColumn.getBit(i));
             }
         }
+    }
+
+    @Test
+    public void testConvertToAndFromBooleanArray() {
+        int[] bitsToTest = new int[] {3, 6, 10, 17, 24, 25, 30};
+        for (int bitToTest : bitsToTest) {
+            assertFalse(mtxBitColumn.setBit(bitToTest, true));
+        }
+
+        assertEquals(
+                mtxBitColumn.getAllBits(),
+                mtxBitColumn.convertBooleanArrayToInt(
+                        mtxBitColumn.convertIntToBooleanArray(
+                                mtxBitColumn.getAllBits()
+                        )
+                )
+        );
+
+        assertEquals(
+                mtxBitColumn.getAllBits(),
+                mtxBitColumn.convertBooleanArrayToInt(
+                        mtxBitColumn.convertIntToBooleanArray(
+                                mtxBitColumn.convertBooleanArrayToInt(
+                                        mtxBitColumn.convertIntToBooleanArray(
+                                                mtxBitColumn.getAllBits()
+                                        )
+                                )
+                        )
+                )
+        );
     }
 }
