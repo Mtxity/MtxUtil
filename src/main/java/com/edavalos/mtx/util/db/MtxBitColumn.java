@@ -22,7 +22,7 @@ public final class MtxBitColumn {
     }
 
     public MtxBitColumn(boolean[] bitArray) {
-        //
+        this.value = this.convertBooleanArrayToInt(bitArray);
     }
 
     // ---------------------- Public Methods -----------------------
@@ -66,7 +66,7 @@ public final class MtxBitColumn {
      * @return Boolean array of length 32 with every bit's value
      */
     public boolean[] getAllBitsAsArray() {
-        //
+        return this.convertIntToBooleanArray(this.value);
     }
 
     /**
@@ -82,7 +82,7 @@ public final class MtxBitColumn {
      * @param bitArray boolean array of size 32
      */
     public void setAllBits(boolean[] bitArray) {
-        //
+        this.value = this.convertBooleanArrayToInt(bitArray);
     }
 
     /**
@@ -94,11 +94,21 @@ public final class MtxBitColumn {
 
     // ---------------------- Private Methods ----------------------
 
-    private int convertBooleanArrayToInt(boolean[] booleans) {
-        //
+    protected int convertBooleanArrayToInt(boolean[] booleans) {
+        int i = 0;
+        for (int j = 0; j < 31; j++) {
+            if (booleans[j]) {
+                i += ((int) Math.pow(2, j));
+            }
+        }
+        return i;
     }
 
-    private boolean[] convertIntToBooleanArray(int i) {
-        //
+    protected boolean[] convertIntToBooleanArray(int i) {
+        boolean[] bits = new boolean[32];
+        for (int j = 0; j < 31; j++) {
+            bits[j] = (i & ((int) Math.pow(2, j))) > 0;
+        }
+        return bits;
     }
 }
