@@ -34,7 +34,7 @@ public final class MtxBitColumn {
      * @return Old value of bit at this column
      */
     public boolean setBit(int column, boolean newValue) {
-        if (column >= 32) {
+        if (column >= 32 || column < 0) {
             throw new IndexOutOfBoundsException(column);
         }
 
@@ -53,7 +53,7 @@ public final class MtxBitColumn {
      * @return Value of bit at this column
      */
     public boolean getBit(int column) {
-        if (column >= 32) {
+        if (column >= 32 || column < 0) {
             throw new IndexOutOfBoundsException(column);
         }
 
