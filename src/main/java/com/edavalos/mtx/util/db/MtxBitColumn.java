@@ -34,7 +34,13 @@ public final class MtxBitColumn {
      * @return Old value of bit at this column
      */
     public boolean setBit(int column, boolean newValue) {
-        //
+        boolean previousVal = this.getBit(column);
+        if (newValue) {
+            this.value = this.value + ((int) Math.pow(2, column));
+        } else {
+            this.value = this.value - ((int) Math.pow(2, column));
+        }
+        return previousVal;
     }
 
     /**
@@ -43,7 +49,8 @@ public final class MtxBitColumn {
      * @return Value of bit at this column
      */
     public boolean getBit(int column) {
-        //
+        // SQL equivalent: BITWISE_AND(this.value, CAST(POWER(2, column) AS INT)) > 0
+        return (this.value & ((int) Math.pow(2, column))) > 0;
     }
 
     /**
