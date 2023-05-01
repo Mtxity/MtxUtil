@@ -34,5 +34,16 @@ public final class MtxBitColumnTest {
                 assertTrue(mtxBitColumn.getBit(i));
             }
         }
+
+        bitsToTest = new int[] {3, 6, 10, 17, 25, 30};
+        assertTrue(mtxBitColumn.setBit(24, false));
+
+        for (int i = 0; i < 31; i++) {
+            if (Arrays.binarySearch(bitsToTest, i) < 0) {
+                assertFalse(mtxBitColumn.getBit(i));
+            } else {
+                assertTrue(mtxBitColumn.getBit(i));
+            }
+        }
     }
 }
