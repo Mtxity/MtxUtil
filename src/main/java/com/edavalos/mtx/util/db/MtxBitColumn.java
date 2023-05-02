@@ -32,6 +32,7 @@ public final class MtxBitColumn {
      * @param column Index of bit to change (zero indexed)
      * @param newValue New value of bit
      * @return Old value of bit at this column
+     * @throws IndexOutOfBoundsException When column is negative or greater than 31
      */
     public boolean setBit(int column, boolean newValue) {
         if (column >= 32 || column < 0) {
@@ -51,6 +52,7 @@ public final class MtxBitColumn {
      * Gets the value of a bit at the specified column / index
      * @param column Index of bit to look up (zero indexed)
      * @return Value of bit at this column
+     * @throws IndexOutOfBoundsException When column is negative or greater than 31
      */
     public boolean getBit(int column) {
         if (column >= 32 || column < 0) {
