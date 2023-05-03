@@ -129,4 +129,20 @@ public final class MtxIdGenerator {
     public int getMaxIds() {
         return this.max;
     }
+
+    public MtxCharType[] getFormatAsArray() {
+        return this.format;
+    }
+
+    public String getFormatAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (MtxCharType ct : this.format) {
+            sb.append(switch (ct) {
+                case CHAR -> 'L';
+                case UINT -> 'N';
+                case ANY  -> 'A';
+            });
+        }
+        return sb.toString();
+    }
 }
