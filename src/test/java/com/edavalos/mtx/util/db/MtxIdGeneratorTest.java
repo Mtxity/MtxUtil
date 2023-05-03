@@ -3,6 +3,11 @@ package com.edavalos.mtx.util.db;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -105,6 +110,55 @@ public final class MtxIdGeneratorTest {
         public void testGetFormatAsString() {
             mtxIdGenerator = new MtxIdGenerator(EXPECTED_FORMAT_AS_ENUM_ARRAY);
             assertEquals(EXPECTED_FORMAT_AS_STRING, mtxIdGenerator.getFormatAsString());
+        }
+    }
+
+    @Nested
+    public class TestGetNextId {
+        private final String NUMBERS = "NNN";
+        private final String NUMBERS_AND_LETTERS = "NLN";
+        private final String NUMBERS_AND_ANYTHING = "ANA";
+
+        @Test
+        public void testGetNextId_onlyNumbers() {
+            mtxIdGenerator = new MtxIdGenerator(NUMBERS);
+
+            int max = mtxIdGenerator.getMaxIds();
+            List<String> idList = new ArrayList<>();
+            for (int i = 0; i < max; i++) {
+                idList.add(mtxIdGenerator.getNextId());
+            }
+
+            Set<String> idSet = new HashSet<>(idList);
+            assertEquals(idList.size(), idSet.size());
+        }
+
+        @Test
+        public void testGetNextId_numbersAndLetters() {
+            mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_LETTERS);
+
+            int max = mtxIdGenerator.getMaxIds();
+            List<String> idList = new ArrayList<>();
+            for (int i = 0; i < max; i++) {
+                idList.add(mtxIdGenerator.getNextId());
+            }
+
+            Set<String> idSet = new HashSet<>(idList);
+            assertEquals(idList.size(), idSet.size());
+        }
+
+        @Test
+        public void testGetNextId_anything() {
+            mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_ANYTHING);
+
+            int max = mtxIdGenerator.getMaxIds();
+            List<String> idList = new ArrayList<>();
+            for (int i = 0; i < max; i++) {
+                idList.add(mtxIdGenerator.getNextId());
+            }
+
+            Set<String> idSet = new HashSet<>(idList);
+            assertEquals(idList.size(), idSet.size());
         }
     }
 }
