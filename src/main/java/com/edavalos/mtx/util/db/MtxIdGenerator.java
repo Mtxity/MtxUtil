@@ -12,6 +12,7 @@ public final class MtxIdGenerator {
 
     private final MtxCharType[] format;
     private final char[] nextId;
+    private final int max;
 
     public MtxIdGenerator(MtxCharType... charTypes) {
         this.validateFormatArray(charTypes);
@@ -19,6 +20,8 @@ public final class MtxIdGenerator {
 
         this.nextId = new char[charTypes.length];
         this.populateInitialNextId();
+
+        this.max = this.calculateMax(this.format);
     }
 
     public MtxIdGenerator(String format) {
@@ -46,6 +49,8 @@ public final class MtxIdGenerator {
 
         this.nextId = new char[idx];
         this.populateInitialNextId();
+
+        this.max = this.calculateMax(this.format);
     }
 
     private void validateFormatArray(MtxCharType[] charTypes) {
@@ -64,6 +69,18 @@ public final class MtxIdGenerator {
                 case UINT, ANY -> this.nextId[i] = '0';
             }
         }
+    }
+
+    private int calculateMax(MtxCharType[] format) {
+        int i = 1;
+        for (MtxCharType type : format) {
+            switch (type) {
+                case CHAR -> i *= 26;
+                case UINT -> i *= 10;
+                case ANY ->  i *= 36;
+            }
+        }
+        return i;
     }
 
     public String getNextId() {
@@ -107,5 +124,9 @@ public final class MtxIdGenerator {
         }
 
         return String.valueOf(this.nextId);
+    }
+
+    public int getMaxIds() {
+        return this.max;
     }
 }
