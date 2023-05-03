@@ -11,10 +11,14 @@ public final class MtxIdGenerator {
     }
 
     private final MtxCharType[] format;
+    private final char[] nextId;
 
     public MtxIdGenerator(MtxCharType... charTypes) {
         this.validateFormatArray(charTypes);
         this.format = charTypes;
+
+        this.nextId = new char[charTypes.length];
+        this.populateInitialNextId();
     }
 
     public MtxIdGenerator(String format) {
@@ -39,6 +43,9 @@ public final class MtxIdGenerator {
 
         this.format = charTypes.toArray(new MtxCharType[idx]);
         this.validateFormatArray(this.format);
+
+        this.nextId = new char[idx];
+        this.populateInitialNextId();
     }
 
     private void validateFormatArray(MtxCharType[] charTypes) {
@@ -48,5 +55,57 @@ public final class MtxIdGenerator {
         if (charTypes.length == 0) {
             throw new IllegalArgumentException("Length of ID format too small. Must be at least 1.");
         }
+    }
+
+    private void populateInitialNextId() {
+        for (int i = 0; i < this.nextId.length; i++) {
+            switch (this.format[i]) {
+                case CHAR      -> this.nextId[i] = 'A';
+                case UINT, ANY -> this.nextId[i] = '0';
+            }
+        }
+    }
+
+    public String getNextId() {
+        for (int i = this.nextId.length - 1; i >= 0; i--) {
+            char c = this.nextId[i];
+            switch (this.format[i]) {
+                case CHAR -> {
+                    char next = ((char) (c + 1));
+                    if (next == '[') {
+                        this.nextId[i] = 'A';
+                        continue;
+                    } else {
+                        this.nextId[i] = next;
+                        return String.valueOf(this.nextId);
+                    }
+                }
+                case UINT -> {
+                    char next = ((char) (c + 1));
+                    if (next == ':') {
+                        this.nextId[i] = '0';
+                        continue;
+                    } else {
+                        this.nextId[i] = next;
+                        return String.valueOf(this.nextId);
+                    }
+                }
+                case ANY -> {
+                    char next = ((char) (c + 1));
+                    if (next == ':') {
+                        this.nextId[i] = 'A';
+                        return String.valueOf(this.nextId);
+                    } else if (next == '[') {
+                        this.nextId[i] = '0';
+                        continue;
+                    } else {
+                        this.nextId[i] = next;
+                        return String.valueOf(this.nextId);
+                    }
+                }
+            }
+        }
+
+        return String.valueOf(this.nextId);
     }
 }
