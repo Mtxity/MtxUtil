@@ -1,11 +1,11 @@
 package com.edavalos.mtx.util.db;
 
 /**
- * Bit columns are a way to store multiple booleans in a database without needing a separate column for each boolean.
+ * Bit columns are a way to store multiple booleans in a database without needing a separate column for each one.
  * Instead of 32 separate columns, only one integer column is needed, and every bit used to store this integer holds a
  * value representing some boolean. The integer's value itself is useless, as it is only a placeholder for bits.
  * <p> </p>
- * This data structure can be treated like a 32 bit boolean array, except the data is stored is an int, ready to be
+ * This data structure can be treated like a 32 bit boolean array, except the data is stored as an int, ready to be
  * imported and exported into a database.
  */
 public final class MtxBitColumn {
