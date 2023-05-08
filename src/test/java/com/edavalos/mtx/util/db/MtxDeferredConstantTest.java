@@ -88,4 +88,28 @@ public final class MtxDeferredConstantTest {
             assertEquals(SAMPLE_DOUBLE, mtxConst.getValue());
         }
     }
+
+    @Test
+    public void testIsValueSet() {
+        assertFalse(mtxConst.isValueSet());
+
+        mtxConst.setValue(SAMPLE_DOUBLE);
+        assertTrue(mtxConst.isValueSet());
+    }
+
+    @Test
+    public void testIsValueSet_setNullValue() {
+        assertFalse(mtxConst.isValueSet());
+
+        mtxConst.setValue(null);
+        assertTrue(mtxConst.isValueSet());
+    }
+
+    @Test
+    public void testThrowsException() {
+        assertTrue(mtxConst.throwsException());
+
+        mtxConst = new MtxDeferredConstant<>(false);
+        assertFalse(mtxConst.throwsException());
+    }
 }
