@@ -32,4 +32,12 @@ public final class MtxDeferredConstant<T> {
     public T getValue() {
         return this.value;
     }
+
+    public boolean isValueSet() {
+        return this.isValueSet;
+    }
+
+    public boolean throwsException() {
+        return this.throwException;
+    }
 }
