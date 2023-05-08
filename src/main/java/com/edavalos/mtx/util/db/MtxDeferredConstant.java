@@ -3,19 +3,30 @@ package com.edavalos.mtx.util.db;
 public final class MtxDeferredConstant<T> {
     private T value;
     private boolean isValueSet;
+    private boolean throwException;
 
-    public MtxDeferredConstant() {
+    public MtxDeferredConstant(boolean throwException) {
         this.value = null;
         this.isValueSet = false;
+        this.throwException = throwException;
     }
 
-    public void setValue(T value) {
+    public MtxDeferredConstant() {
+        this(true);
+    }
+
+    public boolean setValue(T value) {
         if (this.isValueSet) {
-            throw new UnsupportedOperationException("Value has already been set and therefore cannot be changed.");
+            if (this.throwException) {
+                throw new UnsupportedOperationException("Value has already been set and therefore cannot be changed.");
+            } else {
+                return false;
+            }
         }
 
         this.value = value;
         this.isValueSet = true;
+        return true;
     }
 
     public T getValue() {
