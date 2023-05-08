@@ -5,8 +5,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxDeferredConstantTest {
@@ -22,22 +24,52 @@ public final class MtxDeferredConstantTest {
     @Nested
     public class TestSetValue {
 
-        @Test
-        public void testSetValue_valueNotSetYet() {
-            try {
+        @Nested
+        public class TestSetValue_throwException {
+
+            @Test
+            public void testSetValue_valueNotSetYet() {
+                try {
+                    assertTrue(mtxConst.setValue(SAMPLE_DOUBLE));
+                } catch (UnsupportedOperationException e) {
+                    fail();
+                }
+            }
+
+            @Test
+            public void testSetValue_valueAlreadySet() {
                 mtxConst.setValue(SAMPLE_DOUBLE);
-            } catch (UnsupportedOperationException e) {
-                fail();
+
+                assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(SAMPLE_DOUBLE));
+                assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(9.5));
+                assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(null));
             }
         }
 
-        @Test
-        public void testSetValue_valueAlreadySet() {
-            mtxConst.setValue(SAMPLE_DOUBLE);
+        @Nested
+        public class TestSetValue_dontThrowException {
+            @BeforeEach
+            public void setUp() {
+                mtxConst = new MtxDeferredConstant<>(false);
+            }
 
-            assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(SAMPLE_DOUBLE));
-            assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(9.5));
-            assertThrows(UnsupportedOperationException.class, () -> mtxConst.setValue(null));
+            @Test
+            public void testSetValue_valueNotSetYet() {
+                assertTrue(mtxConst.setValue(SAMPLE_DOUBLE));
+            }
+
+            @Test
+            public void testSetValue_valueAlreadySet() {
+                mtxConst.setValue(SAMPLE_DOUBLE);
+
+                try {
+                    assertFalse(mtxConst.setValue(SAMPLE_DOUBLE));
+                    assertFalse(mtxConst.setValue(9.5));
+                    assertFalse(mtxConst.setValue(null));
+                } catch (UnsupportedOperationException e) {
+                    fail();
+                }
+            }
         }
     }
 
