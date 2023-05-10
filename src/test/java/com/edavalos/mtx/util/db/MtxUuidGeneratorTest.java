@@ -10,6 +10,9 @@ import java.util.Set;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxUuidGeneratorTest {
     private MtxUuidGenerator mtxUuidGenerator;
@@ -77,5 +80,24 @@ public final class MtxUuidGeneratorTest {
             mtxUuidGenerator = new MtxUuidGenerator(version);
             assertEquals(version, mtxUuidGenerator.getVersion());
         }
+    }
+
+    @Test
+    public void testGetByteArrayFromHashedNamespace_NoAlgFound() {
+        String nonexistentHashingAlgorithm = "SHB";
+        assertThrows(IllegalArgumentException.class, () -> MtxUuidGenerator.getByteArrayFromHashedNamespace(nonexistentHashingAlgorithm));
+    }
+
+    @Test
+    public void testSetVariantAndVersion() {
+        byte[] testByteArray = new byte[16];
+        testByteArray[6] &= 0x0f;
+        testByteArray[6] |= 0x60;
+        testByteArray[8] &= 0x0f;
+        testByteArray[8] |= 0x20;
+        assertFalse(MtxUuidGenerator.isUuidValid(testByteArray));
+
+        MtxUuidGenerator.setVariantAndVersion(testByteArray, MtxUuidGenerator.MtxUuidVersion.RANDOMLY_GENERATED);
+        assertTrue(MtxUuidGenerator.isUuidValid(testByteArray));
     }
 }
