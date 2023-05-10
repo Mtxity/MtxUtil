@@ -19,7 +19,7 @@ public final class MtxUuidGeneratorTest {
 
     @Nested
     class TestGetNextUuid {
-        private final int TIMES_TO_TEST = 75; // Had to decrease this number because I have a slow computer :(
+        private static final int TIMES_TO_TEST = 75; // Had to decrease this number because I have a slow computer :(
 
         @Test
         public void testGetNextUuid_timeBased() {
@@ -85,7 +85,9 @@ public final class MtxUuidGeneratorTest {
     @Test
     public void testGetByteArrayFromHashedNamespace_NoAlgFound() {
         String nonexistentHashingAlgorithm = "SHB";
-        assertThrows(IllegalArgumentException.class, () -> MtxUuidGenerator.getByteArrayFromHashedNamespace(nonexistentHashingAlgorithm));
+        assertThrows(IllegalArgumentException.class, () -> MtxUuidGenerator.getByteArrayFromHashedNamespace(
+                nonexistentHashingAlgorithm
+        ));
     }
 
     @Test
@@ -93,11 +95,31 @@ public final class MtxUuidGeneratorTest {
         byte[] testByteArray = new byte[16];
         testByteArray[6] &= 0x0f;
         testByteArray[6] |= 0x60;
-        testByteArray[8] &= 0x0f;
+        testByteArray[8] &= 0x3f;
         testByteArray[8] |= 0x20;
         assertFalse(MtxUuidGenerator.isUuidValid(testByteArray));
 
         MtxUuidGenerator.setVariantAndVersion(testByteArray, MtxUuidGenerator.MtxUuidVersion.RANDOMLY_GENERATED);
         assertTrue(MtxUuidGenerator.isUuidValid(testByteArray));
+    }
+
+    @Nested
+    class TestIsUuidValid {
+        private static final byte[] BYTE_ARRAY_WRONG_LENGTH = new byte[32];
+        private static final byte[] BYTE_ARRAY_WRONG_VERSION = new byte[16];
+        static {
+            BYTE_ARRAY_WRONG_VERSION[6] &= 0x0f;
+            BYTE_ARRAY_WRONG_VERSION[6] |= 0x60;
+        }
+
+        @Test
+        public void testIsUuidValid_wrongLength() {
+            assertFalse(MtxUuidGenerator.isUuidValid(BYTE_ARRAY_WRONG_LENGTH));
+        }
+
+        @Test
+        public void testIsUuidValid_wrongVersion() {
+            assertFalse(MtxUuidGenerator.isUuidValid(BYTE_ARRAY_WRONG_VERSION));
+        }
     }
 }
