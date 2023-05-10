@@ -59,7 +59,7 @@ public final class MtxUuidGeneratorTest {
 
         @Test
         public void testGetNextUuid_random() {
-            mtxUuidGenerator = new MtxUuidGenerator(MtxUuidGenerator.MtxUuidVersion.RANDOMLY_GENERATED);
+            mtxUuidGenerator = new MtxUuidGenerator();
 
             List<UUID> generatedUUIDs = new ArrayList<>();
             for (int i = 0; i < TIMES_TO_TEST; i++) {
@@ -68,6 +68,14 @@ public final class MtxUuidGeneratorTest {
 
             Set<UUID> comparisonSet = new HashSet<>(generatedUUIDs);
             assertEquals(generatedUUIDs.size(), comparisonSet.size());
+        }
+    }
+
+    @Test
+    public void testGetVersion() {
+        for (MtxUuidGenerator.MtxUuidVersion version : MtxUuidGenerator.MtxUuidVersion.values()) {
+            mtxUuidGenerator = new MtxUuidGenerator(version);
+            assertEquals(version, mtxUuidGenerator.getVersion());
         }
     }
 }
