@@ -6,15 +6,16 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.UUID;
 
 public final class MtxUuidGenerator {
     public enum MtxUuidVersion {
-        TIME_BASED(1),
-        NAME_BASED_MD5(3),
-        NAME_BASED_SHA1(5),
-        RANDOMLY_GENERATED(4);
+        TIME_BASED(0x10),
+        NAME_BASED_MD5(0x30),
+        NAME_BASED_SHA1(0x50),
+        RANDOMLY_GENERATED(0x40);
 
         private final int vNum;
 
@@ -22,12 +23,12 @@ public final class MtxUuidGenerator {
             this.vNum = version;
         }
 
-        public int getVersion() {
+        public int getVersionHex() {
             return this.vNum;
         }
     }
 
-    private static final int STANDARD_UUID_VARIANT = 0x80;
+    private static final int STANDARD_UUID_VARIANT_HEX = 0x80;
     private static final SecureRandom NUMBER_GENERATOR = new SecureRandom();
 
     private final MtxUuidVersion version;
@@ -47,7 +48,7 @@ public final class MtxUuidGenerator {
     public UUID getNextUuid() {
         byte[] newUuid = switch (this.version) {
             case TIME_BASED -> getByteArrayFromTimestamp();
-            case NAME_BASED_MD5 -> getByteArrayFromHashedNamespace("MD%");
+            case NAME_BASED_MD5 -> getByteArrayFromHashedNamespace("MD5");
             case NAME_BASED_SHA1 -> getByteArrayFromHashedNamespace("SHA-1");
             case RANDOMLY_GENERATED -> getRandomByteArray();
         };
@@ -87,15 +88,14 @@ public final class MtxUuidGenerator {
         }
 
         md.update((nameSpace + name).getBytes());
-        return md.digest(new byte[16]);
-
+        return Arrays.copyOfRange(md.digest(new byte[16]), 0, 16);
     }
 
     protected static byte[] setVariantAndVersion(byte[] uuid, MtxUuidVersion version) {
-        uuid[6]  &= 0x0f;                  // clear version
-        uuid[6]  |= version.getVersion();  // set version
-        uuid[8]  &= 0x3f;                  // clear variant
-        uuid[8]  |= STANDARD_UUID_VARIANT; // set to standard variant
+        uuid[6]  &= 0x0f;                      // clear version
+        uuid[6]  |= version.getVersionHex();   // set version
+        uuid[8]  &= 0x3f;                      // clear variant
+        uuid[8]  |= STANDARD_UUID_VARIANT_HEX; // set to standard variant
 
         return uuid;
     }
