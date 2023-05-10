@@ -1,9 +1,7 @@
 package com.edavalos.mtx.util.db;
 
-import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
 import java.util.Enumeration;
@@ -46,7 +44,7 @@ public final class MtxUuidGenerator {
 
     public UUID getNextUuid() {
         byte[] newUuid = switch (this.version) {
-            case TIME_BASED -> null;
+            case TIME_BASED -> getByteArrayFromTimestamp();
             case NAME_BASED_MD5 -> null;
             case NAME_BASED_SHA1 -> null;
             case RANDOMLY_GENERATED -> getRandomByteArray();
@@ -63,6 +61,16 @@ public final class MtxUuidGenerator {
         NUMBER_GENERATOR.nextBytes(randomBytes);
 
         return randomBytes;
+    }
+
+    private static byte[] getByteArrayFromTimestamp() {
+        ByteBuffer byteBuffer = ByteBuffer.wrap(new byte[16]);
+        long macAddress_forLSB = getMacAddressAsLong() & 0x3FFFFFFFFFFFFFFFL;
+        long systemTime_forMSB = System.currentTimeMillis();
+
+        byteBuffer.putLong(systemTime_forMSB);
+        byteBuffer.putLong(macAddress_forLSB);
+        return byteBuffer.array();
     }
 
     protected static byte[] setVariantAndVersion(byte[] uuid, MtxUuidVersion version) {
@@ -109,5 +117,37 @@ public final class MtxUuidGenerator {
         }
 
         return true;
+    }
+
+    // Source: https://stackoverflow.com/a/16449379
+    private static long getMacAddressAsLong() {
+        long macAddress;
+        try {
+            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
+            while(networks.hasMoreElements()) {
+                NetworkInterface network = networks.nextElement();
+                byte[] mac = network.getHardwareAddress();
+
+                if(mac != null) {
+                    macAddress = convertByteArrayToLong(mac);
+                    break;
+                }
+            }
+            // If no mac address could be found, return a random long
+            macAddress = NUMBER_GENERATOR.nextLong();
+        } catch (SocketException e){
+            macAddress = NUMBER_GENERATOR.nextLong();
+        }
+
+        return macAddress;
+    }
+
+    // Source: https://www.geeksforgeeks.org/java-program-to-convert-byte-array-to-long/
+    private static long convertByteArrayToLong(byte[] bytes) {
+        long val = 0L;
+        for (byte b : bytes) {
+            val = (val << 8) + (b & 255);
+        }
+        return val;
     }
 }
