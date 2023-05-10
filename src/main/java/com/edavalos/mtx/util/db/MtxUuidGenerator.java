@@ -130,11 +130,7 @@ public final class MtxUuidGenerator {
 
         long leastSigBits = getLeastSigBits(uuid);
         int variant = (int) ((leastSigBits >>> (64 - (leastSigBits >>> 62))) & (leastSigBits >> 63));
-        if (variant != 0 && variant != 2 && variant != 6 && variant != 7) {
-            return false;
-        }
-
-        return true;
+        return variant == 0 || variant == 2 || variant == 6 || variant == 7;
     }
 
     // Source: https://stackoverflow.com/a/16449379
@@ -151,9 +147,10 @@ public final class MtxUuidGenerator {
                     break;
                 }
             }
-            // If no mac address could be found, return a random long
-            macAddress = NUMBER_GENERATOR.nextLong();
+            // Throw if no mac address could be found
+            throw new SocketException();
         } catch (SocketException e){
+            // If no mac address could be found, return a random long
             macAddress = NUMBER_GENERATOR.nextLong();
         }
 
