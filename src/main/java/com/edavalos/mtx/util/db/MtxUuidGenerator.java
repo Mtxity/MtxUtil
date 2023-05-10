@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.db;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Enumeration;
 import java.util.UUID;
@@ -45,8 +47,8 @@ public final class MtxUuidGenerator {
     public UUID getNextUuid() {
         byte[] newUuid = switch (this.version) {
             case TIME_BASED -> getByteArrayFromTimestamp();
-            case NAME_BASED_MD5 -> null;
-            case NAME_BASED_SHA1 -> null;
+            case NAME_BASED_MD5 -> getByteArrayFromHashedNamespace("MD%");
+            case NAME_BASED_SHA1 -> getByteArrayFromHashedNamespace("SHA-1");
             case RANDOMLY_GENERATED -> getRandomByteArray();
         };
 
@@ -71,6 +73,22 @@ public final class MtxUuidGenerator {
         byteBuffer.putLong(systemTime_forMSB);
         byteBuffer.putLong(macAddress_forLSB);
         return byteBuffer.array();
+    }
+
+    protected static byte[] getByteArrayFromHashedNamespace(String hashingAlgorithm) {
+        String nameSpace = System.getProperty("user.home") + NUMBER_GENERATOR.nextInt();
+        String name = System.getProperty("user.name");
+
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance(hashingAlgorithm);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("No hashing algorithm found for: " + hashingAlgorithm);
+        }
+
+        md.update((nameSpace + name).getBytes());
+        return md.digest(new byte[16]);
+
     }
 
     protected static byte[] setVariantAndVersion(byte[] uuid, MtxUuidVersion version) {
