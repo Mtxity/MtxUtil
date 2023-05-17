@@ -134,4 +134,16 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Test
+    public void testQuadraticFormulaSolver() {
+        int a = 6;
+        int b = 9;
+        int c = 3;
+        double[] result = MtxMath.quadraticFormulaSolver(a, b, c);
+
+        assertEquals(2, result.length);
+        assertEquals(-0.5, result[0]);
+        assertEquals(-1, result[1]);
+    }
 }

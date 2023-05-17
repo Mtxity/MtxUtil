@@ -116,4 +116,16 @@ public final class MtxMath {
         }
         return true;
     }
+
+    public static double[] quadraticFormulaSolver(int a, int b, int c) {
+        double[] x = new double[2];
+
+        double rootOfDeterminant = Math.sqrt(Math.pow(b, 2) - (4 * a * c));
+        double positiveDeterminant = (-1 * b) + rootOfDeterminant;
+        double negativeDeterminant = (-1 * b) - rootOfDeterminant;
+
+        x[0] = positiveDeterminant / (2 * a);
+        x[1] = negativeDeterminant / (2 * a);
+        return x;
+    }
 }
