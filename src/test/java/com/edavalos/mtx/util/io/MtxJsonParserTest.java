@@ -10,6 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.edavalos.mtx.util.io.MtxFileReaderTest.CURRENT_FILE_PATH;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -18,7 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxJsonParserTest {
-    private static final String CURRENT_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\java\\com\\edavalos\\mtx\\util\\io\\";
     private static final String SAMPLE_JSON_FILENAME = "sampleJsonFile.json";
     private static final String SAMPLE_JSON_STRING = "{\"glossary\":{\"title\":\"example glossary\",\"GlossDiv\":{\"title\":" +
             "\"S\",\"GlossList\":[{\"GlossEntry1\":{\"ID\":\"SGML\",\"SortAs\":\"SGML\",\"GlossTerm\":" +

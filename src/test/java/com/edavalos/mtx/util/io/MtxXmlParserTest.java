@@ -10,6 +10,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import static com.edavalos.mtx.util.io.MtxFileReaderTest.CURRENT_FILE_PATH;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -19,7 +20,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxXmlParserTest {
-    private static final String CURRENT_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\java\\com\\edavalos\\mtx\\util\\io\\";
     private static final String SAMPLE_XML_FILENAME = "sampleXmlFile.xml";
 
     private MtxXmlParser mtxXmlParser;

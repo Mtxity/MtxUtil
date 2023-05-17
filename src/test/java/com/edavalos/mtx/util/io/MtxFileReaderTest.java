@@ -10,7 +10,10 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxFileReaderTest {
-    private static final String CURRENT_FILE_PATH = System.getProperty("user.dir") + "\\src\\test\\java\\com\\edavalos\\mtx\\util\\io\\";
+    private static final String PATH_TO_SRC = "/src/test/java/com/edavalos/mtx/util/io/";
+    private static final String PATH_TO_SRC_WINDOWS = "\\src\\test\\java\\com\\edavalos\\mtx\\util\\io\\";
+    private static final boolean IS_OS_WINDOWS = System.getProperty("os.name").toLowerCase().contains("windows");
+    static final String CURRENT_FILE_PATH = System.getProperty("user.dir") + (IS_OS_WINDOWS ? PATH_TO_SRC_WINDOWS : PATH_TO_SRC);
 
     private MtxFileReader mtxFileReader;
 
