@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.math;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -133,6 +134,11 @@ public class MtxMathTest {
                 assertFalse(MtxMath.isPrime(i));
             }
         }
+
+        @Test
+        public void testIsPrime_negativeNumber() {
+            assertFalse(MtxMath.isPrime(-1));
+        }
     }
 
     @Test
@@ -145,5 +151,122 @@ public class MtxMathTest {
         assertEquals(2, result.length);
         assertEquals(-0.5, result[0]);
         assertEquals(-1, result[1]);
+    }
+
+    @Nested
+    class StatsTests {
+        private static final double[] SAMPLE_DATA_SET = {
+                2.5, 3.0, 6.8, 7.2, 9.8, 10.1,
+                12.0, 12.0, 12.1, 13.4, 13.7, 15,
+                15.12, 15.16, 16.0, 16.1, 16.2, 16.4
+        };
+        private MtxMath.MtxStats mtxStats;
+
+        @Nested
+        class StatsConstructorTests {
+            private static final List<Double> SAMPLE_DOUBLE_LIST = new ArrayList<>() {{
+                add(1.0);
+                add(2.0);
+                add(3.0);
+            }};
+
+            @Test
+            public void testConstructor_default() {
+                mtxStats = new MtxMath.MtxStats();
+                assertTrue(mtxStats.getContents().isEmpty());
+            }
+
+            @Test
+            public void testConstructor_doubleArray() {
+                double[] sampleDoubles = new double[SAMPLE_DOUBLE_LIST.size()];
+                for (int i = 0; i < SAMPLE_DOUBLE_LIST.size(); i++) {
+                    sampleDoubles[i] = SAMPLE_DOUBLE_LIST.get(i);
+                }
+
+                mtxStats = new MtxMath.MtxStats(sampleDoubles);
+                assertEquals(SAMPLE_DOUBLE_LIST, mtxStats.getContents());
+            }
+
+            @Test
+            public void testConstructor_intArray() {
+                int[] sampleDoubles = new int[SAMPLE_DOUBLE_LIST.size()];
+                for (int i = 0; i < SAMPLE_DOUBLE_LIST.size(); i++) {
+                    int x = SAMPLE_DOUBLE_LIST.get(i).intValue();
+                    sampleDoubles[i] = x;
+                }
+
+                mtxStats = new MtxMath.MtxStats(sampleDoubles);
+                assertEquals(SAMPLE_DOUBLE_LIST, mtxStats.getContents());
+            }
+        }
+
+        @Test
+        public void testClearContents() {
+            mtxStats = new MtxMath.MtxStats(new int[]{5, 6, 7});
+            assertTrue(mtxStats.clearContents());
+            assertFalse(mtxStats.clearContents());
+            assertTrue(mtxStats.getContents().isEmpty());
+        }
+
+        @Nested
+        class AddTests {
+            @BeforeEach
+            public void setUp() {
+                mtxStats = new MtxMath.MtxStats(new int[]{5, 6, 7});
+            }
+
+            @Test
+            public void testAdd_double() {
+                double newVal = 2.3;
+                mtxStats.add(newVal);
+                assertTrue(mtxStats.getContents().contains(newVal));
+                assertEquals(4, mtxStats.getContents().size());
+            }
+
+            @Test
+            public void testAdd_int() {
+                int newVal = 5;
+                mtxStats.add(newVal);
+                assertTrue(mtxStats.getContents().contains((double) newVal));
+                assertEquals(4, mtxStats.getContents().size());
+            }
+        }
+
+        @BeforeEach
+        public void setUp() {
+            mtxStats = new MtxMath.MtxStats(SAMPLE_DATA_SET);
+        }
+
+        @Test
+        public void testGetStandardDeviation() {
+            assertEquals(4.2980628711600355, mtxStats.getStandardDeviation());
+        }
+
+        @Test
+        public void testGetMean() {
+            // Actual result should be 11.81
+            assertEquals(	11.809999999999999, mtxStats.getMean());
+        }
+
+        @Test
+        public void testGetMedian_even() {
+            assertEquals(12.75, mtxStats.getMedian());
+        }
+
+        @Test
+        public void testGetMedian_odd() {
+            mtxStats.add(17);
+            assertEquals(13.4, mtxStats.getMedian());
+        }
+
+        @Test
+        public void testGetMode() {
+            assertEquals(12.0, mtxStats.getMode());
+        }
+
+        @Test
+        public void testGetVariance() {
+            assertEquals(18.473344444444447, mtxStats.getVariance());
+        }
     }
 }
