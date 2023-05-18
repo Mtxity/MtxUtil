@@ -1,7 +1,9 @@
 package com.edavalos.mtx.util.math;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public final class MtxMath {
     private static final int DEFAULT_SIZE = 8;
@@ -153,6 +155,28 @@ public final class MtxMath {
 
         public double getMean() {
             return this.getTotal() / this.contents.size();
+        }
+
+        public double getMode() {
+            Map<Double, Integer> frequencyMap = new HashMap<>();
+            for (double i : this.contents) {
+                frequencyMap.put(i, frequencyMap.getOrDefault(i, 0) + 1);
+            }
+
+            double mode = 0.0;
+            int maxFrequency = 0;
+
+            for (Map.Entry<Double, Integer> entry : frequencyMap.entrySet()) {
+                double number = entry.getKey();
+                int frequency = entry.getValue();
+
+                if (frequency > maxFrequency) {
+                    mode = number;
+                    maxFrequency = frequency;
+                }
+            }
+
+            return mode;
         }
 
         private double getTotal() {
