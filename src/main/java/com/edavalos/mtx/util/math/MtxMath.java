@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.math;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public final class MtxMath {
@@ -101,6 +102,42 @@ public final class MtxMath {
             }
 
             return fibonacci;
+        }
+    }
+
+    public static class MtxStats {
+        private final ArrayList<Double> contents;
+
+        public MtxStats() {
+            this.contents = new ArrayList<>();
+        }
+
+        public MtxStats(double[] values) {
+            this();
+            for (double value : values) {
+                this.contents.add(value);
+            }
+        }
+
+        public MtxStats(int[] values) {
+            this();
+            for (int value : values) {
+                this.contents.add((double) value);
+            }
+        }
+
+        public boolean clearContents() {
+            boolean isEmpty = this.contents.isEmpty();
+            this.contents.clear();
+            return !isEmpty;
+        }
+
+        public void add(double value) {
+            this.contents.add(value);
+        }
+
+        public void add(int value) {
+            this.contents.add((double) value);
         }
     }
 
