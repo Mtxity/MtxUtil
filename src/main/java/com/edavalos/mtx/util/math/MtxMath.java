@@ -1,9 +1,6 @@
 package com.edavalos.mtx.util.math;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public final class MtxMath {
     private static final int DEFAULT_SIZE = 8;
@@ -155,6 +152,22 @@ public final class MtxMath {
 
         public double getMean() {
             return this.getTotal() / this.contents.size();
+        }
+
+        public double getMedian() {
+            List<Double> localCopy = new ArrayList<>(List.copyOf(this.contents));
+            localCopy.sort(Comparator.naturalOrder());
+
+            int length = localCopy.size();
+            int middleIdx = length / 2;
+
+            if (length % 2 == 0) {
+                // If array length is even, average the two middle values
+                return (localCopy.get(middleIdx - 1) + localCopy.get(middleIdx)) / 2.0;
+            } else {
+                // array length is odd, return the middle value
+                return localCopy.get(middleIdx);
+            }
         }
 
         public double getMode() {
