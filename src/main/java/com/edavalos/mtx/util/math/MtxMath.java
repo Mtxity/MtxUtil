@@ -142,19 +142,25 @@ public final class MtxMath {
 
         // Source: https://www.baeldung.com/java-calculate-standard-deviation#calculate-the-standard-deviation
         public double getStandardDeviation() {
-            double sum = 0.0;
-            for (double i : this.contents) {
-                sum += i;
-            }
-
-            double mean = sum / this.contents.size();
-
+            double mean = this.getMean();
             double stdDev = 0.0;
             for (double j : this.contents) {
                 stdDev += Math.pow(j - mean, 2);
             }
 
             return Math.sqrt(stdDev / this.contents.size());
+        }
+
+        public double getMean() {
+            return this.getTotal() / this.contents.size();
+        }
+
+        private double getTotal() {
+            double sum = 0.0;
+            for (double i : this.contents) {
+                sum += i;
+            }
+            return sum;
         }
     }
 
