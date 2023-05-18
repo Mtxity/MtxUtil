@@ -139,6 +139,10 @@ public final class MtxMath {
             this.contents.add((double) value);
         }
 
+        public List<Double> getContents() {
+            return this.contents;
+        }
+
         // Source: https://www.baeldung.com/java-calculate-standard-deviation#calculate-the-standard-deviation
         public double getStandardDeviation() {
             double mean = this.getMean();
