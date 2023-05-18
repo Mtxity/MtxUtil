@@ -196,6 +196,18 @@ public final class MtxMath {
             return mode;
         }
 
+        public double getVariance() {
+            double mean = this.getMean();
+            double sumOfSquaredDifferences = 0;
+
+            for (double number : this.contents) {
+                double difference = number - mean;
+                sumOfSquaredDifferences += difference * difference;
+            }
+
+            return sumOfSquaredDifferences / this.contents.size();
+        }
+
         private double getTotal() {
             double sum = 0.0;
             for (double i : this.contents) {
