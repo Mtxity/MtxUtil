@@ -139,6 +139,23 @@ public final class MtxMath {
         public void add(int value) {
             this.contents.add((double) value);
         }
+
+        // Source: https://www.baeldung.com/java-calculate-standard-deviation#calculate-the-standard-deviation
+        public double getStandardDeviation() {
+            double sum = 0.0;
+            for (double i : this.contents) {
+                sum += i;
+            }
+
+            double mean = sum / this.contents.size();
+
+            double stdDev = 0.0;
+            for (double j : this.contents) {
+                stdDev += Math.pow(j - mean, 2);
+            }
+
+            return Math.sqrt(stdDev / this.contents.size());
+        }
     }
 
     public static boolean isPrime(int i) {
