@@ -26,13 +26,34 @@ public class MtxRomanNumeral {
     // Source: https://codingnconcepts.com/java/integer-to-roman/
     public static String getRomanNumeralFromInteger(int number) {
         Integer l = ROMAN_NUMERAL_INTERVALS.floor(number);
-        if (l == null) {
-            return null;
-        }
+        assert l != null;
 
         if (number == l) {
             return ROMAN_LITERALS.get(number);
         }
         return ROMAN_LITERALS.get(l) + getRomanNumeralFromInteger(number - l);
+    }
+
+    public static int getIntegerFromRomanNumeral(String romanNumeral) {
+        if (romanNumeral == null || romanNumeral.length() == 0) {
+            return 0;
+        }
+
+        int result = 0;
+        int previousValue = 0;
+
+        for (int i = romanNumeral.length() - 1; i >= 0; i--) {
+            char currentSymbol = romanNumeral.charAt(i);
+            int currentValue = ROMAN_LITERALS.inverse().get(String.valueOf(currentSymbol));
+
+            if (currentValue < previousValue) {
+                result -= currentValue;
+            } else {
+                result += currentValue;
+                previousValue = currentValue;
+            }
+        }
+
+        return result;
     }
 }
