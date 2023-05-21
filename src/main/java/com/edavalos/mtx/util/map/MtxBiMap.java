@@ -100,7 +100,6 @@ public interface MtxBiMap<K, V> {
      * this map
      * @throws NullPointerException if the specified key is null and this map
      * does not permit null keys
-     * @since 1.8
      */
     default V getOrDefault(K key, V defaultValue) {
         V v;
@@ -108,6 +107,17 @@ public interface MtxBiMap<K, V> {
                 ? v
                 : defaultValue;
     }
+
+    /**
+     * Provides an MtxBiMap that has every key and value flipped, so that
+     * every value is a key mapping to the original key it had.
+     *
+     * @return An MtxBiMap with this map's keys and values reversed
+     * @throws UnsupportedOperationException if the map which this is called
+     * on is already an inverse provided by calling {@code inverse()}. In
+     * other words, {@code MtxBitMap.inverse().inverse()} is illegal.
+     */
+    MtxBiMap<V, K> inverse();
 
     // ------------------- Modification Operations -----------------
 

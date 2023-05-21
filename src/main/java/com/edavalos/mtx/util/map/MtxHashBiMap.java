@@ -4,11 +4,22 @@ import java.util.*;
 
 public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
     private static final String DUPLICATE_VALUES_ERROR_MSG = "MtxBiMap cannot have duplicate values.";
+    private static final String ALREADY_AN_INVERSE_ERROR_MSG = "This MtxBiMap is already an inverse of another one.";
 
     private final HashMap<K, V> internalMap;
+    private final MtxHashBiMap<V, K> inverseMap;
+    private final boolean isInverse;
 
     public MtxHashBiMap() {
         this.internalMap = new HashMap<>();
+        this.inverseMap = new MtxHashBiMap<>(true);
+        this.isInverse = false;
+    }
+
+    private MtxHashBiMap(boolean isInverse) {
+        this.internalMap = new HashMap<>();
+        this.inverseMap = null;
+        this.isInverse = isInverse;
     }
 
     @Override
@@ -45,8 +56,17 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
     }
 
     @Override
+    public MtxBiMap<V, K> inverse() {
+        if (this.isInverse) {
+            throw new UnsupportedOperationException(ALREADY_AN_INVERSE_ERROR_MSG);
+        }
+
+        return this.inverseMap;
+    }
+
+    @Override
     public V put(K key, V value) {
-        if (key == null) {
+        if (key == null || value == null) {
             throw new NullPointerException();
         }
 
@@ -54,11 +74,19 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
             throw new IllegalArgumentException(DUPLICATE_VALUES_ERROR_MSG);
         }
 
+        if (!this.isInverse) {
+            assert this.inverseMap != null;
+            this.inverseMap.put(value, key);
+        }
         return this.internalMap.put(key, value);
     }
 
     @Override
     public V remove(K key) {
+        if (!this.isInverse) {
+            assert this.inverseMap != null;
+            this.inverseMap.remove(this.internalMap.get(key));
+        }
         return this.internalMap.remove(key);
     }
 
@@ -69,11 +97,21 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
         }
 
         this.internalMap.putAll(m);
+        if (!this.isInverse) {
+            assert this.inverseMap != null;
+            for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
+                this.inverseMap.put(entry.getValue(), entry.getKey());
+            }
+        }
     }
 
     @Override
     public void clear() {
         this.internalMap.clear();
+        if (!this.isInverse) {
+            assert this.inverseMap != null;
+            this.inverseMap.clear();
+        }
     }
 
     @Override
