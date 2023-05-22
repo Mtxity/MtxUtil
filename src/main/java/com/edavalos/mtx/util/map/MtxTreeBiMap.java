@@ -1,6 +1,11 @@
 package com.edavalos.mtx.util.map;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class MtxTreeBiMap<K, V> implements MtxBiMap<K, V> {
     private static final String DUPLICATE_VALUES_ERROR_MSG = "MtxBiMap cannot have duplicate values.";
@@ -171,5 +176,23 @@ public class MtxTreeBiMap<K, V> implements MtxBiMap<K, V> {
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return this.internalMap.entrySet();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof MtxTreeBiMap otherBiMap)) {
+            return false;
+        }
+        return this.internalMap.equals(otherBiMap.internalMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(internalMap, isInverse);
+    }
+
+    @Override
+    public String toString() {
+        return this.internalMap.toString();
     }
 }
