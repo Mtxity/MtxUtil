@@ -367,9 +367,44 @@ public class MtxHashBiMapTest {
         }
     }
 
+    @Test
+    public void testEquals() {
+        MtxHashBiMap<Integer, String> copy = getNewCopyMap();
+        fillWithValues();
+
+        assertTrue(mtxHashBiMap.equals(copy));
+        assertTrue(copy.equals(mtxHashBiMap));
+
+        assertFalse(mtxHashBiMap.equals("Sample"));
+    }
+
+    @Test
+    public void testHashCode() {
+        MtxHashBiMap<Integer, String> copy = getNewCopyMap();
+        fillWithValues();
+
+        assertEquals(copy.hashCode(), mtxHashBiMap.hashCode());
+    }
+
+    @Test
+    public void testToString() {
+        String expected = "{1=One, 2=Two, 3=Three}";
+        fillWithValues();
+
+        assertEquals(expected, mtxHashBiMap.toString());
+    }
+
     private void fillWithValues() {
         mtxHashBiMap.put(1, "One");
         mtxHashBiMap.put(2, "Two");
         mtxHashBiMap.put(3, "Three");
+    }
+
+    private MtxHashBiMap<Integer, String> getNewCopyMap() {
+        MtxHashBiMap<Integer, String> copy = new MtxHashBiMap<>();
+        copy.put(1, "One");
+        copy.put(2, "Two");
+        copy.put(3, "Three");
+        return copy;
     }
 }
