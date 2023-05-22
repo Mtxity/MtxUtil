@@ -272,6 +272,10 @@ public final class MtxStringUtil {
     }
 
     public static char mostCommonChar(String string) {
+        if (string == null || string.length() == 0) {
+            return '\u0000';
+        }
+
         HashMap<Character, Integer> tallyMap = new HashMap<>();
         for (char c : string.toCharArray()) {
             if (!tallyMap.containsKey(c)) {
