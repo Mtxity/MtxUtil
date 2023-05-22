@@ -651,18 +651,18 @@ public final class MtxStringUtilTest {
 
     @Nested
     class IsPalindromeTests {
-        String[] samplePalindomesEvenLength = new String[] {
+        String[] samplePalindomesEvenLength = new String[]{
                 "hannah",
                 "SATIREv  vERITAS",
                 ""
         };
-        String[] samplePalindomesOddLength = new String[] {
+        String[] samplePalindomesOddLength = new String[]{
                 "kayak",
                 "12:21",
                 "SATIREv vERITAS",
                 "x"
         };
-        String[] sampleNonPalindomes = new String[] {
+        String[] sampleNonPalindomes = new String[]{
                 "random word",
                 "phrase",
                 "hello there",
@@ -693,17 +693,25 @@ public final class MtxStringUtilTest {
                 assertFalse(MtxStringUtil.isPalindrome(testCase));
             }
         }
+    }
 
-        @Nested
-        class MostCommonCharTests {
+    @Nested
+    class MostCommonCharTests {
 
-            @Test
-            public void testMostCommonChar() {
-                String testCase = "abcadaccefghftcli";
-                char testMostCommon = 'c';
+        @Test
+        public void testMostCommonChar() {
+            String testCase = "abcadaccefghftcli";
+            char testMostCommon = 'c';
 
-                assertEquals(testMostCommon, MtxStringUtil.mostCommonChar(testCase));
-            }
+            assertEquals(testMostCommon, MtxStringUtil.mostCommonChar(testCase));
+        }
+
+        @Test
+        public void testMostCommonChar_charNotFound() {
+            String testCase = "";
+            char nullChar = '\u0000';
+
+            assertEquals(nullChar, MtxStringUtil.mostCommonChar(testCase));
         }
     }
 }
