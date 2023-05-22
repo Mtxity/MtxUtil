@@ -5,6 +5,8 @@ import java.util.*;
 public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
     private static final String DUPLICATE_VALUES_ERROR_MSG = "MtxBiMap cannot have duplicate values.";
     private static final String ALREADY_AN_INVERSE_ERROR_MSG = "This MtxBiMap is already an inverse of another one.";
+    private static final String CANNOT_EDIT_INVERSE_ERROR_MSG = "You cannot modify an inverse map. Modifications " +
+                                                                "must be done to the original";
 
     private final HashMap<K, V> internalMap;
     private final MtxHashBiMap<V, K> inverseMap;
@@ -70,14 +72,26 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
             throw new NullPointerException();
         }
 
-        if (this.internalMap.containsValue(value)) {
-            throw new IllegalArgumentException(DUPLICATE_VALUES_ERROR_MSG);
-        }
-
         if (!this.isInverse) {
+            if (this.internalMap.containsValue(value)) {
+                throw new IllegalArgumentException(DUPLICATE_VALUES_ERROR_MSG);
+            }
+
             assert this.inverseMap != null;
-            this.inverseMap.put(value, key);
+            this.inverseMap.put(value, key, true);
+
+            return this.internalMap.put(key, value);
+        } else {
+            throw new UnsupportedOperationException(CANNOT_EDIT_INVERSE_ERROR_MSG);
         }
+    }
+
+    private V put(K key, V value, boolean inverseOverride) {
+        assert inverseOverride;
+
+        assert this.isInverse;
+        assert this.inverseMap == null;
+
         return this.internalMap.put(key, value);
     }
 
@@ -85,8 +99,20 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
     public V remove(K key) {
         if (!this.isInverse) {
             assert this.inverseMap != null;
-            this.inverseMap.remove(this.internalMap.get(key));
+            this.inverseMap.remove(this.internalMap.get(key), true);
+
+            return this.internalMap.remove(key);
+        } else {
+            throw new UnsupportedOperationException(CANNOT_EDIT_INVERSE_ERROR_MSG);
         }
+    }
+
+    private V remove(K key, boolean inverseOverride) {
+        assert inverseOverride;
+
+        assert this.isInverse;
+        assert this.inverseMap == null;
+
         return this.internalMap.remove(key);
     }
 
@@ -96,22 +122,40 @@ public class MtxHashBiMap<K, V> implements MtxBiMap<K, V> {
             throw new IllegalArgumentException(DUPLICATE_VALUES_ERROR_MSG);
         }
 
-        this.internalMap.putAll(m);
         if (!this.isInverse) {
             assert this.inverseMap != null;
             for (Map.Entry<? extends K, ? extends V> entry : m.entrySet()) {
-                this.inverseMap.put(entry.getValue(), entry.getKey());
+                if (this.inverseMap.containsKey(entry.getValue())) {
+                    throw new IllegalArgumentException(DUPLICATE_VALUES_ERROR_MSG);
+                }
+                this.inverseMap.put(entry.getValue(), entry.getKey(), true);
             }
+
+            this.internalMap.putAll(m);
+        } else {
+            throw new UnsupportedOperationException(CANNOT_EDIT_INVERSE_ERROR_MSG);
         }
     }
 
     @Override
     public void clear() {
-        this.internalMap.clear();
         if (!this.isInverse) {
             assert this.inverseMap != null;
-            this.inverseMap.clear();
+            this.inverseMap.clear(true);
+
+            this.internalMap.clear();
+        } else {
+            throw new UnsupportedOperationException(CANNOT_EDIT_INVERSE_ERROR_MSG);
         }
+    }
+
+    private void clear(boolean inverseOverride) {
+        assert inverseOverride;
+
+        assert this.isInverse;
+        assert this.inverseMap == null;
+
+        this.internalMap.clear();
     }
 
     @Override
