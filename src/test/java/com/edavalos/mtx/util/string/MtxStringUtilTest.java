@@ -714,4 +714,35 @@ public final class MtxStringUtilTest {
             assertEquals(nullChar, MtxStringUtil.mostCommonChar(testCase));
         }
     }
+
+    @Nested
+    class LeetSpeakTests {
+        HashMap<String, String> testCases = new HashMap<>(){{
+            put(
+                    "Hello, world! This is a leet speak transformation.",
+                    "H3110, w0r1d! 7h!5 !5 4 1337 5p34k 7r4n5f0rm47!0n."
+            );
+            put(
+                    "Sample verbiage that should be translated",
+                    "54mp13 v3rb!4g3 7h47 5h0u1d b3 7r4n51473d"
+            );
+            put(
+                    "Totally literally like just ask your mom bro",
+                    "707411y 1!73r411y 1!k3 ju57 45k y0ur m0m br0"
+            );
+        }};
+
+        @Test
+        public void testLeetSpeak() {
+            for (Map.Entry<String, String> testEntry : testCases.entrySet()) {
+                assertEquals(testEntry.getValue(), MtxStringUtil.leetSpeak(testEntry.getKey()));
+            }
+        }
+
+        @Test
+        public void testLeetSpeak_regularText() {
+            String nonLeetSpeak = "Bcdfghjkmnpqruvwxyz";
+            assertEquals(nonLeetSpeak, MtxStringUtil.leetSpeak(nonLeetSpeak));
+        }
+    }
 }
