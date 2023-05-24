@@ -295,4 +295,23 @@ public final class MtxStringUtil {
         }
         return mostCommon;
     }
+
+    public static String leetSpeak(String input) {
+        input = input.replaceAll("a", "4");
+        input = input.replaceAll("A", "4");
+        input = input.replaceAll("e", "3");
+        input = input.replaceAll("E", "3");
+        input = input.replaceAll("l", "1");
+        input = input.replaceAll("L", "1");
+        input = input.replaceAll("o", "0");
+        input = input.replaceAll("O", "0");
+        input = input.replaceAll("s", "5");
+        input = input.replaceAll("S", "5");
+        input = input.replaceAll("t", "7");
+        input = input.replaceAll("T", "7");
+        input = input.replaceAll("i", "!");
+        input = input.replaceAll("I", "!");
+
+        return input;
+    }
 }
