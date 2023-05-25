@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
@@ -294,6 +295,18 @@ public final class MtxStringUtil {
             }
         }
         return mostCommon;
+    }
+
+    public static String replaceFromMap(String input, Map<String, String> replacements) {
+        for (Map.Entry<String, String> replacement : replacements.entrySet()) {
+            if (!MtxStringUtil.isEmpty(replacement.getKey())) {
+                String replacementValue = (replacement.getValue() == null)
+                                          ? ""
+                                          : replacement.getValue();
+                input = input.replaceAll(replacement.getKey(), replacementValue);
+            }
+        }
+        return input;
     }
 
     public static String leetSpeak(String input) {
