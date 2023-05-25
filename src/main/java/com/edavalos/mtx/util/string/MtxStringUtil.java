@@ -332,4 +332,32 @@ public final class MtxStringUtil {
 
         return MtxStringUtil.replaceFromMap(input, leetSpeakMap);
     }
+
+    // Source: https://stackoverflow.com/a/1285588
+    public static String concatenateWithOverlap(String s1, String s2) {
+        if (s1 == null || s2 == null) {
+            throw new NullPointerException();
+        }
+
+        int len1 = s1.length() - 1;
+        char last1 = s1.charAt(len1);
+        char first2 = s2.charAt(0);
+
+        int indexOfLast2 = s2.lastIndexOf(last1, Math.min(last1, Math.min(len1, s2.length() - 1)));
+        while (indexOfLast2 != -1) {
+            if (s1.charAt(len1 - indexOfLast2) == first2) {
+                int ix = indexOfLast2;
+                while ((ix != -1) && (s1.charAt(len1 - indexOfLast2 + ix)) == s2.charAt(ix)) {
+                    ix--;
+                }
+                if (ix == -1) {
+                    return s1 + s2.substring(indexOfLast2 + 1);
+                }
+            }
+
+            indexOfLast2 = s2.lastIndexOf(last1, indexOfLast2 - 1);
+        }
+
+        return s1 + s2;
+    }
 }
