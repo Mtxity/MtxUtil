@@ -12,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStringUtilTest {
@@ -804,6 +805,70 @@ public final class MtxStringUtilTest {
         public void testLeetSpeak_regularText() {
             String nonLeetSpeak = "Bcdfghjkmnpqruvwxyz";
             assertEquals(nonLeetSpeak, MtxStringUtil.leetSpeak(nonLeetSpeak));
+        }
+    }
+
+    @Nested
+    class TestConcatenateWithOverlap {
+        // Random strings from: https://baconipsum.com/
+        HashMap<String[], String> testCases = new HashMap<>(){{
+            put(
+                    new String[] {
+                            "T-bone frankfurter flank",
+                            "flank cow filet mignon"
+                    },
+                    "T-bone frankfurter flank cow filet mignon"
+            );
+            put(
+                    new String[] {
+                            "Ham hock short ribs ribeye ",
+                            " jowl pig strip steak"
+                    },
+                    "Ham hock short ribs ribeye jowl pig strip steak"
+            );
+            put(
+                    new String[] {
+                            "Strip steak boudin",
+                            "steak boudin porchetta"
+                    },
+                    "Strip steak boudin porchetta"
+            );
+            put(
+                    new String[] {
+                            "Strip steak boudin",
+                            "din porchetta"
+                    },
+                    "Strip steak boudin porchetta"
+            );
+        }};
+
+        @Test
+        public void concatenateWithOverlapTest() {
+            for (Map.Entry<String[], String> testEntry : testCases.entrySet()) {
+                assertEquals(
+                        testEntry.getValue(),
+                        MtxStringUtil.concatenateWithOverlap(testEntry.getKey()[0], testEntry.getKey()[1])
+                );
+            }
+        }
+
+        @Test
+        public void concatenateWithOverlapTest_noOverlap() {
+            String s1 = "Sample string that ";
+            String s2 = "should end here";
+            assertEquals(s1 + s2, MtxStringUtil.concatenateWithOverlap(s1, s2));
+        }
+
+        @Test
+        public void concatenateWithOverlapTest_fullOverlap() {
+            String s1 = "Unsalted highly unsaturated string";
+            assertEquals(s1, MtxStringUtil.concatenateWithOverlap(s1, s1));
+        }
+
+        @Test
+        public void concatenateWithOverlapTest_nullArgs() {
+            assertThrows(NullPointerException.class, () -> MtxStringUtil.concatenateWithOverlap(null, "test"));
+            assertThrows(NullPointerException.class, () -> MtxStringUtil.concatenateWithOverlap("test", null));
         }
     }
 }
