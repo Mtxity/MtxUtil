@@ -716,6 +716,67 @@ public final class MtxStringUtilTest {
     }
 
     @Nested
+    class ReplaceFromMapTests {
+        HashMap<String, String> sampleMap = new HashMap<>(){{
+            put("Lorem", "Carpe");
+            put("dolor", "comon");
+            put("occaecat", "sonomeat");
+            put("non", "ont");
+            put("u", "v");
+        }};
+
+        HashMap<String, String> testCases = new HashMap<>(){{
+            put(
+                    "Lorem ipsum dolor sit amet",
+                    "Carpe ipsvm comon sit amet"
+            );
+            put(
+                    "Ut enim ad minim veniam occaecat",
+                    "Ut enim ad minim veniam sonomeat"
+            );
+            put(
+                    "Excepteur sint occaecat cupidatat non proident",
+                    "Exceptevr sint sonomeat cvpidatat ont proident"
+            );
+        }};
+
+        @Test
+        public void testReplaceFromMap() {
+            for (Map.Entry<String, String> testEntry : testCases.entrySet()) {
+                assertEquals(
+                        testEntry.getValue(),
+                        MtxStringUtil.replaceFromMap(testEntry.getKey(), sampleMap)
+                );
+            }
+        }
+
+        @Test
+        public void testReplaceFromMap_mapWithNullKey() {
+            HashMap<String, String> mapWithNullKey = new HashMap<>();
+            mapWithNullKey.put(null, "Value not in return string");
+            String unchangedString = "Bacon ipsum dolor amet corned beef";
+
+            assertEquals(
+                    unchangedString,
+                    MtxStringUtil.replaceFromMap(unchangedString, mapWithNullKey)
+            );
+        }
+
+        @Test
+        public void testReplaceFromMap_mapWithNullValue() {
+            HashMap<String, String> regularBeefOnly = new HashMap<>();
+            regularBeefOnly.put("corned ", null);
+            String input = "Bacon ipsum dolor amet corned beef";
+            String output = "Bacon ipsum dolor amet beef";
+
+            assertEquals(
+                    output,
+                    MtxStringUtil.replaceFromMap(input, regularBeefOnly)
+            );
+        }
+    }
+
+    @Nested
     class LeetSpeakTests {
         HashMap<String, String> testCases = new HashMap<>(){{
             put(
