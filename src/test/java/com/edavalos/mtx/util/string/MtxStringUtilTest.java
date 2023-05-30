@@ -901,14 +901,21 @@ public final class MtxStringUtilTest {
             }
         }
 
+        private class ErrorOnToString {
+            @Override
+            public String toString() {
+                throw new UnsupportedOperationException();
+            }
+        }
+
         Object[] randomItems = new Object[] {
                 "String",                     // String
                 3.5,                          // Double
                 40,                           // Integer
                 1f,                           // Float
                 2L,                           // Long
-                new LowerString("StRInG")  // LowerString
-
+                new LowerString("StRInG"), // LowerString
+                new ErrorOnToString()         // ErrorOnToString
         };
         String randomItemsAsAString = randomItems[0].toString() +
                                       randomItems[1].toString() +
