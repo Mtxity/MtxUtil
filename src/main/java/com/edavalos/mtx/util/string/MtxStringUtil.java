@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
@@ -359,5 +360,20 @@ public final class MtxStringUtil {
         }
 
         return s1 + s2;
+    }
+
+    public static String joinObjectsAsStrings(Objects... objects) {
+        StringBuilder str = new StringBuilder();
+        for (Object thing : objects) {
+            String objectString = null;
+            try {
+                objectString = thing.toString();
+            } catch (Exception e) {
+                objectString = EMPTY;
+            } finally {
+                str.append(objectString);
+            }
+        }
+        return str.toString();
     }
 }
