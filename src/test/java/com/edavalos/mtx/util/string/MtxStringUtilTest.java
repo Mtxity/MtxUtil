@@ -840,6 +840,20 @@ public final class MtxStringUtilTest {
                     },
                     "Strip steak boudin porchetta"
             );
+            put(
+                    new String[] {
+                            "Strip steak bou",
+                            "boudin porchetta"
+                    },
+                    "Strip steak boudin porchetta"
+            );
+            put(
+                    new String[] {
+                            "Doner brisket filet",
+                            " mignon short loin"
+                    },
+                    "Doner brisket filet mignon short loin"
+            );
         }};
 
         @Test
