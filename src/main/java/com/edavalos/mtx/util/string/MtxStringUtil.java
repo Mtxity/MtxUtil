@@ -362,7 +362,7 @@ public final class MtxStringUtil {
         return s1 + s2;
     }
 
-    public static String joinObjectsAsStrings(Objects... objects) {
+    public static String joinObjectsAsStrings(Object... objects) {
         StringBuilder str = new StringBuilder();
         for (Object thing : objects) {
             String objectString = null;
