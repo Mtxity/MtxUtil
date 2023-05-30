@@ -910,7 +910,12 @@ public final class MtxStringUtilTest {
                 new LowerString("StRInG")  // LowerString
 
         };
-        String randomItemsAsAString = "String3.5401.02string";
+        String randomItemsAsAString = randomItems[0].toString() +
+                                      randomItems[1].toString() +
+                                      randomItems[2].toString() +
+                                      randomItems[3].toString() +
+                                      randomItems[4].toString() +
+                                      randomItems[5].toString();
 
         @Test
         public void testJoinObjectsAsStrings() {
