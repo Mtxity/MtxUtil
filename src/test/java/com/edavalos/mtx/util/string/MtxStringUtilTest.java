@@ -885,4 +885,36 @@ public final class MtxStringUtilTest {
             assertThrows(NullPointerException.class, () -> MtxStringUtil.concatenateWithOverlap("test", null));
         }
     }
+
+    @Nested
+    class TestJoinObjectsAsStrings {
+        private class LowerString {
+            String s;
+
+            public LowerString(String s) {
+                this.s = s.toLowerCase();
+            }
+
+            @Override
+            public String toString() {
+                return this.s;
+            }
+        }
+
+        Object[] randomItems = new Object[] {
+                "String",                     // String
+                3.5,                          // Double
+                40,                           // Integer
+                1f,                           // Float
+                2L,                           // Long
+                new LowerString("StRInG")  // LowerString
+
+        };
+        String randomItemsAsAString = "String3.5401.02string";
+
+        @Test
+        public void testJoinObjectsAsStrings() {
+            assertEquals(randomItemsAsAString, MtxStringUtil.joinObjectsAsStrings(randomItems));
+        }
+    }
 }
