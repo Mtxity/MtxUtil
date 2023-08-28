@@ -1,6 +1,9 @@
 package com.edavalos.mtx.util.grouping;
 
+import com.edavalos.mtx.util.db.MtxBitColumn;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,5 +54,37 @@ public class MtxImmutablePairTest {
         assertTrue(uoe.getMessage().contains("MtxImmutablePair"));
         assertTrue(uoe.getMessage().contains("value"));
         assertFalse(uoe.getMessage().contains("key"));
+    }
+
+    @Nested
+    public class EqualsTests {
+
+        @Test
+        public void testEquals_otherPairNull() {
+            assertFalse(mtxImmutablePair.equals(null));
+        }
+
+        @Test
+        public void testEquals_otherPairNotAPair() {
+            assertFalse(mtxImmutablePair.equals(new MtxBitColumn()));
+        }
+
+        @Test
+        public void testEquals_notEqual() {
+            MtxImmutablePair<String, Integer> otherPair = new MtxImmutablePair<>("g", 6);
+            assertFalse(mtxImmutablePair.equals(otherPair));
+        }
+
+        @Test
+        public void testEquals_equal() {
+            MtxImmutablePair<String, Integer> otherPair = new MtxImmutablePair<>(SAMPLE_KEY, SAMPLE_VALUE);
+            assertTrue(mtxImmutablePair.equals(otherPair));
+        }
+    }
+
+    @Test
+    public void testToString() {
+        String mtxPairAsString = "<" + SAMPLE_KEY + " : " + SAMPLE_VALUE + ">";
+        assertEquals(mtxPairAsString, mtxImmutablePair.toString());
     }
 }

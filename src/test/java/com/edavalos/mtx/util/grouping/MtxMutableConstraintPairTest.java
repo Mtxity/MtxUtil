@@ -1,6 +1,9 @@
 package com.edavalos.mtx.util.grouping;
 
+import com.edavalos.mtx.util.db.MtxBitColumn;
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -115,5 +118,66 @@ public class MtxMutableConstraintPairTest {
         mtxMutableConstraintPair.setValue(5);
 
         assertTrue(mtxMutableConstraintPair.hasChanged());
+    }
+
+    @Nested
+    public class EqualsTests {
+
+        @Test
+        public void testEquals_otherPairNull() {
+            assertFalse(mtxMutableConstraintPair.equals(null));
+        }
+
+        @Test
+        public void testEquals_otherPairNotAPair() {
+            assertFalse(mtxMutableConstraintPair.equals(new MtxBitColumn()));
+        }
+
+        @Test
+        public void testEquals_hasChanged() {
+            MtxMutableConstraintPair<String, Integer> otherPair = new MtxMutableConstraintPair<>(
+                    SAMPLE_CONSTRAINT,
+                    SAMPLE_KEY,
+                    SAMPLE_VALUE
+            );
+            otherPair.setValue(SAMPLE_VALUE);
+            assertFalse(mtxMutableConstraintPair.equals(otherPair));
+        }
+
+        @Test
+        public void testEquals_differentConstraint() {
+            MtxMutableConstraintPair<String, Integer> otherPair = new MtxMutableConstraintPair<>(
+                    (key, value) -> key.contains("e"),
+                    SAMPLE_KEY,
+                    SAMPLE_VALUE
+            );
+            assertFalse(mtxMutableConstraintPair.equals(otherPair));
+        }
+
+        @Test
+        public void testEquals_notEqual() {
+            MtxMutableConstraintPair<String, Integer> otherPair = new MtxMutableConstraintPair<>(
+                    SAMPLE_CONSTRAINT,
+                    "ge",
+                    1
+            );
+            assertFalse(mtxMutableConstraintPair.equals(otherPair));
+        }
+
+        @Test
+        public void testEquals_equal() {
+            MtxMutableConstraintPair<String, Integer> otherPair = new MtxMutableConstraintPair<>(
+                    SAMPLE_CONSTRAINT,
+                    SAMPLE_KEY,
+                    SAMPLE_VALUE
+            );
+            assertTrue(mtxMutableConstraintPair.equals(otherPair));
+        }
+    }
+
+    @Test
+    public void testToString() {
+        String mtxPairAsString = "<" + SAMPLE_KEY + " : " + SAMPLE_VALUE + ">";
+        assertEquals(mtxPairAsString, mtxMutableConstraintPair.toString());
     }
 }
