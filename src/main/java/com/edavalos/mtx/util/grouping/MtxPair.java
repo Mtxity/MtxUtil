@@ -20,4 +20,23 @@ public abstract class MtxPair<K, V> {
     public abstract void setKey(K key);
 
     public abstract void setValue(V value);
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+
+        if (o instanceof MtxPair<?,?> otherPair) {
+            return otherPair.key.equals(this.key) &&
+                   otherPair.value.equals(this.value);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "<" + this.key.toString() + " : " + this.value.toString() + ">";
+    }
 }

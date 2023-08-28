@@ -42,4 +42,14 @@ public class MtxMutableConstraintPair<K, V> extends MtxMutablePair<K, V> {
         }
         super.setValue(value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MtxMutableConstraintPair<?, ?> otherConstraintPair) {
+            if (otherConstraintPair.mtxPairConstraint.equals(this.mtxPairConstraint)) {
+                return super.equals(o);
+            }
+        }
+        return false;
+    }
 }

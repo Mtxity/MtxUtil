@@ -26,4 +26,14 @@ public class MtxMutablePair<K, V> extends MtxPair<K, V> {
     public boolean hasChanged() {
         return this.hasChanged;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MtxMutablePair<?, ?> otherPair) {
+            if (otherPair.hasChanged == this.hasChanged) {
+                return super.equals(o);
+            }
+        }
+        return false;
+    }
 }
