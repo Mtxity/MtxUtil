@@ -36,7 +36,9 @@ public class MtxImmutablePairTest {
                 () -> mtxImmutablePair.setKey("Replacement Key")
         );
 
-        assertTrue(uoe.getMessage().contains("MtxImmutablePair") && uoe.getMessage().contains("key"));
+        assertTrue(uoe.getMessage().contains("MtxImmutablePair"));
+        assertTrue(uoe.getMessage().contains("key"));
+        assertFalse(uoe.getMessage().contains("value"));
     }
 
     @Test
@@ -46,6 +48,8 @@ public class MtxImmutablePairTest {
                 () -> mtxImmutablePair.setValue(23)
         );
 
-        assertTrue(uoe.getMessage().contains("MtxImmutablePair") && uoe.getMessage().contains("value"));
+        assertTrue(uoe.getMessage().contains("MtxImmutablePair"));
+        assertTrue(uoe.getMessage().contains("value"));
+        assertFalse(uoe.getMessage().contains("key"));
     }
 }
