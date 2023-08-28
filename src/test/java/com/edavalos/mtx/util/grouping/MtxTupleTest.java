@@ -4,6 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -32,7 +37,58 @@ public class MtxTupleTest {
     }
 
     @Test
-    public void testConstructor_givenContents() {
+    public void testConstructor_givenContents_givenSingleElements() {
+        mtxTuple = new MtxTuple<>(
+                SAMPLE_ELEMENT_0,
+                SAMPLE_ELEMENT_1,
+                SAMPLE_ELEMENT_2,
+                SAMPLE_ELEMENT_3,
+                SAMPLE_ELEMENT_4
+        );
+        assertEquals(SAMPLE_LENGTH, mtxTuple.size());
+
+        assertEquals(SAMPLE_ELEMENT_0, mtxTuple.getAt(0));
+        assertEquals(SAMPLE_ELEMENT_1, mtxTuple.getAt(1));
+        assertEquals(SAMPLE_ELEMENT_2, mtxTuple.getAt(2));
+        assertEquals(SAMPLE_ELEMENT_3, mtxTuple.getAt(3));
+        assertEquals(SAMPLE_ELEMENT_4, mtxTuple.getAt(4));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxTuple.getAt(5));
+    }
+
+    @Test
+    public void testConstructor_givenContents_givenElementList() {
+        List<Character> sampleList = new ArrayList<>() {{
+            add(SAMPLE_ELEMENT_0);
+            add(SAMPLE_ELEMENT_1);
+            add(SAMPLE_ELEMENT_2);
+            add(SAMPLE_ELEMENT_3);
+            add(SAMPLE_ELEMENT_4);
+        }};
+        mtxTuple = new MtxTuple<>(sampleList);
+
+        assertEquals(SAMPLE_LENGTH, mtxTuple.size());
+
+        assertEquals(SAMPLE_ELEMENT_0, mtxTuple.getAt(0));
+        assertEquals(SAMPLE_ELEMENT_1, mtxTuple.getAt(1));
+        assertEquals(SAMPLE_ELEMENT_2, mtxTuple.getAt(2));
+        assertEquals(SAMPLE_ELEMENT_3, mtxTuple.getAt(3));
+        assertEquals(SAMPLE_ELEMENT_4, mtxTuple.getAt(4));
+
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxTuple.getAt(5));
+    }
+
+    @Test
+    public void testConstructor_givenContents_givenElementSet() {
+        Set<Character> sampleSet = new HashSet<>() {{
+            add(SAMPLE_ELEMENT_0);
+            add(SAMPLE_ELEMENT_1);
+            add(SAMPLE_ELEMENT_2);
+            add(SAMPLE_ELEMENT_3);
+            add(SAMPLE_ELEMENT_4);
+        }};
+        mtxTuple = new MtxTuple<>(sampleSet);
+
         assertEquals(SAMPLE_LENGTH, mtxTuple.size());
 
         assertEquals(SAMPLE_ELEMENT_0, mtxTuple.getAt(0));
