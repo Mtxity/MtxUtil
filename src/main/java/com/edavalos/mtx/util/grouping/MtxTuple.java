@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.grouping;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 public class MtxTuple<T> implements Iterable<T> {
@@ -15,6 +17,18 @@ public class MtxTuple<T> implements Iterable<T> {
         this.size = contents.length;
         this.contents = new ArrayList<>(contents.length);
         this.contents.addAll(Arrays.asList(contents));
+    }
+
+    public MtxTuple(List<T> contents) {
+        this.size = contents.size();
+        this.contents = new ArrayList<>(contents.size());
+        this.contents.addAll(contents);
+    }
+
+    public MtxTuple(Set<T> contents) {
+        this.size = contents.size();
+        this.contents = new ArrayList<>(contents.size());
+        this.contents.addAll(contents);
     }
 
     public MtxTuple(int size) {
