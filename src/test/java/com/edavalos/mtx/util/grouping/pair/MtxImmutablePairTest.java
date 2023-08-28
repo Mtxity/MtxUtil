@@ -1,7 +1,8 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.grouping.pair;
 
 import com.edavalos.mtx.util.db.MtxBitColumn;
 
+import com.edavalos.mtx.util.grouping.pair.MtxImmutablePair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

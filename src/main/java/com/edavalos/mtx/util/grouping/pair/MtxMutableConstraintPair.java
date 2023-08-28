@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.grouping.pair;
 
 public class MtxMutableConstraintPair<K, V> extends MtxMutablePair<K, V> {
     @FunctionalInterface

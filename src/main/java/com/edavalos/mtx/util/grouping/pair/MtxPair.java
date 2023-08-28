@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.grouping.pair;
 
 public abstract class MtxPair<K, V> {
     protected K key;

@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.grouping.pair;
 
 public class MtxMutablePair<K, V> extends MtxPair<K, V> {
     private boolean hasChanged;

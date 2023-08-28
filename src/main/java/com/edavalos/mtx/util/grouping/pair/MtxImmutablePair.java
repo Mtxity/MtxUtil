@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.grouping.pair;
 
 public class MtxImmutablePair<K, V> extends MtxPair<K, V> {
     private static final String ERROR_IMMUTABLE_PAIR = "Cannot modify %s of MtxImmutablePair! Either create a new one or use MtxMutablePair.";
