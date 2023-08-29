@@ -376,4 +376,17 @@ public final class MtxStringUtil {
         }
         return str.toString();
     }
+
+    public static <T> String joinArrayAsString(T[] array) {
+        StringBuilder sb = new StringBuilder("[");
+        if (array.length == 0) {
+            return sb.append("]").toString();
+        }
+
+        for (int i = 0; i < array.length - 1; i++) {
+            sb.append(array[i].toString()).append(", ");
+        }
+        sb.append(array[array.length - 1].toString()).append("]");
+        return sb.toString();
+    }
 }
