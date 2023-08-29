@@ -892,12 +892,12 @@ public final class MtxStringUtilTest {
             String s;
 
             public LowerString(String s) {
-                this.s = s.toLowerCase();
+                this.s = s;
             }
 
             @Override
             public String toString() {
-                return this.s;
+                return this.s.toLowerCase();
             }
         }
 
@@ -927,6 +927,31 @@ public final class MtxStringUtilTest {
         @Test
         public void testJoinObjectsAsStrings() {
             assertEquals(randomItemsAsAString, MtxStringUtil.joinObjectsAsStrings(randomItems));
+        }
+    }
+
+    @Nested
+    class TestJoinArrayAsString {
+        Integer[] intArray1 = {1, 2, 3};
+        Integer[] intArray2 = {1};
+        Integer[] intArray3 = {};
+
+        @Test
+        public void testJoinArrayAsString() {
+            String arrayAsString = "[1, 2, 3]";
+            assertEquals(arrayAsString, MtxStringUtil.joinArrayAsString(intArray1));
+        }
+
+        @Test
+        public void testJoinArrayAsString_oneElement() {
+            String arrayAsString = "[1]";
+            assertEquals(arrayAsString, MtxStringUtil.joinArrayAsString(intArray2));
+        }
+
+        @Test
+        public void testJoinArrayAsString_noElements() {
+            String arrayAsString = "[]";
+            assertEquals(arrayAsString, MtxStringUtil.joinArrayAsString(intArray3));
         }
     }
 }
