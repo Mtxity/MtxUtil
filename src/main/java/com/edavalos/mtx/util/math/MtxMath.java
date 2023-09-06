@@ -241,4 +241,10 @@ public final class MtxMath {
         x[1] = negativeDeterminant / (2 * a);
         return x;
     }
+
+    public static void twoDimensionArrayCopy(int[][] source, int[][] destination) {
+        for (int i = 0; i < destination.length; i++) {
+            System.arraycopy(source[i], 0, destination[i], 0, destination[i].length);
+        }
+    }
 }
