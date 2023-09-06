@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.grouping;
 
+import com.edavalos.mtx.util.math.MtxMath;
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
 import java.util.regex.Pattern;
@@ -8,6 +9,8 @@ public class MtxMatrix {
     protected static final String ERROR_ROW_TOO_BIG = "This matrix does not have that many rows!";
     protected static final String ERROR_COL_TOO_BIG = "This matrix does not have that many columns!";
     protected static final String ERROR_NEGATIVE_IDX = "Cannot access a negative index!";
+    protected static final String ERROR_DIFFERING_ROWS = "Cannot add or subtract matrices with differing number of rows!";
+    protected static final String ERROR_DIFFERING_COLS = "Cannot add or subtract matrices with differing number of columns!";
 
     private final int rows;
     private final int cols;
@@ -97,5 +100,50 @@ public class MtxMatrix {
         return sb.toString()
                  .replaceFirst(Pattern.quote("  ["), "[ [")
                  .replace("],\neod", "] ]");
+    }
+
+    public void add(MtxMatrix otherMatrix) {
+        MtxMath.twoDimensionArrayCopy(
+                MtxMatrix.addTogether(this, otherMatrix).matrix,
+                this.matrix
+        );
+    }
+
+    public void subtract(MtxMatrix otherMatrix) {
+        MtxMath.twoDimensionArrayCopy(
+                MtxMatrix.subtractSecondFromFirst(this, otherMatrix).matrix,
+                this.matrix
+        );
+    }
+
+    public static MtxMatrix addTogether(MtxMatrix m1, MtxMatrix m2) {
+        return MtxMatrix.addOrSubtract(m1, m2, true);
+    }
+
+    public static MtxMatrix subtractSecondFromFirst(MtxMatrix m1, MtxMatrix m2) {
+        return MtxMatrix.addOrSubtract(m1, m2, false);
+    }
+
+    private static MtxMatrix addOrSubtract(MtxMatrix m1, MtxMatrix m2, boolean isAddition) {
+        if (m1.rows != m2.rows) {
+            throw new IndexOutOfBoundsException(ERROR_DIFFERING_ROWS);
+        }
+        if (m1.cols != m2.cols) {
+            throw new IndexOutOfBoundsException(ERROR_DIFFERING_COLS);
+        }
+
+        MtxMatrix newMatrix = new MtxMatrix(m1.rows, m2.cols);
+        for (int r = 0; r < m1.rows; r++) {
+            for (int c = 0; c < m1.cols; c++) {
+                int newVal = m1.getValueAt(r, c);
+                if (isAddition) {
+                    newVal += m2.getValueAt(r, c);
+                } else {
+                    newVal -= m2.getValueAt(r, c);
+                }
+                newMatrix.setValueAt(r, c, newVal);
+            }
+        }
+        return newMatrix;
     }
 }
