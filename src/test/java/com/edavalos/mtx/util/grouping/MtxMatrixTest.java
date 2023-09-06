@@ -8,12 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MtxMatrixTest {
-    private static final int[][] EQUIVALENT_MATRIX = new int[][]{
-            new int[]{1, 2, 3},
-            new int[]{4, 5, 6},
-            new int[]{7, 8, 9}
-    };
-
     private MtxMatrix mtxMatrix;
 
     @BeforeEach
@@ -77,6 +71,11 @@ public class MtxMatrixTest {
 
     @Nested
     public class TestSetAndGetValueAt {
+        private static final int[][] EQUIVALENT_MATRIX = new int[][]{
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6},
+                new int[]{7, 8, 9}
+        };
 
         @Test
         public void testGetValueAt() {
@@ -131,6 +130,93 @@ public class MtxMatrixTest {
 
             assertEquals(MtxMatrix.ERROR_ROW_TOO_BIG, rowTooBig.getMessage());
             assertEquals(MtxMatrix.ERROR_COL_TOO_BIG, colTooBig.getMessage());
+        }
+    }
+
+    @Nested
+    public class TestAddSubtract {
+        private static final int[][] OTHER_MATRIX = new int[][]{
+                new int[]{9, 8, 7},
+                new int[]{6, 5, 4},
+                new int[]{3, 2, 1}
+        };
+        private static final int[][] SUM_MATRIX = new int[][]{
+                new int[]{10, 10, 10},
+                new int[]{10, 10, 10},
+                new int[]{10, 10, 10}
+        };
+        private static final int[][] DIFFERENCE_MATRIX = new int[][]{
+                new int[]{-8, -6, -4},
+                new int[]{-2, 0, 2},
+                new int[]{4, 6, 8}
+        };
+
+        @Test
+        public void testAdd() {
+            mtxMatrix.add(new MtxMatrix(OTHER_MATRIX));
+
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    assertEquals(SUM_MATRIX[r][c], mtxMatrix.getValueAt(r, c));
+                }
+            }
+        }
+
+        @Test
+        public void testSubtract() {
+            mtxMatrix.subtract(new MtxMatrix(OTHER_MATRIX));
+
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    assertEquals(DIFFERENCE_MATRIX[r][c], mtxMatrix.getValueAt(r, c));
+                }
+            }
+        }
+
+        @Test
+        public void testAddAndSubtractTogether() {
+            MtxMatrix m = new MtxMatrix(OTHER_MATRIX);
+            MtxMatrix mPlusSum = MtxMatrix.addTogether(
+                    m,
+                    new MtxMatrix(SUM_MATRIX)
+            );
+            MtxMatrix mPlusSumMinusSum = MtxMatrix.subtractSecondFromFirst(
+                    mPlusSum,
+                    new MtxMatrix(SUM_MATRIX)
+            );
+
+            for (int r = 0; r < 3; r++) {
+                for (int c = 0; c < 3; c++) {
+                    assertEquals(m.getValueAt(r, c), mPlusSumMinusSum.getValueAt(r, c));
+                }
+            }
+        }
+
+        @Test
+        public void testAddOrSubtract_differentRowsAndCols() {
+            MtxMatrix moreRows = new MtxMatrix(
+                    new int[]{1,2,3},
+                    new int[]{4,5,6},
+                    new int[]{7,8,9},
+                    new int[]{10,11,12}
+            );
+            MtxMatrix moreCols = new MtxMatrix(
+                    new int[]{1,2,3,4},
+                    new int[]{4,5,6,7},
+                    new int[]{7,8,9,10}
+            );
+
+            IndexOutOfBoundsException rowTooBig = assertThrows(
+                    IndexOutOfBoundsException.class,
+                    () -> mtxMatrix.add(moreRows)
+            );
+            IndexOutOfBoundsException colTooBig = assertThrows(
+                    IndexOutOfBoundsException.class,
+                    () -> mtxMatrix.add(moreCols)
+            );
+
+            assertEquals(MtxMatrix.ERROR_DIFFERING_ROWS, rowTooBig.getMessage());
+            assertEquals(MtxMatrix.ERROR_DIFFERING_COLS, colTooBig.getMessage());
         }
     }
 }
