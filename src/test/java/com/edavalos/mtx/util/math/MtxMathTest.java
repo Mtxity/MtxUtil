@@ -269,4 +269,20 @@ public class MtxMathTest {
             assertEquals(18.473344444444447, mtxStats.getVariance());
         }
     }
+
+    @Test
+    public void testTwoDimensionArrayCopy() {
+        int[][] source = new int[][]{
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6},
+                new int[]{7, 8, 9}
+        };
+        int[][] dest = new int[3][3];
+
+        MtxMath.twoDimensionArrayCopy(source, dest);
+
+        for (int i = 0; i < source.length; i++) {
+            assertArrayEquals(source[i], dest[i]);
+        }
+    }
 }
