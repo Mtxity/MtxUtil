@@ -219,4 +219,22 @@ public class MtxMatrixTest {
             assertEquals(MtxMatrix.ERROR_DIFFERING_COLS, colTooBig.getMessage());
         }
     }
+
+    @Test
+    public void testScale() {
+        int scalar = 2;
+        MtxMatrix product = new MtxMatrix(
+                new int[]{2, 4, 6},
+                new int[]{8, 10, 12},
+                new int[]{14, 16, 18}
+        );
+
+        mtxMatrix.scale(scalar);
+
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                assertEquals(product.getValueAt(r, c), mtxMatrix.getValueAt(r, c));
+            }
+        }
+    }
 }
