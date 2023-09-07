@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxMatrixTest {
     private MtxMatrix mtxMatrix;
@@ -235,6 +237,53 @@ public class MtxMatrixTest {
             for (int c = 0; c < 3; c++) {
                 assertEquals(product.getValueAt(r, c), mtxMatrix.getValueAt(r, c));
             }
+        }
+    }
+
+    @Nested
+    public class TestEquals {
+        private static final MtxMatrix MATRIX_DIFFERING_ROWS = new MtxMatrix(
+                new int[]{1,2,3},
+                new int[]{4,5,6},
+                new int[]{7,8,9},
+                new int[]{10,11,12}
+        );
+        private static final MtxMatrix MATRIX_DIFFERING_COLS = new MtxMatrix(
+                new int[]{1,2,3,4},
+                new int[]{4,5,6,7},
+                new int[]{7,8,9,10}
+        );
+        private static final MtxMatrix MATRIX_ALMOST_EQ = new MtxMatrix(
+                new int[]{1,2,3},
+                new int[]{4,5,7},
+                new int[]{7,8,9}
+        );
+        private static final MtxMatrix MATRIX_EQ = new MtxMatrix(
+                new int[]{1,2,3},
+                new int[]{4,5,6},
+                new int[]{7,8,9}
+        );
+
+        @Test
+        public void testEquals_notAnMtxMatrix() {
+            assertFalse(mtxMatrix.equals(null));
+            assertFalse(mtxMatrix.equals(new int[3][3]));
+        }
+
+        @Test
+        public void testEquals_differentRowsAndCols() {
+            assertFalse(mtxMatrix.equals(MATRIX_DIFFERING_ROWS));
+            assertFalse(mtxMatrix.equals(MATRIX_DIFFERING_COLS));
+        }
+
+        @Test
+        public void testEquals_notEqual() {
+            assertFalse(mtxMatrix.equals(MATRIX_ALMOST_EQ));
+        }
+
+        @Test
+        public void testEquals_equal() {
+            assertTrue(mtxMatrix.equals(MATRIX_EQ));
         }
     }
 }
