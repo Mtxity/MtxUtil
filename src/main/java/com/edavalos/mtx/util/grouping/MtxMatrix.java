@@ -102,6 +102,32 @@ public class MtxMatrix {
                  .replace("],\neod", "] ]");
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof MtxMatrix otherMatrix)) {
+            return false;
+        }
+
+        if (this.rows != otherMatrix.rows) {
+            return false;
+        }
+        if (this.cols != otherMatrix.cols) {
+            return false;
+        }
+
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.cols; c++) {
+                if (this.matrix[r][c] != otherMatrix.matrix[r][c]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void add(MtxMatrix otherMatrix) {
         MtxMath.twoDimensionArrayCopy(
                 MtxMatrix.addTogether(this, otherMatrix).matrix,
