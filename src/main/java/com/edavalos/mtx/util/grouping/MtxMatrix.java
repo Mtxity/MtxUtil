@@ -116,6 +116,14 @@ public class MtxMatrix {
         );
     }
 
+    public void scale(int scalar) {
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.cols; c++) {
+                this.matrix[r][c] *= scalar;
+            }
+        }
+    }
+
     public static MtxMatrix addTogether(MtxMatrix m1, MtxMatrix m2) {
         return MtxMatrix.addOrSubtract(m1, m2, true);
     }
