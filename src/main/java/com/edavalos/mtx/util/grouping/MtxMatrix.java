@@ -9,8 +9,8 @@ public class MtxMatrix {
     protected static final String ERROR_ROW_TOO_BIG = "This matrix does not have that many rows!";
     protected static final String ERROR_COL_TOO_BIG = "This matrix does not have that many columns!";
     protected static final String ERROR_NEGATIVE_IDX = "Cannot access a negative index!";
-    protected static final String ERROR_DIFFERING_ROWS = "Cannot add or subtract matrices with differing number of rows!";
-    protected static final String ERROR_DIFFERING_COLS = "Cannot add or subtract matrices with differing number of columns!";
+    protected static final String ERROR_DIFFERING_ROWS = "Cannot %s matrices with differing number of rows!";
+    protected static final String ERROR_DIFFERING_COLS = "Cannot %s matrices with differing number of columns!";
 
     private final int rows;
     private final int cols;
@@ -133,11 +133,12 @@ public class MtxMatrix {
     }
 
     private static MtxMatrix addOrSubtract(MtxMatrix m1, MtxMatrix m2, boolean isAddition) {
+        String action = isAddition ? "add" : "subtract";
         if (m1.rows != m2.rows) {
-            throw new IndexOutOfBoundsException(ERROR_DIFFERING_ROWS);
+            throw new IndexOutOfBoundsException(String.format(ERROR_DIFFERING_ROWS, action));
         }
         if (m1.cols != m2.cols) {
-            throw new IndexOutOfBoundsException(ERROR_DIFFERING_COLS);
+            throw new IndexOutOfBoundsException(String.format(ERROR_DIFFERING_COLS, action));
         }
 
         MtxMatrix newMatrix = new MtxMatrix(m1.rows, m2.cols);

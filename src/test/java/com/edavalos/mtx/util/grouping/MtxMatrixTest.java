@@ -212,11 +212,11 @@ public class MtxMatrixTest {
             );
             IndexOutOfBoundsException colTooBig = assertThrows(
                     IndexOutOfBoundsException.class,
-                    () -> mtxMatrix.add(moreCols)
+                    () -> mtxMatrix.subtract(moreCols)
             );
 
-            assertEquals(MtxMatrix.ERROR_DIFFERING_ROWS, rowTooBig.getMessage());
-            assertEquals(MtxMatrix.ERROR_DIFFERING_COLS, colTooBig.getMessage());
+            assertEquals(String.format(MtxMatrix.ERROR_DIFFERING_ROWS, "add"), rowTooBig.getMessage());
+            assertEquals(String.format(MtxMatrix.ERROR_DIFFERING_COLS, "subtract"), colTooBig.getMessage());
         }
     }
 
