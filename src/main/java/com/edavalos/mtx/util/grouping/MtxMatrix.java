@@ -11,6 +11,9 @@ public class MtxMatrix {
     protected static final String ERROR_NEGATIVE_IDX = "Cannot access a negative index!";
     protected static final String ERROR_DIFFERING_ROWS = "Cannot %s matrices with differing number of rows!";
     protected static final String ERROR_DIFFERING_COLS = "Cannot %s matrices with differing number of columns!";
+    protected static final String ERROR_DIFFERING_ROWS_COLS = "The number of columns in the first matrix must be the " +
+                                                              "same as the number of rows in the second matrix! " +
+                                                              "First matrix's columns: %d, second matrix's rows: %d";
 
     private final int rows;
     private final int cols;
@@ -180,5 +183,27 @@ public class MtxMatrix {
             }
         }
         return newMatrix;
+    }
+
+    public static MtxMatrix dotProduct(MtxMatrix m1, MtxMatrix m2) {
+        if (m1.cols != m2.rows) {
+            throw new IllegalArgumentException(String.format(ERROR_DIFFERING_ROWS_COLS, m1.cols, m2.rows));
+        }
+
+        int m = m1.rows;
+        int n = m1.cols; // & m2.rows
+        int p = m2.cols;
+
+        MtxMatrix product = new MtxMatrix(m, p);
+        for (int m1r = 0; m1r < m; m1r++) {
+            for (int m2c = 0; m2c < p; m2c++) {
+                int subProduct = 0;
+                for (int i = 0; i < n; i++) {
+                    subProduct += m1.getValueAt(m1r, i) * m2.getValueAt(i, m2c);
+                }
+                product.setValueAt(m1r, m2c, subProduct);
+            }
+        }
+        return product;
     }
 }
