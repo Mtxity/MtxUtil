@@ -22,7 +22,7 @@ public class MtxMatrixTest {
     }
 
     @Nested
-    public class TestToString {
+    public class ToStringTests {
 
         @Test
         public void testToString_sameLengths() {
@@ -72,7 +72,7 @@ public class MtxMatrixTest {
     }
 
     @Nested
-    public class TestSetAndGetValueAt {
+    public class SetAndGetValueAtTests {
         private static final int[][] EQUIVALENT_MATRIX = new int[][]{
                 new int[]{1, 2, 3},
                 new int[]{4, 5, 6},
@@ -136,7 +136,7 @@ public class MtxMatrixTest {
     }
 
     @Nested
-    public class TestAddSubtract {
+    public class AddSubtractTests {
         private static final int[][] OTHER_MATRIX = new int[][]{
                 new int[]{9, 8, 7},
                 new int[]{6, 5, 4},
@@ -241,7 +241,7 @@ public class MtxMatrixTest {
     }
 
     @Nested
-    public class TestEquals {
+    public class EqualsTests {
         private static final MtxMatrix MATRIX_DIFFERING_ROWS = new MtxMatrix(
                 new int[]{1,2,3},
                 new int[]{4,5,6},
