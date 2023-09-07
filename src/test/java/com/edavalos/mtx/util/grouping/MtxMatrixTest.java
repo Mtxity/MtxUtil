@@ -286,4 +286,34 @@ public class MtxMatrixTest {
             assertTrue(mtxMatrix.equals(MATRIX_EQ));
         }
     }
+
+    @Test
+    public void testDotProduct() {
+        MtxMatrix m1 = new MtxMatrix(
+                new int[]{1,2,3},
+                new int[]{4,5,6}
+        );
+        MtxMatrix m2 = new MtxMatrix(
+                new int[]{7,8},
+                new int[]{9,10},
+                new int[]{11,12}
+        );
+
+        MtxMatrix expectedProduct = new MtxMatrix(
+                new int[]{58,64},
+                new int[]{139,154}
+        );
+        MtxMatrix realProduct = MtxMatrix.dotProduct(m1, m2);
+
+        assertEquals(expectedProduct, realProduct);
+    }
+
+    @Test
+    public void testDotProduct_differingRowsAndColumns() {
+        IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, () -> MtxMatrix.dotProduct(
+                new MtxMatrix(2, 4),
+                new MtxMatrix(3, 3)
+        ));
+        assertEquals(String.format(MtxMatrix.ERROR_DIFFERING_ROWS_COLS, 4, 3), iae.getMessage());
+    }
 }
