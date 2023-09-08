@@ -316,4 +316,38 @@ public class MtxMatrixTest {
         ));
         assertEquals(String.format(MtxMatrix.ERROR_DIFFERING_ROWS_COLS, 4, 3), iae.getMessage());
     }
+
+    @Test
+    public void testGetIdentityMatrix() {
+        MtxMatrix i1 = new MtxMatrix(
+                new int[]{1}
+        );
+        MtxMatrix i2 = new MtxMatrix(
+                new int[]{1,0},
+                new int[]{0,1}
+        );
+        MtxMatrix i3 = new MtxMatrix(
+                new int[]{1,0,0},
+                new int[]{0,1,0},
+                new int[]{0,0,1}
+        );
+        MtxMatrix i4 = new MtxMatrix(
+                new int[]{1,0,0,0},
+                new int[]{0,1,0,0},
+                new int[]{0,0,1,0},
+                new int[]{0,0,0,1}
+        );
+
+        // test new results
+        assertEquals(i1, MtxMatrix.getIdentityMatrix(1));
+        assertEquals(i2, MtxMatrix.getIdentityMatrix(2));
+        assertEquals(i3, MtxMatrix.getIdentityMatrix(3));
+        assertEquals(i4, MtxMatrix.getIdentityMatrix(4));
+
+        // test cached results
+        assertEquals(i1, MtxMatrix.getIdentityMatrix(1));
+        assertEquals(i2, MtxMatrix.getIdentityMatrix(2));
+        assertEquals(i3, MtxMatrix.getIdentityMatrix(3));
+        assertEquals(i4, MtxMatrix.getIdentityMatrix(4));
+    }
 }
