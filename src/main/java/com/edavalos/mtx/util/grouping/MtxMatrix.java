@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.grouping;
 import com.edavalos.mtx.util.math.MtxMath;
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 public class MtxMatrix {
@@ -14,6 +15,8 @@ public class MtxMatrix {
     protected static final String ERROR_DIFFERING_ROWS_COLS = "The number of columns in the first matrix must be the " +
                                                               "same as the number of rows in the second matrix! " +
                                                               "First matrix's columns: %d, second matrix's rows: %d";
+
+    private static final HashMap<Integer, MtxMatrix> identityMatrices = new HashMap<>();
 
     private final int rows;
     private final int cols;
@@ -205,5 +208,18 @@ public class MtxMatrix {
             }
         }
         return product;
+    }
+
+    public static MtxMatrix getIdentityMatrix(int size) {
+        if (identityMatrices.containsKey(size)) {
+            return identityMatrices.get(size);
+        }
+
+        MtxMatrix I = new MtxMatrix(size, size);
+        for (int i = 0; i < size; i++) {
+            I.setValueAt(i, i, 1);
+        }
+        identityMatrices.put(size, I);
+        return I;
     }
 }
