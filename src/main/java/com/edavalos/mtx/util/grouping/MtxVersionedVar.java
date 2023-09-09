@@ -1,5 +1,8 @@
 package com.edavalos.mtx.util.grouping;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -44,5 +47,13 @@ public class MtxVersionedVar<T> {
         T mostRecentValue = this.getValue();
         this.varStack.push(newValue);
         return mostRecentValue;
+    }
+
+    public int totalVersions() {
+        return this.varStack.size();
+    }
+
+    public Collection<T> getAllVersions() {
+        return List.copyOf(this.varStack);
     }
 }
