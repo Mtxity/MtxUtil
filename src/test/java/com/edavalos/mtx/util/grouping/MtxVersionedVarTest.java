@@ -126,4 +126,19 @@ public class MtxVersionedVarTest {
         assertEquals(expectedHistory1, actualHistory1.toString());
         assertEquals(expectedHistory2, actualHistory2.toString());
     }
+
+    @Test
+    public void testToString() {
+        assertEquals("[]", mtxVersionedVar.toString());
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 10; i++) {
+            mtxVersionedVar.setValue(String.valueOf(i));
+
+            sb.append(i).append(", ");
+            String expected = "[" + sb + "] -> " + i;
+            expected = expected.replace(", ]", "]");
+            assertEquals(expected, mtxVersionedVar.toString());
+        }
+    }
 }
