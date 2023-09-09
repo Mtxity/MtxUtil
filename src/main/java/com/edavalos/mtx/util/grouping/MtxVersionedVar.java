@@ -65,4 +65,13 @@ public class MtxVersionedVar<T> {
     public Collection<T> getAllVersions() {
         return List.copyOf(this.varStack);
     }
+
+    @Override
+    public String toString() {
+        String varStackString = this.varStack.toString();
+        if (!this.varStack.isEmpty()) {
+            varStackString += " -> " + this.varStack.peek().toString();
+        }
+        return varStackString;
+    }
 }
