@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.grouping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Stack;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,10 +74,45 @@ public class MtxVersionedVarTest {
 
     @Test
     public void testGetValueAtVersion_negativeVersion() {
-        mtxVersionedVar.setValue(null);
-        mtxVersionedVar.setValue(null);
-        mtxVersionedVar.setValue(null);
-        
+        mtxVersionedVar.setValue("one");
+        mtxVersionedVar.setValue("two");
+        mtxVersionedVar.setValue("three");
+
+        assertNotNull(mtxVersionedVar.getValueAtVersion(2));
         assertNull(mtxVersionedVar.getValueAtVersion(5));
+    }
+
+    @Test
+    public void testTotalVersions() {
+        mtxVersionedVar.setValue("one");
+        mtxVersionedVar.setValue("two");
+        mtxVersionedVar.setValue("three");
+
+        assertEquals(4, mtxVersionedVar.totalVersions());
+
+        for (int i = 0; i < 16; i++) {
+            mtxVersionedVar.setValue("etc.");
+        }
+
+        assertEquals(20, mtxVersionedVar.totalVersions());
+    }
+
+    @Test
+    public void testGetAllVersions() {
+        mtxVersionedVar = new MtxVersionedVar<>("one");
+        mtxVersionedVar.setValue("two");
+        mtxVersionedVar.setValue("three");
+        Collection<String> actualHistory1 = mtxVersionedVar.getAllVersions();
+        mtxVersionedVar.setValue("four");
+        mtxVersionedVar.setValue("five");
+        mtxVersionedVar.setValue("six");
+        Collection<String> actualHistory2 = mtxVersionedVar.getAllVersions();
+        mtxVersionedVar.setValue("seven");
+
+        String expectedHistory1 = "[one, two, three]";
+        String expectedHistory2 = "[one, two, three, four, five, six]";
+
+        assertEquals(expectedHistory1, actualHistory1.toString());
+        assertEquals(expectedHistory2, actualHistory2.toString());
     }
 }
