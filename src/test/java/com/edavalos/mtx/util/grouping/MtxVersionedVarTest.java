@@ -31,12 +31,23 @@ public class MtxVersionedVarTest {
     public void testSetValue() {
         assertNull(mtxVersionedVar.getValue());
 
+        assertNull(mtxVersionedVar.setValue(String.valueOf(-1)));
         for (int i = 0; i < 20; i++) {
-            mtxVersionedVar.setValue(String.valueOf(i));
+            assertEquals(String.valueOf(i - 1), mtxVersionedVar.setValue(String.valueOf(i)));
             assertEquals(String.valueOf(i), mtxVersionedVar.getValue());
         }
 
         assertNotNull(mtxVersionedVar.getValue());
+    }
+
+    @Test
+    public void testSetValue_null() {
+        String errorMsg = assertThrows(
+                NullPointerException.class,
+                () -> mtxVersionedVar.setValue(null)
+        ).getMessage();
+
+        assertEquals(MtxVersionedVar.ERROR_NULL, errorMsg);
     }
 
     @Test
@@ -88,9 +99,9 @@ public class MtxVersionedVarTest {
         mtxVersionedVar.setValue("two");
         mtxVersionedVar.setValue("three");
 
-        assertEquals(4, mtxVersionedVar.totalVersions());
+        assertEquals(3, mtxVersionedVar.totalVersions());
 
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 17; i++) {
             mtxVersionedVar.setValue("etc.");
         }
 
@@ -99,7 +110,7 @@ public class MtxVersionedVarTest {
 
     @Test
     public void testGetAllVersions() {
-        mtxVersionedVar = new MtxVersionedVar<>("one");
+        mtxVersionedVar.setValue("one");
         mtxVersionedVar.setValue("two");
         mtxVersionedVar.setValue("three");
         Collection<String> actualHistory1 = mtxVersionedVar.getAllVersions();

@@ -1,7 +1,6 @@
 package com.edavalos.mtx.util.grouping;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -11,6 +10,8 @@ import java.util.Stack;
  * @param <T>
  */
 public class MtxVersionedVar<T> {
+    protected static final String ERROR_NULL = "New value cannot be null!";
+
     private final Stack<T> varStack;
 
     // ----------------------- Constructors ------------------------
@@ -21,12 +22,16 @@ public class MtxVersionedVar<T> {
     }
 
     public MtxVersionedVar() {
-        this(null);
+        this.varStack = new Stack<>();
     }
 
     // ---------------------- Public Methods -----------------------
 
     public T getValue() {
+        if (this.varStack.isEmpty()) {
+            return null;
+        }
+
         return this.varStack.peek();
     }
 
@@ -44,6 +49,10 @@ public class MtxVersionedVar<T> {
     }
 
     public T setValue(T newValue) {
+        if (newValue == null) {
+            throw new NullPointerException(ERROR_NULL);
+        }
+
         T mostRecentValue = this.getValue();
         this.varStack.push(newValue);
         return mostRecentValue;
