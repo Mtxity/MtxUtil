@@ -1,4 +1,6 @@
-package com.edavalos.mtx.util.grouping.table;
+package com.edavalos.mtx.util.db.table;
+
+import com.edavalos.mtx.util.db.table.ExistingPrimaryKeyException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
