@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MtxThreeColumnTable<A, B, C> {
-    protected record MtxDouble<a, b, c>(a primaryKey, b col1, c col2) {}
+    protected record MtxTriple<a, b, c>(a first, b second, c third) {}
 
-    private final HashMap<A, MtxDouble<A, B, C>> rowsMap;
-    private final ArrayList<MtxDouble<A, B, C>> rowsList;
+    private final HashMap<A, MtxTriple<A, B, C>> rowsMap;
+    private final ArrayList<MtxTriple<A, B, C>> rowsList;
 
     public MtxThreeColumnTable() {
         this.rowsMap = new HashMap<>();
@@ -19,7 +19,7 @@ public class MtxThreeColumnTable<A, B, C> {
             throw new ExistingPrimaryKeyException(primaryKey);
         }
 
-        MtxDouble<A, B, C> newRow = new MtxDouble<>(primaryKey, column1, column2);
+        MtxTriple<A, B, C> newRow = new MtxTriple<>(primaryKey, column1, column2);
         this.rowsMap.put(primaryKey, newRow);
         this.rowsList.add(newRow);
     }
