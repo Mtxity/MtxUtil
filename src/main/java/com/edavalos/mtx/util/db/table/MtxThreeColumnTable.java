@@ -37,4 +37,23 @@ public class MtxThreeColumnTable<A, B, C> {
     public List<MtxTriple<A, B, C>> getRowsFromMatchingThirdColumn(C value) {
         return this.rowsList.stream().filter(row -> row.third().equals(value)).collect(Collectors.toList());
     }
+
+    public boolean deleteRow(A primaryKey) {
+        MtxTriple<A, B, C> rowToDelete = this.rowsMap.remove(primaryKey);
+        if (rowToDelete == null) {
+            return false;
+        } else {
+            this.rowsList.remove(rowToDelete);
+            return true;
+        }
+    }
+
+    public boolean deleteRow(MtxTriple<A, B, C> rowToDelete) {
+        if (this.rowsMap.remove(rowToDelete.first()) == null) {
+            return false;
+        } else {
+            this.rowsList.remove(rowToDelete);
+            return true;
+        }
+    }
 }
