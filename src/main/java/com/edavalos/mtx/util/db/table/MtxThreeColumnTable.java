@@ -1,7 +1,5 @@
 package com.edavalos.mtx.util.db.table;
 
-import com.edavalos.mtx.util.db.table.ExistingPrimaryKeyException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,5 +32,9 @@ public class MtxThreeColumnTable<A, B, C> {
 
     public List<MtxTriple<A, B, C>> getRowsFromMatchingSecondColumn(B value) {
         return this.rowsList.stream().filter(row -> row.second().equals(value)).collect(Collectors.toList());
+    }
+
+    public List<MtxTriple<A, B, C>> getRowsFromMatchingThirdColumn(C value) {
+        return this.rowsList.stream().filter(row -> row.third().equals(value)).collect(Collectors.toList());
     }
 }
