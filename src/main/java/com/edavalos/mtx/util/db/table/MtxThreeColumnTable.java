@@ -76,4 +76,33 @@ public class MtxThreeColumnTable<A, B, C> {
         }
         return deletedSomething;
     }
+
+    public boolean editRowValues(MtxTriple<A, B, C> rowBefore, MtxTriple<A, B, C> rowAfter) {
+        if (!rowBefore.first().equals(rowAfter.first())) {
+            throw new ImmutableColumnException(rowBefore.first(), rowAfter.first());
+        }
+
+        if (!this.rowsMap.containsValue(rowBefore)) {
+            return false;
+        }
+
+        this.rowsMap.put(rowAfter.first(), rowAfter);
+        this.rowsList.remove(rowBefore);
+        this.rowsList.add(rowAfter);
+        return true;
+    }
+
+    public boolean editRowValues(A primaryKey, MtxTriple<A, B, C> rowWithEdits) {
+        if (!primaryKey.equals(rowWithEdits.first())) {
+            throw new ImmutableColumnException(primaryKey, rowWithEdits.first());
+        }
+
+        if (!this.rowsMap.containsKey(primaryKey)) {
+            return false;
+        }
+
+        this.rowsList.remove(this.rowsMap.put(primaryKey, rowWithEdits));
+        this.rowsList.add(rowWithEdits);
+        return true;
+    }
 }
