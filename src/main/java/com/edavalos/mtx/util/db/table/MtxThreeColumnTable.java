@@ -56,4 +56,24 @@ public class MtxThreeColumnTable<A, B, C> {
             return true;
         }
     }
+
+    public boolean deleteRowsMatchingSecondColumn(B value) {
+        boolean deletedSomething = false;
+        for (MtxTriple<A, B, C> rowToDelete : this.getRowsFromMatchingSecondColumn(value)) {
+            this.rowsMap.remove(rowToDelete.first());
+            this.rowsList.remove(rowToDelete);
+            deletedSomething = true;
+        }
+        return deletedSomething;
+    }
+
+    public boolean deleteRowsMatchingThirdColumn(C value) {
+        boolean deletedSomething = false;
+        for (MtxTriple<A, B, C> rowToDelete : this.getRowsFromMatchingThirdColumn(value)) {
+            this.rowsMap.remove(rowToDelete.first());
+            this.rowsList.remove(rowToDelete);
+            deletedSomething = true;
+        }
+        return deletedSomething;
+    }
 }
