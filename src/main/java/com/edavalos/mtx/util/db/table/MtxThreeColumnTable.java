@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.db.table;
 
+import com.edavalos.mtx.util.string.MtxMatrixFormatter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,5 +113,19 @@ public class MtxThreeColumnTable<A, B, C> {
         int idx = this.rowsList.indexOf(this.rowsMap.put(primaryKey, rowWithEdits));
         this.rowsList.set(idx, rowWithEdits);
         return true;
+    }
+
+    @Override
+    public String toString() {
+        List<String[]> stringRows = new ArrayList<>();
+        for (MtxTriple<A, B, C> row : this.rowsList) {
+            String[] rowArray = {
+                    row.first().toString(),
+                    row.second().toString(),
+                    row.third().toString()
+            };
+            stringRows.add(rowArray);
+        }
+        return MtxMatrixFormatter.formatBorder(stringRows.toArray(new String[0][]));
     }
 }
