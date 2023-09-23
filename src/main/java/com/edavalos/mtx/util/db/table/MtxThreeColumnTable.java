@@ -118,6 +118,7 @@ public class MtxThreeColumnTable<A, B, C> {
     @Override
     public String toString() {
         List<String[]> stringRows = new ArrayList<>();
+        stringRows.add(new String[]{"Primary Key", "Column 1", "Column 2"});
         for (MtxTriple<A, B, C> row : this.rowsList) {
             String[] rowArray = {
                     row.first().toString(),
