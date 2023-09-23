@@ -254,4 +254,32 @@ public class MtxThreeColumnTableTest {
             ), mtxTable.getAllRows());
         }
     }
+
+    @Nested
+    public class ToStringTests {
+        String SAMPLE_TABLE_HEADER =
+                "+------------+------------+------------+\n" +
+                "| Primary Key|    Column 1|    Column 2|\n" +
+                "+------------+------------+------------+";
+        String SAMPLE_TABLE_CONTENTS = SAMPLE_TABLE_HEADER + "\n" +
+                "|          45|         Yes|   Sometimes|\n" +
+                "+------------+------------+------------+\n" +
+                "|          46|          No|       Never|\n" +
+                "+------------+------------+------------+\n" +
+                "|          47|       Maybe|      Always|\n" +
+                "+------------+------------+------------+";
+
+        @Test
+        public void testToString() {
+            assertEquals(SAMPLE_TABLE_CONTENTS, mtxTable.toString());
+        }
+
+        @Test
+        public void testToString_emptyTable() {
+            assertEquals(
+                    SAMPLE_TABLE_HEADER,
+                    new MtxThreeColumnTable<String, Integer, Double>().toString()
+            );
+        }
+    }
 }
