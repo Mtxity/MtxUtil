@@ -38,6 +38,10 @@ public class MtxThreeColumnTable<A, B, C> {
         return this.rowsList.stream().filter(row -> row.third().equals(value)).collect(Collectors.toList());
     }
 
+    public List<MtxTriple<A, B, C>> getAllRows() {
+        return this.rowsList.stream().collect(Collectors.toList());
+    }
+
     public boolean deleteRow(A primaryKey) {
         MtxTriple<A, B, C> rowToDelete = this.rowsMap.remove(primaryKey);
         if (rowToDelete == null) {
