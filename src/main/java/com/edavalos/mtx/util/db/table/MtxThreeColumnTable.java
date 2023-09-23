@@ -26,6 +26,10 @@ public class MtxThreeColumnTable<A, B, C> {
         this.rowsList.add(newRow);
     }
 
+    public void addRow(MtxTriple<A, B, C> newRow) {
+        this.addRow(newRow.first(), newRow.second(), newRow.third());
+    }
+
     public MtxTriple<A, B, C> getRowFromPrimaryKey(A primaryKey) {
         return this.rowsMap.get(primaryKey);
     }
