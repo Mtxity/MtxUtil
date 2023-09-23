@@ -95,8 +95,7 @@ public class MtxThreeColumnTable<A, B, C> {
         }
 
         this.rowsMap.put(rowAfter.first(), rowAfter);
-        this.rowsList.remove(rowBefore);
-        this.rowsList.add(rowAfter);
+        this.rowsList.set(this.rowsList.indexOf(rowBefore), rowAfter);
         return true;
     }
 
@@ -109,8 +108,8 @@ public class MtxThreeColumnTable<A, B, C> {
             return false;
         }
 
-        this.rowsList.remove(this.rowsMap.put(primaryKey, rowWithEdits));
-        this.rowsList.add(rowWithEdits);
+        int idx = this.rowsList.indexOf(this.rowsMap.put(primaryKey, rowWithEdits));
+        this.rowsList.set(idx, rowWithEdits);
         return true;
     }
 }
