@@ -54,6 +54,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         node.next.prev = node.prev;
         node.prev = null;
         node.next = null;
+        this.size --;
         return true;
     }
 
@@ -68,5 +69,31 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
             current = current.next;
         }
         return null;
+    }
+
+    @Override
+    public String toString() {
+        String[] contentsStrArr = new String[this.size()];
+
+        MtxItrNode current = this.head.next;
+        int i = 0;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                contentsStrArr[i++] = dataNode.data.toString();
+            }
+            current = current.next;
+        }
+
+        return "[" + String.join(", ", contentsStrArr) + "]";
+    }
+
+    @Override
+    public int size() {
+        return this.size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.head == null;
     }
 }
