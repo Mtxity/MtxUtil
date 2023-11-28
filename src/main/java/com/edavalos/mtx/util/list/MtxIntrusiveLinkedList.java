@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.Iterator;
+
 public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> {
     private class MtxItrNode {
         MtxItrNode next;
@@ -94,6 +96,107 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public boolean isEmpty() {
-        return this.head == null;
+        return this.head.next == this.head.prev;
+    }
+
+    @Override
+    public boolean contains(T element) {
+        return this.findNode(element) != null;
+    }
+
+    @Override
+    public int countOccurrences(T element) {
+        int count = 0;
+        MtxItrNode current = this.head.next;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                if (dataNode.data.equals(element)) {
+                    count ++;
+                }
+            }
+            current = current.next;
+        }
+        return count;
+    }
+
+    @Override
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        MtxItrNode current = this.head.next;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                if (index == 0) {
+                    return dataNode.data;
+                }
+                index --;
+            }
+            current = current.next;
+        }
+        return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.equalsTo(o);
+    }
+
+    @Override
+    public int hashCode() {
+        int hashCode = 1;
+        MtxItrNode current = this.head.next;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                int elementHashCode = dataNode.data == null ? 0 : dataNode.data.hashCode();
+                hashCode = (31 * hashCode) + elementHashCode;
+            }
+            current = current.next;
+        }
+        return hashCode;
+    }
+
+    @Override
+    public int indexOf(T element) {
+        int idx = 0;
+        MtxItrNode current = this.head.next;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                if (dataNode.data.equals(element)) {
+                    return idx;
+                }
+                idx ++;
+            }
+            current = current.next;
+        }
+        return idx;
+    }
+
+    @Override
+    public void clear() {
+        this.head = new MtxItrNode();
+        this.head.next = this.head;
+        this.head.prev = this.head;
+        this.size = 0;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private MtxItrNode current = head.next;
+
+            @Override
+            public boolean hasNext() {
+                return current != head;
+            }
+
+            @Override
+            public T next() {
+                T element = ((MtxItrData<T>) this.current).data;
+                this.current = this.current.next;
+                return element;
+            }
+        };
     }
 }
