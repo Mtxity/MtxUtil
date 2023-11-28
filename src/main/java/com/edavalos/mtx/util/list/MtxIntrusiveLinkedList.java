@@ -208,4 +208,24 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
             }
         };
     }
+
+    @Override
+    public MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException {
+        if (fromIndex < 0) {
+            throw new IndexOutOfBoundsException(fromIndex);
+        }
+        if (toIndex > this.size()) {
+            throw new IndexOutOfBoundsException(toIndex);
+        }
+
+        MtxIntrusiveLinkedList<T> subList = new MtxIntrusiveLinkedList<>();
+        MtxItrNode current = this.getNodeAt(fromIndex);
+        MtxItrNode end = this.getNodeAt(toIndex);
+
+        while (current != end.next && current != this.head) {
+            subList.add(((MtxItrData<T>) current).data);
+            current = current.next;
+        }
+        return subList;
+    }
 }
