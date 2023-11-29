@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.db;
 /**
  * An integer that can only have a value inside the given range
  */
-public class MtxRangedInteger extends Number implements Comparable<MtxUnsignedInteger>  {
+public class MtxRangedInteger extends Number implements Comparable<MtxRangedInteger>  {
     private final boolean throwException;
     private final int min;
     private final int max;
@@ -27,6 +27,16 @@ public class MtxRangedInteger extends Number implements Comparable<MtxUnsignedIn
 
     // ---------------------- Public Methods -----------------------
 
+    /**
+     * Attempts to set the value for this MtxRangedInteger. If the
+     * given value falls outside this MtxRangedInteger's range, then
+     * either the closest value possible is set, or an exception is
+     * thrown, depending on if throwException is true or not
+     *
+     * @param newValue the new value to try to set
+     * @throws IllegalArgumentException if throwException is true and
+     *         newValue falls outside previously set range
+     */
     public void setValue(int newValue) {
         if (newValue < this.min || newValue > this.max) {
             if (this.throwException) {
@@ -38,6 +48,68 @@ public class MtxRangedInteger extends Number implements Comparable<MtxUnsignedIn
 
         this.value = newValue;
         this.hasValue = true;
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as a byte
+     * after a narrowing primitive conversion.
+     */
+    @Override
+    public byte byteValue() {
+        return ((byte) this.value);
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as a short
+     * after a narrowing primitive conversion.
+     */
+    @Override
+    public short shortValue() {
+        return ((short) this.value);
+    }
+
+    /**
+     * Returns a String object representing this
+     * MtxRangedInteger's value. The value is converted to signed
+     * decimal representation and returned as a string, exactly as if
+     * the integer value were given as an argument to the {@link
+     * java.lang.Integer#toString(int)} method.
+     *
+     * @return a string representation of the value of this object in
+     *         base&nbsp;10.
+     */
+    @Override
+    public String toString() {
+        return Integer.toString(this.value);
+    }
+
+    /**
+     * Compares this object to the specified object.  The result is
+     * {@code true} if and only if the argument is not
+     * {@code null} and is an MtxRangedInteger object that
+     * contains the same {@code int} value as this object.
+     *
+     * @param obj the object to compare with.
+     * @return true if the objects are the same, false otherwise.
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof MtxRangedInteger otherRangedInt) {
+            return this.value == otherRangedInt.intValue();
+        }
+        return false;
+    }
+
+    /**
+     * Returns a hash code for this MtxRangedInteger.
+     *
+     * @return a hash code value for this object, equal to the
+     *         primitive {@code int} value represented by this
+     *         MtxRangedInteger object.
+     */
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(this.value);
     }
 
     // ---------------------- Private Methods ----------------------
