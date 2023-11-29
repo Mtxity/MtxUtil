@@ -2,6 +2,10 @@ package com.edavalos.mtx.util.db;
 
 /**
  * An integer that can only have a value inside the given range
+ * <p></p>
+ * Represents a ranged integer with a minimum and maximum value.
+ * Provides methods to set and retrieve the value within the range.
+ * Implements Comparable<MtxRangedInteger> and extends Number class.
  */
 public class MtxRangedInteger extends Number implements Comparable<MtxRangedInteger>  {
     private final boolean throwException;
@@ -135,9 +139,13 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
 
     /**
      * Returns the value of this MtxRangedInteger as an int.
+     * If no value is set, returns 0
      */
     @Override
     public int intValue() {
+        if (!this.hasValue) {
+            return 0;
+        }
         return this.value;
     }
 
