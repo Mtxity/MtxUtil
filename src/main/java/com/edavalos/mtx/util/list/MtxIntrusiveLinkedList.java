@@ -73,7 +73,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     private MtxItrData<T> findNode(T contents) {
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(contents)) {
                     return dataNode;
                 }
@@ -90,7 +90,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         MtxItrNode current = this.head.next;
         int i = 0;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 contentsStrArr[i++] = dataNode.data.toString();
             }
             current = current.next;
@@ -119,7 +119,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         int count = 0;
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(element)) {
                     count ++;
                 }
@@ -136,8 +136,8 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         }
 
         MtxItrNode node = this.getNodeAt(index);
-        if (node instanceof MtxItrData<T> dataNode) {
-            return dataNode.data;
+        if (node instanceof MtxItrData dataNode) {
+            return (T) dataNode.data;
         } else {
             return null;
         }
@@ -146,7 +146,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     private MtxItrNode getNodeAt(int index) {
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 if (index == 0) {
                     return dataNode;
                 }
@@ -167,7 +167,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         int hashCode = 1;
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 int elementHashCode = dataNode.data == null ? 0 : dataNode.data.hashCode();
                 hashCode = (31 * hashCode) + elementHashCode;
             }
@@ -181,7 +181,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         int idx = 0;
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(element)) {
                     return idx;
                 }
@@ -246,7 +246,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         MtxItrNode current = this.head.next;
         int i = 0;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 array[i++] = dataNode.data;
             }
             current = current.next;
@@ -306,11 +306,11 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
         MtxItrNode current = this.head.next;
         while (current != this.head) {
-            if (current instanceof MtxItrData<T> dataNode) {
+            if (current instanceof MtxItrData dataNode) {
                 if (occurrences.containsKey(dataNode.data)) {
-                    occurrences.put(dataNode.data, occurrences.get(dataNode.data) + 1);
+                    occurrences.put((T) dataNode.data, occurrences.get(dataNode.data) + 1);
                 } else {
-                    occurrences.put(dataNode.data, 1);
+                    occurrences.put((T) dataNode.data, 1);
                 }
             }
             current = current.next;
