@@ -71,14 +71,14 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     }
 
     private MtxItrData<T> findNode(T contents) {
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(contents)) {
                     return dataNode;
                 }
             }
-            current = current.next;
+            current = current.prev;
         }
         return null;
     }
@@ -87,13 +87,13 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     public String toString() {
         String[] contentsStrArr = new String[this.size()];
 
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         int i = 0;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 contentsStrArr[i++] = dataNode.data.toString();
             }
-            current = current.next;
+            current = current.prev;
         }
 
         return "[" + String.join(", ", contentsStrArr) + "]";
@@ -106,7 +106,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public boolean isEmpty() {
-        return this.head.next == this.head.prev;
+        return this.head.next == this.head && this.head.prev == this.head;
     }
 
     @Override
@@ -117,14 +117,14 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     @Override
     public int countOccurrences(T element) {
         int count = 0;
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(element)) {
                     count ++;
                 }
             }
-            current = current.next;
+            current = current.prev;
         }
         return count;
     }
@@ -144,7 +144,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     }
 
     private MtxItrNode getNodeAt(int index) {
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 if (index == 0) {
@@ -152,7 +152,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
                 }
                 index --;
             }
-            current = current.next;
+            current = current.prev;
         }
         return null;
     }
@@ -165,13 +165,13 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     @Override
     public int hashCode() {
         int hashCode = 1;
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 int elementHashCode = dataNode.data == null ? 0 : dataNode.data.hashCode();
                 hashCode = (31 * hashCode) + elementHashCode;
             }
-            current = current.next;
+            current = current.prev;
         }
         return hashCode;
     }
@@ -179,7 +179,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     @Override
     public int indexOf(T element) {
         int idx = 0;
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 if (dataNode.data.equals(element)) {
@@ -187,7 +187,10 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
                 }
                 idx ++;
             }
-            current = current.next;
+            current = current.prev;
+        }
+        if (idx >= this.size()) {
+            return -1;
         }
         return idx;
     }
@@ -243,13 +246,13 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     public T[] toArray() {
         Object[] array = new Object[this.size()];
 
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         int i = 0;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 array[i++] = dataNode.data;
             }
-            current = current.next;
+            current = current.prev;
         }
 
         return (T[]) array;
@@ -304,7 +307,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
     private HashMap<T, Integer> countAllOccurrences() {
         HashMap<T, Integer> occurrences = new HashMap<>();
 
-        MtxItrNode current = this.head.next;
+        MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
                 if (occurrences.containsKey(dataNode.data)) {
@@ -313,7 +316,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
                     occurrences.put((T) dataNode.data, 1);
                 }
             }
-            current = current.next;
+            current = current.prev;
         }
         return occurrences;
     }
