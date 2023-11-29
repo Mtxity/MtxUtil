@@ -34,6 +34,13 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         this.size = 0;
     }
 
+    public MtxIntrusiveLinkedList(T[] initialContents) {
+        this();
+        for (T element : initialContents) {
+            this.add(element);
+        }
+    }
+
     @Override
     public void add(T element) {
         MtxItrData<T> newNode = new MtxItrData<>(element);
