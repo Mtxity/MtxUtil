@@ -112,6 +112,62 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
         return Integer.hashCode(this.value);
     }
 
+    // ----------------- Public Inherited Methods ------------------
+
+    /**
+     * Compares two MtxRangedInteger objects numerically.
+     *
+     * @param anotherMtxRangedInteger the MtxRangedInteger to be
+     *                                compared.
+     * @return the value {@code 0} if this MtxRangedInteger is
+     *         equal to the argument MtxRangedInteger, a value less
+     *         than {@code 0} if this MtxRangedInteger is
+     *         numerically less than the argument MtxRangedInteger,
+     *         and a value greater than {@code 0} if this
+     *         MtxRangedInteger is numerically greater than the
+     *         argument MtxRangedInteger.
+     */
+    @Override
+    public int compareTo(MtxRangedInteger anotherMtxRangedInteger) {
+        int otherRangedInt = anotherMtxRangedInteger.intValue();
+        return Integer.compare(this.value, otherRangedInt);
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as an int.
+     */
+    @Override
+    public int intValue() {
+        return this.value;
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as a long
+     * after a widening primitive conversion.
+     */
+    @Override
+    public long longValue() {
+        return ((long) this.value);
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as a float
+     * after a widening primitive conversion.
+     */
+    @Override
+    public float floatValue() {
+        return ((float) this.value);
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger as a double
+     * after a widening primitive conversion.
+     */
+    @Override
+    public double doubleValue() {
+        return ((double) this.value);
+    }
+
     // ---------------------- Private Methods ----------------------
 
     protected int getValueClosestToLimit(int value) {
