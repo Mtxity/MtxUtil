@@ -235,9 +235,9 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         MtxItrNode current = this.getNodeAt(fromIndex);
         MtxItrNode end = this.getNodeAt(toIndex);
 
-        while (current != end.next && current != this.head) {
+        while (current != end && current != this.head) {
             subList.add(((MtxItrData<T>) current).data);
-            current = current.next;
+            current = current.prev;
         }
         return subList;
     }
