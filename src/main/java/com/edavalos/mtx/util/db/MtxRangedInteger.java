@@ -168,6 +168,24 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
         return ((double) this.value);
     }
 
+    // ---------------------- Static Methods -----------------------
+
+    /**
+     * Parses the string argument as a ranged decimal integer.
+     * @param s a String to be parsed.
+     * @param max Maximum size this ranged int is allowed to be
+     * @param min Minimum size this ranged int is allowed to be
+     * @return an MtxRangedInteger represented by the argument
+     * @throws NumberFormatException if argument String contains
+     *         any characters other than digits or negative signs
+     * @throws IllegalArgumentException if value represented by
+     *         the argument falls outside given range
+     */
+    public static MtxRangedInteger parseRangedInt(String s, int min, int max) {
+        int newRangedIntVal = Integer.parseInt(s);
+        return new MtxRangedInteger(min, max, true, newRangedIntVal);
+    }
+
     // ---------------------- Private Methods ----------------------
 
     protected int getValueClosestToLimit(int value) {
