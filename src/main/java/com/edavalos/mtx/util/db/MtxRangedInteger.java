@@ -57,6 +57,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     /**
      * Returns the value of this MtxRangedInteger as a byte
      * after a narrowing primitive conversion.
+     * If no value is set, uses 0
      */
     @Override
     public byte byteValue() {
@@ -66,6 +67,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     /**
      * Returns the value of this MtxRangedInteger as a short
      * after a narrowing primitive conversion.
+     * If no value is set, returns 0
      */
     @Override
     public short shortValue() {
@@ -152,6 +154,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     /**
      * Returns the value of this MtxRangedInteger as a long
      * after a widening primitive conversion.
+     * If no value is set, returns 0
      */
     @Override
     public long longValue() {
@@ -161,6 +164,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     /**
      * Returns the value of this MtxRangedInteger as a float
      * after a widening primitive conversion.
+     * If no value is set, returns 0.0
      */
     @Override
     public float floatValue() {
@@ -170,6 +174,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     /**
      * Returns the value of this MtxRangedInteger as a double
      * after a widening primitive conversion.
+     * If no value is set, returns 0.0
      */
     @Override
     public double doubleValue() {
