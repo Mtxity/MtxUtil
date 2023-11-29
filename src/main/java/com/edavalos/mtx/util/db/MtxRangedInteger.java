@@ -1,11 +1,19 @@
 package com.edavalos.mtx.util.db;
 
+import com.edavalos.mtx.util.grouping.pair.MtxImmutablePair;
+import com.edavalos.mtx.util.grouping.pair.MtxPair;
+
 /**
  * An integer that can only have a value inside the given range
  * <p></p>
  * Represents a ranged integer with a minimum and maximum value.
  * Provides methods to set and retrieve the value within the range.
  * Implements Comparable<MtxRangedInteger> and extends Number class.
+ * <p></p>
+ * When an integer outside its range is passed to it, it will either
+ * throw an IllegalArgumentException, or set its value to the
+ * closest range bound to it, depending on the value of
+ * throwException
  */
 public class MtxRangedInteger extends Number implements Comparable<MtxRangedInteger>  {
     private final boolean throwException;
@@ -52,6 +60,61 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
 
         this.value = newValue;
         this.hasValue = true;
+    }
+
+    /**
+     * Returns the value of this MtxRangedInteger. If a value has been set,
+     * returns that value. If no value has been set, throws a NullPointerException.
+     *
+     * @return the value of this MtxRangedInteger
+     * @throws NullPointerException if no value has been set for this MtxRangedInteger
+     */
+    public int value() {
+        if (this.hasValue) {
+            return this.value;
+        }
+
+        throw new NullPointerException("MtxRangedInteger has no value");
+    }
+
+    /**
+     * Returns the minimum value of this MtxRangedInteger.
+     *
+     * @return the minimum value of this MtxRangedInteger
+     */
+    public int getMin() {
+        return this.min;
+    }
+
+    /**
+     * Returns the maximum value of this MtxRangedInteger.
+     *
+     * @return the maximum value of this MtxRangedInteger
+     */
+    public int getMax() {
+        return this.max;
+    }
+
+    /**
+     * Returns a pair of integers representing the range of this MtxRangedInteger.
+     * The first integer in the pair represents the minimum value, and the second
+     * integer represents the maximum value.
+     *
+     * @return a pair of integers representing the range of this MtxRangedInteger
+     */
+    public MtxPair<Integer, Integer> getRange() {
+        return new MtxImmutablePair<>(this.min, this.max);
+    }
+
+    /**
+     * Returns true if this MtxRangedInteger throws an exception when an integer
+     * out of its range is given to it, false otherwise
+     *
+     * @return true if this method throws an IllegalArgumentException, false
+     *         otherwise
+     */
+    public boolean throwsException() {
+        return this.throwException;
     }
 
     /**
