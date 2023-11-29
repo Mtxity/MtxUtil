@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -310,4 +311,68 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         return occurrences;
     }
 
+    @Override
+    public void sort(Comparator<T> comparator) {
+        this.head.next = this.mergeSort(this.head.next, comparator);
+        // Update head and tail pointers
+        MtxItrNode tail = this.head;
+        while (tail.next != this.head) {
+            tail.next.prev = tail;
+            tail = tail.next;
+        }
+        tail.next = this.head;
+        this.head.prev = tail;
+    }
+
+    private MtxItrNode mergeSort(MtxItrNode start, Comparator<T> comparator) {
+        if (start == null || start.next == this.head || start == this.head) {
+            return start;
+        }
+
+        MtxItrNode middle = this.getMiddle(start);
+        MtxItrNode nextOfMiddle = middle.next;
+
+        middle.next = this.head;
+        nextOfMiddle.prev = this.head;
+
+        MtxItrNode left = this.mergeSort(start, comparator);
+        MtxItrNode right = this.mergeSort(nextOfMiddle, comparator);
+
+        return this.merge(left, right, comparator);
+    }
+
+    private MtxItrNode merge(MtxItrNode left, MtxItrNode right, Comparator<T> comparator) {
+        if (left == this.head) {
+            return right;
+        }
+        if (right == this.head) {
+            return left;
+        }
+        if (comparator.compare(((MtxItrData<T>) left).data, ((MtxItrData<T>) right).data) > 0) {
+            left.next = merge(left.next, right, comparator);
+            left.next.prev = left;
+            left.prev = this.head;
+            return left;
+        } else {
+            right.next = merge(left, right.next, comparator);
+            right.next.prev = right;
+            right.prev = this.head;
+            return right;
+        }
+    }
+
+    private MtxItrNode getMiddle(MtxItrNode start) {
+        if (start == head) return start;
+        MtxItrNode fast = start.next;
+        MtxItrNode slow = start;
+
+        while (fast != head) {
+            fast = fast.next;
+            if (fast != head) {
+                slow = slow.next;
+                fast = fast.next;
+            }
+        }
+        return slow;
+    }
 }
