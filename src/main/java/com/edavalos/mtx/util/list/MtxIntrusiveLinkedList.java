@@ -1,6 +1,8 @@
 package com.edavalos.mtx.util.list;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> {
     private class MtxItrNode {
@@ -276,4 +278,36 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         node.data = element;
         return previousData;
     }
+
+    @Override
+    public boolean removeDuplicates() {
+        boolean foundDuplicate = false;
+        for (Map.Entry<T, Integer> occurrence : this.countAllOccurrences().entrySet()) {
+            if (occurrence.getValue() > 1) {
+                foundDuplicate = true;
+                for (int i = 0; i < occurrence.getValue(); i++) {
+                    this.remove(occurrence.getKey());
+                }
+            }
+        }
+        return foundDuplicate;
+    }
+
+    private HashMap<T, Integer> countAllOccurrences() {
+        HashMap<T, Integer> occurrences = new HashMap<>();
+
+        MtxItrNode current = this.head.next;
+        while (current != this.head) {
+            if (current instanceof MtxItrData<T> dataNode) {
+                if (occurrences.containsKey(dataNode.data)) {
+                    occurrences.put(dataNode.data, occurrences.get(dataNode.data) + 1);
+                } else {
+                    occurrences.put(dataNode.data, 1);
+                }
+            }
+            current = current.next;
+        }
+        return occurrences;
+    }
+
 }
