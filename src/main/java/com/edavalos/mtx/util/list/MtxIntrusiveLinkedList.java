@@ -1,9 +1,9 @@
 package com.edavalos.mtx.util.list;
 
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Set;
 
 public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> {
     private class MtxItrNode {
@@ -53,10 +53,6 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public boolean remove(T element) {
-        if (this.head == null) {
-            return false;
-        }
-
         MtxItrNode node = this.findNode(element);
         if (node == null) {
             return false;
@@ -135,12 +131,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
             throw new IndexOutOfBoundsException(index);
         }
 
-        MtxItrNode node = this.getNodeAt(index);
-        if (node instanceof MtxItrData dataNode) {
-            return (T) dataNode.data;
-        } else {
-            return null;
-        }
+        return ((MtxItrData<T>) this.getNodeAt(index)).data;
     }
 
     private MtxItrNode getNodeAt(int index) {
@@ -189,10 +180,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
             }
             current = current.prev;
         }
-        if (idx >= this.size()) {
-            return -1;
-        }
-        return idx;
+        return -1;
     }
 
     @Override
@@ -260,10 +248,6 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public T removeAt(int index) {
-        if (this.head == null) {
-            return null;
-        }
-
         MtxItrNode node = this.getNodeAt(index);
         if (node == null) {
             throw new IndexOutOfBoundsException(index);
@@ -292,39 +276,30 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public boolean removeDuplicates() {
+        Set<T> seen = new HashSet<>();
         boolean foundDuplicate = false;
-        for (Map.Entry<T, Integer> occurrence : this.countAllOccurrences().entrySet()) {
-            if (occurrence.getValue() > 1) {
-                foundDuplicate = true;
-                for (int i = 0; i < occurrence.getValue(); i++) {
-                    this.remove(occurrence.getKey());
-                }
-            }
-        }
-        return foundDuplicate;
-    }
-
-    private HashMap<T, Integer> countAllOccurrences() {
-        HashMap<T, Integer> occurrences = new HashMap<>();
 
         MtxItrNode current = this.head.prev;
         while (current != this.head) {
             if (current instanceof MtxItrData dataNode) {
-                if (occurrences.containsKey(dataNode.data)) {
-                    occurrences.put((T) dataNode.data, occurrences.get(dataNode.data) + 1);
+                if (seen.contains(dataNode.data)) {
+                    current.prev.next = current.next;
+                    current.next.prev = current.prev;
+                    this.size --;
+                    foundDuplicate = true;
                 } else {
-                    occurrences.put((T) dataNode.data, 1);
+                    seen.add((T) dataNode.data);
                 }
             }
             current = current.prev;
         }
-        return occurrences;
+        return foundDuplicate;
     }
 
     @Override
     public void sort(Comparator<T> comparator) {
         this.head.next = this.mergeSort(this.head.next, comparator);
-        // Update head and tail pointers
+
         MtxItrNode tail = this.head;
         while (tail.next != this.head) {
             tail.next.prev = tail;
