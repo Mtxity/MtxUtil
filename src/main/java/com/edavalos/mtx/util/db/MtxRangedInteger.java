@@ -118,6 +118,66 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     }
 
     /**
+     * Adds the given integer to the current value of this MtxRangedInteger.
+     * Returns the new value after the addition.
+     *
+     * @param otherInt the integer to add to the current value
+     * @return the new value after the addition
+     * @throws IllegalArgumentException if throwException is true and
+     *         the new value falls outside previously set range
+     */
+    public int add(int otherInt) {
+        int newValue = this.value + otherInt;
+        this.setValue(newValue);
+        return this.value;
+    }
+
+    /**
+     * Subtracts the given integer from the current value of this MtxRangedInteger.
+     * Returns the new value after the subtraction.
+     *
+     * @param otherInt the integer to subtract from the current value
+     * @return the new value after the subtraction
+     * @throws IllegalArgumentException if throwException is true and
+     *         the new value falls outside previously set range
+     */
+    public int subtract(int otherInt) {
+        int newValue = this.value - otherInt;
+        this.setValue(newValue);
+        return this.value;
+    }
+
+    /**
+     * Multiplies the given integer by the current value of this MtxRangedInteger.
+     * Returns the new value after the multiplication.
+     *
+     * @param otherInt the integer to multiply with the current value
+     * @return the new value after the multiplication
+     * @throws IllegalArgumentException if throwException is true and
+     *         the new value falls outside previously set range
+     */
+    public int multiply(int otherInt) {
+        int newValue = this.value * otherInt;
+        this.setValue(newValue);
+        return this.value;
+    }
+
+    /**
+     * Divides the current value of this MtxRangedInteger by the given integer
+     * and casts it to an int. Returns the new value after the division.
+     *
+     * @param otherInt the integer to divide the current value by
+     * @return the new value after the division cast to an int
+     * @throws IllegalArgumentException if throwException is true and
+     *         the new value falls outside previously set range
+     */
+    public int divideBy(int otherInt) {
+        int newValue = this.value / otherInt;
+        this.setValue(newValue);
+        return this.value;
+    }
+
+    /**
      * Returns the value of this MtxRangedInteger as a byte
      * after a narrowing primitive conversion.
      * If no value is set, uses 0
