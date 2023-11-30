@@ -25,6 +25,10 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
     // ----------------------- Constructors ------------------------
 
     public MtxRangedInteger(int minValue, int maxValue, boolean throwException) {
+        if (minValue >= maxValue) {
+            throw new IllegalArgumentException("Minimum bound must be smaller than maximum bound");
+        }
+
         this.min = minValue;
         this.max = maxValue;
         this.throwException = throwException;
@@ -54,7 +58,7 @@ public class MtxRangedInteger extends Number implements Comparable<MtxRangedInte
             if (this.throwException) {
                 throw new IllegalArgumentException("Value outside range: " + newValue);
             } else {
-                newValue = this.getValueClosestToLimit(value);
+                newValue = this.getValueClosestToLimit(newValue);
             }
         }
 
