@@ -14,26 +14,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStringListTest {
-    private final MtxStringList.MtxStringDecoder<String> stringStringDecoder = new MtxStringList.MtxStringDecoder<String>() {
-        @Override
-        public String fromString(String stringRepresentation) {
-            return stringRepresentation;
+    private final MtxStringList.MtxStringDecoder<String> stringStringDecoder = stringRepresentation -> stringRepresentation;
+    private final MtxStringList.MtxStringDecoder<Integer> intStringDecoder = Integer::valueOf;
+    private final MtxStringList.MtxStringDecoder<Character> charStringDecoder = stringRepresentation -> {
+        if (stringRepresentation.length() != 1) {
+            return null;
         }
-    };
-    private final MtxStringList.MtxStringDecoder<Integer> intStringDecoder = new MtxStringList.MtxStringDecoder<Integer>() {
-        @Override
-        public Integer fromString(String stringRepresentation) {
-            return Integer.valueOf(stringRepresentation);
-        }
-    };
-    private final MtxStringList.MtxStringDecoder<Character> charStringDecoder = new MtxStringList.MtxStringDecoder<Character>() {
-        @Override
-        public Character fromString(String stringRepresentation) {
-            if (stringRepresentation.length() != 1) {
-                return null;
-            }
-            return stringRepresentation.charAt(0);
-        }
+        return stringRepresentation.charAt(0);
     };
 
     private MtxStringList<Integer> mtxStringList;
@@ -62,7 +49,7 @@ public final class MtxStringListTest {
 
     @Test
     public void testAdd_nonSerializableElement_throwException() {
-        MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<Double>() {
+        MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<>() {
             @Override
             public Double fromString(String stringRepresentation) {
                 return Double.valueOf(stringRepresentation);
@@ -111,7 +98,7 @@ public final class MtxStringListTest {
 
         @Test
         public void testAddAll_nonSerializableElement_throwException() {
-            MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<Double>() {
+            MtxStringList<Double> doubleMtxStringList = new MtxStringList<>(new MtxStringList.MtxStringDecoder<>() {
                 @Override
                 public Double fromString(String stringRepresentation) {
                     return Double.valueOf(stringRepresentation);

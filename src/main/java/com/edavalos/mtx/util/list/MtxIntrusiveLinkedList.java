@@ -193,7 +193,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             private MtxItrNode current = head.next;
 
             @Override

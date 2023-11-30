@@ -123,7 +123,7 @@ public final class MtxUnsignedIntegerTest {
     @Test
     public void testEquals_differentTypes() {
         mtxUInt = new MtxUnsignedInteger(VALID_UINT);
-        Double sampleDouble = new Double(VALID_UINT);
+        Double sampleDouble = Double.valueOf(VALID_UINT);
 
         assertFalse(mtxUInt.equals(sampleDouble));
     }
