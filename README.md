@@ -7,6 +7,7 @@ A collection of data sctructures and other utilities
 * `MtxArrayList` - `O(1)` lookup and `O(1)` insert, but periodically expensive adds
 * `MtxHashList` - `O(1)` lookup and `O(1)` insert, but periodically expensive removes
 * `MtxStringList` - `O(n)` lookup and `O(n)` insert, but `O(1)` `toString()`s
+* `MtxIntrusiveLinkedList` - `O(n)` lookup and `O(1)` insert, but marginally faster than `MtxLinkedList`
 
 All of these support `equals()` and `iterator()` as well as the basic functions. (`size()`, `toArray()`, `sort()`, etc.) See the [interface](https://github.com/Mtxity/MtxUtil/blob/main/src/main/java/com/edavalos/mtx/util/list/MtxList.java) for a complete list.
 
