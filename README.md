@@ -54,6 +54,15 @@ These are its implementations:
 ## String Utilities
 
 ## HTTP Request Reader
+`MtxRequestReader` takes a serialized HTTP request and parses it.
+Something like: `GET /test/14/twelve?key1=value1&key2=value2 HTTP/1.1` would be consumed by an `MtxRequestReader` object to have the following properties accessible:
+* `requestMethod`: `GET`
+* `httpVersion`: `HTTP/1.1`
+* `fixedParams`: `["test", "14", "twelve"]`
+* `anchor`: `null`
+* `queryParams`: `key1=value1`, `key2=value2`
+* `hasQueryParams`: `true`
+* `hasAnchor`: `false`
 
 ## Graphs
 
