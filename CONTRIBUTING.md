@@ -39,6 +39,8 @@ Use common sense when writing and arranging your code. Listed here are some gene
   9. general purpose `private` methods
 
 Notes:
+  * `public` methods should generally be placed on the top half of classes, and `private` methods should reside in the bottom half.
+    * It is ok to mark `private` methods as `protected` in order to individually unit test them
   * Classes should not contain any `static` methods unless the class is a utility class, marked by having a private constructor.
   * `private` methods that are directly used by one or more `public` methods for a single purpose may go under that method instead of at the bottom section.
   * `public` methods that extend on the functionality of an overridden method (by overloading it, for example) may go under that method instead of in the public method section.
@@ -53,7 +55,8 @@ Notes:
     * **Example:** `MtxTimeUtil`
 
 ### Unit testing
-Please add unit tests for all new functionality! This is a utility library so most code will not be user-tested unless it has unit tests. The goal is to maintain 100% code coverage.
+Please add unit tests for all new functionality! This is a utility library so most code will not be user-tested unless it has unit tests. The goal is to maintain 95% code coverage.
+The only code that is not covered should be code that logistically cannot be tested or mocked!
 
   * Unit test classes should be named: `<class name>` + `Test`
     * **Example:** `MtxTimeUtilTest` contains the tests for `MtxTimeUtil`
