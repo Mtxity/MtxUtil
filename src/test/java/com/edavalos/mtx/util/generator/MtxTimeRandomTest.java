@@ -7,8 +7,10 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxTimeRandomTest {
     private static final int TESTS_COUNT = 10;
@@ -77,6 +79,19 @@ public class MtxTimeRandomTest {
         @Test
         public void testRandomInt() {
             assertEquals(randomsSet.size(), randomsList.size());
+        }
+
+        @Test
+        public void testRandomInt_withBounds() {
+            for (int i = 0; i < TESTS_COUNT; i++) {
+                int smallBound = new Random().nextInt(1, 5);
+                int largeBound = new Random().nextInt(10, 15);
+                for (int j = 0; j < TESTS_COUNT; j++) {
+                    int randomSample = mtxTimeRandom.randomInt(smallBound, largeBound);
+                    assertTrue(smallBound <= randomSample);
+                    assertTrue(largeBound > randomSample);
+                }
+            }
         }
     }
 

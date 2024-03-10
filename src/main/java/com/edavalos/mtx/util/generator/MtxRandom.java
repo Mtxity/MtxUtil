@@ -24,6 +24,10 @@ public abstract class MtxRandom {
         return Long.valueOf(val).intValue();
     }
 
+    public int randomInt(int min, int max) {
+        return this.random.nextInt(min, max);
+    }
+
     public long randomLong() {
         return this.random.nextLong();
     }
