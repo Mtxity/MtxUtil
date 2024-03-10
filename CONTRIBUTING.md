@@ -38,10 +38,9 @@ Use common sense when writing and arranging your code. Listed here are some gene
   8. `public` methods
   9. general purpose `private` methods
 
-Notes:
+### Class structure
   * `public` methods should generally be placed on the top half of classes, and `private` methods should reside in the bottom half.
     * It is ok to mark `private` methods as `protected` in order to individually unit test them
-  * Classes should not contain any `static` methods unless the class is a utility class, marked by having a private constructor.
   * `private` methods that are directly used by one or more `public` methods for a single purpose may go under that method instead of at the bottom section.
   * `public` methods that extend on the functionality of an overridden method (by overloading it, for example) may go under that method instead of in the public method section.
   * All `static` variables should be `final`.
