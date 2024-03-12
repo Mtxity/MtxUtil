@@ -11,6 +11,10 @@ public class MtxIpRandom extends MtxRandom {
         super(getTimeFromIp());
     }
 
+    public MtxIpRandom(InetAddress ip) {
+        super(getTimeFromIp(ip));
+    }
+
     private static long getTimeFromIp() {
         InetAddress ip;
         try {
