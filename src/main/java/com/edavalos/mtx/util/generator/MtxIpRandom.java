@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.generator;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.nio.ByteBuffer;
 import java.util.Random;
 
 public class MtxIpRandom extends MtxRandom {
@@ -26,10 +27,10 @@ public class MtxIpRandom extends MtxRandom {
     }
 
     private static long getTimeFromIp(InetAddress ip) {
-        int ipv4 = Integer.parseInt(String.valueOf(ip.toString()).replaceAll("\\.", ""));
-        Random randInt = new Random(ipv4);
+        byte[] ipv4AsBytes = String.valueOf(ip.toString()).replaceAll("\\.", "").getBytes();
+        Random randInt = new Random(ByteBuffer.wrap(ipv4AsBytes).getLong());
         StringBuilder sbr = new StringBuilder();
-        for (int i = 0; i < ipv4; i++) {
+        for (int i = 0; i < 1000; i++) {
             sbr.append(randInt.nextInt());
         }
         String sbrS = sbr.toString();
