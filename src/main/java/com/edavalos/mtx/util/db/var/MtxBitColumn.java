@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
 /**
  * Bit columns are a way to store multiple booleans in a database without needing a separate column for each one.

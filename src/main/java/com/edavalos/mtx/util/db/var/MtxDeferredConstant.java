@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
 /**
  * This data structure is a wrapper for any object deemed immutable that does not have a value ready at instantiation.

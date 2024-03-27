@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
 /**
  * This data structure is a wrapper for any object that should only be mutable when allowed to be. That is, when

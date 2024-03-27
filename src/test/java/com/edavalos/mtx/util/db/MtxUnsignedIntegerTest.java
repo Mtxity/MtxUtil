@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db;
 
+import com.edavalos.mtx.util.db.var.MtxUnsignedInteger;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 

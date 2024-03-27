@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.db;
 
+import com.edavalos.mtx.util.db.var.MtxRangedInteger;
+import com.edavalos.mtx.util.db.var.MtxUnsignedInteger;
 import com.edavalos.mtx.util.grouping.pair.MtxImmutablePair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;

@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
 import com.edavalos.mtx.util.grouping.pair.MtxImmutablePair;
 import com.edavalos.mtx.util.grouping.pair.MtxPair;

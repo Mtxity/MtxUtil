@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
 /**
  * A wrapper for unsigned integers.
