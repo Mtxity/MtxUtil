@@ -89,4 +89,32 @@ public class MtxValidatedVar<T> {
     public void validate() {
         this.isValid = true;
     }
+
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * @param obj another object to compare this to
+     * @return true if both are MtxValidatedVars, and either both have the same value, both are null, or both are
+     * invalid
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MtxValidatedVar<?> other)) {
+            return false;
+        }
+
+        // If both are invalid, they are considered equal since accessing their values would cause an equal result
+        if (!other.isValid() && !this.isValid()) {
+            return true;
+        }
+
+        if (other.getValue() == null) {
+            return this.getValue() == null;
+        }
+
+        if (this.getValue() == null) {
+            return other.getValue() == null;
+        }
+
+        return other.getValue().equals(this.getValue());
+    }
 }
