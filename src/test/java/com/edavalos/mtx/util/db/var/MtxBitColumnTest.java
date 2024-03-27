@@ -1,6 +1,5 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.var;
 
-import com.edavalos.mtx.util.db.var.MtxBitColumn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
