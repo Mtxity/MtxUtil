@@ -26,7 +26,7 @@ public class MtxValidatedVar<T> {
     // ---------------------- Public Methods -----------------------
 
     public T getValue() {
-        if (this.isValid) {
+        if (this.isValid()) {
             return this.value;
         } else {
             throw new IllegalStateException(ERROR_MSG);
