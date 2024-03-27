@@ -117,4 +117,24 @@ public class MtxValidatedVar<T> {
 
         return other.getValue().equals(this.getValue());
     }
+
+    /**
+     * Returns a string representation of the value of this MtxValidatedVar, unless it is invalid in which case it
+     * throws an exception
+     *
+     * @return a string representation of whatever getValue() returns.
+     * @throws IllegalStateException if this MtxValidatedVar is currently invalid
+     */
+    @Override
+    public String toString() throws IllegalStateException {
+        if (this.isValid()) {
+            if (this.getValue() == null) {
+                return "null";
+            } else {
+                return this.getValue().toString();
+            }
+        } else {
+            throw new IllegalStateException(ERROR_MSG);
+        }
+    }
 }
