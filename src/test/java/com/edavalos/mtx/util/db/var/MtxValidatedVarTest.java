@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db.var;
 
+import com.edavalos.mtx.util.db.table.MtxThreeColumnTable;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -155,6 +156,41 @@ public class MtxValidatedVarTest {
 
             assertFalse(vVar1.equals(vVar2));
             assertFalse(vVar2.equals(vVar1));
+        }
+    }
+
+    @Nested
+    class TestToString {
+
+        @Test
+        public void testToString_validated() {
+            MtxThreeColumnTable<String, String, String> table = buildTable();
+            MtxValidatedVar<MtxThreeColumnTable<String, String, String>> vVar = new MtxValidatedVar<>(table, true);
+
+            assertEquals(table.toString(), vVar.toString());
+        }
+
+        @Test
+        public void testToString_validated_null() {
+            MtxValidatedVar<MtxThreeColumnTable<String, String, String>> vVar = new MtxValidatedVar<>(null, true);
+
+            assertEquals("null", vVar.toString());
+        }
+
+        @Test
+        public void testToString_invalidated() {
+            MtxValidatedVar<MtxThreeColumnTable<String, String, String>> vVar = new MtxValidatedVar<>(null, false);
+
+            IllegalStateException ise = assertThrows(IllegalStateException.class, () -> vVar.toString());
+            assertEquals(MtxValidatedVar.ERROR_MSG, ise.getMessage());
+        }
+
+        private MtxThreeColumnTable<String, String, String> buildTable() {
+            MtxThreeColumnTable<String, String, String> table = new MtxThreeColumnTable<>();
+            table.addRow("l", "2", "E");
+            table.addRow("A", "S", "6");
+            table.addRow("T", "B", "9");
+            return table;
         }
     }
 }
