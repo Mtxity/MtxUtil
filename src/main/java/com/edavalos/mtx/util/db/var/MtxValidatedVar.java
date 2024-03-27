@@ -10,10 +10,17 @@ public class MtxValidatedVar<T> {
 
     public MtxValidatedVar(T value) {
         this.value = value;
+        this.isValid = true;
     }
 
     public MtxValidatedVar() {
         this.value = null;
+        this.isValid = true;
+    }
+
+    public MtxValidatedVar(T value, boolean isValid) {
+        this.value = value;
+        this.isValid = isValid;
     }
 
     // ---------------------- Public Methods -----------------------
