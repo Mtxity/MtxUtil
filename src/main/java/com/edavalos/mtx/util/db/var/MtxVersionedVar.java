@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.db.var;
 
 import java.util.Collection;
 import java.util.List;

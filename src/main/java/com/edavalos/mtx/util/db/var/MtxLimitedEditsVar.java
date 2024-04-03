@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.db.var;
 
 /**
  * This data structure is identical to MtxVersionedVar, except it only allows its value to be changed n times, after
