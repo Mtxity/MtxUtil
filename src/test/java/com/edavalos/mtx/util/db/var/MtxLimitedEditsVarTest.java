@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.grouping;
+package com.edavalos.mtx.util.db.var;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
