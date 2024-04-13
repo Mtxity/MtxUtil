@@ -14,4 +14,8 @@ public class MtxOptionalVar<T> {
     public static <T> MtxOptionalVar<T> empty() {
         return (MtxOptionalVar<T>) EMPTY;
     }
+
+    public static <T> MtxOptionalVar<T> of(T value) {
+        return new MtxOptionalVar<>(value);
+    }
 }
