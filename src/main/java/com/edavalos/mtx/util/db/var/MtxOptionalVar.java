@@ -1,7 +1,7 @@
 package com.edavalos.mtx.util.db.var;
 
 public class MtxOptionalVar<T> {
-    private static final MtxOptionalVar<?> EMPTY = new MtxOptionalVar<>(null);
+    private static final MtxOptionalVar<?> EMPTY = new MtxOptionalVar<>(false);
 
     private T value;
     private boolean hasValue;
@@ -9,6 +9,11 @@ public class MtxOptionalVar<T> {
     public MtxOptionalVar(T value) {
         this.value = value;
         this.hasValue = true;
+    }
+
+    private MtxOptionalVar(boolean hasValue) {
+        this.value = null;
+        this.hasValue = false;
     }
 
     public static <T> MtxOptionalVar<T> empty() {
