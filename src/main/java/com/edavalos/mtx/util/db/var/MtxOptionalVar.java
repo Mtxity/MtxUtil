@@ -10,4 +10,8 @@ public class MtxOptionalVar<T> {
         this.value = value;
         this.hasValue = true;
     }
+
+    public static <T> MtxOptionalVar<T> empty() {
+        return (MtxOptionalVar<T>) EMPTY;
+    }
 }
