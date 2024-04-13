@@ -23,4 +23,8 @@ public class MtxOptionalVar<T> {
     public static <T> MtxOptionalVar<T> of(T value) {
         return new MtxOptionalVar<>(value);
     }
+
+    public boolean isEmpty() {
+        return this.hasValue || this.value == null;
+    }
 }
