@@ -35,4 +35,31 @@ public class MtxOptionalVarTest {
         assertTrue(MtxOptionalVar.empty().isEmpty());
         assertFalse(new MtxOptionalVar<Integer>(5).isEmpty());
     }
+
+    @Test
+    public void testOf() {
+        mtxOVar = MtxOptionalVar.of(SAMPLE_STR);
+
+        assertEquals(SAMPLE_STR, mtxOVar.getValue());
+    }
+
+    @Test
+    public void testGetValue_hasValue() {
+        mtxOVar = new MtxOptionalVar<>(SAMPLE_STR);
+
+        assertFalse(mtxOVar.isEmpty());
+        assertEquals(SAMPLE_STR, mtxOVar.getValue());
+    }
+
+    @Test
+    public void testGetValue_empty() {
+        mtxOVar = MtxOptionalVar.empty();
+
+        assertTrue(mtxOVar.isEmpty());
+        String errorMsg = assertThrows(
+                NoSuchElementException.class,
+                () -> mtxOVar.getValue()
+        ).getMessage();
+        assertEquals("No value present", errorMsg);
+    }
 }
