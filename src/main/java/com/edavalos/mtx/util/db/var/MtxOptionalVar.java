@@ -28,7 +28,7 @@ public class MtxOptionalVar<T> {
     }
 
     public boolean isEmpty() {
-        return !(this.hasValue || this.value == null);
+        return !this.hasValue || this.value == null;
     }
 
     public T getValue() {
