@@ -39,4 +39,28 @@ public class MtxOptionalVar<T> {
         }
         return this.value;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MtxOptionalVar<?> other)) {
+            return false;
+        }
+
+        if (other.isEmpty() && this.isEmpty()) {
+            return true;
+        }
+
+        if (!other.isEmpty() && !this.isEmpty()) {
+            assert other.value != null && this.value != null;
+            Class<?> otherType = other.value.getClass();
+            Class<?> thisType = this.value.getClass();
+            if (!thisType.equals(otherType)) {
+                return false;
+            } else {
+                return other.value.equals(this.value);
+            }
+        }
+
+        return false;
+    }
 }
