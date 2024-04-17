@@ -20,7 +20,9 @@ public class MtxOptionalVar<T> {
     }
 
     public static <T> MtxOptionalVar<T> empty() {
-        return (MtxOptionalVar<T>) EMPTY;
+        @SuppressWarnings("unchecked")
+        MtxOptionalVar<T> emptyOptional = (MtxOptionalVar<T>) EMPTY;
+        return emptyOptional;
     }
 
     public static <T> MtxOptionalVar<T> of(T value) {
