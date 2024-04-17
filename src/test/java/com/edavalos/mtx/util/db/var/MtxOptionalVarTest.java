@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db.var;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
@@ -61,5 +62,65 @@ public class MtxOptionalVarTest {
                 () -> mtxOVar.getValue()
         ).getMessage();
         assertEquals("No value present", errorMsg);
+    }
+
+    @Nested
+    class TestEquals {
+
+        @Test
+        public void testEquals_differentTypes() {
+            MtxOptionalVar<String> oVar = new MtxOptionalVar<>(SAMPLE_STR);
+            MtxValidatedVar<String> vVar = new MtxValidatedVar<>(SAMPLE_STR);
+
+            assertFalse(oVar.equals(vVar));
+        }
+
+        @Test
+        public void testEquals_bothEmpty() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.empty();
+            MtxOptionalVar<Integer> oVar2 = MtxOptionalVar.empty();
+
+            assertTrue(oVar1.equals(oVar2));
+        }
+
+        @Test
+        public void testEquals_otherEmpty() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.of(SAMPLE_STR);
+            MtxOptionalVar<Integer> oVar2 = MtxOptionalVar.empty();
+
+            assertFalse(oVar1.equals(oVar2));
+        }
+
+        @Test
+        public void testEquals_thisEmpty() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.empty();
+            MtxOptionalVar<Integer> oVar2 = MtxOptionalVar.of(10);
+
+            assertFalse(oVar1.equals(oVar2));
+        }
+
+        @Test
+        public void testEquals_differentInnerTypes() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.of(SAMPLE_STR);
+            MtxOptionalVar<Integer> oVar2 = MtxOptionalVar.of(10);
+
+            assertFalse(oVar1.equals(oVar2));
+        }
+
+        @Test
+        public void testEquals_differentInnerValues() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.of(SAMPLE_STR);
+            MtxOptionalVar<String> oVar2 = MtxOptionalVar.of("Other String");
+
+            assertFalse(oVar1.equals(oVar2));
+        }
+
+        @Test
+        public void testEquals_sameInnerValues() {
+            MtxOptionalVar<String> oVar1 = MtxOptionalVar.of(SAMPLE_STR);
+            MtxOptionalVar<String> oVar2 = MtxOptionalVar.of(SAMPLE_STR);
+
+            assertTrue(oVar1.equals(oVar2));
+        }
     }
 }
