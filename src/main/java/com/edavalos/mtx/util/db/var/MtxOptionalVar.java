@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class MtxOptionalVar<T> {
     private static final String NO_VAL = "No value present";
-    private static final MtxOptionalVar<?> EMPTY = new MtxOptionalVar<>(false);
+    private static final MtxOptionalVar<?> EMPTY = new MtxOptionalVar<>();
 
     private final T value;
     private final boolean hasValue;
@@ -14,7 +14,7 @@ public class MtxOptionalVar<T> {
         this.hasValue = true;
     }
 
-    private MtxOptionalVar(boolean hasValue) {
+    private MtxOptionalVar() {
         this.value = null;
         this.hasValue = false;
     }
