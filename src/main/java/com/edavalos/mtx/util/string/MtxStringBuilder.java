@@ -1,6 +1,8 @@
 package com.edavalos.mtx.util.string;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class MtxStringBuilder {
     private final ArrayList<String> parts;
@@ -67,6 +69,32 @@ public class MtxStringBuilder {
 
     public MtxStringBuilder append(boolean nextBool) {
         this.parts.add(String.valueOf(nextBool));
+        return this;
+    }
+
+    public MtxStringBuilder append(Object nextValue) {
+        this.parts.add(nextValue.toString());
+        return this;
+    }
+
+    public MtxStringBuilder append(Object[] nextValue) {
+        for (Object o : nextValue) {
+            this.parts.add(o.toString());
+        }
+        return this;
+    }
+
+    public MtxStringBuilder append(List<?> nextValue) {
+        for (Object o : nextValue) {
+            this.parts.add(o.toString());
+        }
+        return this;
+    }
+
+    public MtxStringBuilder append(Collection<?> nextValue) {
+        for (Object o : nextValue) {
+            this.parts.add(o.toString());
+        }
         return this;
     }
 
