@@ -16,6 +16,12 @@ public abstract class MtxQuery {
         public String toString() {
             return "(" + this.leftVal + " " + this.operator.getKeyword() + " " + this.rightVal + ")";
         }
+
+        boolean isOr() {
+            return this.leftVal == null &&
+                   this.rightVal == null &&
+                   this.operator == ComparisonOperator.OR;
+        }
     }
 
     enum ComparisonOperator {
@@ -108,6 +114,17 @@ public abstract class MtxQuery {
         return new Comparison(field1, ComparisonOperator.LIKE, field2);
     }
 
+
+    protected boolean complete;
+
+    public MtxQuery() {
+        this.complete = false;
+    }
+
     @Override
     public abstract String toString();
+
+    public boolean isComplete() {
+        return this.complete;
+    }
 }

@@ -18,7 +18,6 @@ public class MtxSelectQuery extends MtxQuery {
     private final List<Comparison> WHERE;
     private final List<String> ORDERBY_ASC;
     private final List<String> ORDERBY_DESC;
-    private boolean complete;
 
     public MtxSelectQuery(String select) {
         this.SELECT = select;
@@ -29,7 +28,6 @@ public class MtxSelectQuery extends MtxQuery {
         this.WHERE = new LinkedList<>();
         this.ORDERBY_ASC = new LinkedList<>();
         this.ORDERBY_DESC = new LinkedList<>();
-        this.complete = false;
     }
 
     public MtxSelectQuery() {
@@ -38,7 +36,7 @@ public class MtxSelectQuery extends MtxQuery {
 
     public MtxSelectQuery from(String table) {
         this.FROM = table;
-        this.complete = true;
+        super.complete = true;
         return this;
     }
 
@@ -68,7 +66,10 @@ public class MtxSelectQuery extends MtxQuery {
     }
 
     public MtxSelectQuery or() {
-        this.WHERE.add(new Comparison(null, ComparisonOperator.OR, null));
+        // OR cannot be first or last
+        if (!this.WHERE.isEmpty() && this.WHERE.getLast().isOr()) {
+            this.WHERE.add(new Comparison(null, ComparisonOperator.OR, null));
+        }
         return this;
     }
 
@@ -79,5 +80,32 @@ public class MtxSelectQuery extends MtxQuery {
             this.ORDERBY_ASC.add(column);
         }
         return this;
+    }
+
+    @Override
+    public String toString() {
+        if (!super.isComplete()) {
+            throw new IllegalStateException("MtxSelectQuery is missing elements required to convert it to a String!");
+        }
+
+        StringBuilder qb = new StringBuilder();
+        qb.append("SELECT ").append(this.SELECT).append(" FROM ").append(this.FROM);
+        if (!this.WHERE.isEmpty()) {
+            qb.append(" WHERE (");
+            for (int i = 0; i < this.WHERE.size(); i++) {
+                Comparison comparison = this.WHERE.get(i);
+                if (comparison.isOr()) {
+                    qb.append(") OR (");
+                } else {
+                    qb.append(comparison.toString());
+                    if (i != this.WHERE.size() - 1) {
+                        qb.append(" AND ");
+                    }
+                }
+            }
+            qb.append(")");
+        }
+
+        return qb.toString();
     }
 }
