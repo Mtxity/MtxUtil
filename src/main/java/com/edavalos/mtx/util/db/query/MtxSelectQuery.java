@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.db.query;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class MtxSelectQuery extends MtxQuery {
     public enum Order {
@@ -90,6 +91,12 @@ public class MtxSelectQuery extends MtxQuery {
 
         StringBuilder qb = new StringBuilder();
         qb.append("SELECT ").append(this.SELECT).append(" FROM ").append(this.FROM);
+
+        qb = addJoin(qb, this.INNER_JOIN, "INNER JOIN");
+        qb = addJoin(qb, this.LEFT_JOIN,  "LEFT JOIN");
+        qb = addJoin(qb, this.RIGHT_JOIN, "RIGHT JOIN");
+        qb = addJoin(qb, this.FULL_JOIN,  "FULL JOIN");
+
         if (!this.WHERE.isEmpty()) {
             qb.append(" WHERE (");
             for (int i = 0; i < this.WHERE.size(); i++) {
@@ -141,5 +148,16 @@ public class MtxSelectQuery extends MtxQuery {
         }
 
         return qb.append(";").toString();
+    }
+
+    private static StringBuilder addJoin(StringBuilder qb, HashMap<String, Comparison> joinLogic, String joinKeyword) {
+        if (joinLogic.isEmpty()) {
+            return qb;
+        }
+
+        for (Map.Entry<String, Comparison> join : joinLogic.entrySet()) {
+            qb.append(" ").append(joinKeyword).append(" ").append(join.getKey()).append(" ON ").append(join.getValue());
+        }
+        return qb;
     }
 }
