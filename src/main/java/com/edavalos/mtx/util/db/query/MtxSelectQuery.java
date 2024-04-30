@@ -5,6 +5,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MtxSelectQuery extends MtxQuery {
+    public enum Order {
+        ASC, DESC
+    }
+
     private String FROM;
     private final String SELECT;
     private final HashMap<String, Comparison> INNER_JOIN;
@@ -12,7 +16,8 @@ public class MtxSelectQuery extends MtxQuery {
     private final HashMap<String, Comparison> RIGHT_JOIN;
     private final HashMap<String, Comparison> FULL_JOIN;
     private final List<Comparison> WHERE;
-    private final List<Comparison> ORDERBY;
+    private final List<String> ORDERBY_ASC;
+    private final List<String> ORDERBY_DESC;
     private boolean complete;
 
     public MtxSelectQuery(String select) {
@@ -22,7 +27,8 @@ public class MtxSelectQuery extends MtxQuery {
         this.RIGHT_JOIN = new HashMap<>();
         this.FULL_JOIN = new HashMap<>();
         this.WHERE = new LinkedList<>();
-        this.ORDERBY = new LinkedList<>();
+        this.ORDERBY_ASC = new LinkedList<>();
+        this.ORDERBY_DESC = new LinkedList<>();
         this.complete = false;
     }
 
@@ -66,4 +72,12 @@ public class MtxSelectQuery extends MtxQuery {
         return this;
     }
 
+    public MtxSelectQuery orderBy(String column, Order order) {
+        if (Order.DESC == order) {
+            this.ORDERBY_DESC.add(column);
+        } else {
+            this.ORDERBY_ASC.add(column);
+        }
+        return this;
+    }
 }
