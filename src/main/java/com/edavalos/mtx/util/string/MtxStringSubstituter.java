@@ -2,11 +2,11 @@ package com.edavalos.mtx.util.string;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class MtxStringSubstituter {
-    protected static final Pattern KEYWORD_WRAPPER = Pattern.compile("\\$\\{([^}]+)}");
+    protected static final String MATCH_BOUND_LEFT_BORDER = "${";
+    protected static final String MATCH_BOUND_RIGHT_BORDER = "}";
     protected static final String UNSUPPORTED_MAP_ADDITIONS = "This MtxStringSubstituter was initialized with a map " +
                                                               "that does not allow modifications!";
 
@@ -29,15 +29,13 @@ public class MtxStringSubstituter {
     }
 
     public String substitute(String inputWithTemplates) {
-        Matcher matcher = KEYWORD_WRAPPER.matcher(inputWithTemplates);
-        String result = inputWithTemplates;
-        while (matcher.find()) {
-            String match = matcher.group(1);
-            String sub = this.substitutions.get(match);
-            if (sub != null) {
-                result.replace("${" + match + "}", sub);
-            }
+        for (Map.Entry<String, String> sub : this.substitutions.entrySet()) {
+            inputWithTemplates = inputWithTemplates.replaceAll(Pattern.quote(wrapWord(sub.getKey())), sub.getValue());
         }
-        return result;
+        return inputWithTemplates;
+    }
+
+    private static String wrapWord(String input) {
+        return MATCH_BOUND_LEFT_BORDER + input + MATCH_BOUND_RIGHT_BORDER;
     }
 }
