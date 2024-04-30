@@ -6,9 +6,47 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class MtxStringSubstituterTest {
     private MtxStringSubstituter mtxStringSubstituter;
+
+    @Nested
+    class ConstructorTests {
+
+        @Test
+        public void testConstructor_withMap() {
+            mtxStringSubstituter = new MtxStringSubstituter(Map.of("1", "2"));
+            assertEquals("2", mtxStringSubstituter.substitute("${1}"));
+        }
+
+        @Test
+        public void testConstructor_noMap() {
+            mtxStringSubstituter = new MtxStringSubstituter();
+            assertEquals("${1}", mtxStringSubstituter.substitute("${1}"));
+        }
+    }
+
+    @Nested
+    class AddSubstitutionTests {
+
+        @Test
+        public void testAddSubstitution_withModifiableMap() {
+            mtxStringSubstituter = new MtxStringSubstituter();
+            mtxStringSubstituter.addSubstitution("1", "2");
+            assertEquals("2", mtxStringSubstituter.substitute("${1}"));
+        }
+
+        @Test
+        public void testAddSubstitution_withUnmodifiableMap() {
+            mtxStringSubstituter = new MtxStringSubstituter(Map.of());
+            UnsupportedOperationException uoe = assertThrows(
+                    UnsupportedOperationException.class,
+                    () -> mtxStringSubstituter.addSubstitution("1", "2")
+            );
+            assertEquals(MtxStringSubstituter.UNSUPPORTED_MAP_ADDITIONS, uoe.getMessage());
+        }
+    }
 
     @Nested
     class SubstituteTests {
