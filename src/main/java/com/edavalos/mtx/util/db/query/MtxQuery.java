@@ -38,6 +38,16 @@ public abstract class MtxQuery {
         }
     }
 
+    /**
+     * Returns a comparison object that checks equality for use in building an {@link MtxQuery}
+     * @param field1 left value to compare
+     * @param field2 right value to compare
+     * @return Boolean {@link Comparison} between the two provided values
+     */
+    public static Comparison eq(String field1, String field2) {
+        return new Comparison(field1, ComparisonOperator.EQUAL_TO, field2);
+    }
+
     @Override
     public abstract String toString();
 }

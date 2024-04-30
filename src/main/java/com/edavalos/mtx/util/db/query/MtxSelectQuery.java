@@ -7,12 +7,12 @@ import java.util.List;
 public class MtxSelectQuery extends MtxQuery {
     private String FROM;
     private final String SELECT;
-    private final HashMap<String, String> INNER_JOIN;
-    private final HashMap<String, String> LEFT_JOIN;
-    private final HashMap<String, String> RIGHT_JOIN;
-    private final HashMap<String, String> FULL_JOIN;
-    private final List<String> WHERE;
-    private final List<String> ORDERBY;
+    private final HashMap<String, Comparison> INNER_JOIN;
+    private final HashMap<String, Comparison> LEFT_JOIN;
+    private final HashMap<String, Comparison> RIGHT_JOIN;
+    private final HashMap<String, Comparison> FULL_JOIN;
+    private final List<Comparison> WHERE;
+    private final List<Comparison> ORDERBY;
     private boolean complete;
 
     public MtxSelectQuery(String select) {
@@ -36,23 +36,23 @@ public class MtxSelectQuery extends MtxQuery {
         return this;
     }
 
-    public MtxSelectQuery leftJoin(String otherTable, String operator) {
-        this.LEFT_JOIN.put(otherTable, operator);
+    public MtxSelectQuery leftJoin(String otherTable, Comparison condition) {
+        this.LEFT_JOIN.put(otherTable, condition);
         return this;
     }
 
-    public MtxSelectQuery rightJoin(String otherTable, String operator) {
-        this.RIGHT_JOIN.put(otherTable, operator);
+    public MtxSelectQuery rightJoin(String otherTable, Comparison condition) {
+        this.RIGHT_JOIN.put(otherTable, condition);
         return this;
     }
 
-    public MtxSelectQuery innerJoin(String otherTable, String operator) {
-        this.INNER_JOIN.put(otherTable, operator);
+    public MtxSelectQuery innerJoin(String otherTable, Comparison condition) {
+        this.INNER_JOIN.put(otherTable, condition);
         return this;
     }
 
-    public MtxSelectQuery fullJoin(String otherTable, String operator) {
-        this.FULL_JOIN.put(otherTable, operator);
+    public MtxSelectQuery fullJoin(String otherTable, Comparison condition) {
+        this.FULL_JOIN.put(otherTable, condition);
         return this;
     }
 
