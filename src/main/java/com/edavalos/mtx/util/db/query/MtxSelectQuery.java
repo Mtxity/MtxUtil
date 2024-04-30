@@ -68,7 +68,7 @@ public class MtxSelectQuery extends MtxQuery {
 
     public MtxSelectQuery or() {
         // OR cannot be first or last
-        if (!this.WHERE.isEmpty() && this.WHERE.getLast().isOr()) {
+        if (!this.WHERE.isEmpty() && this.WHERE.get(this.WHERE.size() - 1).isOr()) {
             this.WHERE.add(new Comparison(null, ComparisonOperator.OR, null));
         }
         return this;
