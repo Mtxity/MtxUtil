@@ -94,11 +94,12 @@ public class MtxSelectQuery extends MtxQuery {
             qb.append(" WHERE (");
             for (int i = 0; i < this.WHERE.size(); i++) {
                 Comparison comparison = this.WHERE.get(i);
+                boolean isLast = i == this.WHERE.size() - 1;
                 if (comparison.isOr()) {
                     qb.append(") OR (");
                 } else {
                     qb.append(comparison.toString());
-                    if (i != this.WHERE.size() - 1) {
+                    if (!isLast) {
                         qb.append(" AND ");
                     }
                 }
@@ -106,6 +107,39 @@ public class MtxSelectQuery extends MtxQuery {
             qb.append(")");
         }
 
-        return qb.toString();
+        if (!this.ORDERBY_ASC.isEmpty()) {
+            qb.append(" ORDER BY ");
+            for (int i = 0; i < this.ORDERBY_ASC.size(); i++) {
+                String column = this.ORDERBY_ASC.get(i);
+                boolean isLast = i == this.ORDERBY_ASC.size() - 1;
+                qb.append(column);
+                if (!isLast) {
+                    qb.append(", ");
+                } else {
+                    qb.append(" ASC");
+                }
+            }
+            if (!this.ORDERBY_DESC.isEmpty()) {
+                qb.append(", ");
+            }
+        }
+
+        if (!this.ORDERBY_DESC.isEmpty()) {
+            if (this.ORDERBY_ASC.isEmpty()) {
+                qb.append(" ORDER BY ");
+            }
+            for (int i = 0; i < this.ORDERBY_DESC.size(); i++) {
+                String column = this.ORDERBY_DESC.get(i);
+                boolean isLast = i == this.ORDERBY_DESC.size() - 1;
+                qb.append(column);
+                if (!isLast) {
+                    qb.append(", ");
+                } else {
+                    qb.append(" DESC");
+                }
+            }
+        }
+
+        return qb.append(";").toString();
     }
 }
