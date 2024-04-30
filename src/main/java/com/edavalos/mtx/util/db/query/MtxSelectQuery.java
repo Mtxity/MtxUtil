@@ -56,4 +56,14 @@ public class MtxSelectQuery extends MtxQuery {
         return this;
     }
 
+    public MtxSelectQuery where(Comparison condition) {
+        this.WHERE.add(condition);
+        return this;
+    }
+
+    public MtxSelectQuery or() {
+        this.WHERE.add(new Comparison(null, ComparisonOperator.OR, null));
+        return this;
+    }
+
 }
