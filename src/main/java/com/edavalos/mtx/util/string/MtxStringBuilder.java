@@ -3,7 +3,9 @@ package com.edavalos.mtx.util.string;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 
 public class MtxStringBuilder {
     private final LinkedList<Character> parts;
@@ -140,6 +142,11 @@ public class MtxStringBuilder {
             throw new IndexOutOfBoundsException("Index outside bounds of MtxStringBuilder: " + index);
         }
         return this.parts.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return this.parts.stream().map(String::valueOf).collect(Collectors.joining());
     }
 
 
