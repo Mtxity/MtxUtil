@@ -241,4 +241,44 @@ public class MtxStringBuilderTest {
         );
         assertEquals("Index outside bounds of MtxStringBuilder: 1000", e.getMessage());
     }
+
+    @Test
+    public void testToString() {
+        String sampleString = "";
+        mtxStringBuilder = new MtxStringBuilder();
+        for (int i = 0; i < 26; i+=2) {
+            sampleString += i;
+            mtxStringBuilder.append(i);
+            assertEquals(sampleString, mtxStringBuilder.toString());
+        }
+    }
+
+    @Nested
+    class EqualsTests {
+
+        @Test
+        public void testEquals_null() {
+            assertFalse(mtxStringBuilder.equals(null));
+        }
+
+        @Test
+        public void testEquals_differentObject() {
+            assertFalse(mtxStringBuilder.equals("null"));
+        }
+
+        @Test
+        public void testEquals_differentLength() {
+            assertFalse(mtxStringBuilder.equals(new MtxStringBuilder("test")));
+        }
+
+        @Test
+        public void testEquals_differentValue() {
+            assertFalse(mtxStringBuilder.equals(new MtxStringBuilder(STARTING_STR.replace("a", "b"))));
+        }
+
+        @Test
+        public void testEquals_sameValue() {
+            assertTrue(mtxStringBuilder.equals(new MtxStringBuilder(STARTING_STR)));
+        }
+    }
 }
