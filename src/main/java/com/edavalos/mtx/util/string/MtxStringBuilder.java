@@ -1,27 +1,26 @@
 package com.edavalos.mtx.util.string;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MtxStringBuilder {
-    private final ArrayList<Character> parts;
+    private final LinkedList<Character> parts;
 
 
     // ----------------------- Constructors ------------------------
 
     public MtxStringBuilder() {
-        this.parts = new ArrayList<>();
+        this.parts = new LinkedList<>();
     }
 
     public MtxStringBuilder(String firstString) {
-        this.parts = new ArrayList<>();
+        this.parts = new LinkedList<>();
         this.appendString(firstString);
     }
 
     public MtxStringBuilder(Object firstValue) {
-        this.parts = new ArrayList<>();
+        this.parts = new LinkedList<>();
         this.appendString(firstValue.toString());
     }
 
