@@ -9,6 +9,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxStringBuilderTest {
@@ -157,5 +158,30 @@ public class MtxStringBuilderTest {
             mtxStringBuilder = mtxStringBuilder.append((List<?>) null);
             assertEquals(STARTING_STR, mtxStringBuilder.toString());
         }
+    }
+
+    @Test
+    public void testAppendSpace() {
+        mtxStringBuilder = mtxStringBuilder.appendSpace();
+        assertEquals(STARTING_STR + " ", mtxStringBuilder.toString());
+    }
+
+    @Test
+    public void testAppendSpaces() {
+        for (int i = 0; i < 5; i++) {
+            mtxStringBuilder = mtxStringBuilder.appendSpaces(i);
+            String expectedAdded = (i == 0) ? "" : " ".repeat(i);
+            assertEquals(STARTING_STR + expectedAdded, mtxStringBuilder.toString());
+            mtxStringBuilder = new MtxStringBuilder(STARTING_STR);
+        }
+    }
+
+    @Test
+    public void testAppendSpaces_negative() {
+        StringIndexOutOfBoundsException e = assertThrows(
+                StringIndexOutOfBoundsException.class,
+                () -> mtxStringBuilder.appendSpaces(-1)
+        );
+        assertEquals("Cannot append string of negative size: -1", e.getMessage());
     }
 }
