@@ -3,8 +3,6 @@ package com.edavalos.mtx.util.string;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.StringJoiner;
-import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public class MtxStringBuilder {
@@ -137,6 +135,10 @@ public class MtxStringBuilder {
         return this.parts.size();
     }
 
+    public boolean isEmpty() {
+        return this.parts.isEmpty();
+    }
+
     public char charAt(int index) {
         if (index < 0 || index >= this.length()) {
             throw new IndexOutOfBoundsException("Index outside bounds of MtxStringBuilder: " + index);
@@ -147,6 +149,20 @@ public class MtxStringBuilder {
     @Override
     public String toString() {
         return this.parts.stream().map(String::valueOf).collect(Collectors.joining());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof MtxStringBuilder otherMtxSb)) {
+            return false;
+        }
+        if (otherMtxSb.length() != this.length()) {
+            return false;
+        }
+        return this.toString().equals(otherMtxSb.toString());
     }
 
 
