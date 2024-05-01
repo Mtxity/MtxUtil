@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.string;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class MtxStringBuilder {
     private final LinkedList<Character> parts;
@@ -106,11 +107,13 @@ public class MtxStringBuilder {
     }
 
     public MtxStringBuilder replaceAll(char target, char replacement) {
-        for (int i = 0; i < this.parts.size(); i++) {
-            if (this.parts.get(i) == target) {
-                this.parts.set(i, replacement);
+        this.parts.replaceAll(character -> {
+            if (character == target) {
+                return replacement;
+            } else {
+                return character;
             }
-        }
+        });
         return this;
     }
 
