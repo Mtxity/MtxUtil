@@ -95,10 +95,6 @@ public class MtxStringBuilder {
         return this.append(nextValue.toArray());
     }
 
-    public MtxStringBuilder append(Collection<?> nextValue) {
-        return this.append(nextValue.toArray());
-    }
-
 
     // ------------------ Private Helper Methods -------------------
 
