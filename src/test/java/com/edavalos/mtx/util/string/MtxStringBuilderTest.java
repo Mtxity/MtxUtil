@@ -219,4 +219,26 @@ public class MtxStringBuilderTest {
             assertEquals(i, mtxStringBuilder.length());
         }
     }
+
+    @Test
+    public void testIsEmpty() {
+        mtxStringBuilder = new MtxStringBuilder();
+        assertTrue(mtxStringBuilder.isEmpty());
+        mtxStringBuilder.append("string");
+        assertFalse(mtxStringBuilder.isEmpty());
+    }
+
+    @Test
+    public void testCharAt() {
+        assertEquals(STARTING_STR.charAt(3), mtxStringBuilder.charAt(3));
+    }
+
+    @Test
+    public void testCharAt_outOfBounds() {
+        IndexOutOfBoundsException e = assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> mtxStringBuilder.charAt(1000)
+        );
+        assertEquals("Index outside bounds of MtxStringBuilder: 1000", e.getMessage());
+    }
 }
