@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -200,5 +201,22 @@ public class MtxStringBuilderTest {
                 mtxStringBuilder.toString(),
                 mtxStringBuilder.reverse().toString()
         );
+    }
+
+    @Test
+    public void testReplaceAll() {
+        assertEquals(
+                STARTING_STR.replaceAll(Pattern.quote("_"), "+"),
+                mtxStringBuilder.replaceAll('_', '+').toString()
+        );
+    }
+
+    @Test
+    public void testLength() {
+        mtxStringBuilder = new MtxStringBuilder();
+        for (int i = 1; i < 8; i++) {
+            mtxStringBuilder.append(i);
+            assertEquals(i, mtxStringBuilder.length());
+        }
     }
 }
