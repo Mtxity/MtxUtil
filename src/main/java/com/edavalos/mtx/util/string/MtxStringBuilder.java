@@ -95,6 +95,20 @@ public class MtxStringBuilder {
         return this.append(nextValue.toArray());
     }
 
+    public MtxStringBuilder appendSpace() {
+        return this.append(' ');
+    }
+
+    public MtxStringBuilder appendSpaces(int count) {
+        if (count < 0) {
+            throw new StringIndexOutOfBoundsException("Cannot append string of negative size: " + count);
+        }
+        for (int i = 0; i < count; i++) {
+            this.parts.add(' ');
+        }
+        return this;
+    }
+
     public MtxStringBuilder reverse() {
         if (this.length() <= 1) {
             return this;
