@@ -94,6 +94,17 @@ public class MtxStringBuilder {
         return this.append(nextValue.toArray());
     }
 
+    public int length() {
+        return this.parts.size();
+    }
+
+    public char charAt(int index) {
+        if (index < 0 || index >= this.length()) {
+            throw new IndexOutOfBoundsException("Index outside bounds of MtxStringBuilder: " + index);
+        }
+        return this.parts.get(index);
+    }
+
 
     // ------------------ Private Helper Methods -------------------
 
