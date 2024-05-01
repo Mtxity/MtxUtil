@@ -94,6 +94,17 @@ public class MtxStringBuilder {
         return this.append(nextValue.toArray());
     }
 
+    public MtxStringBuilder reverse() {
+        if (this.length() <= 1) {
+            return this;
+        }
+        MtxStringBuilder newMtxStringBuilder = new MtxStringBuilder();
+        for (int i = this.parts.size() - 1; i >= 0; i--) {
+            newMtxStringBuilder.append(((char) this.parts.get(i)));
+        }
+        return newMtxStringBuilder;
+    }
+
     public int length() {
         return this.parts.size();
     }
