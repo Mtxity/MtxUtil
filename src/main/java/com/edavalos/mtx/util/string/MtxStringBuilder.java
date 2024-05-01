@@ -29,7 +29,9 @@ public class MtxStringBuilder {
     // ---------------------- Public Methods -----------------------
 
     public MtxStringBuilder append(String nextString) {
-        this.appendString(nextString);
+        if (nextString != null && !nextString.isEmpty()) {
+            this.appendString(nextString);
+        }
         return this;
     }
 
@@ -74,29 +76,27 @@ public class MtxStringBuilder {
     }
 
     public MtxStringBuilder append(Object nextValue) {
-        this.appendString(nextValue.toString());
-        return this;
+        return this.append(nextValue.toString());
     }
 
     public MtxStringBuilder append(Object[] nextValue) {
-        for (Object o : nextValue) {
-            this.parts.add(o.toString());
+        if (nextValue != null) {
+            for (Object o : nextValue) {
+                this.append(o.toString());
+            }
         }
         return this;
     }
 
     public MtxStringBuilder append(List<?> nextValue) {
-        for (Object o : nextValue) {
-            this.parts.add(o.toString());
+        if (nextValue == null) {
+            return this;
         }
-        return this;
+        return this.append(nextValue.toArray());
     }
 
     public MtxStringBuilder append(Collection<?> nextValue) {
-        for (Object o : nextValue) {
-            this.parts.add(o.toString());
-        }
-        return this;
+        return this.append(nextValue.toArray());
     }
 
 
