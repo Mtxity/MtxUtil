@@ -184,4 +184,21 @@ public class MtxStringBuilderTest {
         );
         assertEquals("Cannot append string of negative size: -1", e.getMessage());
     }
+
+    @Test
+    public void testReverse() {
+        assertEquals(
+                new StringBuilder(STARTING_STR).reverse().toString(),
+                mtxStringBuilder.reverse().toString()
+        );
+    }
+
+    @Test
+    public void testReverse_lengthOne() {
+        mtxStringBuilder = new MtxStringBuilder("x");
+        assertEquals(
+                mtxStringBuilder.toString(),
+                mtxStringBuilder.reverse().toString()
+        );
+    }
 }
