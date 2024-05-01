@@ -105,6 +105,15 @@ public class MtxStringBuilder {
         return newMtxStringBuilder;
     }
 
+    public MtxStringBuilder replaceAll(char target, char replacement) {
+        for (int i = 0; i < this.parts.size(); i++) {
+            if (this.parts.get(i) == target) {
+                this.parts.set(i, replacement);
+            }
+        }
+        return this;
+    }
+
     public int length() {
         return this.parts.size();
     }
