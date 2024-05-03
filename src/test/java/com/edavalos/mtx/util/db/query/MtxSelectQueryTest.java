@@ -206,7 +206,19 @@ public final class MtxSelectQueryTest {
     }
 
     @Test
-    public void testToString_incompleteQuery() {
+    public void testToString_incompleteQuery_standalone() {
+        String expectedErrorMsg = "MtxSelectQuery is missing elements required to convert it to a String!";
+        MtxSelectQuery query = new MtxSelectQuery("randomElement");
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> query.toString()
+        );
+        String actualErrorMsg = exception.getMessage();
+        assertEquals(expectedErrorMsg, actualErrorMsg);
+    }
+
+    @Test
+    public void testToString_incompleteQuery_withExtraClauses() {
         String expectedErrorMsg = "MtxSelectQuery is missing elements required to convert it to a String!";
         MtxSelectQuery query = mtxSelectQuery
                                .leftJoin("other1", gte("a", "b"))
