@@ -50,4 +50,14 @@ public final class MtxSelectQueryTest {
                         .toString();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testQuery_fullJoin() {
+        String expected = "SELECT * FROM table FULL JOIN otherTable ON (t = u);";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .fullJoin("otherTable", eq("t", "u"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
 }
