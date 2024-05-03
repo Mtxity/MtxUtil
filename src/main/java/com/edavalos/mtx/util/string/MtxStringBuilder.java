@@ -109,6 +109,31 @@ public class MtxStringBuilder {
         return this;
     }
 
+    public MtxStringBuilder trim() {
+        int start = 0;
+        int end = this.parts.size();
+        for (int i = 0; i < this.parts.size(); i++) {
+            if (this.parts.get(i) != ' ') {
+                start = i;
+                break;
+            }
+            if (i == this.parts.size() - 1) {
+                return new MtxStringBuilder();
+            }
+        }
+
+        for (int j = this.parts.size() - 1; j >= 0; j--) {
+            if (this.parts.get(j) != ' ') {
+                end = j + 1;
+                break;
+            }
+        }
+
+        List<Character> subList = this.parts.subList(start, end);
+        MtxStringBuilder subString = new MtxStringBuilder();
+        return subString.append(subList);
+    }
+
     public MtxStringBuilder reverse() {
         if (this.length() <= 1) {
             return this;
