@@ -143,4 +143,41 @@ public final class MtxSelectQueryTest {
                         .toString();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testOrderBy_bothAscAndDesc() {
+        String expected = "SELECT * FROM table ORDER BY date ASC, time DESC;";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .orderBy("date", MtxSelectQuery.Order.ASC)
+                        .orderBy("time", MtxSelectQuery.Order.DESC)
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testOrderBy_bothAscAndDesc_multipleValues() {
+        String expected = "SELECT * FROM table ORDER BY year, date ASC, time, place DESC;";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .orderBy("year", MtxSelectQuery.Order.ASC)
+                        .orderBy("date", MtxSelectQuery.Order.ASC)
+                        .orderBy("time", MtxSelectQuery.Order.DESC)
+                        .orderBy("place", MtxSelectQuery.Order.DESC)
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testOrderBy_bothAscAndDesc_multipleValues_randomOrder() {
+        String expected = "SELECT * FROM table ORDER BY year, date ASC, time, place DESC;";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .orderBy("time", MtxSelectQuery.Order.DESC)
+                        .orderBy("year", MtxSelectQuery.Order.ASC)
+                        .orderBy("place", MtxSelectQuery.Order.DESC)
+                        .orderBy("date", MtxSelectQuery.Order.ASC)
+                        .toString();
+        assertEquals(expected, actual);
+    }
 }
