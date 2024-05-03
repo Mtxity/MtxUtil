@@ -103,7 +103,9 @@ public class MtxSelectQuery extends MtxQuery {
                 Comparison comparison = this.WHERE.get(i);
                 boolean isLast = i == this.WHERE.size() - 1;
                 if (comparison.isOr()) {
-                    qb.append(") OR (");
+                    if (!isLast) {
+                        qb.append(") OR (");
+                    }
                 } else {
                     qb.append(comparison.toString());
                     if (!isLast && (i + 1 < this.WHERE.size() && !this.WHERE.get(i + 1).isOr())) {
