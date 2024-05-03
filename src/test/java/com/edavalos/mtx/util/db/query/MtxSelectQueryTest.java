@@ -40,4 +40,14 @@ public final class MtxSelectQueryTest {
                         .toString();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testQuery_innerJoin() {
+        String expected = "SELECT * FROM table INNER JOIN otherTable ON (t = u);";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .innerJoin("otherTable", eq("t", "u"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
 }
