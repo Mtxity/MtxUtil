@@ -39,4 +39,60 @@ public final class MtxQueryTest {
             assertTrue(comparison.isOr());
         }
     }
+
+    @Nested
+    class TestComparisonGenerator {
+        private static String f1 = "1";
+        private static String f2 = "2";
+        private MtxQuery.Comparison comparison;
+
+        @Test
+        public void testEq() {
+            comparison = MtxQuery.eq(f1, f2);
+            String expected = "(1 = 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testNeq() {
+            comparison = MtxQuery.neq(f1, f2);
+            String expected = "(1 <> 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testGt() {
+            comparison = MtxQuery.gt(f1, f2);
+            String expected = "(1 > 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testGte() {
+            comparison = MtxQuery.gte(f1, f2);
+            String expected = "(1 >= 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testLt() {
+            comparison = MtxQuery.lt(f1, f2);
+            String expected = "(1 < 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testLte() {
+            comparison = MtxQuery.lte(f1, f2);
+            String expected = "(1 <= 2)";
+            assertEquals(expected, comparison.toString());
+        }
+
+        @Test
+        public void testLike() {
+            comparison = MtxQuery.like(f1, f2);
+            String expected = "(1 LIKE 2)";
+            assertEquals(expected, comparison.toString());
+        }
+    }
 }
