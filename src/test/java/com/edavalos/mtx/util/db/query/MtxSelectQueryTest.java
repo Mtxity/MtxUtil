@@ -4,9 +4,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.edavalos.mtx.util.db.query.MtxQuery.eq;
+import static com.edavalos.mtx.util.db.query.MtxQuery.gte;
 import static com.edavalos.mtx.util.db.query.MtxQuery.like;
+import static com.edavalos.mtx.util.db.query.MtxQuery.lt;
+import static com.edavalos.mtx.util.db.query.MtxQuery.lte;
 import static com.edavalos.mtx.util.db.query.MtxQuery.neq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public final class MtxSelectQueryTest {
     private MtxSelectQuery mtxSelectQuery;
@@ -179,5 +183,44 @@ public final class MtxSelectQueryTest {
                         .orderBy("date", MtxSelectQuery.Order.ASC)
                         .toString();
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testToString_completeQuery() {
+        String expected = "SELECT * " +
+                          "FROM table " +
+                          "INNER JOIN other2 ON (c < d) " +
+                          "LEFT JOIN other1 ON (a >= b) " +
+                          "WHERE ((w <= x)) OR ((y LIKE z)) " +
+                          "ORDER BY year ASC, time DESC;";
+        MtxSelectQuery query = mtxSelectQuery
+                               .from("table")
+                               .leftJoin("other1", gte("a", "b"))
+                               .innerJoin("other2", lt("c", "d"))
+                               .where(lte("w", "x"))
+                               .or()
+                               .where(like("y", "z"))
+                               .orderBy("time", MtxSelectQuery.Order.DESC)
+                               .orderBy("year", MtxSelectQuery.Order.ASC);
+        assertEquals(expected, query.toString());
+    }
+
+    @Test
+    public void testToString_incompleteQuery() {
+        String expectedErrorMsg = "MtxSelectQuery is missing elements required to convert it to a String!";
+        MtxSelectQuery query = mtxSelectQuery
+                               .leftJoin("other1", gte("a", "b"))
+                               .innerJoin("other2", lt("c", "d"))
+                               .where(lte("w", "x"))
+                               .or()
+                               .where(like("y", "z"))
+                               .orderBy("time", MtxSelectQuery.Order.DESC)
+                               .orderBy("year", MtxSelectQuery.Order.ASC);
+        IllegalStateException exception = assertThrows(
+                IllegalStateException.class,
+                () -> query.toString()
+        );
+        String actualErrorMsg = exception.getMessage();
+        assertEquals(expectedErrorMsg, actualErrorMsg);
     }
 }
