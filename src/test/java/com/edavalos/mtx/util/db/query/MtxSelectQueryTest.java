@@ -30,4 +30,14 @@ public final class MtxSelectQueryTest {
                         .toString();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testQuery_rightJoin() {
+        String expected = "SELECT * FROM table RIGHT JOIN otherTable ON (t = u);";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .rightJoin("otherTable", eq("t", "u"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
 }
