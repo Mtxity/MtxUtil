@@ -123,4 +123,14 @@ public final class MtxSelectQueryTest {
                         .toString();
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void testOrderBy_onlyAsc() {
+        String expected = "SELECT * FROM table ORDER BY time ASC;";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .orderBy("time", MtxSelectQuery.Order.ASC)
+                        .toString();
+        assertEquals(expected, actual);
+    }
 }
