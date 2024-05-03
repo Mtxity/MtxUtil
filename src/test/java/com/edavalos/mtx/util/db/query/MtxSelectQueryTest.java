@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.edavalos.mtx.util.db.query.MtxQuery.eq;
+import static com.edavalos.mtx.util.db.query.MtxQuery.like;
+import static com.edavalos.mtx.util.db.query.MtxQuery.neq;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public final class MtxSelectQueryTest {
@@ -57,6 +59,67 @@ public final class MtxSelectQueryTest {
         String actual = mtxSelectQuery
                         .from("table")
                         .fullJoin("otherTable", eq("t", "u"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testQuery_where_one() {
+        String expected = "SELECT * FROM table WHERE ((t = u));";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .where(eq("t", "u"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testQuery_where_multiple() {
+        String expected = "SELECT * FROM table WHERE ((t = u) AND (v <> w) AND (x LIKE y));";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .where(eq("t", "u"))
+                        .where(neq("v", "w"))
+                        .where(like("x", "y"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testQuery_where_withOr_atMiddle() {
+        String expected = "SELECT * FROM table WHERE ((t = u) AND (v <> w)) OR ((x LIKE y));";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .where(eq("t", "u"))
+                        .where(neq("v", "w"))
+                        .or()
+                        .where(like("x", "y"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testQuery_where_withOr_atStart() {
+        String expected = "SELECT * FROM table WHERE ((t = u) AND (v <> w) AND (x LIKE y));";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .or() // OR statement should be ignored due to being first
+                        .where(eq("t", "u"))
+                        .where(neq("v", "w"))
+                        .where(like("x", "y"))
+                        .toString();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testQuery_where_withOr_atEnd() {
+        String expected = "SELECT * FROM table WHERE ((t = u) AND (v <> w) AND (x LIKE y));";
+        String actual = mtxSelectQuery
+                        .from("table")
+                        .where(eq("t", "u"))
+                        .where(neq("v", "w"))
+                        .where(like("x", "y"))
+                        .or() // OR statement should be ignored due to being last
                         .toString();
         assertEquals(expected, actual);
     }
