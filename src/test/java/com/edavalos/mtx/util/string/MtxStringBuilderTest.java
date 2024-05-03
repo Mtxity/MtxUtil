@@ -186,6 +186,55 @@ public class MtxStringBuilderTest {
         assertEquals("Cannot append string of negative size: -1", e.getMessage());
     }
 
+    @Nested
+    class TrimTests {
+
+        @Test
+        public void testTrim_noTrim() {
+            String starting = "123 456";
+            String expected = "123 456";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
+
+        @Test
+        public void testTrim_beginningTrim() {
+            String starting = "  3 456";
+            String expected = "3 456";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
+
+        @Test
+        public void testTrim_endingTrim() {
+            String starting = "123 4  ";
+            String expected = "123 4";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
+
+        @Test
+        public void testTrim_bothSidesTrim() {
+            String starting = "  3 45 ";
+            String expected = "3 45";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
+
+        @Test
+        public void testTrim_entireTrim() {
+            String starting = "      ";
+            String expected = "";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
+    }
+
     @Test
     public void testReverse() {
         assertEquals(
