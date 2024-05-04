@@ -42,4 +42,8 @@ public class MtxLogger {
     public void log(String statement, MtxCompatibleLogger logger) {
         logger.log(getTimestamp() + " " + statement);
     }
+
+    public void log(String statement) {
+        System.out.println(getTimestamp() + " " + statement);
+    }
 }
