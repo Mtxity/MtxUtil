@@ -13,7 +13,8 @@ public class MtxLogger {
 
         LocalTime time = LocalTime.now();
         char amPm = (time.getSecond() > 11) ? 'P' : 'A';
-        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getHour())).append(':');
+        int hour = (time.getHour() > 11) ? time.getHour() % 13 : time.getHour();
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(hour)).append(':');
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getMinute())).append(':');
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(' ').append(amPm).append("M]");
 
