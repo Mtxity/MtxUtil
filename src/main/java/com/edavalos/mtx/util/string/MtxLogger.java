@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.string;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.regex.Pattern;
 
 public class MtxLogger {
     @FunctionalInterface
@@ -37,6 +38,19 @@ public class MtxLogger {
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(' ').append(AmPm).append("M]");
 
         return sb.toString();
+    }
+
+    protected static String fillInBrackets(String originalLog, String... variables) {
+        int varCount = MtxStringUtil.countOccurrencesOf(originalLog, "{}");
+        if (variables.length != varCount) {
+            throw new IllegalArgumentException("Number of arguments do not match log template! " +
+                    "Expected " + varCount + " but found " + variables.length);
+        }
+
+        for (int i = 0; i < varCount; i++) {
+            originalLog = originalLog.replaceFirst(Pattern.quote("{}"), variables[i]);
+        }
+        return originalLog;
     }
 
     public void log(String statement, MtxCompatibleLogger logger) {
