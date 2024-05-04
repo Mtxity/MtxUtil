@@ -4,6 +4,11 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 public class MtxLogger {
+    @FunctionalInterface
+    public interface MtxCompatibleLogger {
+        void log(String statement);
+    }
+
     protected static String getTimestamp() {
         LocalDate date = LocalDate.now();
         StringBuilder sb = new StringBuilder("[");
@@ -32,5 +37,9 @@ public class MtxLogger {
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(' ').append(AmPm).append("M]");
 
         return sb.toString();
+    }
+
+    public void log(String statement, MtxCompatibleLogger logger) {
+        logger.log(getTimestamp() + " " + statement);
     }
 }
