@@ -12,11 +12,24 @@ public class MtxLogger {
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(date.getDayOfMonth())).append(' ');
 
         LocalTime time = LocalTime.now();
-        char amPm = (time.getSecond() > 11) ? 'P' : 'A';
-        int hour = (time.getHour() > 11) ? time.getHour() % 13 : time.getHour();
+        int hour;
+        char AmPm;
+        if (time.getHour() == 0) {
+            hour = 12;
+            AmPm = 'A';
+        } else if (time.getHour() <= 11) {
+            hour = time.getHour();
+            AmPm = 'A';
+        } else if (time.getHour() == 12) {
+            hour = 12;
+            AmPm = 'P';
+        } else {
+            hour = time.getHour() % 12;
+            AmPm = 'P';
+        }
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(hour)).append(':');
         sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getMinute())).append(':');
-        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(' ').append(amPm).append("M]");
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(' ').append(AmPm).append("M]");
 
         return sb.toString();
     }
