@@ -954,4 +954,42 @@ public final class MtxStringUtilTest {
             assertEquals(arrayAsString, MtxStringUtil.joinArrayAsString(intArray3));
         }
     }
+
+    @Nested
+    class TestPadZeroToDateRelatedInt {
+        int tooLow = -2;
+        int tooHigh = 102;
+        int oneDigit = 7;
+        int twoDigit = 14;
+
+        @Test
+        public void testPadZeroToDateRelatedInt_tooLow() {
+            String errMSg = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.padZeroToDateRelatedInt(tooLow)
+            ).getMessage();
+
+            assertEquals("Negative values cannot be padded: " + tooLow, errMSg);
+        }
+
+        @Test
+        public void testPadZeroToDateRelatedInt_tooHigh() {
+            String errMSg = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.padZeroToDateRelatedInt(tooHigh)
+            ).getMessage();
+
+            assertEquals("Value is too big to be padded (and fit in two digits): " + tooHigh, errMSg);
+        }
+
+        @Test
+        public void testPadZeroToDateRelatedInt_noZeroAdded() {
+            assertEquals("14", MtxStringUtil.padZeroToDateRelatedInt(twoDigit));
+        }
+
+        @Test
+        public void testPadZeroToDateRelatedInt_withZeroAdded() {
+            assertEquals("07", MtxStringUtil.padZeroToDateRelatedInt(oneDigit));
+        }
+    }
 }
