@@ -1,16 +1,14 @@
 package com.edavalos.mtx.util.string;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class MtxLogger {
     protected static String getTimestamp() {
-        Date ts = new Date();
+        LocalDate ts = LocalDate.now();
         StringBuilder sb = new StringBuilder("[");
         sb.append(ts.getYear()).append('-');
-        sb.append(ts.getMonth()).append('-');
-        sb.append(ts.getDay());
+        sb.append(ts.getMonthValue()).append('-');
+        sb.append(ts.getDayOfMonth());
 
         return sb.toString();
     }
