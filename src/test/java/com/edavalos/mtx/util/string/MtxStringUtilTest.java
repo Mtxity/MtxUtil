@@ -391,6 +391,15 @@ public final class MtxStringUtilTest {
                 );
             }
         }
+
+        @Test
+        public void testCountOccurrencesOf_forUseInLogging() {
+            String logTemplate = "{}";
+            for (int i = 0; i < 10; i++) {
+                String logStatementWithTemplate = "TestLog " + ((logTemplate + " ").repeat(i));
+                assertEquals(i, MtxStringUtil.countOccurrencesOf(logStatementWithTemplate, logTemplate));
+            }
+        }
     }
 
     @Nested
