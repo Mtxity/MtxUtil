@@ -388,4 +388,19 @@ public final class MtxStringUtil {
         sb.append(array[array.length - 1].toString()).append("]");
         return sb.toString();
     }
+
+    public static String padZeroToDateRelatedInt(int value) {
+        if (value < 0) {
+            throw new IllegalArgumentException("Negative values cannot be padded: " + value);
+        }
+        if (value > 99) {
+            throw new IllegalArgumentException("Value is too big to be padded (and fit in two digits): " + value);
+        }
+
+        if (value > 9) {
+            return String.valueOf(value);
+        } else {
+            return "0" + value;
+        }
+    }
 }
