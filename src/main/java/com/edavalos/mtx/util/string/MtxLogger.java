@@ -8,13 +8,13 @@ public class MtxLogger {
         LocalDate date = LocalDate.now();
         StringBuilder sb = new StringBuilder("[");
         sb.append(date.getYear()).append('-');
-        sb.append(date.getMonthValue()).append('-');
-        sb.append(date.getDayOfMonth()).append(' ');
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(date.getMonthValue())).append('-');
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(date.getDayOfMonth())).append(' ');
 
         LocalTime time = LocalTime.now();
-        sb.append(time.getHour()).append(':');
-        sb.append(time.getMinute()).append(':');
-        sb.append(time.getSecond()).append(']');
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getHour())).append(':');
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getMinute())).append(':');
+        sb.append(MtxStringUtil.padZeroToDateRelatedInt(time.getSecond())).append(" AM]");
 
         return sb.toString();
     }
