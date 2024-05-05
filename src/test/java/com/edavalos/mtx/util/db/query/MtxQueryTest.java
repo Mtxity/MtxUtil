@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public final class MtxQueryTest {
 
     @Nested
-    class TestComparison {
+    class ComparisonTests {
         private MtxQuery.Comparison comparison;
 
         @Test
@@ -41,7 +41,7 @@ public final class MtxQueryTest {
     }
 
     @Nested
-    class TestComparisonGenerator {
+    class ComparisonGeneratorTests {
         private static String f1 = "1";
         private static String f2 = "2";
         private MtxQuery.Comparison comparison;
@@ -93,6 +93,38 @@ public final class MtxQueryTest {
             comparison = MtxQuery.like(f1, f2);
             String expected = "(1 LIKE 2)";
             assertEquals(expected, comparison.toString());
+        }
+    }
+
+    @Nested
+    class IsCompleteTests {
+        private static final class SampleQuery extends MtxQuery {
+            public SampleQuery(boolean isComplete) {
+                super.complete = isComplete;
+            }
+
+            @Override
+            public String toString() {
+                return null;
+            }
+
+            public boolean isComplete() {
+                return super.isComplete();
+            }
+        }
+
+        private SampleQuery sampleQuery;
+
+        @Test
+        public void testIsComplete_notComplete() {
+            sampleQuery = new SampleQuery(false);
+            assertFalse(sampleQuery.isComplete());
+        }
+
+        @Test
+        public void testIsComplete_isComplete() {
+            sampleQuery = new SampleQuery(true);
+            assertTrue(sampleQuery.isComplete());
         }
     }
 }
