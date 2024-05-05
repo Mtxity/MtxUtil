@@ -60,4 +60,12 @@ public class MtxLogger {
     public void log(String statement) {
         System.out.println(getTimestamp() + " " + statement);
     }
+
+    public void log(String template, String... args) {
+        this.log(fillInBrackets(template, args));
+    }
+
+    public void log(String template, MtxCompatibleLogger logger, String... args) {
+        this.log(fillInBrackets(template, args), logger);
+    }
 }
