@@ -20,11 +20,16 @@ public class MtxChecksumIdGenerator implements MtxInfiniteIdBuilder {
 
     @Override
     public String getNextId() {
-        int[] digits = new int[this.length - 1];
-        for (int i = 0; i < this.length - 1; i++) {
+        int[] digits = this.getInitialDigits(this.length - 1);
+        return Arrays.toString(digits);
+    }
+
+    protected int[] getInitialDigits(int length) {
+        int[] digits = new int[length];
+        for (int i = 0; i < length; i++) {
             int digit = NUMBER_GENERATOR.nextInt(10) % 10;
             digits[i] = digit;
         }
-        return Arrays.toString(digits);
+        return digits;
     }
 }
