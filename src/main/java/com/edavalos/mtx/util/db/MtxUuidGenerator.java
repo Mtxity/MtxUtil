@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.UUID;
 
-public final class MtxUuidGenerator {
+public final class MtxUuidGenerator implements MtxInfiniteIdBuilder {
     public enum MtxUuidVersion {
         TIME_BASED(0x10),
         NAME_BASED_MD5(0x30),
@@ -59,6 +59,7 @@ public final class MtxUuidGenerator {
         return new UUID(getMostSigBits(newUuid), getLeastSigBits(newUuid));
     }
 
+    @Override
     public String getNextId() {
         return this.getNextUuid().toString();
     }
