@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -72,6 +73,21 @@ public final class MtxUuidGeneratorTest {
             Set<UUID> comparisonSet = new HashSet<>(generatedUUIDs);
             assertEquals(generatedUUIDs.size(), comparisonSet.size());
         }
+    }
+
+    @Test
+    public void testGetNextId() {
+        mtxUuidGenerator = new MtxUuidGenerator(MtxUuidGenerator.MtxUuidVersion.RANDOMLY_GENERATED);
+
+        List<String> generatedIds = new ArrayList<>();
+        for (int i = 0; i < 45; i++) {
+            String newId = mtxUuidGenerator.getNextId();
+            generatedIds.add(newId);
+            assertDoesNotThrow(() -> UUID.fromString(newId));
+        }
+
+        Set<String> comparisonSet = new HashSet<>(generatedIds);
+        assertEquals(generatedIds.size(), comparisonSet.size());
     }
 
     @Test
