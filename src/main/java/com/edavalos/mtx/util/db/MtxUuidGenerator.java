@@ -59,6 +59,10 @@ public final class MtxUuidGenerator {
         return new UUID(getMostSigBits(newUuid), getLeastSigBits(newUuid));
     }
 
+    public String getNextId() {
+        return this.getNextUuid().toString();
+    }
+
     private static byte[] getRandomByteArray() {
         byte[] randomBytes = new byte[16];
         NUMBER_GENERATOR.nextBytes(randomBytes);
