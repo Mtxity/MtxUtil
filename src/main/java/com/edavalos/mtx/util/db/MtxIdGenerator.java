@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.db;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MtxIdGenerator implements MtxInfiniteIdBuilder {
+public final class MtxIdGenerator implements MtxAutoIdBuilder {
     public enum MtxCharType {
         CHAR,
         UINT,

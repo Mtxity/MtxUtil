@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.db;
 import java.util.Arrays;
 import java.util.Random;
 
-public class MtxChecksumIdGenerator implements MtxInfiniteIdBuilder {
+public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
     private static final Random NUMBER_GENERATOR = new Random();
 
     private final int length;

@@ -1,5 +1,5 @@
 package com.edavalos.mtx.util.db;
 
-public interface MtxInfiniteIdBuilder {
+public interface MtxAutoIdBuilder {
     String getNextId();
 }
