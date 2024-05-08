@@ -146,4 +146,9 @@ public final class MtxIdGenerator implements MtxAutoIdBuilder {
         }
         return sb.toString();
     }
+
+    @Override
+    public int getIdLength() {
+        return this.format.length;
+    }
 }

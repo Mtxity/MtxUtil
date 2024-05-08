@@ -48,4 +48,9 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
         }
         return 10 - (sum % 10);
     }
+
+    @Override
+    public int getIdLength() {
+        return this.length;
+    }
 }

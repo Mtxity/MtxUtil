@@ -170,4 +170,9 @@ public final class MtxUuidGenerator implements MtxAutoIdBuilder {
         }
         return val;
     }
+
+    @Override
+    public int getIdLength() {
+        return 36;
+    }
 }
