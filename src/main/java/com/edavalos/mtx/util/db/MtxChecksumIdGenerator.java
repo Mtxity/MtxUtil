@@ -21,6 +21,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
     @Override
     public String getNextId() {
         int[] digits = this.getInitialDigits(this.length - 1);
+        digits[this.length - 1] = getChecksumDigit(digits);
         return Arrays.toString(digits);
     }
 
@@ -31,5 +32,20 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
             digits[i] = digit;
         }
         return digits;
+    }
+
+    protected int getChecksumDigit(int[] initialDigits) {
+        // Based on the Luhn Algorithm
+        // https://en.m.wikipedia.org/wiki/Luhn_algorithm
+        boolean x2 = true;
+        int sum = 0;
+        for (int i = 0; i < initialDigits.length; i++) {
+            String row = String.valueOf(x2 ? initialDigits[i] * 2 : initialDigits[i]);
+            for (int j = 0; j < row.length(); j++) {
+                sum += row.charAt(j);
+            }
+            x2 = !x2;
+        }
+        return 10 - (sum % 10);
     }
 }
