@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.id;
 
 import java.math.BigInteger;
 import java.net.NetworkInterface;

@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.db;
+package com.edavalos.mtx.util.db.id;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
