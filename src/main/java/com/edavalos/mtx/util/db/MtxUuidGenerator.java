@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db;
 
+import java.math.BigInteger;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
@@ -28,6 +29,7 @@ public final class MtxUuidGenerator implements MtxAutoIdBuilder {
         }
     }
 
+    private static final BigInteger TOTAL_UUID_COMBINATIONS = BigInteger.valueOf(2).pow(128);
     private static final int STANDARD_UUID_VARIANT_HEX = 0x80;
     private static final SecureRandom NUMBER_GENERATOR = new SecureRandom();
 
@@ -174,5 +176,10 @@ public final class MtxUuidGenerator implements MtxAutoIdBuilder {
     @Override
     public int getIdLength() {
         return 36;
+    }
+
+    @Override
+    public BigInteger getTotalUniqueIds() {
+        return TOTAL_UUID_COMBINATIONS;
     }
 }

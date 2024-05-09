@@ -128,6 +128,7 @@ public final class MtxIdGenerator implements MtxAutoIdBuilder {
         return String.valueOf(this.nextId);
     }
 
+    @Override
     public BigInteger getTotalUniqueIds() {
         return BigInteger.valueOf(this.max);
     }
