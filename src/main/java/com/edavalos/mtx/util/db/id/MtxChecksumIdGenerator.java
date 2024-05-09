@@ -23,11 +23,16 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
     public String getNextId() {
         int[] digits = this.getInitialDigits(this.length - 1);
         digits[this.length - 1] = getChecksumDigit(digits);
-        return Arrays.toString(digits);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < this.length; i++) {
+            sb.append(digits[i]);
+        }
+        return sb.toString();
     }
 
     protected int[] getInitialDigits(int length) {
-        int[] digits = new int[length];
+        int[] digits = new int[length + 1];
         for (int i = 0; i < length; i++) {
             int digit = NUMBER_GENERATOR.nextInt(10) % 10;
             digits[i] = digit;
@@ -35,7 +40,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
         return digits;
     }
 
-    protected int getChecksumDigit(int[] initialDigits) {
+    protected static int getChecksumDigit(int[] initialDigits) {
         // Based on the Luhn Algorithm
         // https://en.m.wikipedia.org/wiki/Luhn_algorithm
         boolean x2 = true;
@@ -47,7 +52,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
             }
             x2 = !x2;
         }
-        return 10 - (sum % 10);
+        return 9 - ((sum + 9) % 10);
     }
 
     @Override
