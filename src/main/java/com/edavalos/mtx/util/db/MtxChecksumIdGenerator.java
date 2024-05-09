@@ -54,7 +54,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
         return this.length;
     }
 
-    public int getMaxIds() {
+    public int getTotalUniqueIds() {
         return (int) Math.pow(10, this.length);
     }
 }

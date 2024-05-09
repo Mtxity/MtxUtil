@@ -87,10 +87,10 @@ public final class MtxIdGeneratorTest {
         int max2 = 93600;
 
         mtxIdGenerator = new MtxIdGenerator(test1);
-        assertEquals(max1, mtxIdGenerator.getMaxIds());
+        assertEquals(max1, mtxIdGenerator.getTotalUniqueIds());
 
         mtxIdGenerator = new MtxIdGenerator(test2);
-        assertEquals(max2, mtxIdGenerator.getMaxIds());
+        assertEquals(max2, mtxIdGenerator.getTotalUniqueIds());
     }
 
     @Nested
@@ -123,7 +123,7 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_onlyNumbers() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS);
 
-            int max = mtxIdGenerator.getMaxIds();
+            int max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
             for (int i = 0; i < max; i++) {
                 idList.add(mtxIdGenerator.getNextId());
@@ -137,7 +137,7 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_numbersAndLetters() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_LETTERS);
 
-            int max = mtxIdGenerator.getMaxIds();
+            int max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
             for (int i = 0; i < max; i++) {
                 idList.add(mtxIdGenerator.getNextId());
@@ -151,7 +151,7 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_anything() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_ANYTHING);
 
-            int max = mtxIdGenerator.getMaxIds();
+            int max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
             for (int i = 0; i < max; i++) {
                 idList.add(mtxIdGenerator.getNextId());
