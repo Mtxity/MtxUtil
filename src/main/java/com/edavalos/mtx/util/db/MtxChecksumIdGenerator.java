@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -54,7 +55,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
         return this.length;
     }
 
-    public int getTotalUniqueIds() {
-        return (int) Math.pow(10, this.length);
+    public BigInteger getTotalUniqueIds() {
+        return BigInteger.valueOf(10).pow(this.length);
     }
 }

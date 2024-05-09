@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.db;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -87,10 +88,10 @@ public final class MtxIdGeneratorTest {
         int max2 = 93600;
 
         mtxIdGenerator = new MtxIdGenerator(test1);
-        assertEquals(max1, mtxIdGenerator.getTotalUniqueIds());
+        assertEquals(BigInteger.valueOf(max1), mtxIdGenerator.getTotalUniqueIds());
 
         mtxIdGenerator = new MtxIdGenerator(test2);
-        assertEquals(max2, mtxIdGenerator.getTotalUniqueIds());
+        assertEquals(BigInteger.valueOf(max2), mtxIdGenerator.getTotalUniqueIds());
     }
 
     @Nested
@@ -123,9 +124,9 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_onlyNumbers() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS);
 
-            int max = mtxIdGenerator.getTotalUniqueIds();
+            BigInteger max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
-            for (int i = 0; i < max; i++) {
+            for (int i = 0; i < max.intValue(); i++) {
                 idList.add(mtxIdGenerator.getNextId());
             }
 
@@ -137,9 +138,9 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_numbersAndLetters() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_LETTERS);
 
-            int max = mtxIdGenerator.getTotalUniqueIds();
+            BigInteger max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
-            for (int i = 0; i < max; i++) {
+            for (int i = 0; i < max.intValue(); i++) {
                 idList.add(mtxIdGenerator.getNextId());
             }
 
@@ -151,9 +152,9 @@ public final class MtxIdGeneratorTest {
         public void testGetNextId_anything() {
             mtxIdGenerator = new MtxIdGenerator(NUMBERS_AND_ANYTHING);
 
-            int max = mtxIdGenerator.getTotalUniqueIds();
+            BigInteger max = mtxIdGenerator.getTotalUniqueIds();
             List<String> idList = new ArrayList<>();
-            for (int i = 0; i < max; i++) {
+            for (int i = 0; i < max.intValue(); i++) {
                 idList.add(mtxIdGenerator.getNextId());
             }
 

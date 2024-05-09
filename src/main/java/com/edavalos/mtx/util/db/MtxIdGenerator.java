@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.db;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,8 +128,8 @@ public final class MtxIdGenerator implements MtxAutoIdBuilder {
         return String.valueOf(this.nextId);
     }
 
-    public int getTotalUniqueIds() {
-        return this.max;
+    public BigInteger getTotalUniqueIds() {
+        return BigInteger.valueOf(this.max);
     }
 
     public MtxCharType[] getFormatAsArray() {
