@@ -162,4 +162,12 @@ public final class MtxIdGeneratorTest {
             assertEquals(idList.size(), idSet.size());
         }
     }
+
+    @Test
+    public void testGetIdLength() {
+        for (int i = 1; i < 10; i++) {
+            mtxIdGenerator = new MtxIdGenerator("A".repeat(i));
+            assertEquals(i, mtxIdGenerator.getIdLength());
+        }
+    }
 }

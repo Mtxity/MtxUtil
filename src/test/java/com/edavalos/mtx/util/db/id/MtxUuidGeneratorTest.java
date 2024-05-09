@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.db.id;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -137,5 +138,18 @@ public final class MtxUuidGeneratorTest {
         public void testIsUuidValid_wrongVersion() {
             assertFalse(MtxUuidGenerator.isUuidValid(BYTE_ARRAY_WRONG_VERSION));
         }
+    }
+
+    @Test
+    public void testGetIdLength() {
+        mtxUuidGenerator = new MtxUuidGenerator();
+        String uuid = mtxUuidGenerator.getNextId();
+        assertEquals(uuid.length(), mtxUuidGenerator.getIdLength());
+    }
+
+    @Test
+    public void testGetTotalUniqueIds() {
+        mtxUuidGenerator = new MtxUuidGenerator();
+        assertEquals(BigInteger.valueOf(2).pow(128), mtxUuidGenerator.getTotalUniqueIds());
     }
 }
