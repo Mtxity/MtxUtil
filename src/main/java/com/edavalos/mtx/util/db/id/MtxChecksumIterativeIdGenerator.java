@@ -15,8 +15,8 @@ public class MtxChecksumIterativeIdGenerator extends MtxChecksumIdGenerator {
             this.nextId = 0;
         }
         char[] digitChars = String.format("%0" + length + "d", this.nextId).toCharArray();
-        int[] digitInts = new int[length];
-        Arrays.setAll(digitInts, i -> Character.getNumericValue(digitChars[i]));
+        int[] digitInts = new int[length + 1];
+        Arrays.setAll(digitInts, i -> i >= length ? 0 : Character.getNumericValue(digitChars[i]));
         this.nextId ++;
         return digitInts;
     }
