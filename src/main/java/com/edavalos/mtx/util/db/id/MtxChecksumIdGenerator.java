@@ -45,7 +45,7 @@ public class MtxChecksumIdGenerator implements MtxAutoIdBuilder {
         // https://en.m.wikipedia.org/wiki/Luhn_algorithm
         boolean x2 = true;
         int sum = 0;
-        for (int i = 0; i < initialDigits.length; i++) {
+        for (int i = 0; i < initialDigits.length - 1; i++) {
             String row = String.valueOf(x2 ? initialDigits[i] * 2 : initialDigits[i]);
             for (int j = 0; j < row.length(); j++) {
                 sum += row.charAt(j);
