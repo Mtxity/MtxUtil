@@ -25,4 +25,15 @@ public class MtxInsertQuery {
         this.numberOfColumns = columns.length;
         this.VALUES = new LinkedList<>();
     }
+
+    public MtxInsertQuery values(String... values) {
+        if (values.length != this.numberOfColumns) {
+            throw new ArrayIndexOutOfBoundsException(
+                    "MtxInsertQuery expected " + this.numberOfColumns + " values, got: " + values.length
+            );
+        }
+        this.VALUES.add(values);
+        super.complete = true;
+        return this;
+    }
 }
