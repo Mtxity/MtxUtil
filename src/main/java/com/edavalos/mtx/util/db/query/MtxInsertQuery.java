@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.db.query;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MtxInsertQuery {
+public class MtxInsertQuery extends MtxQuery {
     private final String INSERT;
     private final boolean insertIntoAllColumns;
     private final String[] INTO;
@@ -35,5 +35,14 @@ public class MtxInsertQuery {
         this.VALUES.add(values);
         super.complete = true;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        if (!super.isComplete()) {
+            throw new IllegalStateException("MtxInsertQuery is missing elements required to convert it to a String!");
+        }
+
+        return null;
     }
 }
