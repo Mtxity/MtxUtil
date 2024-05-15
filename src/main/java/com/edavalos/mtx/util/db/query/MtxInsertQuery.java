@@ -43,6 +43,19 @@ public class MtxInsertQuery extends MtxQuery {
             throw new IllegalStateException("MtxInsertQuery is missing elements required to convert it to a String!");
         }
 
-        return null;
+        StringBuilder qb = new StringBuilder();
+        qb.append("INSERT INTO ").append(this.INSERT);
+        if (!this.insertIntoAllColumns && this.INTO != null) {
+            qb.append(" (").append(String.join(", ", this.INTO)).append(")");
+        }
+
+        qb.append(" VALUES ");
+        int rowCount = this.VALUES.size();
+        String[] rows = new String[rowCount];
+        for (int i = 0; i < rowCount; i++) {
+            rows[i] = "('" + String.join("', '", this.VALUES.get(i)) + "')";
+        }
+
+        return qb.append(String.join(", ", rows)).append(";").toString();
     }
 }
