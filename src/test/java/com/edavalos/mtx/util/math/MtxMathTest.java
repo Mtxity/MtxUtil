@@ -29,13 +29,40 @@ public class MtxMathTest {
         // Unit test for ensuring accuracy of utility method used in this testing suite
         @Test
         public void testRound() {
-            assertEquals("1.12", String.valueOf(round(1.1234567, 2)));
-            assertEquals("1.1235", String.valueOf(round(1.1234567, 4)));
-            assertEquals("1.12346", String.valueOf(round(1.1234567, 5)));
+            assertEquals("1.12", String.valueOf(this.round(1.1234567, 2)));
+            assertEquals("1.1235", String.valueOf(this.round(1.1234567, 4)));
+            assertEquals("1.12346", String.valueOf(this.round(1.1234567, 5)));
+        }
+
+        @Test
+        public void testPi() {
+            assertEquals(Math.PI, this.round(MtxMath.PI, 15));
+        }
+
+        @Test
+        public void testTau() {
+            assertEquals(Math.PI * 2, this.round(MtxMath.TAU, 15));
+        }
+
+        @Test
+        public void testE() {
+            assertEquals(Math.E, this.round(MtxMath.E, 15));
+        }
+
+        @Test
+        public void testY() {
+            double expectedY = 0.577215664901533;
+            assertEquals(expectedY, this.round(MtxMath.Y, 15));
+        }
+
+        @Test
+        public void testPhi() {
+            double expectedPhi = (1 + Math.sqrt(5))/2;
+            assertEquals(expectedPhi, this.round(MtxMath.PHI, 15));
         }
 
         private double round(double input, int digits) {
-            double flattener = Integer.parseInt("1" + "0".repeat(digits));
+            double flattener = Long.parseLong("1" + "0".repeat(digits));
             return Math.round(input * flattener) / flattener;
         }
     }
