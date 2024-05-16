@@ -24,6 +24,23 @@ public class MtxMathTest {
     }
 
     @Nested
+    class ConstantsTests {
+
+        // Unit test for ensuring accuracy of utility method used in this testing suite
+        @Test
+        public void testTruncate() {
+            assertEquals("1.12", String.valueOf(truncate(1.1234567, 2)));
+            assertEquals("1.1234", String.valueOf(truncate(1.1234567, 4)));
+            assertEquals("1.12345", String.valueOf(truncate(1.1234567, 5)));
+        }
+
+        private double truncate(double input, int digits) {
+            int flattener = Integer.parseInt("1" + "0".repeat(digits));
+            return Math.floor(input * flattener) / flattener;
+        }
+    }
+
+    @Nested
     class FactorialTests {
         private static final List<Integer> SAMPLE_FACTORIALS = new ArrayList<>() {
             {
