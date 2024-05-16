@@ -7,6 +7,10 @@ public final class MtxMath {
     public static final int POSITIVE_INFINITY = (int) Double.POSITIVE_INFINITY;
     public static final int NEGATIVE_INFINITY = (int) Double.NEGATIVE_INFINITY;
 
+    public static final double PI  = 3.14159265358979323846264338327950;
+    public static final double TAU = 6.28318530717958647692528676655901;
+    public static final double E   = 2.71828182845904523536028747135266;
+
     public static class MtxFactorial implements Iterable<Integer> {
         private static final String NEGATIVE_SIZE_ERR = "Factorial is not defined for negative numbers.";
 
