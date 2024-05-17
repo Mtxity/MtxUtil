@@ -8,6 +8,8 @@ public final class MtxMath {
     public static final int NEGATIVE_INFINITY = (int) Double.NEGATIVE_INFINITY;
 
     public static class MtxFactorial implements Iterable<Integer> {
+        private static final String NEGATIVE_SIZE_ERR = "Factorial is not defined for negative numbers.";
+
         private final int iteratorLength;
 
         public MtxFactorial(int size) {
@@ -39,7 +41,7 @@ public final class MtxMath {
 
         public static long factorial(int n) {
             if (n < 0) {
-                throw new IllegalArgumentException("Factorial is not defined for negative numbers.");
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
             }
 
             long factorial = 1;
@@ -52,6 +54,8 @@ public final class MtxMath {
     }
 
     public static class MtxFibonacci implements Iterable<Integer> {
+        private static final String NEGATIVE_SIZE_ERR = "Invalid input. Fibonacci sequence starts from index 1.";
+
         private final int iteratorLength;
 
         public MtxFibonacci(int size) {
@@ -83,7 +87,7 @@ public final class MtxMath {
 
         public static int fibonacci(int n) {
             if (n <= 0) {
-                throw new IllegalArgumentException("Invalid input. Fibonacci sequence starts from index 1.");
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
             }
 
             if (n == 1 || n == 2) {
@@ -105,6 +109,8 @@ public final class MtxMath {
     }
 
     public static class MtxCatalan {
+        private static final String NEGATIVE_SIZE_ERR = "No Catalan number exists for negative numbers.";
+
         private final int iteratorLength;
 
         public MtxCatalan(int size) {
@@ -117,7 +123,7 @@ public final class MtxMath {
 
         public static long catalan(int n) {
             if (n < 0) {
-                throw new IllegalArgumentException("No Catalan number exists for negative numbers.");
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
             }
 
             if (n == 0 || n == 1) {
