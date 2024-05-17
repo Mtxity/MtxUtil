@@ -116,7 +116,7 @@ public final class MtxMath {
         }
     }
 
-    public static class MtxCatalan {
+    public static class MtxCatalan implements Iterable<Integer> {
         private static final String NEGATIVE_SIZE_ERR = "No Catalan number exists for negative numbers.";
 
         private final int iteratorLength;
@@ -131,6 +131,25 @@ public final class MtxMath {
 
         public MtxCatalan() {
             this(DEFAULT_SIZE);
+        }
+
+        @Override
+        public Iterator<Integer> iterator() {
+            return new Iterator<>() {
+                private int iterations = 1;
+
+                @Override
+                public boolean hasNext() {
+                    return this.iterations <= iteratorLength;
+                }
+
+                @Override
+                public Integer next() {
+                    long currentVal = catalan(this.iterations);
+                    this.iterations++;
+                    return ((int) currentVal);
+                }
+            };
         }
 
         public static long catalan(int n) {
