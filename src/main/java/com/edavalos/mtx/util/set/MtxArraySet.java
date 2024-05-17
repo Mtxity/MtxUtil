@@ -107,4 +107,17 @@ public class MtxArraySet<T> implements MtxSet<T> {
     public void clear() {
 
     }
+
+    protected int getNextIndex() {
+        int currentSize = this.setContents.length;
+        for (int i = 0; i < currentSize; i++) {
+            if (this.setContents[i] == null) {
+                return i;
+            }
+        }
+        Object[] newSet = new Object[currentSize + STARTING_SIZE];
+        System.arraycopy(this.setContents, 0, newSet, currentSize, currentSize);
+        this.setContents = newSet;
+        return currentSize;
+    }
 }
