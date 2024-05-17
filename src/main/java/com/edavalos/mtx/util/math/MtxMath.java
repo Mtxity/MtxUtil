@@ -104,7 +104,24 @@ public final class MtxMath {
         }
     }
 
-    public static class MtxCatalan { }
+    public static class MtxCatalan {
+
+        public static long catalan(int n) {
+            if (n < 0) {
+                throw new IllegalArgumentException("No Catalan number exists for negative numbers.");
+            }
+
+            if (n == 0 || n == 1) {
+                return 1;
+            }
+
+            long catalanNum = 0;
+            for (int i = 0; i < n; i++) {
+                catalanNum += catalan(i) * catalan(n - i - 1);
+            }
+            return catalanNum;
+        }
+    }
 
     public static class MtxStats {
         private final ArrayList<Double> contents;
