@@ -189,6 +189,22 @@ public class MtxMathTest {
             }
         };
 
+        @Test
+        public void testCatalan() {
+            for (int i = 1; i < SAMPLE_CATALANS.size(); i++) {
+                assertEquals(Long.valueOf(SAMPLE_CATALANS.get(i - 1)),  MtxMath.MtxCatalan.catalan(i));
+            }
+        }
+
+        @Test
+        public void testCatalan_negative() {
+            String errorMsg = "No Catalan number exists for negative numbers.";
+            int sampleNegativeInteger = -46;
+
+            Throwable error = assertThrows(IllegalArgumentException.class, () -> MtxMath.MtxCatalan.catalan(sampleNegativeInteger));
+            assertEquals(errorMsg, error.getMessage());
+        }
+
         @Nested
         class CatalanConstructorTests {
 
