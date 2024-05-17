@@ -104,6 +104,8 @@ public final class MtxMath {
         }
     }
 
+    public static class MtxCatalan { }
+
     public static class MtxStats {
         private final ArrayList<Double> contents;
 
