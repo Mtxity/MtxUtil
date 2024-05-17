@@ -3,9 +3,10 @@ package com.edavalos.mtx.util.set;
 import java.util.Iterator;
 
 public class MtxArraySet<T> implements MtxSet<T> {
-    private static final int STARTING_SIZE = 8;
+    protected static final int STARTING_SIZE = 8;
 
-    private Object[] setContents;
+    protected Object[] setContents;
+    protected int nextIndex;
 
     public MtxArraySet(int startingSize) {
         if (startingSize < 0) {
@@ -13,10 +14,12 @@ public class MtxArraySet<T> implements MtxSet<T> {
         }
 
         this.setContents = new Object[startingSize];
+        this.nextIndex = 0;
     }
 
     public MtxArraySet(T... contents) {
-        this.setContents = new Object[contents.length];
+        this.setContents = new Object[contents.length + STARTING_SIZE];
+        this.nextIndex = contents.length + 1;
         System.arraycopy(contents, 0, this.setContents, 0, contents.length);
     }
 
@@ -87,7 +90,9 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public boolean add(T element) {
-        return false;
+        // @TODO: Check if element already exists
+        this.setContents[this.getNextIndex()] = element;
+        return true;
     }
 
     /**
