@@ -13,6 +13,10 @@ public final class MtxMath {
         private final int iteratorLength;
 
         public MtxFactorial(int size) {
+            if (size < 0) {
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
+            }
+
             this.iteratorLength = size;
         }
 
@@ -59,6 +63,10 @@ public final class MtxMath {
         private final int iteratorLength;
 
         public MtxFibonacci(int size) {
+            if (size <= 0) {
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
+            }
+
             this.iteratorLength = size;
         }
 
@@ -114,6 +122,10 @@ public final class MtxMath {
         private final int iteratorLength;
 
         public MtxCatalan(int size) {
+            if (size < 0) {
+                throw new IllegalArgumentException(NEGATIVE_SIZE_ERR);
+            }
+
             this.iteratorLength = size;
         }
 
