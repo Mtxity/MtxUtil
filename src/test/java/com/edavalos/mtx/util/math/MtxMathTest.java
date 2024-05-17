@@ -87,6 +87,15 @@ public class MtxMathTest {
                 }
                 assertEquals(expectedSize, actualSize);
             }
+
+            @Test
+            public void testConstructor_negativeSize() {
+                String errorMsg = "Factorial is not defined for negative numbers.";
+                int sampleNegativeInteger = -46;
+
+                Throwable error = assertThrows(IllegalArgumentException.class, () -> new MtxMath.MtxFactorial(sampleNegativeInteger));
+                assertEquals(errorMsg, error.getMessage());
+            }
         }
     }
 
