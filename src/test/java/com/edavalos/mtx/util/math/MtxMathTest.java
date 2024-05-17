@@ -190,6 +190,16 @@ public class MtxMathTest {
         };
 
         @Test
+        public void testIterator() {
+            List<Integer> actualElements = new ArrayList<>();
+            for (int i : new MtxMath.MtxCatalan()) {
+                actualElements.add(i);
+            }
+
+            assertEquals(SAMPLE_CATALANS, actualElements);
+        }
+
+        @Test
         public void testCatalan() {
             for (int i = 1; i < SAMPLE_CATALANS.size(); i++) {
                 assertEquals(Long.valueOf(SAMPLE_CATALANS.get(i - 1)),  MtxMath.MtxCatalan.catalan(i));
