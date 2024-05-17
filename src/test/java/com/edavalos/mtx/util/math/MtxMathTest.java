@@ -70,9 +70,19 @@ public class MtxMathTest {
 
             @Test
             public void testConstructor_default() {
-                final int expectedSize = 9;
-                int actualSize = 0;
+                final int expectedSize = 8;
+                int actualSize = -1;
                 for (int i : new MtxMath.MtxFactorial()) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+
+            @Test
+            public void testConstructor_positiveSize() {
+                final int expectedSize = 12;
+                int actualSize = -1;
+                for (int i : new MtxMath.MtxFactorial(expectedSize)) {
                     actualSize ++;
                 }
                 assertEquals(expectedSize, actualSize);
