@@ -175,6 +175,55 @@ public class MtxMathTest {
     }
 
     @Nested
+    class CatalanTests {
+        private static final List<Integer> SAMPLE_CATALANS = new ArrayList<>() {
+            {
+                add(1);
+                add(2);
+                add(5);
+                add(14);
+                add(42);
+                add(132);
+                add(429);
+                add(1430);
+            }
+        };
+
+        @Nested
+        class CatalanConstructorTests {
+
+            @Test
+            public void testConstructor_default() {
+                final int expectedSize = 8;
+                int actualSize = 0;
+                for (int i : new MtxMath.MtxCatalan()) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+
+            @Test
+            public void testConstructor_positiveSize() {
+                final int expectedSize = 12;
+                int actualSize = 0;
+                for (int i : new MtxMath.MtxCatalan(expectedSize)) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+
+            @Test
+            public void testConstructor_negativeSize() {
+                String errorMsg = "No Catalan number exists for negative numbers.";
+                int sampleNegativeInteger = -4;
+
+                Throwable error = assertThrows(IllegalArgumentException.class, () -> new MtxMath.MtxCatalan(sampleNegativeInteger));
+                assertEquals(errorMsg, error.getMessage());
+            }
+        }
+    }
+
+    @Nested
     public class IsPrimeTests {
         private static final int[] PRIME_NUMBERS = {
                 2, 3, 5, 7, 11, 13, 17, 19, 23, 29,
