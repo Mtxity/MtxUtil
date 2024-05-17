@@ -91,7 +91,7 @@ public class MtxMathTest {
             @Test
             public void testConstructor_negativeSize() {
                 String errorMsg = "Factorial is not defined for negative numbers.";
-                int sampleNegativeInteger = -46;
+                int sampleNegativeInteger = -4;
 
                 Throwable error = assertThrows(IllegalArgumentException.class, () -> new MtxMath.MtxFactorial(sampleNegativeInteger));
                 assertEquals(errorMsg, error.getMessage());
@@ -138,6 +138,39 @@ public class MtxMathTest {
 
             Throwable error = assertThrows(IllegalArgumentException.class, () -> MtxMath.MtxFibonacci.fibonacci(sampleNegativeInteger));
             assertEquals(errorMsg, error.getMessage());
+        }
+
+        @Nested
+        class FibonacciConstructorTests {
+
+            @Test
+            public void testConstructor_default() {
+                final int expectedSize = 8;
+                int actualSize = 0;
+                for (int i : new MtxMath.MtxFibonacci()) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+
+            @Test
+            public void testConstructor_positiveSize() {
+                final int expectedSize = 12;
+                int actualSize = 0;
+                for (int i : new MtxMath.MtxFibonacci(expectedSize)) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+
+            @Test
+            public void testConstructor_negativeSize() {
+                String errorMsg = "Invalid input. Fibonacci sequence starts from index 1.";
+                int sampleNegativeInteger = -4;
+
+                Throwable error = assertThrows(IllegalArgumentException.class, () -> new MtxMath.MtxFibonacci(sampleNegativeInteger));
+                assertEquals(errorMsg, error.getMessage());
+            }
         }
     }
 
