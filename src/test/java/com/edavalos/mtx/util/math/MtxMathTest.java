@@ -64,6 +64,20 @@ public class MtxMathTest {
             Throwable error = assertThrows(IllegalArgumentException.class, () -> MtxMath.MtxFactorial.factorial(sampleNegativeInteger));
             assertEquals(errorMsg, error.getMessage());
         }
+
+        @Nested
+        class FactorialConstructorTests {
+
+            @Test
+            public void testConstructor_default() {
+                final int expectedSize = 9;
+                int actualSize = 0;
+                for (int i : new MtxMath.MtxFactorial()) {
+                    actualSize ++;
+                }
+                assertEquals(expectedSize, actualSize);
+            }
+        }
     }
 
     @Nested
