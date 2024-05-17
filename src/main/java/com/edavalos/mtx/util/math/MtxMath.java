@@ -105,6 +105,15 @@ public final class MtxMath {
     }
 
     public static class MtxCatalan {
+        private final int iteratorLength;
+
+        public MtxCatalan(int size) {
+            this.iteratorLength = size;
+        }
+
+        public MtxCatalan() {
+            this(DEFAULT_SIZE);
+        }
 
         public static long catalan(int n) {
             if (n < 0) {
