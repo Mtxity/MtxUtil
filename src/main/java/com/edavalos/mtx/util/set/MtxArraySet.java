@@ -19,7 +19,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
 
     public MtxArraySet(T... contents) {
         this.setContents = new Object[contents.length + STARTING_SIZE];
-        this.nextIndex = contents.length + 1;
+        this.nextIndex = contents.length;
         System.arraycopy(contents, 0, this.setContents, 0, contents.length);
     }
 
@@ -91,7 +91,13 @@ public class MtxArraySet<T> implements MtxSet<T> {
     @Override
     public boolean add(T element) {
         // @TODO: Check if element already exists
-        this.setContents[this.getNextIndex()] = element;
+        if (this.nextIndex >= this.setContents.length) {
+            Object[] setContentsCopy = new Object[this.setContents.length + STARTING_SIZE];
+            System.arraycopy(this.setContents, 0, setContentsCopy, 0, this.setContents.length);
+            this.setContents = setContentsCopy;
+        }
+        this.setContents[this.nextIndex] = element;
+        this.nextIndex ++;
         return true;
     }
 
@@ -111,18 +117,5 @@ public class MtxArraySet<T> implements MtxSet<T> {
     @Override
     public void clear() {
 
-    }
-
-    protected int getNextIndex() {
-        int currentSize = this.setContents.length;
-        for (int i = 0; i < currentSize; i++) {
-            if (this.setContents[i] == null) {
-                return i;
-            }
-        }
-        Object[] newSet = new Object[currentSize + STARTING_SIZE];
-        System.arraycopy(this.setContents, 0, newSet, currentSize, currentSize);
-        this.setContents = newSet;
-        return currentSize;
     }
 }
