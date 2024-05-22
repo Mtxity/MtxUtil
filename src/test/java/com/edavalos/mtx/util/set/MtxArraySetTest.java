@@ -237,4 +237,16 @@ public final class MtxArraySetTest {
             assertEquals("(i, j, k)", mtxArraySet.toString());
         }
     }
+
+    @Test
+    public void testHashCode() {
+        mtxArraySet = new MtxArraySet<>();
+        mtxArraySet.add("1");
+        mtxArraySet.add("2");
+        mtxArraySet.add("3");
+
+        MtxArraySet<String> otherArraySet = new MtxArraySet<>("1", "2", "3");
+
+        assertEquals(otherArraySet.hashCode(), mtxArraySet.hashCode());
+    }
 }
