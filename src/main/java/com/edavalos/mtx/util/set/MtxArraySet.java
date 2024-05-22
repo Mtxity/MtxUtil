@@ -66,7 +66,19 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new Iterator<>() {
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx < size();
+            }
+
+            @Override
+            public T next() {
+                return (T) setContents[this.idx++];
+            }
+        };
     }
 
     /**
