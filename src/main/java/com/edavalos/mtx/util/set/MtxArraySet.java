@@ -82,7 +82,12 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public int hashCode() {
-        return 0;
+        int hashCode = 1;
+        for (Object item : this.setContents) {
+            int elementHashCode = item == null ? 0 : item.hashCode();
+            hashCode += elementHashCode;
+        }
+        return hashCode;
     }
 
     /**
