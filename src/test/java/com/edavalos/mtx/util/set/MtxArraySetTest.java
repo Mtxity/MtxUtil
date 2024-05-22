@@ -8,10 +8,49 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxArraySetTest {
     private MtxArraySet<String> mtxArraySet;
+
+    @Nested
+    class ConstructorTests {
+
+        @Test
+        public void testConstructor_withStartingSize() {
+            mtxArraySet = new MtxArraySet<>(5);
+            assertArrayEquals(new String[]{null, null, null, null, null}, mtxArraySet.setContents);
+            assertEquals(0, mtxArraySet.nextIndex);
+        }
+
+        @Test
+        public void testConstructor_withStartingSize_negativeValue() {
+            String expectedMessage = "MtxArraySet size cannot be negative";
+            String actualMessage = assertThrows(
+                    NegativeArraySizeException.class,
+                    () -> mtxArraySet = new MtxArraySet<>(-5)
+            ).getMessage();
+            assertEquals(expectedMessage, actualMessage);
+        }
+
+        @Test
+        public void testConstructor_withContents() {
+            mtxArraySet = new MtxArraySet<>("a", "b");
+            assertArrayEquals(
+                    new String[]{"a", "b", null, null, null, null, null, null, null, null},
+                    mtxArraySet.setContents
+            );
+            assertEquals(2, mtxArraySet.nextIndex);
+        }
+
+        @Test
+        public void testConstructor_default() {
+            mtxArraySet = new MtxArraySet<>();
+            assertArrayEquals(new String[]{null, null, null, null, null, null, null, null}, mtxArraySet.setContents);
+            assertEquals(0, mtxArraySet.nextIndex);
+        }
+    }
 
     @Test
     public void testAdd() {
