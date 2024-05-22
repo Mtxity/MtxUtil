@@ -90,7 +90,16 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public String toString() {
-        return "";
+        StringBuilder sb = new StringBuilder("(");
+        for (Object item : this.setContents) {
+            if (item == null) {
+                continue;
+            }
+
+            sb.append(item).append(", ");
+        }
+        sb.append(")");
+        return sb.toString().replace(", )", ")");
     }
 
     /**
