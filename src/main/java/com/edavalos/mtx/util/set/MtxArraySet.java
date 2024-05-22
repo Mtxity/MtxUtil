@@ -32,7 +32,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.nextIndex;
     }
 
     /**
