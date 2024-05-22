@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -255,5 +258,47 @@ public final class MtxArraySetTest {
         String[] sampleArr = {"I", "II", "III", "IV", "V"};
         mtxArraySet = new MtxArraySet<>(sampleArr);
         assertArrayEquals(sampleArr, mtxArraySet.toArray());
+    }
+
+    @Nested
+    class IteratorTests {
+
+        @Test
+        public void testIterator_empty() {
+            mtxArraySet = new MtxArraySet<>();
+            int timesTest = 0;
+            for (String item : mtxArraySet) {
+                timesTest ++;
+                assertNull(item);
+            }
+            assertEquals(0, timesTest);
+        }
+
+        @Test
+        public void testIterator_withValues() {
+            mtxArraySet = new MtxArraySet<>("j", "h", "k");
+            HashSet sampleSet = new HashSet();
+            sampleSet.add("j");
+            sampleSet.add("h");
+            sampleSet.add("k");
+
+            for (String item : mtxArraySet) {
+                assertTrue(sampleSet.contains(item));
+            }
+        }
+
+        @Test
+        public void testIterator_nullValues() {
+            mtxArraySet = new MtxArraySet<>("j", null, "k");
+            HashSet sampleSet = new HashSet();
+            sampleSet.add("j");
+            sampleSet.add(null);
+            sampleSet.add("k");
+            sampleSet.add(null);
+
+            for (String item : mtxArraySet) {
+                assertTrue(sampleSet.contains(item));
+            }
+        }
     }
 }
