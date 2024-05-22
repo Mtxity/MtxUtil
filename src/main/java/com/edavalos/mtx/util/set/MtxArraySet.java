@@ -74,7 +74,9 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public T[] toArray() {
-        return null;
+        Object[] arr = new Object[this.nextIndex];
+        System.arraycopy(this.setContents, 0, arr, 0, this.nextIndex);
+        return (T[]) arr;
     }
 
     /**
