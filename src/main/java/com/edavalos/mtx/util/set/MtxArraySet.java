@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class MtxArraySet<T> implements MtxSet<T> {
@@ -155,6 +156,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public void clear() {
-
+        Arrays.fill(this.setContents, null);
+        this.nextIndex = 0;
     }
 }
