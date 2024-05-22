@@ -33,4 +33,13 @@ public final class MtxArraySetTest {
             assertArrayEquals(expected2, mtxArraySet.setContents);
         }
     }
+
+    @Test
+    public void testSize() {
+        mtxArraySet = new MtxArraySet<>();
+        for (int i = 0; i < 12; i++) {
+            assertEquals(i, mtxArraySet.size());
+            mtxArraySet.add(String.valueOf(i));
+        }
+    }
 }
