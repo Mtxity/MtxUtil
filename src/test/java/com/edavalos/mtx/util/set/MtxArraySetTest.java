@@ -249,4 +249,11 @@ public final class MtxArraySetTest {
 
         assertEquals(otherArraySet.hashCode(), mtxArraySet.hashCode());
     }
+
+    @Test
+    public void testToArray() {
+        String[] sampleArr = {"I", "II", "III", "IV", "V"};
+        mtxArraySet = new MtxArraySet<>(sampleArr);
+        assertArrayEquals(sampleArr, mtxArraySet.toArray());
+    }
 }
