@@ -41,14 +41,23 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.nextIndex == 0;
     }
 
     /**
-     * @return true if this set contains the specified element, false otherwise
+     * @return true if this set contains the specified element (or if this element is null), false otherwise
      */
     @Override
     public boolean contains(T element) {
+        if (element == null) {
+            return true;
+        }
+
+        for (Object setContent : this.setContents) {
+            if (element.equals(setContent)) {
+                return true;
+            }
+        }
         return false;
     }
 
