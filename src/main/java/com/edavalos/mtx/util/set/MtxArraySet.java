@@ -18,6 +18,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
         this.nextIndex = 0;
     }
 
+    @SafeVarargs
     public MtxArraySet(T... contents) {
         this.setContents = new Object[contents.length + STARTING_SIZE];
         this.nextIndex = contents.length;
@@ -75,6 +76,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             public T next() {
                 return (T) setContents[this.idx++];
             }
@@ -85,6 +87,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
      * @return an array of this set
      */
     @Override
+    @SuppressWarnings("unchecked")
     public T[] toArray() {
         Object[] arr = new Object[this.nextIndex];
         System.arraycopy(this.setContents, 0, arr, 0, this.nextIndex);
@@ -170,6 +173,7 @@ public class MtxArraySet<T> implements MtxSet<T> {
      *
      * @return {@code T} if element was found (and removed), null if element was not found.
      */
+    @SuppressWarnings("unchecked")
     public T removeAndReturn(T element) {
         T found = null;
         for (int i = 0; i < this.nextIndex; i++) {
