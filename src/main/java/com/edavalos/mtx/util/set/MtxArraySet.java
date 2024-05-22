@@ -102,14 +102,32 @@ public class MtxArraySet<T> implements MtxSet<T> {
     }
 
     /**
-     * Removes an element from this set
+     * Removes an element from this set. If the given argument is null then this will have no effect, but will return
+     * true if this MtxArraySet has any null values.
      *
      * @return true if element was found (and removed), false if element was not found.
      */
     @Override
     public boolean remove(T element) {
-        return false;
+        boolean found = false;
+        for (int i = 0; i < this.nextIndex; i++) {
+            if (element == null && this.setContents[i] == null) {
+                found = true;
+                break;
+            }
+
+            if (this.setContents[i].equals(element)) {
+                found = true;
+                this.setContents[i] = this.setContents[this.nextIndex - 1];
+                this.setContents[this.nextIndex - 1] = null;
+                this.nextIndex --;
+                break;
+            }
+        }
+        return found;
     }
+
+    // @Todo: Add removeAndReturn() method
 
     /**
      * Removes everything from this set
