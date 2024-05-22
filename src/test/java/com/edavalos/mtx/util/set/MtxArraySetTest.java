@@ -176,4 +176,40 @@ public final class MtxArraySetTest {
         assertEquals(0, mtxArraySet.nextIndex);
         assertArrayEquals(new String[]{null, null, null, null, null, null, null, null}, mtxArraySet.setContents);
     }
+
+    @Test
+    public void testIsEmpty() {
+        mtxArraySet = new MtxArraySet<>();
+        assertTrue(mtxArraySet.isEmpty());
+
+        mtxArraySet.add("t");
+        assertFalse(mtxArraySet.isEmpty());
+
+        mtxArraySet.remove("t");
+        assertTrue(mtxArraySet.isEmpty());
+    }
+
+    @Nested
+    class ContainsTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxArraySet = new MtxArraySet<>("a", "b", "c");
+        }
+
+        @Test
+        public void testContains_containsElement() {
+            assertTrue(mtxArraySet.contains("b"));
+        }
+
+        @Test
+        public void testContains_doesNotContainElement() {
+            assertFalse(mtxArraySet.contains("d"));
+        }
+
+        @Test
+        public void testContains_nullElement() {
+            assertTrue(mtxArraySet.contains(null));
+        }
+    }
 }
