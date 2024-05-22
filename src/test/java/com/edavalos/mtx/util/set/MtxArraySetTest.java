@@ -212,4 +212,29 @@ public final class MtxArraySetTest {
             assertTrue(mtxArraySet.contains(null));
         }
     }
+
+    @Nested
+    class ToStringTests {
+
+        @Test
+        public void testToString_empty() {
+            mtxArraySet = new MtxArraySet<>();
+
+            assertEquals("()", mtxArraySet.toString());
+        }
+
+        @Test
+        public void testToString_oneItem() {
+            mtxArraySet = new MtxArraySet<>("i");
+
+            assertEquals("(i)", mtxArraySet.toString());
+        }
+
+        @Test
+        public void testToString_multipleItems() {
+            mtxArraySet = new MtxArraySet<>("i", "j", "k");
+
+            assertEquals("(i, j, k)", mtxArraySet.toString());
+        }
+    }
 }
