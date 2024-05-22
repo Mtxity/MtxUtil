@@ -87,4 +87,38 @@ public final class MtxArraySetTest {
             assertTrue(mtxArraySet.remove(null));
         }
     }
+
+    @Nested
+    class RemoveAndReturnTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxArraySet = new MtxArraySet<>("x", "y", "z");
+        }
+
+        @Test
+        public void testRemove_elementFound() {
+            assertEquals(3, mtxArraySet.nextIndex);
+            assertEquals("x", mtxArraySet.setContents[0]);
+            assertEquals("y", mtxArraySet.setContents[1]);
+            assertEquals("z", mtxArraySet.setContents[2]);
+
+            assertEquals("x", mtxArraySet.removeAndReturn("x"));
+
+            assertEquals(2, mtxArraySet.nextIndex);
+            assertEquals("z", mtxArraySet.setContents[0]);
+            assertEquals("y", mtxArraySet.setContents[1]);
+            assertNull(mtxArraySet.setContents[2]);
+        }
+
+        @Test
+        public void testRemove_elementNotFound() {
+            assertNull(mtxArraySet.removeAndReturn("w"));
+        }
+
+        @Test
+        public void testRemove_elementNull() {
+            assertNull(mtxArraySet.removeAndReturn(null));
+        }
+    }
 }
