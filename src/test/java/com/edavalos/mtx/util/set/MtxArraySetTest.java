@@ -121,4 +121,20 @@ public final class MtxArraySetTest {
             assertNull(mtxArraySet.removeAndReturn(null));
         }
     }
+
+    @Test
+    public void testClear() {
+        mtxArraySet = new MtxArraySet<>();
+        mtxArraySet.add("1");
+        mtxArraySet.add("2");
+        mtxArraySet.add("3");
+        mtxArraySet.add("4");
+
+        assertEquals(4, mtxArraySet.nextIndex);
+        assertArrayEquals(new String[]{"1", "2", "3", "4", null, null, null, null}, mtxArraySet.setContents);
+
+        mtxArraySet.clear();
+        assertEquals(0, mtxArraySet.nextIndex);
+        assertArrayEquals(new String[]{null, null, null, null, null, null, null, null}, mtxArraySet.setContents);
+    }
 }
