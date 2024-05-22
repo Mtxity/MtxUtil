@@ -127,7 +127,28 @@ public class MtxArraySet<T> implements MtxSet<T> {
         return found;
     }
 
-    // @Todo: Add removeAndReturn() method
+    /**
+     * Removes an element from this set and returns it. If the given argument is null then this will have no effect.
+     *
+     * @return {@code T} if element was found (and removed), null if element was not found.
+     */
+    public T removeAndReturn(T element) {
+        T found = null;
+        for (int i = 0; i < this.nextIndex; i++) {
+            if (element == null) {
+                break;
+            }
+
+            if (this.setContents[i].equals(element)) {
+                found = (T) this.setContents[i];
+                this.setContents[i] = this.setContents[this.nextIndex - 1];
+                this.setContents[this.nextIndex - 1] = null;
+                this.nextIndex --;
+                break;
+            }
+        }
+        return found;
+    }
 
     /**
      * Removes everything from this set
