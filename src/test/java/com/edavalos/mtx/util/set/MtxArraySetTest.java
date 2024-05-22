@@ -1,9 +1,13 @@
 package com.edavalos.mtx.util.set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxArraySetTest {
@@ -40,6 +44,47 @@ public final class MtxArraySetTest {
         for (int i = 0; i < 12; i++) {
             assertEquals(i, mtxArraySet.size());
             mtxArraySet.add(String.valueOf(i));
+        }
+    }
+
+    @Nested
+    class RemoveTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxArraySet = new MtxArraySet<>("x", "y", "z");
+        }
+
+        @Test
+        public void testRemove_elementFound() {
+            assertEquals(3, mtxArraySet.nextIndex);
+            assertEquals("x", mtxArraySet.setContents[0]);
+            assertEquals("y", mtxArraySet.setContents[1]);
+            assertEquals("z", mtxArraySet.setContents[2]);
+
+            assertTrue(mtxArraySet.remove("x"));
+
+            assertEquals(2, mtxArraySet.nextIndex);
+            assertEquals("z", mtxArraySet.setContents[0]);
+            assertEquals("y", mtxArraySet.setContents[1]);
+            assertNull(mtxArraySet.setContents[2]);
+        }
+
+        @Test
+        public void testRemove_elementNotFound() {
+            assertFalse(mtxArraySet.remove("w"));
+        }
+
+        @Test
+        public void testRemove_elementNull_noNullsInSet() {
+            assertFalse(mtxArraySet.remove(null));
+        }
+
+        @Test
+        public void testRemove_elementNull_hasNullsInSet() {
+            mtxArraySet.nextIndex ++;
+            mtxArraySet.setContents[3] = null;
+            assertTrue(mtxArraySet.remove(null));
         }
     }
 }
