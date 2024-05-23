@@ -131,7 +131,10 @@ public class MtxArraySet<T> implements MtxSet<T> {
      */
     @Override
     public boolean add(T element) {
-        // @TODO: Check if element already exists
+        if (this.contains(element)) {
+            return false;
+        }
+
         if (this.nextIndex >= this.setContents.length) {
             Object[] setContentsCopy = new Object[this.setContents.length + STARTING_SIZE];
             System.arraycopy(this.setContents, 0, setContentsCopy, 0, this.setContents.length);
