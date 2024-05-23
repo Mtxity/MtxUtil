@@ -55,7 +55,7 @@ public final class MtxArraySetTest {
     }
 
     @Test
-    public void testAdd() {
+    public void testAdd_newElement() {
         mtxArraySet = new MtxArraySet<>();
         String[] expected1 = new String[MtxArraySet.STARTING_SIZE];
         for (int i = 0; i < MtxArraySet.STARTING_SIZE; i++) {
@@ -77,6 +77,15 @@ public final class MtxArraySetTest {
             assertEquals(expected2.length, mtxArraySet.setContents.length);
             assertArrayEquals(expected2, mtxArraySet.setContents);
         }
+    }
+
+    @Test
+    public void testAdd_existingElement() {
+        mtxArraySet = new MtxArraySet<>("o");
+        assertFalse(mtxArraySet.add("o"));
+
+        assertTrue(mtxArraySet.add("oo"));
+        assertFalse(mtxArraySet.add("oo"));
     }
 
     @Test
