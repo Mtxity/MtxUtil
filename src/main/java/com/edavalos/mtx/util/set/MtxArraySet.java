@@ -3,6 +3,9 @@ package com.edavalos.mtx.util.set;
 import java.util.Arrays;
 import java.util.Iterator;
 
+/**
+ * Unordered implementation of MtxSet backed by an array.
+ */
 public class MtxArraySet<T> implements MtxSet<T> {
     protected static final int STARTING_SIZE = 8;
 

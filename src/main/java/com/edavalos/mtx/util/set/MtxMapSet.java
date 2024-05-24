@@ -1,17 +1,19 @@
 package com.edavalos.mtx.util.set;
 
-import java.util.HashMap;
+import java.util.TreeMap;
 
-// @TODO: Make an ordered map set (Using TreeMap)
+/**
+ * Unordered implementation of MtxSet backed by a treemap.
+ */
 public class MtxMapSet<T> implements MtxSet<T> {
-    protected final HashMap<Integer, Object> setContents;
+    protected final TreeMap<Integer, Object> setContents;
 
     public MtxMapSet() {
-        this.setContents = new HashMap<>();
+        this.setContents = new TreeMap<>();
     }
 
     public MtxMapSet(T... contents) {
-        this.setContents = new HashMap<>();
+        this.setContents = new TreeMap<>();
         for (T content : contents) {
             this.add(content);
         }
@@ -61,7 +63,7 @@ public class MtxMapSet<T> implements MtxSet<T> {
     public boolean add(T element) {
         int hashCode = this.getHashCode(element);
         if (this.setContents.containsKey(hashCode)) {
-            return true;
+            return false;
         }
 
         this.setContents.put(hashCode, element);
