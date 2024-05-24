@@ -6,7 +6,7 @@ import java.util.TreeMap;
  * Unordered implementation of MtxSet backed by a treemap.
  */
 public class MtxMapSet<T> implements MtxSet<T> {
-    protected final TreeMap<Integer, Object> setContents;
+    protected final TreeMap<Integer, T> setContents;
 
     public MtxMapSet() {
         this.setContents = new TreeMap<>();
@@ -102,7 +102,7 @@ public class MtxMapSet<T> implements MtxSet<T> {
             return null;
         }
 
-        return (T) this.setContents.remove(this.getHashCode(element));
+        return this.setContents.remove(this.getHashCode(element));
     }
 
     /**
