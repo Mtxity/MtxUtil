@@ -78,7 +78,6 @@ public class MtxMapSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean remove(T element) {
-        // @Todo: Add removeAndReturn()
         int hashCode = this.getHashCode(element);
         if (this.setContents.containsKey(hashCode)) {
             this.setContents.remove(hashCode);
@@ -86,6 +85,24 @@ public class MtxMapSet<T> implements MtxSet<T> {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Removes an element from this set and returns it. If the given argument is null then this will have no effect.
+     *
+     * @return {@code T} if element was found (and removed), null if element was not found.
+     */
+    @SuppressWarnings("unchecked")
+    public T removeAndReturn(T element) {
+        if (element == null) {
+            return null;
+        }
+
+        if (!this.setContents.containsValue(element)) {
+            return null;
+        }
+
+        return (T) this.setContents.remove(this.getHashCode(element));
     }
 
     /**
