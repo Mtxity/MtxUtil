@@ -17,6 +17,7 @@ public final class MtxMapSetTest {
         assertTrue(mtxMapSet.setContents.isEmpty());
     }
 
+    // @TODO: Make sure unordered results don't fail
     @Test
     public void testConstructor_withContents() {
         mtxMapSet = new MtxMapSet<>(2.5, 3.5, 4.5);
@@ -52,10 +53,48 @@ public final class MtxMapSetTest {
         assertTrue(mtxMapSet.contains(1.1));
     }
 
+    // @TODO: Make sure unordered results don't fail
     @Test
     public void testToArray() {
         Double[] array = new Double[] {1.1, 2.2, 3.3};
         mtxMapSet = new MtxMapSet<>(array);
         assertArrayEquals(array, mtxMapSet.toArray());
+    }
+
+    @Test
+    public void testAdd_newElement() {
+        mtxMapSet = new MtxMapSet<>();
+        assertTrue(mtxMapSet.isEmpty());
+
+        assertTrue(mtxMapSet.add(1.1));
+        assertFalse(mtxMapSet.isEmpty());
+        assertTrue(mtxMapSet.contains(1.1));
+        assertArrayEquals(new Double[] {1.1}, mtxMapSet.toArray());
+
+        assertEquals(1, mtxMapSet.size());
+    }
+
+    @Test
+    public void testAdd_existingElement() {
+        mtxMapSet = new MtxMapSet<>(1.1);
+        assertFalse(mtxMapSet.add(1.1));
+
+        assertEquals(1, mtxMapSet.size());
+    }
+
+    @Test
+    public void testRemove_elementFound() {
+        mtxMapSet = new MtxMapSet<>(1.1);
+        assertTrue(mtxMapSet.remove(1.1));
+
+        assertEquals(0, mtxMapSet.size());
+    }
+
+    @Test
+    public void testRemove_elementNotFound() {
+        mtxMapSet = new MtxMapSet<>(1.1);
+        assertFalse(mtxMapSet.remove(1.2));
+
+        assertEquals(1, mtxMapSet.size());
     }
 }
