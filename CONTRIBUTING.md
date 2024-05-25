@@ -63,3 +63,4 @@ The only code that is not covered should be code that logistically cannot be tes
     * So basically just name all unit tests the same as the method being tested, prefixed by the word `test`, in camel case.
     * If the method being tested needs multiple unit tests, name them all the same + the test case description, separated by an underscore (`_`)
     * **Example:** `testAddAll_argContainingDelimiter()` and `testAddAll_addToNonEmptyList()` will test the method `addAll()`
+    * If 3 or more tests are needed for one method then please put them in a nested testing class (Denoted with `@Nested`)
