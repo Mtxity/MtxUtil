@@ -146,4 +146,23 @@ public final class MtxMapSetTest {
             assertEquals(3, mtxMapSet.size());
         }
     }
+
+    @Test
+    public void testClear() {
+        mtxMapSet = new MtxMapSet<>(1.1, 2.2);
+        assertEquals(2, mtxMapSet.size());
+        assertFalse(mtxMapSet.isEmpty());
+
+        mtxMapSet.clear();
+        assertEquals(0, mtxMapSet.size());
+        assertTrue(mtxMapSet.isEmpty());
+    }
+
+    @Test
+    public void testGetHashCode() {
+        Object[] array = new Object[] {1, "2", 3.3, new MtxMapSet<>()};
+        for (Object object : array) {
+            assertEquals(object.hashCode(), new MtxMapSet<>().getHashCode(object));
+        }
+    }
 }
