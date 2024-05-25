@@ -1,10 +1,13 @@
 package com.edavalos.mtx.util.set;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxMapSetTest {
@@ -96,5 +99,51 @@ public final class MtxMapSetTest {
         assertFalse(mtxMapSet.remove(1.2));
 
         assertEquals(1, mtxMapSet.size());
+    }
+
+    @Nested
+    class RemoveAndReturnTests {
+
+        @BeforeEach
+        public void setUp() {
+            // @TODO: Make these default values consts
+            mtxMapSet = new MtxMapSet<>(1.1, 2.2, 3.3);
+        }
+
+        @Test
+        public void testRemoveAndReturn_elementFound_first() {
+            Double element = 1.1;
+            assertEquals(3, mtxMapSet.size());
+
+            assertEquals(element, mtxMapSet.removeAndReturn(element));
+            assertEquals(2, mtxMapSet.size());
+        }
+
+        @Test
+        public void testRemoveAndReturn_elementFound_middle() {
+            Double element = 2.2;
+            assertEquals(3, mtxMapSet.size());
+
+            assertEquals(element, mtxMapSet.removeAndReturn(element));
+            assertEquals(2, mtxMapSet.size());
+        }
+
+        @Test
+        public void testRemoveAndReturn_elementNotFound() {
+            Double element = 4.4;
+            assertEquals(3, mtxMapSet.size());
+
+            assertNull(mtxMapSet.removeAndReturn(element));
+            assertEquals(3, mtxMapSet.size());
+        }
+
+        @Test
+        public void testRemoveAndReturn_elementNull() {
+            Double element = null;
+            assertEquals(3, mtxMapSet.size());
+
+            assertNull(mtxMapSet.removeAndReturn(element));
+            assertEquals(3, mtxMapSet.size());
+        }
     }
 }
