@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.set;
 import java.util.Comparator;
 
 /**
- * Ordered and auto-sorted implementation of MtxSet backed by a linked list.
+ * Ordered and auto-sorted implementation of MtxLinkedSet backed by a linked list.
  */
 public final class MtxSortedLinkedSet<T> extends MtxLinkedSet<T> {
     private final Comparator<T> comparator;
