@@ -12,6 +12,7 @@ public class MtxMapSet<T> implements MtxSet<T> {
         this.setContents = new TreeMap<>();
     }
 
+    @SafeVarargs
     public MtxMapSet(T... contents) {
         this.setContents = new TreeMap<>();
         for (T content : contents) {
@@ -92,7 +93,6 @@ public class MtxMapSet<T> implements MtxSet<T> {
      *
      * @return {@code T} if element was found (and removed), null if element was not found.
      */
-    @SuppressWarnings("unchecked")
     public T removeAndReturn(T element) {
         if (element == null) {
             return null;
