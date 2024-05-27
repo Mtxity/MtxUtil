@@ -14,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxMapSetTest {
+    private static final double VAL1 = 1.1;
+    private static final double VAL2 = 2.2;
+    private static final double VAL3 = 3.3;
+
     private MtxMapSet<Double> mtxMapSet;
 
     @Test
@@ -37,7 +41,7 @@ public final class MtxMapSetTest {
         mtxMapSet = new MtxMapSet<>();
         assertEquals(0, mtxMapSet.size());
 
-        mtxMapSet.add(1.1);
+        mtxMapSet.add(VAL1);
         assertEquals(1, mtxMapSet.size());
     }
 
@@ -46,22 +50,22 @@ public final class MtxMapSetTest {
         mtxMapSet = new MtxMapSet<>();
         assertTrue(mtxMapSet.isEmpty());
 
-        mtxMapSet.add(1.1);
+        mtxMapSet.add(VAL1);
         assertFalse(mtxMapSet.isEmpty());
     }
 
     @Test
     public void testContains() {
         mtxMapSet = new MtxMapSet<>();
-        assertFalse(mtxMapSet.contains(1.1));
+        assertFalse(mtxMapSet.contains(VAL1));
 
-        mtxMapSet.add(1.1);
-        assertTrue(mtxMapSet.contains(1.1));
+        mtxMapSet.add(VAL1);
+        assertTrue(mtxMapSet.contains(VAL1));
     }
 
     @Test
     public void testToArray() {
-        Double[] array = new Double[] {2.2, 1.1, 3.3};
+        Double[] array = new Double[] {VAL2, VAL1, VAL3};
         mtxMapSet = new MtxMapSet<>(array);
         assertSetEquals(array, mtxMapSet.toArray());
     }
@@ -71,33 +75,33 @@ public final class MtxMapSetTest {
         mtxMapSet = new MtxMapSet<>();
         assertTrue(mtxMapSet.isEmpty());
 
-        assertTrue(mtxMapSet.add(1.1));
+        assertTrue(mtxMapSet.add(VAL1));
         assertFalse(mtxMapSet.isEmpty());
-        assertTrue(mtxMapSet.contains(1.1));
-        assertArrayEquals(new Double[] {1.1}, mtxMapSet.toArray());
+        assertTrue(mtxMapSet.contains(VAL1));
+        assertArrayEquals(new Double[] {VAL1}, mtxMapSet.toArray());
 
         assertEquals(1, mtxMapSet.size());
     }
 
     @Test
     public void testAdd_existingElement() {
-        mtxMapSet = new MtxMapSet<>(1.1);
-        assertFalse(mtxMapSet.add(1.1));
+        mtxMapSet = new MtxMapSet<>(VAL1);
+        assertFalse(mtxMapSet.add(VAL1));
 
         assertEquals(1, mtxMapSet.size());
     }
 
     @Test
     public void testRemove_elementFound() {
-        mtxMapSet = new MtxMapSet<>(1.1);
-        assertTrue(mtxMapSet.remove(1.1));
+        mtxMapSet = new MtxMapSet<>(VAL1);
+        assertTrue(mtxMapSet.remove(VAL1));
 
         assertEquals(0, mtxMapSet.size());
     }
 
     @Test
     public void testRemove_elementNotFound() {
-        mtxMapSet = new MtxMapSet<>(1.1);
+        mtxMapSet = new MtxMapSet<>(VAL1);
         assertFalse(mtxMapSet.remove(1.2));
 
         assertEquals(1, mtxMapSet.size());
@@ -108,13 +112,12 @@ public final class MtxMapSetTest {
 
         @BeforeEach
         public void setUp() {
-            // @TODO: Make these default values consts
-            mtxMapSet = new MtxMapSet<>(1.1, 2.2, 3.3);
+            mtxMapSet = new MtxMapSet<>(VAL1, VAL2, VAL3);
         }
 
         @Test
         public void testRemoveAndReturn_elementFound_first() {
-            Double element = 1.1;
+            Double element = VAL1;
             assertEquals(3, mtxMapSet.size());
 
             assertEquals(element, mtxMapSet.removeAndReturn(element));
@@ -123,7 +126,7 @@ public final class MtxMapSetTest {
 
         @Test
         public void testRemoveAndReturn_elementFound_middle() {
-            Double element = 2.2;
+            Double element = VAL2;
             assertEquals(3, mtxMapSet.size());
 
             assertEquals(element, mtxMapSet.removeAndReturn(element));
@@ -151,7 +154,7 @@ public final class MtxMapSetTest {
 
     @Test
     public void testClear() {
-        mtxMapSet = new MtxMapSet<>(1.1, 2.2);
+        mtxMapSet = new MtxMapSet<>(VAL1, VAL2);
         assertEquals(2, mtxMapSet.size());
         assertFalse(mtxMapSet.isEmpty());
 
