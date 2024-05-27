@@ -21,4 +21,9 @@ public class MtxSortedMapSet<T> extends MtxMapSet<T> {
             this.next ++;
         }
     }
+
+    @Override
+    public boolean remove(T element) {
+        return super.remove(element);
+    }
 }
