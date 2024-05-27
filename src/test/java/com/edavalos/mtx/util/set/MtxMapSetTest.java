@@ -4,11 +4,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public final class MtxMapSetTest {
     private MtxMapSet<Double> mtxMapSet;
@@ -20,13 +23,13 @@ public final class MtxMapSetTest {
         assertTrue(mtxMapSet.setContents.isEmpty());
     }
 
-    // @TODO: Make sure unordered results don't fail
     @Test
     public void testConstructor_withContents() {
-        mtxMapSet = new MtxMapSet<>(2.5, 3.5, 4.5);
+        Double[] array = new Double[] {2.5, 3.5, 4.5};
+        mtxMapSet = new MtxMapSet<>(4.5, 3.5, 2.5);
         assertEquals(3, mtxMapSet.size());
         assertFalse(mtxMapSet.setContents.isEmpty());
-        assertArrayEquals(new Double[] {2.5, 3.5, 4.5}, mtxMapSet.toArray());
+        assertSetEquals(array, mtxMapSet.toArray());
     }
 
     @Test
@@ -56,12 +59,11 @@ public final class MtxMapSetTest {
         assertTrue(mtxMapSet.contains(1.1));
     }
 
-    // @TODO: Make sure unordered results don't fail
     @Test
     public void testToArray() {
-        Double[] array = new Double[] {1.1, 2.2, 3.3};
+        Double[] array = new Double[] {2.2, 1.1, 3.3};
         mtxMapSet = new MtxMapSet<>(array);
-        assertArrayEquals(array, mtxMapSet.toArray());
+        assertSetEquals(array, mtxMapSet.toArray());
     }
 
     @Test
@@ -164,5 +166,18 @@ public final class MtxMapSetTest {
         for (Object object : array) {
             assertEquals(object.hashCode(), new MtxMapSet<>().getHashCode(object));
         }
+    }
+
+    private boolean assertSetEquals(Object[] expectedSetArray, Object[] actualSetArray) {
+        if (expectedSetArray.length != actualSetArray.length) {
+            fail("Expected Set length (" + expectedSetArray.length +
+                    ") is different than Actual Set length (" + actualSetArray.length + ")");
+            return false; // Return value should be ignored
+        }
+
+        Set<Object> expected = Set.of(expectedSetArray);
+        Set<Object> actual = Set.of(actualSetArray);
+        assertEquals(expected, actual);
+        return expected.equals(actual);
     }
 }
