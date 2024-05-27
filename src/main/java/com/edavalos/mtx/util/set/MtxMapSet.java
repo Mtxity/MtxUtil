@@ -1,12 +1,13 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.Map;
 import java.util.TreeMap;
 
 /**
  * Unordered implementation of MtxSet backed by a treemap.
  */
 public class MtxMapSet<T> implements MtxSet<T> {
-    protected final TreeMap<Integer, T> setContents;
+    protected Map<Integer, T> setContents;
 
     public MtxMapSet() {
         this.setContents = new TreeMap<>();
