@@ -72,13 +72,22 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T removeAndReturn(T element) {
-        // @TODO: Implement this natively
-        if (this.remove(element)) {
-            return element;
-        } else {
-            return null;
+        T found = null;
+        for (int i = 0; i < this.nextIndex; i++) {
+            if (element == null && this.setContents[i] == null) {
+                break;
+            }
+
+            if (this.setContents[i].equals(element)) {
+                found = (T) this.setContents[i];
+                System.arraycopy(this.setContents, i, this.setContents, i-1, this.setContents.length - i);
+                this.nextIndex --;
+                break;
+            }
         }
+        return found;
     }
 
     private void sort() {
