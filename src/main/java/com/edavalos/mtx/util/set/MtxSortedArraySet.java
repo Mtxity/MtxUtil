@@ -24,8 +24,31 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         this.sort();
     }
 
+    // @TODO: Make this more efficient by upshifting array instead of adding new element at the end and then sorting
+    @Override
+    public boolean add(T element) {
+        if (this.contains(element)) {
+            return false;
+        }
+
+        this.add(element);
+        this.sort();
+        return true;
+    }
+
+    // @TODO: Make this more efficient by downshifting array instead of swapping with last element
     @Override
     public boolean remove(T element) {
         boolean removed = super.remove(element);
+        if (removed) {
+            this.sort();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void sort() {
+        // @TODO: Implement this
     }
 }
