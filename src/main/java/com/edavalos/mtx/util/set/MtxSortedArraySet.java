@@ -61,6 +61,16 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         }
     }
 
+    @Override
+    public T removeAndReturn(T element) {
+        // @TODO: Implement this natively
+        if (this.remove(element)) {
+            return element;
+        } else {
+            return null;
+        }
+    }
+
     private void sort() {
         // @TODO: Implement this
     }
