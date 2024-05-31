@@ -31,7 +31,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
             return false;
         }
 
-        this.add(element);
+        super.add(element);
         this.sort();
         return true;
     }
