@@ -18,6 +18,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         this.comparator = comparator;
     }
 
+    @SafeVarargs
     public MtxSortedArraySet(Comparator<T> comparator, T... contents) {
         super(contents);
         this.comparator = comparator;
@@ -25,6 +26,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public boolean add(T element) {
         if (this.contains(element)) {
             return false;
