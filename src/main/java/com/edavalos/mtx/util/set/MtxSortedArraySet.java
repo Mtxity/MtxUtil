@@ -63,7 +63,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
 
             if (this.setContents[i].equals(element)) {
                 found = true;
-                System.arraycopy(this.setContents, i, this.setContents, i-1, this.setContents.length - i);
+                System.arraycopy(this.setContents, i+1, this.setContents, i, this.setContents.length - i);
                 this.nextIndex --;
                 break;
             }
@@ -82,7 +82,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
 
             if (this.setContents[i].equals(element)) {
                 found = (T) this.setContents[i];
-                System.arraycopy(this.setContents, i, this.setContents, i-1, this.setContents.length - i);
+                System.arraycopy(this.setContents, i+1, this.setContents, i, this.setContents.length - i);
                 this.nextIndex --;
                 break;
             }
