@@ -3,7 +3,7 @@ package com.edavalos.mtx.util.set;
 import java.util.Comparator;
 
 /**
- * Ordered and auto-sorted implementation of MtxArraySet backed by a tree set.
+ * Ordered and auto-sorted implementation of MtxArraySet backed by an array.
  */
 public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     private final Comparator<T> comparator;
@@ -51,7 +51,6 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         return true;
     }
 
-    // @TODO: Make this more efficient by downshifting array instead of swapping with last element
     @Override
     public boolean remove(T element) {
         boolean found = false;
