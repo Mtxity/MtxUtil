@@ -54,13 +54,21 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     // @TODO: Make this more efficient by downshifting array instead of swapping with last element
     @Override
     public boolean remove(T element) {
-        boolean removed = super.remove(element);
-        if (removed) {
-            this.sort();
-            return true;
-        } else {
-            return false;
+        boolean found = false;
+        for (int i = 0; i < this.nextIndex; i++) {
+            if (element == null && this.setContents[i] == null) {
+                found = true;
+                break;
+            }
+
+            if (this.setContents[i].equals(element)) {
+                found = true;
+                System.arraycopy(this.setContents, i, this.setContents, i-1, this.setContents.length - i);
+                this.nextIndex --;
+                break;
+            }
         }
+        return found;
     }
 
     @Override
