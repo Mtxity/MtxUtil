@@ -24,15 +24,28 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         this.sort();
     }
 
-    // @TODO: Make this more efficient by upshifting array instead of adding new element at the end and then sorting
     @Override
     public boolean add(T element) {
         if (this.contains(element)) {
             return false;
         }
 
-        super.add(element);
-        this.sort();
+        if (this.nextIndex >= this.setContents.length) {
+            Object[] setContentsCopy = new Object[this.setContents.length + STARTING_SIZE];
+            System.arraycopy(this.setContents, 0, setContentsCopy, 0, this.setContents.length);
+            this.setContents = setContentsCopy;
+        }
+
+        for (int i = 0; i < this.nextIndex; i++) {
+            if (this.comparator.compare(element, ((T) this.setContents[i])) > 0) {
+                System.arraycopy(this.setContents, i, this.setContents, i+1, this.setContents.length - i);
+                this.setContents[i] = element;
+                this.nextIndex ++;
+                return true;
+            }
+        }
+        this.setContents[this.nextIndex] = element;
+        this.nextIndex ++;
         return true;
     }
 
