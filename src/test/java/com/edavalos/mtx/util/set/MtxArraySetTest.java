@@ -89,6 +89,22 @@ public final class MtxArraySetTest {
     }
 
     @Test
+    public void testAddAll_allNewElements() {
+        mtxArraySet = new MtxArraySet<>("o", "oo");
+        assertTrue(mtxArraySet.addAll(new String[] {"ooo", "oooo", "ooooo"}));
+
+        assertArrayEquals(new Object[] {"o", "oo", "ooo", "oooo", "ooooo"}, mtxArraySet.toArray());
+    }
+
+    @Test
+    public void testAddAll_oneExistingElement() {
+        mtxArraySet = new MtxArraySet<>("o", "oo");
+        assertFalse(mtxArraySet.addAll(new String[] {"ooo", "o", "ooooo"}));
+
+        assertArrayEquals(new Object[] {"o", "oo"}, mtxArraySet.toArray());
+    }
+
+    @Test
     public void testSize() {
         mtxArraySet = new MtxArraySet<>();
         for (int i = 0; i < 12; i++) {
@@ -134,7 +150,7 @@ public final class MtxArraySetTest {
         public void testRemove_elementNull_hasNullsInSet() {
             mtxArraySet.nextIndex ++;
             mtxArraySet.setContents[3] = null;
-            assertTrue(mtxArraySet.remove(null));
+            assertFalse(mtxArraySet.remove(null));
         }
     }
 

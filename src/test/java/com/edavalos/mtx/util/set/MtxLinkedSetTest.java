@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -218,6 +219,25 @@ public final class MtxLinkedSetTest {
                     i + 0.3
             ));
             assertEquals((int) ((i + 1) * 6), mtxLinkedSet.size());
+        }
+    }
+
+    @Test
+    public void testAddAll_allNewElements() {
+        assertTrue(mtxLinkedSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {2.54, 3.65, 4.76}) {
+            assertTrue(mtxLinkedSet.contains(d));
+        }
+    }
+
+    @Test
+    public void testAddAll_oneExistingElement() {
+        mtxLinkedSet.add(2.54);
+        assertFalse(mtxLinkedSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {3.65, 4.76}) {
+            assertFalse(mtxLinkedSet.contains(d));
         }
     }
 

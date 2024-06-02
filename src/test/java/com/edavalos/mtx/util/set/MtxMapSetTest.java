@@ -92,6 +92,27 @@ public final class MtxMapSetTest {
     }
 
     @Test
+    public void testAddAll_allNewElements() {
+        mtxMapSet = new MtxMapSet<>();
+        assertTrue(mtxMapSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {2.54, 3.65, 4.76}) {
+            assertTrue(mtxMapSet.contains(d));
+        }
+    }
+
+    @Test
+    public void testAddAll_oneExistingElement() {
+        mtxMapSet = new MtxMapSet<>();
+        mtxMapSet.add(2.54);
+        assertFalse(mtxMapSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {3.65, 4.76}) {
+            assertFalse(mtxMapSet.contains(d));
+        }
+    }
+
+    @Test
     public void testRemove_elementFound() {
         mtxMapSet = new MtxMapSet<>(VAL1);
         assertTrue(mtxMapSet.remove(VAL1));

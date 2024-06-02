@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -236,6 +237,25 @@ public final class MtxHashSetTest {
                     i + 0.3
             ));
             assertEquals((int) ((i + 1) * 6), mtxHashSet.size());
+        }
+    }
+
+    @Test
+    public void testAddAll_allNewElements() {
+        assertTrue(mtxHashSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {2.54, 3.65, 4.76}) {
+            assertTrue(mtxHashSet.contains(d));
+        }
+    }
+
+    @Test
+    public void testAddAll_oneExistingElement() {
+        mtxHashSet.add(2.54);
+        assertFalse(mtxHashSet.addAll(new Double[] {2.54, 3.65, 4.76}));
+
+        for (double d : new double[] {3.65, 4.76}) {
+            assertFalse(mtxHashSet.contains(d));
         }
     }
 
