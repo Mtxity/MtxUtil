@@ -63,6 +63,10 @@ public class MtxMapSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean add(T element) {
+        if (element == null) {
+            return false;
+        }
+
         int hashCode = this.getHashCode(element);
         if (this.setContents.containsKey(hashCode)) {
             return false;
@@ -80,6 +84,10 @@ public class MtxMapSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean remove(T element) {
+        if (element == null) {
+            return false;
+        }
+
         int hashCode = this.getHashCode(element);
         if (this.setContents.containsKey(hashCode)) {
             this.setContents.remove(hashCode);
@@ -95,6 +103,10 @@ public class MtxMapSet<T> implements MtxSet<T> {
      * @return {@code T} if element was found (and removed), null if element was not found.
      */
     public T removeAndReturn(T element) {
+        if (element == null) {
+            return null;
+        }
+
         if (element == null) {
             return null;
         }

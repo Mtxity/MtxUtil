@@ -28,6 +28,10 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     @Override
     @SuppressWarnings("unchecked")
     public boolean add(T element) {
+        if (element == null) {
+            return false;
+        }
+
         if (this.contains(element)) {
             return false;
         }
@@ -53,6 +57,10 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
 
     @Override
     public boolean remove(T element) {
+        if (element == null) {
+            return false;
+        }
+
         boolean found = false;
         for (int i = 0; i < this.nextIndex; i++) {
             if (element == null && this.setContents[i] == null) {
@@ -73,6 +81,10 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     @Override
     @SuppressWarnings("unchecked")
     public T removeAndReturn(T element) {
+        if (element == null) {
+            return null;
+        }
+
         T found = null;
         for (int i = 0; i < this.nextIndex; i++) {
             if (element == null && this.setContents[i] == null) {

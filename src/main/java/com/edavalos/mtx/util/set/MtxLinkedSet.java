@@ -92,6 +92,10 @@ public class MtxLinkedSet<T> implements MtxSet<T> {
 
     @Override
     public boolean add(T element) {
+        if (element == null) {
+            return false;
+        }
+
         MtxNode newNode = new MtxNode(element);
 
         if (this.head == null) {
@@ -129,6 +133,10 @@ public class MtxLinkedSet<T> implements MtxSet<T> {
 
     @Override
     public boolean remove(T element) {
+        if (element == null) {
+            return false;
+        }
+
         if (this.head == null) {
             return false;
         }

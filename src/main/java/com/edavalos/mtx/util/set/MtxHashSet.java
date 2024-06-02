@@ -53,6 +53,10 @@ public final class MtxHashSet<T> implements MtxSet<T> {
 
     @Override
     public boolean add(T element) {
+        if (element == null) {
+            return false;
+        }
+
         return this.content.put(element, PRESENT) == null;
     }
 
