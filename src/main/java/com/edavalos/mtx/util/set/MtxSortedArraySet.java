@@ -93,30 +93,31 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         // @TODO: Implement this
     }
 
-    private static void mergeSort(int[] a, int n) {
-        if (n < 2) {
+    private static <C> void mergeSort(C[] array, int length, Comparator<C> comparator) {
+        if (length < 2) {
             return;
         }
-        int mid = n / 2;
-        int[] l = new int[mid];
-        int[] r = new int[n - mid];
+        int mid = length / 2;
+        C[] l = (C[]) new Object[mid];
+        C[] r = (C[]) new Object[length - mid];
 
         for (int i = 0; i < mid; i++) {
-            l[i] = a[i];
+            l[i] = array[i];
         }
-        for (int i = mid; i < n; i++) {
-            r[i - mid] = a[i];
+        for (int i = mid; i < length; i++) {
+            r[i - mid] = array[i];
         }
-        mergeSort(l, mid);
-        mergeSort(r, n - mid);
+        mergeSort(l, mid, comparator);
+        mergeSort(r, length - mid, comparator);
 
-        merge(a, l, r, mid, n - mid);
+        merge(array, l, r, mid, length - mid, comparator);
     }
 
-    private static void merge(int[] a, int[] l, int[] r, int left, int right) {
+    private static <C> void merge(C[] a, C[] l, C[] r, int left, int right, Comparator<C> comparator) {
         int i = 0, j = 0, k = 0;
         while (i < left && j < right) {
-            if (l[i] <= r[j]) {
+//            if (l[i] <= r[j]) {
+            if (comparator.compare(l[i], r[j]) <= 0) {
                 a[k++] = l[i++];
             } else {
                 a[k++] = r[j++];
