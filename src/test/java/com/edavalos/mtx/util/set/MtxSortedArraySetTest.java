@@ -1,10 +1,12 @@
 package com.edavalos.mtx.util.set;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -41,6 +43,44 @@ public class MtxSortedArraySetTest {
             assertFalse(mtxSortedArraySet.isEmpty());
             assertEquals("(10.0, 20.0, 30.0)", mtxSortedArraySet.toString());
             assertEquals(MtxArraySet.STARTING_SIZE + 3, mtxSortedArraySet.setContents.length);
+        }
+    }
+
+    @Nested
+    class SortTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, 3);
+            mtxSortedArraySet.nextIndex = 3;
+        }
+
+        @Test
+        public void testSort_noSorting() {
+            mtxSortedArraySet.setContents[0] = 1.0;
+            mtxSortedArraySet.setContents[1] = 3.0;
+            mtxSortedArraySet.setContents[2] = 5.0;
+
+            mtxSortedArraySet.sort();
+            assertArrayEquals(new Object[]{1.0, 3.0, 5.0}, mtxSortedArraySet.setContents);
+        }
+
+        @Test
+        public void testSort_withSorting_oddNumber() {
+            mtxSortedArraySet.setContents[0] = 5.0;
+            mtxSortedArraySet.setContents[1] = 1.0;
+            mtxSortedArraySet.setContents[2] = 3.0;
+
+            mtxSortedArraySet.sort();
+            assertArrayEquals(new Object[]{1.0, 3.0, 5.0}, mtxSortedArraySet.setContents);
+        }
+
+        @Test
+        public void testSort_empty() {
+            mtxSortedArraySet.nextIndex = 0;
+
+            mtxSortedArraySet.sort();
+            assertArrayEquals(new Object[]{null, null, null}, mtxSortedArraySet.setContents);
         }
     }
 }
