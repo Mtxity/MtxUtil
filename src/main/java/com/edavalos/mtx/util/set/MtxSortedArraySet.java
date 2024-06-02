@@ -90,6 +90,10 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     }
 
     protected void sort() {
+        if (this.isEmpty()) {
+            return;
+        }
+
         mergeSort(((T[]) this.setContents), this.setContents.length, this.comparator);
     }
 
