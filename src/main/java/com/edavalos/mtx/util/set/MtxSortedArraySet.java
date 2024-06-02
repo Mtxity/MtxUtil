@@ -89,8 +89,8 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         return found;
     }
 
-    private void sort() {
-        mergeSort(((T[]) this.setContents), this.nextIndex, this.comparator);
+    protected void sort() {
+        mergeSort(((T[]) this.setContents), this.setContents.length, this.comparator);
     }
 
     private static <C> void mergeSort(C[] array, int length, Comparator<C> comparator) {
