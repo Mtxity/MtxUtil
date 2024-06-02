@@ -56,6 +56,16 @@ public class MtxSortedArraySetTest {
         }
 
         @Test
+        public void testSort_oneElement() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, 1);
+            mtxSortedArraySet.nextIndex = 0;
+            mtxSortedArraySet.setContents[0] = 1.0;
+
+            mtxSortedArraySet.sort();
+            assertArrayEquals(new Object[]{1.0}, mtxSortedArraySet.setContents);
+        }
+
+        @Test
         public void testSort_noSorting() {
             mtxSortedArraySet.setContents[0] = 1.0;
             mtxSortedArraySet.setContents[1] = 3.0;
@@ -73,6 +83,20 @@ public class MtxSortedArraySetTest {
 
             mtxSortedArraySet.sort();
             assertArrayEquals(new Object[]{1.0, 3.0, 5.0}, mtxSortedArraySet.setContents);
+        }
+
+        @Test
+        public void testSort_withSorting_evenNumber() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, 4);
+            mtxSortedArraySet.nextIndex = 4;
+
+            mtxSortedArraySet.setContents[0] = 8.0;
+            mtxSortedArraySet.setContents[1] = 1.0;
+            mtxSortedArraySet.setContents[2] = 3.0;
+            mtxSortedArraySet.setContents[3] = 5.0;
+
+            mtxSortedArraySet.sort();
+            assertArrayEquals(new Object[]{1.0, 3.0, 5.0, 8.0}, mtxSortedArraySet.setContents);
         }
 
         @Test
