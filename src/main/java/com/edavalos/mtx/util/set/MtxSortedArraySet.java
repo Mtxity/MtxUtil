@@ -101,12 +101,11 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         C[] l = (C[]) new Object[mid];
         C[] r = (C[]) new Object[length - mid];
 
-        for (int i = 0; i < mid; i++) {
-            l[i] = array[i];
+        System.arraycopy(array, 0, l, 0, mid);
+        if (length - mid >= 0) {
+            System.arraycopy(array, mid, r, 0, length - mid);
         }
-        for (int i = mid; i < length; i++) {
-            r[i - mid] = array[i];
-        }
+
         mergeSort(l, mid, comparator);
         mergeSort(r, length - mid, comparator);
 
