@@ -90,7 +90,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
     }
 
     private void sort() {
-        // @TODO: Implement this
+        mergeSort(((T[]) this.setContents), this.nextIndex, this.comparator);
     }
 
     private static <C> void mergeSort(C[] array, int length, Comparator<C> comparator) {
