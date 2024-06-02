@@ -81,6 +81,7 @@ public interface MtxSet<T> extends Iterable<T> {
      */
     @Override
     boolean equals(Object o);
+
     default boolean equalsTo(Object o) {
         if (o instanceof MtxSet<?> otherSet) {
             if (otherSet.size() != this.size()) {
@@ -106,6 +107,24 @@ public interface MtxSet<T> extends Iterable<T> {
      * @return true if element was added to the set, false if it was already in it.
      */
     boolean add(T element);
+
+    /**
+     * Adds all elements to this set. If any already exists, nothing happens. If all
+     * are new then all are added.
+     * @return true if all elements are added to the set, false if one element already exists in this set.
+     */
+    default boolean addAll(T[] elements) {
+        for (T element : elements) {
+            if (this.contains(element)) {
+                return false;
+            }
+        }
+
+        for (T element : elements) {
+            this.add(element);
+        }
+        return true;
+    }
 
     /**
      * Removes an element from this set
