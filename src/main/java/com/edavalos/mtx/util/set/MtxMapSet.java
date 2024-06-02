@@ -17,6 +17,9 @@ public class MtxMapSet<T> implements MtxSet<T> {
     public MtxMapSet(T... contents) {
         this.setContents = new TreeMap<>();
         for (T content : contents) {
+            if (content == null) {
+                continue;
+            }
             this.add(content);
         }
     }

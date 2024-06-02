@@ -2,6 +2,9 @@ package com.edavalos.mtx.util.set;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Unordered implementation of MtxSet backed by an array.
@@ -23,9 +26,21 @@ public class MtxArraySet<T> implements MtxSet<T> {
 
     @SafeVarargs
     public MtxArraySet(T... contents) {
-        this.setContents = new Object[contents.length + STARTING_SIZE];
-        this.nextIndex = contents.length;
-        System.arraycopy(contents, 0, this.setContents, 0, contents.length);
+        LinkedList<T> contentsAsList = new LinkedList<>();
+        for (T content : contents) {
+            if (content == null) {
+                continue;
+            }
+            contentsAsList.add(content);
+        }
+        Object[] filteredContents = new Object[contentsAsList.size()];
+        for (int i = 0; i < contentsAsList.size(); i++) {
+            filteredContents[i] = contentsAsList.get(i);
+        }
+
+        this.setContents = new Object[filteredContents.length + STARTING_SIZE];
+        this.nextIndex = filteredContents.length;
+        System.arraycopy(filteredContents, 0, this.setContents, 0, filteredContents.length);
     }
 
     public MtxArraySet() {

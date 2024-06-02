@@ -22,6 +22,10 @@ public final class MtxHashSet<T> implements MtxSet<T> {
     public MtxHashSet(Class<T> type, T... initialContents) {
         this(type);
         for (T element : initialContents) {
+            if (content == null) {
+                continue;
+            }
+
             this.content.put(element, PRESENT);
         }
     }

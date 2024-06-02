@@ -33,6 +33,10 @@ public class MtxLinkedSet<T> implements MtxSet<T> {
         this(type);
         Set<T> addedElements = new HashSet<>(initialContents.length);
         for (T element : initialContents) {
+            if (element == null) {
+                continue;
+            }
+
             MtxNode newNode = new MtxNode(element);
             if (this.head == null) {
                 this.head = newNode;
