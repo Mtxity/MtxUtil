@@ -161,4 +161,32 @@ public class MtxSortedArraySetTest {
             assertFalse(mtxSortedArraySet.add(null));
         }
     }
+
+    @Nested
+    class RemoveTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, SORTED_VALS);
+        }
+
+        @Test
+        public void testRemove_elementInSet() {
+            assertTrue(mtxSortedArraySet.remove(2.2));
+            assertEquals("(1.1, 3.3, 4.4, 5.5)", mtxSortedArraySet.toString());
+        }
+
+        @Test
+        public void testRemove_elementNotInSet() {
+            assertFalse(mtxSortedArraySet.remove(6.6));
+            assertEquals("(1.1, 2.2, 3.3, 4.4, 5.5)", mtxSortedArraySet.toString());
+        }
+
+        @Test
+        public void testRemove_nullElement() {
+            assertFalse(mtxSortedArraySet.remove(null));
+        }
+    }
+
+    // @TODO: Add unit tests for removeAndReturn()
 }
