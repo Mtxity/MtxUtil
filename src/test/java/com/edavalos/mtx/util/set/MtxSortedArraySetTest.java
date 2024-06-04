@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxSortedArraySetTest {
-    private static final double[] SORTED_VALS = {1.1, 2.2, 3.3, 4.4, 5.5};
-    private static final double[] UNSORTED_VALS = {3.3, 5.5, 2.2, 1.1, 4.4};
+    private static final Double[] SORTED_VALS = {1.1, 2.2, 3.3, 4.4, 5.5};
+    private static final Double[] UNSORTED_VALS = {3.3, 5.5, 2.2, 1.1, 4.4};
     private static final Comparator<Double> COMPARATOR = Comparator.naturalOrder();
 
     private MtxSortedArraySet<Double> mtxSortedArraySet;
@@ -105,6 +105,51 @@ public class MtxSortedArraySetTest {
 
             mtxSortedArraySet.sort();
             assertArrayEquals(new Object[]{null, null, null}, mtxSortedArraySet.setContents);
+        }
+    }
+
+    @Nested
+    class AddTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR);
+        }
+
+        @Test
+        public void testAdd_inOrder() {
+            for (int i = 0; i < SORTED_VALS.length; i++) {
+                double val = SORTED_VALS[i];
+                assertTrue(mtxSortedArraySet.add(val));
+                assertFalse(mtxSortedArraySet.add(val));
+            }
+            assertArrayEquals(SORTED_VALS, mtxSortedArraySet.toArray());
+        }
+
+        @Test
+        public void testAdd_outOfOrder() {
+            for (int i = 0; i < UNSORTED_VALS.length; i++) {
+                double val = UNSORTED_VALS[i];
+                assertTrue(mtxSortedArraySet.add(val));
+                assertFalse(mtxSortedArraySet.add(val));
+            }
+            assertArrayEquals(SORTED_VALS, mtxSortedArraySet.toArray());
+        }
+
+        @Test
+        public void testAdd_increaseArraySize() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, 3);
+            for (int i = 0; i < UNSORTED_VALS.length; i++) {
+                double val = UNSORTED_VALS[i];
+                assertTrue(mtxSortedArraySet.add(val));
+                assertFalse(mtxSortedArraySet.add(val));
+            }
+            assertArrayEquals(SORTED_VALS, mtxSortedArraySet.toArray());
+        }
+
+        @Test
+        public void testAdd_nullElement() {
+            assertFalse(mtxSortedArraySet.add(null));
         }
     }
 }
