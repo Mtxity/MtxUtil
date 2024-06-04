@@ -44,6 +44,15 @@ public class MtxSortedArraySetTest {
             assertEquals("(10.0, 20.0, 30.0)", mtxSortedArraySet.toString());
             assertEquals(MtxArraySet.STARTING_SIZE + 3, mtxSortedArraySet.setContents.length);
         }
+
+        @Test
+        public void testConstructor_withUnsortedContents() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, UNSORTED_VALS);
+            assertFalse(mtxSortedArraySet.isEmpty());
+            assertArrayEquals(SORTED_VALS, mtxSortedArraySet.toArray());
+            assertEquals("(1.1, 2.2, 3.3, 4.4, 5.5)", mtxSortedArraySet.toString());
+            assertEquals(MtxArraySet.STARTING_SIZE + 5, mtxSortedArraySet.setContents.length);
+        }
     }
 
     @Nested
