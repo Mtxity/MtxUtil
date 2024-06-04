@@ -43,8 +43,8 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         }
 
         for (int i = 0; i < this.nextIndex; i++) {
-            if (this.comparator.compare(element, ((T) this.setContents[i])) > 0) {
-                System.arraycopy(this.setContents, i, this.setContents, i+1, this.setContents.length - i);
+            if (this.comparator.compare(element, ((T) this.setContents[i])) <= 0) {
+                System.arraycopy(this.setContents, i, this.setContents, i+1, this.setContents.length - i - 1);
                 this.setContents[i] = element;
                 this.nextIndex ++;
                 return true;
