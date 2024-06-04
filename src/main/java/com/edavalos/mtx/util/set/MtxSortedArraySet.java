@@ -101,6 +101,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         return found;
     }
 
+    @SuppressWarnings("unchecked")
     protected void sort() {
         if (this.isEmpty()) {
             return;
@@ -109,6 +110,7 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
         mergeSort(((T[]) this.setContents), this.nextIndex, this.comparator);
     }
 
+    @SuppressWarnings("unchecked")
     private static <C> void mergeSort(C[] array, int length, Comparator<C> comparator) {
         if (length < 2) {
             return;
