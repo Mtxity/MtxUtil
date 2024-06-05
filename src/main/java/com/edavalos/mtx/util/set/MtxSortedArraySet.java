@@ -82,13 +82,9 @@ public class MtxSortedArraySet<T> extends MtxArraySet<T> {
 
         T found = null;
         for (int i = 0; i < this.nextIndex; i++) {
-            if (element == null && this.setContents[i] == null) {
-                break;
-            }
-
             if (this.setContents[i].equals(element)) {
                 found = (T) this.setContents[i];
-                System.arraycopy(this.setContents, i+1, this.setContents, i, this.setContents.length - i);
+                System.arraycopy(this.setContents, i+1, this.setContents, i, this.setContents.length - i - 1);
                 this.nextIndex --;
                 break;
             }
