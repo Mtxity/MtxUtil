@@ -9,6 +9,7 @@ import java.util.Comparator;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxSortedArraySetTest {
@@ -188,5 +189,30 @@ public class MtxSortedArraySetTest {
         }
     }
 
-    // @TODO: Add unit tests for removeAndReturn()
+    @Nested
+    class RemoveAndReturnTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedArraySet = new MtxSortedArraySet<>(COMPARATOR, SORTED_VALS);
+        }
+
+        @Test
+        public void testRemove_elementInSet() {
+            Double element = 2.2;
+            assertEquals(element, mtxSortedArraySet.removeAndReturn(element));
+            assertEquals("(1.1, 3.3, 4.4, 5.5)", mtxSortedArraySet.toString());
+        }
+
+        @Test
+        public void testRemove_elementNotInSet() {
+            assertNull(mtxSortedArraySet.removeAndReturn(6.6));
+            assertEquals("(1.1, 2.2, 3.3, 4.4, 5.5)", mtxSortedArraySet.toString());
+        }
+
+        @Test
+        public void testRemove_nullElement() {
+            assertNull(mtxSortedArraySet.removeAndReturn(null));
+        }
+    }
 }
