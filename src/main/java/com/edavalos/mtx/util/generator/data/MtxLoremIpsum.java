@@ -14,6 +14,7 @@ public class MtxLoremIpsum {
     protected static final String LOREM_IPSUM_FILEPATH = "./loremIpsum.txt";
     protected static final String ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED = "Lorem Ipsum could not be loaded!";
     protected static final int MAX_LOREMS = 75;
+    protected static final int MAX_LOREMS_WORDS = 8382;
 
     protected static String[][] LOREM_IPSUM = null;
     protected static String[] LOREM_IPSUM_SINGLE_LINE = null;
@@ -67,5 +68,26 @@ public class MtxLoremIpsum {
         }
 
         return LOREM_IPSUM_SINGLE_LINE;
+    }
+
+
+    // ---------------------- Public Methods -----------------------
+
+    public String getWords(int amount) throws IOException {
+        if (amount > MAX_LOREMS_WORDS) {
+            throw new IndexOutOfBoundsException("Max number of lorem ipsum words is " + MAX_LOREMS_WORDS);
+        }
+        if (amount < 1) {
+            throw new IndexOutOfBoundsException("Minimum number of lorem ipsum words is 1");
+        }
+
+        StringBuilder words = new StringBuilder();
+        for (int i = 0; i < amount; i++) {
+            words.append(getFullLoremIpsumInOneLine()[i]);
+            if (i != amount - 1) {
+                words.append(" ");
+            }
+        }
+        return words.toString();
     }
 }
