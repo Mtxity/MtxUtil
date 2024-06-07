@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.generator;
+package com.edavalos.mtx.util.generator.random;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;

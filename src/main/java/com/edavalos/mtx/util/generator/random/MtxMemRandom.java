@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.generator;
+package com.edavalos.mtx.util.generator.random;
 
 public class MtxMemRandom extends MtxRandom {
     public MtxMemRandom() {
