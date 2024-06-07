@@ -12,6 +12,7 @@ public final class MtxStringUtil {
     public static final String EMPTY = "";
     public static final String NEWLINE = String.valueOf('\n');
     public static final char SEPARATOR_CHAR = 'ҁ';
+    public static final String SPACE_QUOTED_PATTERN = Pattern.quote(" ");
 
     protected static Map<String, String> leetSpeakMap = null;
 
