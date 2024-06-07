@@ -35,11 +35,7 @@ public class MtxLoremIpsum {
         }
         fileScanner.close();
 
-        String[][] matrix = new String[rows.size()][];
-        for (int i = 0; i < rows.size(); i++) {
-            matrix[i] = rows.get(i);
-        }
-        LOREM_IPSUM = matrix;
+        LOREM_IPSUM = rows.toArray(new String[0][]);
     }
 
     protected static String[][] getFullLoremIpsum() throws IOException {
