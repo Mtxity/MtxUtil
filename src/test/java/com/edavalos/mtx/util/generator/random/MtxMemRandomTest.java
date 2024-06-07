@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.generator;
+package com.edavalos.mtx.util.generator.random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -12,14 +12,14 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MtxTimeRandomTest {
+public class MtxMemRandomTest {
     private static final int TESTS_COUNT = 10;
 
-    private MtxTimeRandom mtxTimeRandom;
+    private MtxMemRandom mtxMemRandom;
 
     @BeforeEach
     public void setUp() {
-        mtxTimeRandom = new MtxTimeRandom();
+        mtxMemRandom = new MtxMemRandom();
     }
 
     @Nested
@@ -31,7 +31,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomByte());
+                randomsList.add(mtxMemRandom.randomByte());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -51,7 +51,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomShort());
+                randomsList.add(mtxMemRandom.randomShort());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -71,7 +71,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomInt());
+                randomsList.add(mtxMemRandom.randomInt());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -87,7 +87,7 @@ public class MtxTimeRandomTest {
                 int smallBound = new Random().nextInt(1, 5);
                 int largeBound = new Random().nextInt(10, 15);
                 for (int j = 0; j < TESTS_COUNT; j++) {
-                    int randomSample = mtxTimeRandom.randomInt(smallBound, largeBound);
+                    int randomSample = mtxMemRandom.randomInt(smallBound, largeBound);
                     assertTrue(smallBound <= randomSample);
                     assertTrue(largeBound > randomSample);
                 }
@@ -104,7 +104,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomLong());
+                randomsList.add(mtxMemRandom.randomLong());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -124,7 +124,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomFloat());
+                randomsList.add(mtxMemRandom.randomFloat());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -144,7 +144,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomDouble());
+                randomsList.add(mtxMemRandom.randomDouble());
             }
             randomsSet = new HashSet<>(randomsList);
         }
@@ -164,7 +164,7 @@ public class MtxTimeRandomTest {
         public void setUp() {
             randomsList = new ArrayList<>();
             for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomChar());
+                randomsList.add(mtxMemRandom.randomChar());
             }
             randomsSet = new HashSet<>(randomsList);
         }

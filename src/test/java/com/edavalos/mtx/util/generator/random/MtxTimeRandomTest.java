@@ -1,11 +1,9 @@
-package com.edavalos.mtx.util.generator;
+package com.edavalos.mtx.util.generator.random;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -14,14 +12,14 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MtxIpRandomTest {
+public class MtxTimeRandomTest {
     private static final int TESTS_COUNT = 10;
 
-    private MtxIpRandom mtxTimeRandom;
+    private MtxTimeRandom mtxTimeRandom;
 
     @BeforeEach
     public void setUp() {
-        mtxTimeRandom = new MtxIpRandom();
+        mtxTimeRandom = new MtxTimeRandom();
     }
 
     @Nested
@@ -32,30 +30,14 @@ public class MtxIpRandomTest {
         @BeforeEach
         public void setUp() {
             randomsList = new ArrayList<>();
-            randomsSet = null;
-        }
-
-        @Test
-        public void testRandomByte_defaultAddress() {
             for (int i = 0; i < TESTS_COUNT; i++) {
                 randomsList.add(mtxTimeRandom.randomByte());
             }
             randomsSet = new HashSet<>(randomsList);
-
-            assertEquals(randomsSet.size(), randomsList.size());
         }
 
         @Test
-        public void testRandomByte_providedAddress() {
-            mtxTimeRandom = new MtxIpRandom(
-                    new InetSocketAddress("192.168.0.4", 3000).getAddress()
-            );
-
-            for (int i = 0; i < TESTS_COUNT; i++) {
-                randomsList.add(mtxTimeRandom.randomByte());
-            }
-            randomsSet = new HashSet<>(randomsList);
-
+        public void testRandomByte() {
             assertEquals(randomsSet.size(), randomsList.size());
         }
     }
