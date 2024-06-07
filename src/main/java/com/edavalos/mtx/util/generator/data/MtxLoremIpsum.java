@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+// Loosely inspired by:
+// https://sourceforge.net/p/loremipsum/code/HEAD/tree/trunk/src/main/java/de/svenjacobs/loremipsum/LoremIpsum.java
 public class MtxLoremIpsum {
     protected static final String LOREM_IPSUM_FILEPATH = "./loremIpsum.txt";
     protected static final String ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED = "Lorem Ipsum could not be loaded!";
@@ -88,6 +90,11 @@ public class MtxLoremIpsum {
                 words.append(" ");
             }
         }
-        return words.toString();
+
+        String wordsAsString = words.toString();
+        if (wordsAsString.endsWith(",")) {
+            wordsAsString = MtxStringUtil.replaceLast(wordsAsString, ",", "");
+        }
+        return wordsAsString;
     }
 }
