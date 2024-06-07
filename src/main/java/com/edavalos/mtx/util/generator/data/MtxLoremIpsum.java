@@ -6,14 +6,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class MtxLoremIpsum {
     protected static final String LOREM_IPSUM_FILEPATH = "./loremIpsum.txt";
     protected static final String ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED = "Lorem Ipsum could not be loaded!";
+    protected static final int MAX_LOREMS = 75;
 
     protected static String[][] LOREM_IPSUM = null;
+    protected static String[] LOREM_IPSUM_SINGLE_LINE = null;
 
     private static void loadLoremIpsum() throws IOException {
         Scanner fileScanner;
@@ -44,5 +47,25 @@ public class MtxLoremIpsum {
         }
 
         return LOREM_IPSUM;
+    }
+
+    private static void loadFullLoremIpsumInOneLine() throws IOException {
+        if (LOREM_IPSUM == null) {
+            loadLoremIpsum();
+        }
+
+        List<String> words = new ArrayList<>();
+        for (String[] row : LOREM_IPSUM) {
+            words.addAll(Arrays.asList(row));
+        }
+        LOREM_IPSUM_SINGLE_LINE = words.toArray(new String[0]);
+    }
+
+    protected static String[] getFullLoremIpsumInOneLine() throws IOException {
+        if (LOREM_IPSUM_SINGLE_LINE == null) {
+            loadFullLoremIpsumInOneLine();
+        }
+
+        return LOREM_IPSUM_SINGLE_LINE;
     }
 }
