@@ -4,7 +4,6 @@ import com.edavalos.mtx.util.string.MtxStringUtil;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -24,7 +23,16 @@ public class MtxLoremIpsumTest {
                     length ++;
                 }
             }
-            assertEquals(75, length);
+            assertEquals(MtxLoremIpsum.MAX_LOREMS, length);
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test
+    public void testGetFullLoremIpsumInOneLine() {
+        try {
+            assertEquals(8382, MtxLoremIpsum.getFullLoremIpsumInOneLine().length);
         } catch (IOException e) {
             fail(e.getMessage());
         }
