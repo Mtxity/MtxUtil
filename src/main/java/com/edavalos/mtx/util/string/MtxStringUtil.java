@@ -407,8 +407,9 @@ public final class MtxStringUtil {
     }
 
     // Inspired by: https://stackoverflow.com/a/2282765
+    // @TODO: Make this more efficient
     public static String replaceLast(String fullStr, String toReplace, String replaceWith) {
-        if (isEmpty(fullStr) || isEmpty(toReplace) || isEmpty(replaceWith)) {
+        if (fullStr == null || toReplace == null || replaceWith == null) {
             return fullStr;
         }
 
