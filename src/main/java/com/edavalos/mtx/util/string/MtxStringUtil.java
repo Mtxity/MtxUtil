@@ -406,16 +406,25 @@ public final class MtxStringUtil {
         }
     }
 
-    // Inspired by: https://stackoverflow.com/a/2282982
+    // Inspired by: https://stackoverflow.com/a/2282765
     public static String replaceLast(String fullStr, String toReplace, String replaceWith) {
         if (isEmpty(fullStr) || isEmpty(toReplace) || isEmpty(replaceWith)) {
             return fullStr;
         }
 
-        int pos = fullStr.lastIndexOf(replaceWith);
-        if (pos > -1) {
-            return fullStr.substring(0, pos) + replaceWith + fullStr.substring(pos + toReplace.length());
+        Pattern pattern = Pattern.compile(toReplace);
+        Matcher matcher = pattern.matcher(fullStr);
+        if (!matcher.find()) {
+            return fullStr;
         }
-        return fullStr;
+        int lastMatchStart=0;
+        do {
+            lastMatchStart=matcher.start();
+        } while (matcher.find());
+        matcher.find(lastMatchStart);
+        StringBuffer sb = new StringBuffer(fullStr.length());
+        matcher.appendReplacement(sb, replaceWith);
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 }
