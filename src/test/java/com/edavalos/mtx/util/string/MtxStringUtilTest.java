@@ -1001,4 +1001,46 @@ public final class MtxStringUtilTest {
             assertEquals("07", MtxStringUtil.padZeroToDateRelatedInt(oneDigit));
         }
     }
+
+    @Nested
+    class TestReplaceLast {
+
+        @Test
+        public void testReplaceLast_nullVals() {
+            String test = "test";
+            assertEquals(test, MtxStringUtil.replaceLast(test, "t", null));
+            assertEquals(test, MtxStringUtil.replaceLast(test, null, "x"));
+            assertNull(MtxStringUtil.replaceLast(null, "t", "x"));
+        }
+
+        @Test
+        public void testReplaceLast_lastChar() {
+            assertEquals("tesx", MtxStringUtil.replaceLast("test", "t", "x"));
+        }
+
+        @Test
+        public void testReplaceLast_firstChar() {
+            assertEquals("zest", MtxStringUtil.replaceLast("yest", "y", "z"));
+        }
+
+        @Test
+        public void testReplaceLast_middleChar() {
+            assertEquals("tust", MtxStringUtil.replaceLast("test", "e", "u"));
+        }
+
+        @Test
+        public void testReplaceLast_longerChar() {
+            assertEquals("testies", MtxStringUtil.replaceLast("test", "t", "ties"));
+        }
+
+        @Test
+        public void testReplaceLast_longerReplacement() {
+            assertEquals("trust", MtxStringUtil.replaceLast("test", "e", "ru"));
+        }
+
+        @Test
+        public void testReplaceLast_notFound() {
+            assertEquals("test", MtxStringUtil.replaceLast("test", "x", "y"));
+        }
+    }
 }
