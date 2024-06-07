@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 
 public class MtxLoremIpsum {
-    protected static final String LOREM_IPSUM_FILEPATH = "/loremIpsum.txt";
+    protected static final String LOREM_IPSUM_FILEPATH = "./loremIpsum.txt";
     protected static final String ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED = "Lorem Ipsum could not be loaded!";
 
     protected static String[][] LOREM_IPSUM = null;
 
     private static void loadLoremIpsum() throws IOException {
         Scanner fileScanner;
-
         try {
-            fileScanner = new Scanner(new File(String.valueOf(MtxLoremIpsum.class.getResource(LOREM_IPSUM_FILEPATH))));
+            File loremFile = new File(MtxLoremIpsum.class.getClassLoader().getResource(LOREM_IPSUM_FILEPATH).getFile());
+            fileScanner = new Scanner(loremFile);
         } catch (FileNotFoundException e) {
             throw new IOException(ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED);
         }
