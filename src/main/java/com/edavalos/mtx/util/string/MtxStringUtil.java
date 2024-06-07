@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class MtxStringUtil {
@@ -403,5 +404,18 @@ public final class MtxStringUtil {
         } else {
             return "0" + value;
         }
+    }
+
+    // Inspired by: https://stackoverflow.com/a/2282982
+    public static String replaceLast(String fullStr, String toReplace, String replaceWith) {
+        if (isEmpty(fullStr) || isEmpty(toReplace) || isEmpty(replaceWith)) {
+            return fullStr;
+        }
+
+        int pos = fullStr.lastIndexOf(replaceWith);
+        if (pos > -1) {
+            return fullStr.substring(0, pos) + replaceWith + fullStr.substring(pos + toReplace.length());
+        }
+        return fullStr;
     }
 }
