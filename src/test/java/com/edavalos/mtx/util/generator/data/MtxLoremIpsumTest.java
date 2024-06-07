@@ -51,8 +51,19 @@ public class MtxLoremIpsumTest {
         }
 
         @Test
+        public void testGetWords_3() {
+            String expected = "Lorem ipsum dolor";
+
+            try {
+                assertEquals(expected, mtxLoremIpsum.getWords(3));
+            } catch (IOException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        @Test
         public void testGetWords_5() {
-            String expected = "Lorem ipsum dolor sit amet,";
+            String expected = "Lorem ipsum dolor sit amet";
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(5));
