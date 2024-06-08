@@ -90,6 +90,7 @@ public class MtxLoremIpsumTest {
 
         @Test
         public void testGetWords_110() {
+            // @TODO: Split this into multiple lines
             String expected = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et odio pellentesque diam volutpat commodo sed egestas. Venenatis tellus in metus vulputate eu scelerisque felis. Vitae congue mauris rhoncus aenean vel. Nibh venenatis cras sed felis eget velit aliquet sagittis id. In dictum non consectetur a erat nam. Curabitur vitae nunc sed velit dignissim sodales ut eu. In pellentesque massa placerat duis ultricies lacus. Amet est placerat in egestas. Libero volutpat sed cras ornare. Adipiscing bibendum est ultricies integer quis auctor elit sed. Tempus imperdiet nulla malesuada pellentesque elit. Massa eget egestas purus viverra accumsan. Tincidunt id aliquet risus feugiat";
 
             try {
@@ -117,6 +118,59 @@ public class MtxLoremIpsumTest {
                     assertThrows(
                             IndexOutOfBoundsException.class,
                             () -> mtxLoremIpsum.getWords(8400)
+                    ).getMessage()
+            );
+        }
+    }
+
+    @Nested
+    class GetParagraphTests {
+
+        @BeforeEach
+        public void setUp() {
+            mtxLoremIpsum = new MtxLoremIpsum();
+        }
+
+        @Test
+        public void testGetParagraphs_1() {
+            String expected = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et odio pellentesque diam volutpat commodo sed egestas. Venenatis tellus in metus vulputate eu scelerisque felis. Vitae congue mauris rhoncus aenean vel. Nibh venenatis cras sed felis eget velit aliquet sagittis id. In dictum non consectetur a erat nam. Curabitur vitae nunc sed velit dignissim sodales ut eu. In pellentesque massa placerat duis ultricies lacus. Amet est placerat in egestas. Libero volutpat sed cras ornare. Adipiscing bibendum est ultricies integer quis auctor elit sed. Tempus imperdiet nulla malesuada pellentesque elit. Massa eget egestas purus viverra accumsan.";
+
+            try {
+                assertEquals(expected, mtxLoremIpsum.getParagraphs(1));
+            } catch (IOException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        @Test
+        public void testGetParagraphs_2() {
+            String expected = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et odio pellentesque diam volutpat commodo sed egestas. Venenatis tellus in metus vulputate eu scelerisque felis. Vitae congue mauris rhoncus aenean vel. Nibh venenatis cras sed felis eget velit aliquet sagittis id. In dictum non consectetur a erat nam. Curabitur vitae nunc sed velit dignissim sodales ut eu. In pellentesque massa placerat duis ultricies lacus. Amet est placerat in egestas. Libero volutpat sed cras ornare. Adipiscing bibendum est ultricies integer quis auctor elit sed. Tempus imperdiet nulla malesuada pellentesque elit. Massa eget egestas purus viverra accumsan.\nTincidunt id aliquet risus feugiat in ante. Dui accumsan sit amet nulla facilisi morbi. Ultricies leo integer malesuada nunc vel. Elementum curabitur vitae nunc sed. Nulla facilisi cras fermentum odio. Praesent elementum facilisis leo vel fringilla est ullamcorper. Ut tortor pretium viverra suspendisse potenti nullam ac tortor. Imperdiet proin fermentum leo vel orci porta non pulvinar neque. In fermentum et sollicitudin ac orci. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Commodo quis imperdiet massa tincidunt nunc pulvinar sapien. Nisl nunc mi ipsum faucibus vitae aliquet nec ullamcorper. Laoreet non curabitur gravida arcu. Metus dictum at tempor commodo ullamcorper a lacus vestibulum. Eu lobortis elementum nibh tellus molestie nunc non.";
+
+            try {
+                assertEquals(expected, mtxLoremIpsum.getParagraphs(2));
+            } catch (IOException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        @Test
+        public void testGetParagraphs_tooSmall() {
+            assertEquals(
+                    "Minimum number of lorem ipsum paragraphs is 1",
+                    assertThrows(
+                            IndexOutOfBoundsException.class,
+                            () -> mtxLoremIpsum.getParagraphs(-1)
+                    ).getMessage()
+            );
+        }
+
+        @Test
+        public void testGetParagraphs_tooBig() {
+            assertEquals(
+                    "Max number of lorem ipsum paragraphs is " + MtxLoremIpsum.MAX_LOREMS,
+                    assertThrows(
+                            IndexOutOfBoundsException.class,
+                            () -> mtxLoremIpsum.getParagraphs(84)
                     ).getMessage()
             );
         }
