@@ -18,6 +18,8 @@ public class MtxLoremIpsumTest {
     public void setUp() {
         MtxLoremIpsum.LOREM_IPSUM = null;
         MtxLoremIpsum.LOREM_IPSUM_SINGLE_LINE = null;
+
+        mtxLoremIpsum = new MtxLoremIpsum();
     }
 
     @Test
@@ -49,11 +51,6 @@ public class MtxLoremIpsumTest {
 
     @Nested
     class GetWordsTests {
-
-        @BeforeEach
-        public void setUp() {
-            mtxLoremIpsum = new MtxLoremIpsum();
-        }
 
         @Test
         public void testGetWords_3() {
@@ -145,11 +142,6 @@ public class MtxLoremIpsumTest {
     @Nested
     class GetParagraphTests {
 
-        @BeforeEach
-        public void setUp() {
-            mtxLoremIpsum = new MtxLoremIpsum();
-        }
-
         @Test
         public void testGetParagraphs_1() {
             String expected = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor " +
@@ -216,6 +208,22 @@ public class MtxLoremIpsumTest {
                             () -> mtxLoremIpsum.getParagraphs(84)
                     ).getMessage()
             );
+        }
+    }
+
+    @Test
+    public void testIterator() {
+        String[] expected = {"Lorem", "ipsum", "dolor", "sit", "amet,"};
+        int testLength = 5;
+
+        int idx = 0;
+        for (String testIpsum : mtxLoremIpsum) {
+            if (idx >= testLength) {
+                break;
+            }
+
+            assertEquals(expected[idx], testIpsum);
+            idx ++;
         }
     }
 }
