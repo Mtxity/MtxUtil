@@ -5,8 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -35,7 +33,7 @@ public class MtxLoremIpsumTest {
                 }
             }
             assertEquals(MtxLoremIpsum.MAX_LOREMS, length);
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -44,7 +42,7 @@ public class MtxLoremIpsumTest {
     public void testGetFullLoremIpsumInOneLine() {
         try {
             assertEquals(8382, MtxLoremIpsum.getFullLoremIpsumInOneLine().length);
-        } catch (IOException e) {
+        } catch (RuntimeException e) {
             fail(e.getMessage());
         }
     }
@@ -58,7 +56,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(3));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -69,7 +67,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(5));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -82,7 +80,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(30));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -93,7 +91,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(7, 3));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -111,7 +109,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getWords(110));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -155,7 +153,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getParagraphs(1));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
@@ -183,7 +181,7 @@ public class MtxLoremIpsumTest {
 
             try {
                 assertEquals(expected, mtxLoremIpsum.getParagraphs(2));
-            } catch (IOException e) {
+            } catch (RuntimeException e) {
                 fail(e.getMessage());
             }
         }
