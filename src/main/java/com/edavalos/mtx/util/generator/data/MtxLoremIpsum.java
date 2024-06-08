@@ -4,7 +4,6 @@ import com.edavalos.mtx.util.string.MtxStringUtil;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -22,13 +21,13 @@ public class MtxLoremIpsum implements Iterable<String> {
     protected static String[][] LOREM_IPSUM = null;
     protected static String[] LOREM_IPSUM_SINGLE_LINE = null;
 
-    private static void loadLoremIpsum() throws IOException {
+    private static void loadLoremIpsum() {
         Scanner fileScanner;
         try {
             File loremFile = new File(MtxLoremIpsum.class.getClassLoader().getResource(LOREM_IPSUM_FILEPATH).getFile());
             fileScanner = new Scanner(loremFile);
         } catch (FileNotFoundException e) {
-            throw new IOException(ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED);
+            throw new RuntimeException(ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED);
         }
 
         List<String[]> rows = new ArrayList<>();
@@ -45,7 +44,7 @@ public class MtxLoremIpsum implements Iterable<String> {
         LOREM_IPSUM = rows.toArray(new String[0][]);
     }
 
-    protected static String[][] getFullLoremIpsum() throws IOException {
+    protected static String[][] getFullLoremIpsum() {
         if (LOREM_IPSUM == null) {
             loadLoremIpsum();
         }
@@ -53,7 +52,7 @@ public class MtxLoremIpsum implements Iterable<String> {
         return LOREM_IPSUM;
     }
 
-    private static void loadFullLoremIpsumInOneLine() throws IOException {
+    private static void loadFullLoremIpsumInOneLine() {
         if (LOREM_IPSUM == null) {
             loadLoremIpsum();
         }
@@ -65,7 +64,7 @@ public class MtxLoremIpsum implements Iterable<String> {
         LOREM_IPSUM_SINGLE_LINE = words.toArray(new String[0]);
     }
 
-    protected static String[] getFullLoremIpsumInOneLine() throws IOException {
+    protected static String[] getFullLoremIpsumInOneLine() {
         if (LOREM_IPSUM_SINGLE_LINE == null) {
             loadFullLoremIpsumInOneLine();
         }
@@ -77,7 +76,7 @@ public class MtxLoremIpsum implements Iterable<String> {
     // ---------------------- Public Methods -----------------------
 
     // @TODO: Add javadocs for these methods
-    public String getWords(int amount, int startIndex) throws IOException {
+    public String getWords(int amount, int startIndex) {
         if (amount + startIndex > MAX_LOREMS_WORDS) {
             throw new IndexOutOfBoundsException("Max number of lorem ipsum words is " + MAX_LOREMS_WORDS);
         }
@@ -100,11 +99,11 @@ public class MtxLoremIpsum implements Iterable<String> {
         return wordsAsString;
     }
 
-    public String getWords(int amount) throws IOException {
+    public String getWords(int amount) {
         return getWords(amount, 0);
     }
 
-    public String getParagraphs(int amount) throws IOException {
+    public String getParagraphs(int amount) {
         if (amount > MAX_LOREMS) {
             throw new IndexOutOfBoundsException("Max number of lorem ipsum paragraphs is " + MAX_LOREMS);
         }
@@ -137,11 +136,7 @@ public class MtxLoremIpsum implements Iterable<String> {
 
             @Override
             public String next() {
-                try {
-                    return getFullLoremIpsumInOneLine()[this.idx++];
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                return getFullLoremIpsumInOneLine()[this.idx++];
             }
         };
     }
