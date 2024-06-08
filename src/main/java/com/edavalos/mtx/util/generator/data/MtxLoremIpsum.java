@@ -75,8 +75,9 @@ public class MtxLoremIpsum {
 
     // ---------------------- Public Methods -----------------------
 
-    public String getWords(int amount) throws IOException {
-        if (amount > MAX_LOREMS_WORDS) {
+    // @TODO: Add javadocs for these methods
+    public String getWords(int amount, int startIndex) throws IOException {
+        if (amount + startIndex > MAX_LOREMS_WORDS) {
             throw new IndexOutOfBoundsException("Max number of lorem ipsum words is " + MAX_LOREMS_WORDS);
         }
         if (amount < 1) {
@@ -84,7 +85,7 @@ public class MtxLoremIpsum {
         }
 
         StringBuilder words = new StringBuilder();
-        for (int i = 0; i < amount; i++) {
+        for (int i = startIndex; i < amount; i++) {
             words.append(getFullLoremIpsumInOneLine()[i]);
             if (i != amount - 1) {
                 words.append(" ");
@@ -96,6 +97,10 @@ public class MtxLoremIpsum {
             wordsAsString = MtxStringUtil.replaceLast(wordsAsString, ",", "");
         }
         return wordsAsString;
+    }
+
+    public String getWords(int amount) throws IOException {
+        return getWords(amount, 0);
     }
 
     public String getParagraphs(int amount) throws IOException {
