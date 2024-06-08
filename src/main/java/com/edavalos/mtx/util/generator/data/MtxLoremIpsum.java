@@ -7,12 +7,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
 // Loosely inspired by:
 // https://sourceforge.net/p/loremipsum/code/HEAD/tree/trunk/src/main/java/de/svenjacobs/loremipsum/LoremIpsum.java
-public class MtxLoremIpsum {
+public class MtxLoremIpsum implements Iterable<String> {
     protected static final String LOREM_IPSUM_FILEPATH = "./loremIpsum.txt";
     protected static final String ERROR_LOREM_IPSUM_COULD_NOT_BE_LOADED = "Lorem Ipsum could not be loaded!";
     protected static final int MAX_LOREMS = 75;
@@ -122,5 +123,26 @@ public class MtxLoremIpsum {
             paragraphsAsString = MtxStringUtil.replaceLast(paragraphsAsString, MtxStringUtil.NEWLINE, "");
         }
         return paragraphsAsString;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<>() {
+            private int idx = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx <= MAX_LOREMS_WORDS;
+            }
+
+            @Override
+            public String next() {
+                try {
+                    return getFullLoremIpsumInOneLine()[this.idx++];
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
     }
 }
