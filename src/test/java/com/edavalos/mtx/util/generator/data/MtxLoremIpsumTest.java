@@ -89,6 +89,17 @@ public class MtxLoremIpsumTest {
         }
 
         @Test
+        public void testGetWords_7_startIndex_3() {
+            String expected = "sit amet, consectetur adipiscing";
+
+            try {
+                assertEquals(expected, mtxLoremIpsum.getWords(7, 3));
+            } catch (IOException e) {
+                fail(e.getMessage());
+            }
+        }
+
+        @Test
         public void testGetWords_110() {
             // @TODO: Split this into multiple lines
             String expected = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Et odio pellentesque diam volutpat commodo sed egestas. Venenatis tellus in metus vulputate eu scelerisque felis. Vitae congue mauris rhoncus aenean vel. Nibh venenatis cras sed felis eget velit aliquet sagittis id. In dictum non consectetur a erat nam. Curabitur vitae nunc sed velit dignissim sodales ut eu. In pellentesque massa placerat duis ultricies lacus. Amet est placerat in egestas. Libero volutpat sed cras ornare. Adipiscing bibendum est ultricies integer quis auctor elit sed. Tempus imperdiet nulla malesuada pellentesque elit. Massa eget egestas purus viverra accumsan. Tincidunt id aliquet risus feugiat";
