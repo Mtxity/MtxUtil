@@ -97,4 +97,25 @@ public class MtxLoremIpsum {
         }
         return wordsAsString;
     }
+
+    public String getParagraphs(int amount) throws IOException {
+        if (amount > MAX_LOREMS) {
+            throw new IndexOutOfBoundsException("Max number of lorem ipsum paragraphs is " + MAX_LOREMS);
+        }
+        if (amount < 1) {
+            throw new IndexOutOfBoundsException("Minimum number of lorem ipsum paragraphs is 1");
+        }
+
+        StringBuilder paragraphs = new StringBuilder();
+        for (int i = 0; i < amount; i++) {
+            String[] words = getFullLoremIpsum()[i];
+            paragraphs.append(String.join(" ", words)).append(MtxStringUtil.NEWLINE);
+        }
+
+        String paragraphsAsString = paragraphs.toString();
+        if (paragraphsAsString.endsWith(MtxStringUtil.NEWLINE)) {
+            paragraphsAsString = MtxStringUtil.replaceLast(paragraphsAsString, MtxStringUtil.NEWLINE, "");
+        }
+        return paragraphsAsString;
+    }
 }
