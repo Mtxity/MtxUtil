@@ -10,6 +10,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This generator yields Lorem Ipsum text in both word and paragraph format. It is useful when you need english like
+ * words to fill sample UI elements with.
+ */
 // Loosely inspired by:
 // https://sourceforge.net/p/loremipsum/code/HEAD/tree/trunk/src/main/java/de/svenjacobs/loremipsum/LoremIpsum.java
 public class MtxLoremIpsum implements Iterable<String> {
@@ -75,7 +79,12 @@ public class MtxLoremIpsum implements Iterable<String> {
 
     // ---------------------- Public Methods -----------------------
 
-    // @TODO: Add javadocs for these methods
+    /**
+     * Returns lorem ipsum words
+     * @param amount amount of sample words needed
+     * @param startIndex start index to begin with
+     * @return sample (lorem ipsum) words, number of which specified in {@code amount} joined into one string
+     */
     public String getWords(int amount, int startIndex) {
         if (amount + startIndex > MAX_LOREMS_WORDS) {
             throw new IndexOutOfBoundsException("Max number of lorem ipsum words is " + MAX_LOREMS_WORDS);
@@ -99,10 +108,20 @@ public class MtxLoremIpsum implements Iterable<String> {
         return wordsAsString;
     }
 
+    /**
+     * Returns lorem ipsum words
+     * @param amount amount of sample words needed
+     * @return sample (lorem ipsum) words, number of which specified in {@code amount} joined into one string
+     */
     public String getWords(int amount) {
         return getWords(amount, 0);
     }
 
+    /**
+     * Returns lorem ipsum paragraphs
+     * @param amount amount of sample paragraphs needed
+     * @return sample (lorem ipsum) paragraphs, number of which specified in {@code amount} joined into one string
+     */
     public String getParagraphs(int amount) {
         if (amount > MAX_LOREMS) {
             throw new IndexOutOfBoundsException("Max number of lorem ipsum paragraphs is " + MAX_LOREMS);
@@ -124,6 +143,10 @@ public class MtxLoremIpsum implements Iterable<String> {
         return paragraphsAsString;
     }
 
+    /**
+     * Generates an {@code Iterator} that provides sample words. Can be used in for loops to yield fake sample words.
+     * @return an {@code Iterator} that iterates sample (lorem ipsum) words until it reaches 8382 words.
+     */
     @Override
     public Iterator<String> iterator() {
         return new Iterator<>() {
