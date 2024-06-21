@@ -14,6 +14,10 @@ public class MtxCsv {
         this.fillContentsWithGenericSamples();
     }
 
+    public MtxCsv(String[][] contents) {
+        this.contents = contents;
+    }
+
     private void fillContentsWithGenericSamples() {
         for (int x = 0; x < this.contents.length; x++) {
             for (int y = 0; y < this.contents[x].length; y++) {
