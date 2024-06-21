@@ -5,6 +5,7 @@ public class MtxCsv {
     private final String yChar = "y";
 
     private final String[][] contents;
+    private boolean editable;
 
     public MtxCsv(int size) {
         this.contents = new String[size][];
@@ -12,10 +13,12 @@ public class MtxCsv {
             this.contents[i] = new String[size];
         }
         this.fillContentsWithGenericSamples();
+        this.editable = true;
     }
 
     public MtxCsv(String[][] contents) {
         this.contents = contents;
+        this.editable = true;
     }
 
     private void fillContentsWithGenericSamples() {
