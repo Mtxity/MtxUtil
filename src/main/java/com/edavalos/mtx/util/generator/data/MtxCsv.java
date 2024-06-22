@@ -28,4 +28,8 @@ public class MtxCsv {
             }
         }
     }
+
+    public String get(int x, int y) {
+        return this.contents[x][y];
+    }
 }
