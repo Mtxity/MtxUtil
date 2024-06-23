@@ -16,9 +16,9 @@ public class MtxPopulatedCsv {
 
     private final String xChar = "x";
     private final String yChar = "y";
+    private final boolean editable;
 
     protected final String[][] contents;
-    protected boolean editable;
 
     public MtxPopulatedCsv(int size, boolean editable) {
         this.contents = new String[size][];
@@ -91,5 +91,9 @@ public class MtxPopulatedCsv {
             throw new IllegalAccessException(ERROR_MODIFICATIONS_DISALLOWED);
         }
         return this.contents;
+    }
+
+    public boolean isEditable() {
+        return this.editable;
     }
 }

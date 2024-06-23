@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class MtxPopulatedCsvTest {
@@ -118,5 +120,11 @@ public class MtxPopulatedCsvTest {
                 () -> mtxPopulatedCsv.getOriginal()
         ).getMessage();
         assertEquals(expectedErrMsg, actualErrMsg);
+    }
+
+    @Test
+    public void testIsEditable() {
+        assertTrue(new MtxPopulatedCsv(true).isEditable());
+        assertFalse(new MtxPopulatedCsv(false).isEditable());
     }
 }
