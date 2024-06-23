@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.generator.data;
 
+import com.edavalos.mtx.util.string.MtxStringUtil;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class MtxPopulatedCsv {
         while (fileScanner.hasNextLine()) {
             List<String> values = new ArrayList<>();
             try (Scanner rowScanner = new Scanner(fileScanner.nextLine())) {
-                rowScanner.useDelimiter(",");
+                rowScanner.useDelimiter(MtxStringUtil.COMMA);
                 while (rowScanner.hasNext()) {
                     values.add(rowScanner.next());
                 }

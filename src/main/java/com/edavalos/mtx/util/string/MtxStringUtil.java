@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 public final class MtxStringUtil {
     public static final String EMPTY = "";
     public static final String NEWLINE = String.valueOf('\n');
+    public static final String COMMA = ",";
     public static final char SEPARATOR_CHAR = 'ҁ';
     public static final String SPACE_QUOTED_PATTERN = Pattern.quote(" ");
 
