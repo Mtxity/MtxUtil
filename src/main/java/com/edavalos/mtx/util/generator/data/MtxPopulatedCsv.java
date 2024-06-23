@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class MtxPopulatedCsv {
     private static final String SAMPLE_CSV_FILEPATH = "./randomData.csv";
     private static final String ERROR_SAMPLE_CSV_COULD_NOT_BE_LOADED = "Sample csv could not be loaded!";
+    private static final String ERROR_MODIFICATIONS_DISALLOWED = "This MtxPopulatedCsv cannot be modified! No direct access allowed!";
 
     private final String xChar = "x";
     private final String yChar = "y";
@@ -73,5 +74,12 @@ public class MtxPopulatedCsv {
 
     public String[][] getCopy() {
         return Arrays.stream(this.contents).map(String[]::clone).toArray(String[][]::new);
+    }
+
+    public String[][] getOriginal() throws IllegalAccessException {
+        if (!this.editable) {
+            throw new IllegalAccessException(ERROR_MODIFICATIONS_DISALLOWED);
+        }
+        return this.contents;
     }
 }
