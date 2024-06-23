@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.generator.data;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -66,7 +67,11 @@ public class MtxPopulatedCsv {
         return data;
     }
 
-    public String get(int x, int y) {
+    public String getAt(int x, int y) {
         return this.contents[x][y];
+    }
+
+    public String[][] getCopy() {
+        return Arrays.stream(this.contents).map(String[]::clone).toArray(String[][]::new);
     }
 }
