@@ -30,6 +30,11 @@ public class MtxPopulatedCsv {
         this.editable = true;
     }
 
+    public MtxPopulatedCsv() {
+        this.contents = loadSampleCsv().stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
+        this.editable = true;
+    }
+
     private void fillContentsWithGenericSamples() {
         for (int x = 0; x < this.contents.length; x++) {
             for (int y = 0; y < this.contents[x].length; y++) {
