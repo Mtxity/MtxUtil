@@ -20,23 +20,23 @@ public class MtxPopulatedCsv {
     protected final String[][] contents;
     protected boolean editable;
 
-    public MtxPopulatedCsv(int size) {
+    public MtxPopulatedCsv(int size, boolean editable) {
         this.contents = new String[size][];
         for (int i = 0; i < size; i++) {
             this.contents[i] = new String[size];
         }
         this.fillContentsWithGenericSamples();
-        this.editable = true;
+        this.editable = editable;
     }
 
-    public MtxPopulatedCsv(String[][] contents) {
+    public MtxPopulatedCsv(String[][] contents, boolean editable) {
         this.contents = contents;
-        this.editable = true;
+        this.editable = editable;
     }
 
-    public MtxPopulatedCsv() {
+    public MtxPopulatedCsv(boolean editable) {
         this.contents = loadSampleCsv().stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
-        this.editable = true;
+        this.editable = editable;
     }
 
     private void fillContentsWithGenericSamples() {

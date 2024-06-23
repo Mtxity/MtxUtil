@@ -17,7 +17,7 @@ public class MtxPopulatedCsvTest {
         @Test
         public void testConstructor_sizeArg() {
             int sampleSize = 5;
-            mtxPopulatedCsv = new MtxPopulatedCsv(sampleSize);
+            mtxPopulatedCsv = new MtxPopulatedCsv(sampleSize, true);
 
             assertEquals(sampleSize, mtxPopulatedCsv.contents.length);
             assertEquals(sampleSize, mtxPopulatedCsv.contents[0].length);
@@ -26,14 +26,14 @@ public class MtxPopulatedCsvTest {
         @Test
         public void testConstructor_contentsArg() {
             String[][] sampleContents = {{"x", "y", "z"}, {"l", "m", "n"}};
-            mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+            mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
 
             assertEquals(sampleContents, mtxPopulatedCsv.contents);
         }
 
         @Test
         public void testConstructor_default() {
-            mtxPopulatedCsv = new MtxPopulatedCsv();
+            mtxPopulatedCsv = new MtxPopulatedCsv(true);
 
             assertEquals("blueberry", mtxPopulatedCsv.contents[0][0]);
             assertEquals("blackberry", mtxPopulatedCsv.contents[1][1]);
@@ -44,7 +44,7 @@ public class MtxPopulatedCsvTest {
     @Test
     public void testSetAt_editable() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
-        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
         assertArrayEquals(sampleContents, mtxPopulatedCsv.contents);
 
         sampleContents[0][1] = "g";
@@ -59,8 +59,7 @@ public class MtxPopulatedCsvTest {
     @Test
     public void testSetAt_nonEditable() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
-        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
-        mtxPopulatedCsv.editable = false;
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, false);
 
         String expectedErrMsg = "This MtxPopulatedCsv cannot be modified! No direct access allowed!";
         String actualErrMsg = assertThrows(
@@ -72,7 +71,7 @@ public class MtxPopulatedCsvTest {
 
     @Test
     public void testGetAt() {
-        mtxPopulatedCsv = new MtxPopulatedCsv();
+        mtxPopulatedCsv = new MtxPopulatedCsv(true);
 
         assertEquals("strawberry", mtxPopulatedCsv.getAt(0, 1));
         assertEquals("kumquat", mtxPopulatedCsv.getAt(1, 2));
@@ -82,7 +81,7 @@ public class MtxPopulatedCsvTest {
     @Test
     public void testGetCopy() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
-        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
         assertArrayEquals(sampleContents, mtxPopulatedCsv.getCopy());
 
         mtxPopulatedCsv.contents[0][1] = "g";
@@ -92,7 +91,7 @@ public class MtxPopulatedCsvTest {
     @Test
     public void testGetOriginal_editable() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
-        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
         try {
             assertArrayEquals(sampleContents, mtxPopulatedCsv.getOriginal());
         } catch (IllegalAccessException e) {
@@ -111,8 +110,7 @@ public class MtxPopulatedCsvTest {
     @Test
     public void testGetOriginal_nonEditable() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
-        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
-        mtxPopulatedCsv.editable = false;
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, false);
 
         String expectedErrMsg = "This MtxPopulatedCsv cannot be modified! No direct access allowed!";
         String actualErrMsg = assertThrows(
