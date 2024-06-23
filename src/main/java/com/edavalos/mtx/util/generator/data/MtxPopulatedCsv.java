@@ -1,13 +1,13 @@
 package com.edavalos.mtx.util.generator.data;
 
-public class MtxCsv {
+public class MtxPopulatedCsv {
     private final String xChar = "x";
     private final String yChar = "y";
 
     private final String[][] contents;
     private boolean editable;
 
-    public MtxCsv(int size) {
+    public MtxPopulatedCsv(int size) {
         this.contents = new String[size][];
         for (int i = 0; i < size; i++) {
             this.contents[i] = new String[size];
@@ -16,7 +16,7 @@ public class MtxCsv {
         this.editable = true;
     }
 
-    public MtxCsv(String[][] contents) {
+    public MtxPopulatedCsv(String[][] contents) {
         this.contents = contents;
         this.editable = true;
     }
