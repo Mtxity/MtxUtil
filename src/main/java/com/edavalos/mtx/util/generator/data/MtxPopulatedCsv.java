@@ -15,8 +15,8 @@ public class MtxPopulatedCsv {
     private final String xChar = "x";
     private final String yChar = "y";
 
-    private final String[][] contents;
-    private boolean editable;
+    protected final String[][] contents;
+    protected boolean editable;
 
     public MtxPopulatedCsv(int size) {
         this.contents = new String[size][];
