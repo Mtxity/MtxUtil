@@ -70,6 +70,14 @@ public class MtxPopulatedCsv {
         return data;
     }
 
+    public void setAt(int x, int y, String newValue) throws IllegalAccessException {
+        if (!this.editable) {
+            throw new IllegalAccessException(ERROR_MODIFICATIONS_DISALLOWED);
+        }
+
+        this.contents[x][y] = newValue;
+    }
+
     public String getAt(int x, int y) {
         return this.contents[x][y];
     }

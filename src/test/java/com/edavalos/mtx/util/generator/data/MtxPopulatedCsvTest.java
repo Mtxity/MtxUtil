@@ -42,6 +42,35 @@ public class MtxPopulatedCsvTest {
     }
 
     @Test
+    public void testSetAt_editable() {
+        String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+        assertArrayEquals(sampleContents, mtxPopulatedCsv.contents);
+
+        sampleContents[0][1] = "g";
+        try {
+            mtxPopulatedCsv.setAt(0, 1, "g");
+        } catch (IllegalAccessException e) {
+            fail();
+        }
+        assertArrayEquals(sampleContents, mtxPopulatedCsv.contents);
+    }
+
+    @Test
+    public void testSetAt_nonEditable() {
+        String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents);
+        mtxPopulatedCsv.editable = false;
+
+        String expectedErrMsg = "This MtxPopulatedCsv cannot be modified! No direct access allowed!";
+        String actualErrMsg = assertThrows(
+                IllegalAccessException.class,
+                () -> mtxPopulatedCsv.setAt(0, 1, "g")
+        ).getMessage();
+        assertEquals(expectedErrMsg, actualErrMsg);
+    }
+
+    @Test
     public void testGetAt() {
         mtxPopulatedCsv = new MtxPopulatedCsv();
 
