@@ -41,6 +41,12 @@ public class MtxPopulatedCsvTest {
             assertEquals("blackberry", mtxPopulatedCsv.contents[1][1]);
             assertEquals("pickle", mtxPopulatedCsv.contents[2][2]);
         }
+
+        @Test
+        public void testConstructor_default_noArg() {
+            mtxPopulatedCsv = new MtxPopulatedCsv();
+            assertFalse(mtxPopulatedCsv.isEditable());
+        }
     }
 
     @Test
