@@ -39,6 +39,10 @@ public class MtxPopulatedCsv {
         this.editable = editable;
     }
 
+    public MtxPopulatedCsv() {
+        this(false);
+    }
+
     private void fillContentsWithGenericSamples() {
         for (int x = 0; x < this.contents.length; x++) {
             for (int y = 0; y < this.contents[x].length; y++) {
