@@ -141,4 +141,15 @@ public class MtxPopulatedCsvTest {
         assertTrue(new MtxPopulatedCsv(true).isEditable());
         assertFalse(new MtxPopulatedCsv(false).isEditable());
     }
+
+    @Test
+    public void testToString() {
+        mtxPopulatedCsv = new MtxPopulatedCsv();
+        String expected =
+                "    blueberry   strawberry    raspberry        peach        lemon         plum       orange        apple    pineapple     honeydew\n" +
+                "       cherry   blackberry      kumquat     mandarin    tangerine         lime   grapefruit  pomegranate   cantaloupe   watermelon\n" +
+                "    cornichon      gherkin       pickle         dill      mustard pepperoncini       banana   lemongrass     rosemary      rhubarb";
+
+        assertEquals(expected, mtxPopulatedCsv.toString());
+    }
 }
