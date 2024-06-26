@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// @TODO: Add Four, Five, Six and Seven ColumnTables
 public class MtxThreeColumnTable<A, B, C> {
     public record MtxTriple<a, b, c>(a first, b second, c third) {}
 

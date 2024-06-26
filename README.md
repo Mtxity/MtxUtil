@@ -3,6 +3,43 @@ A collection of data structures and other utilities
 
 # Contents
 In order of package names
+<!-- @TODO: Add table of contents here -->
+
+## Address ([com.edavalos.mtx.util.address](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/address))
+`MtxAddress` stores and parses US and CAN address data
+
+## DB ID Generator ([com.edavalos.mtx.util.db.id](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/id))
+`MtxAutoIdBuilder` generates IDs given a specified criteria
+<!-- @TODO: Add list of implementations -->
+
+## DB Query Generator ([com.edavalos.mtx.util.db.query](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/query))
+<!-- @TODO: Add description -->
+
+## DB Table Data Holder ([com.edavalos.mtx.util.db.table](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/table))
+<!-- @TODO: Add description -->
+
+## Specialized Field Wrappers ([com.edavalos.mtx.util.db.var](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/var))
+<!-- @TODO: Add description -->
+
+## Data Generation ([com.edavalos.mtx.util.generator.data](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/generator/data))
+<!-- @TODO: Add description -->
+
+## Random Data Generation ([com.edavalos.mtx.util.generator.random](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/generator/random))
+`MtxRandom` generates a random value of most types of primitives.
+
+These are its implementations:
+* `MtxIpRandom` - uses the IPv4 address of the machine this is running on as a seed.
+* `MtxMemRandom` - uses the number of free RAM bytes of the machine this is running on as a seed.
+* `MtxTimeRandom` - uses the current time (in nanoseconds) as a seed.
+
+## Graphs ([com.edavalos.mtx.util.graph](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/graph))
+<!-- @TODO: Add description -->
+
+## Graphs ([com.edavalos.mtx.util.grouping](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/grouping))
+<!-- @TODO: Add description -->
+
+## Pairs ([com.edavalos.mtx.util.grouping.pair](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/grouping/pair))
+<!-- @TODO: Add description -->
 
 ## Hashing ([com.edavalos.mtx.util.hash](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/hash))
 `MtxHash` will securely encrypt sensitive strings. All implementations hash the values a couple of thousand times and add a salt at every iteration.
@@ -48,6 +85,15 @@ Both of these support `size()` and `toString()`
 This is a representation (and real-world use case) of a multi-priority and bidirectional stack:
 * `MtxElevator` - controlled with `queueFloor()` and `moveToNextFloor()`
 
+## Maps ([com.edavalos.mtx.util.map](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/map))
+<!-- @TODO: Add description -->
+
+## Math Utils ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
+<!-- @TODO: Add description -->
+
+## Roman Numerals ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
+<!-- @TODO: Add description -->
+
 ## HTTP Request Reader ([com.edavalos.mtx.util.network](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/network))
 `MtxRequestReader` takes a serialized HTTP request and parses it.
 Something like: `GET /test/14/twelve?key1=value1&key2=value2 HTTP/1.1` would be consumed by an `MtxRequestReader` object to have the following properties accessible:
@@ -70,11 +116,13 @@ Something like: `GET /test/14/twelve?key1=value1&key2=value2 HTTP/1.1` would be 
 
 All of these support `equals()` and `iterator()` as well as the basic functions. (`contains()`, `toArray()`, `toString()`, `containsAll()`, etc.) See the [interface](https://github.com/Mtxity/MtxUtil/blob/main/src/main/java/com/edavalos/mtx/util/set/MtxSet.java) for a complete list.
 
-## String Handlers and Manipulators
+## String Handlers and Manipulators ([com.edavalos.mtx.util.string](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/string))
+<!-- @TODO: Add description -->
 
-## String Utilities
+## String Utilities ([com.edavalos.mtx.util.string](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/string))
+<!-- @TODO: Add description -->
 
-## Time
+## Time ([com.edavalos.mtx.util.time](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/time))
 `MtxTime` is an object for keeping a record of a time vector, with operations to modify it accordingly. It can be instantiated with a string to parse into a time, or directly with integers for each component. It will also self balance (so that its hours are no greater than 23 and its seconds and minutes are no greater than 59).
 
 It has support for these methods:
@@ -82,3 +130,10 @@ It has support for these methods:
 * `subtractTime()` - subtracts a time from this time
 * `multiplyBy()` - multiplies this time by an integer
 * `isLongerTHan()` - checks if this time vector is longer than another one
+
+`MtxClock` records the time elapsed (in milliseconds) between when `start()` and `getElapsed()` is called
+
+`MtxTimeUtil` provides several utilities for dealing with times:
+* `isValidTime()` - checks if a string fits the pattern used by `MtxTime`
+* `extractTimeDigits()` - converts a time string into an integer array of time components
+* `getRelativeTimeToNow()` - gets the difference between a specified time and now, in a human-readable format
