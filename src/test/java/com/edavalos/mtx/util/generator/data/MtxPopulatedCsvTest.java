@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.generator.data;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -95,13 +97,24 @@ public class MtxPopulatedCsvTest {
     }
 
     @Test
-    public void testGetCopy() {
+    public void testGetCopy_modifyOriginal() {
         String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
         mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
         assertArrayEquals(sampleContents, mtxPopulatedCsv.getCopy());
 
         mtxPopulatedCsv.contents[0][1] = "g";
         assertArrayEquals(sampleContents, mtxPopulatedCsv.getCopy());
+    }
+
+    @Test
+    public void testGetCopy_modifyCopy() {
+        String[][] sampleContents = {{"a", "b"}, {"c", "d"}, {"e", "f"}};
+        mtxPopulatedCsv = new MtxPopulatedCsv(sampleContents, true);
+        String[][] copiedContents = mtxPopulatedCsv.getCopy();
+        assertTrue(Arrays.deepEquals(sampleContents, copiedContents));
+
+        copiedContents[0][1] = "g";
+        assertFalse(Arrays.deepEquals(sampleContents, copiedContents));
     }
 
     @Test
