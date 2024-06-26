@@ -34,6 +34,17 @@ public class MtxPopulatedCsv {
         this.editable = editable;
     }
 
+    public MtxPopulatedCsv(String content, int size, boolean editable) {
+        this.contents = new String[size][];
+        for (int i = 0; i < size; i++) {
+            this.contents[i] = new String[size];
+            for (int j = 0; j < size; j++) {
+                this.contents[i][j] = content;
+            }
+        }
+        this.editable = editable;
+    }
+
     public MtxPopulatedCsv(boolean editable) {
         this.contents = loadSampleCsv().stream().map(u -> u.toArray(new String[0])).toArray(String[][]::new);
         this.editable = editable;
