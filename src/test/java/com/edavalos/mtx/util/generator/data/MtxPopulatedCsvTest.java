@@ -34,6 +34,14 @@ public class MtxPopulatedCsvTest {
         }
 
         @Test
+        public void testConstructor_contentArg() {
+            String[][] expectedContents = {{".", ".", "."}, {".", ".", "."}, {".", ".", "."}};
+            mtxPopulatedCsv = new MtxPopulatedCsv(".", 3, true);
+
+            assertArrayEquals(expectedContents, mtxPopulatedCsv.contents);
+        }
+
+        @Test
         public void testConstructor_default() {
             mtxPopulatedCsv = new MtxPopulatedCsv(true);
 
