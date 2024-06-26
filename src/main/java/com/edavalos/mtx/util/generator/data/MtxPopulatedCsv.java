@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.generator.data;
 
+import com.edavalos.mtx.util.string.MtxMatrixFormatter;
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
 import java.io.File;
@@ -110,5 +111,10 @@ public class MtxPopulatedCsv {
 
     public boolean isEditable() {
         return this.editable;
+    }
+
+    @Override
+    public String toString() {
+        return MtxMatrixFormatter.format(this.contents);
     }
 }
