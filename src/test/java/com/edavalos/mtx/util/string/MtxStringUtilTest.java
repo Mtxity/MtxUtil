@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.string;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -1041,6 +1042,47 @@ public final class MtxStringUtilTest {
         @Test
         public void testReplaceLast_notFound() {
             assertEquals("test", MtxStringUtil.replaceLast("test", "x", "y"));
+        }
+    }
+
+    @Nested
+    class TestSplitAtMultiple {
+        private static final String TEST_STR = "a b c d e f";
+        private static final String[] TEST_DELIMS = {"x", "y", "c", "v", "w"};
+
+        @Test
+        public void testSplitAtMultiple_foundDelim_delimInFirst_caseSensitive() {
+            String[] expected = {"a b c", "d e f"};
+            String[] parts = MtxStringUtil.splitAtMultiple(TEST_STR, TEST_DELIMS, true, true);
+            assertArrayEquals(expected, parts);
+        }
+
+        @Test
+        public void testSplitAtMultiple_foundDelim_delimInSecond_caseSensitive() {
+            String[] expected = {"a b", "c d e f"};
+            String[] parts = MtxStringUtil.splitAtMultiple(TEST_STR, TEST_DELIMS, false, true);
+            assertArrayEquals(expected, parts);
+        }
+
+        @Test
+        public void testSplitAtMultiple_foundDelim_delimInFirst_caseInsensitive() {
+            String[] expected = {"a b c", "d e f"};
+            String[] parts = MtxStringUtil.splitAtMultiple(TEST_STR, TEST_DELIMS, true, false);
+            assertArrayEquals(expected, parts);
+        }
+
+        @Test
+        public void testSplitAtMultiple_foundDelim_delimInSecond_caseInsensitive() {
+            String[] expected = {"a b", "c d e f"};
+            String[] parts = MtxStringUtil.splitAtMultiple(TEST_STR, TEST_DELIMS, false, false);
+            assertArrayEquals(expected, parts);
+        }
+
+        @Test
+        public void testSplitAtMultiple_noFoundDelim() {
+            String[] expected = {"a b c d e f"};
+            String[] parts = MtxStringUtil.splitAtMultiple(TEST_STR, new String[] {"x"}, false, false);
+            assertArrayEquals(expected, parts);
         }
     }
 }
