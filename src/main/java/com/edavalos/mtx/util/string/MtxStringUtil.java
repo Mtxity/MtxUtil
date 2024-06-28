@@ -429,4 +429,28 @@ public final class MtxStringUtil {
         matcher.appendTail(sb);
         return sb.toString();
     }
+
+    /**
+     * Split a String into two at any of the delimiters in the given array
+     * @param s original String to split
+     * @param possibleDelimiters array of Strings to use as delimiters
+     * @param putDelimiterInFirst if true, will split the string after the delimiter, else will split it before
+     * @param caseSensitive should check case of possibleDelimiters
+     * @return String array of length two if delimiter is found or one if no delimiter is found
+     */
+    public static String[] splitAtMultiple(String s, String[] possibleDelimiters, boolean putDelimiterInFirst, boolean caseSensitive) {
+        String[] words = s.split(" ");
+        for (int i = 0; i < words.length; i++) {
+            String word = words[i];
+            int splitIdx = i + (putDelimiterInFirst ? 1 : 0);
+            for (String delim : possibleDelimiters) {
+                if ((caseSensitive && word.equals(delim)) || (!caseSensitive && word.equalsIgnoreCase(delim))) {
+                    String part1 = String.join(" ", Arrays.copyOf(words, splitIdx));
+                    String part2 = String.join(" ", Arrays.copyOfRange(words, splitIdx, words.length));
+                    return new String[] {part1, part2};
+                }
+            }
+        }
+        return new String[] {s};
+    }
 }
