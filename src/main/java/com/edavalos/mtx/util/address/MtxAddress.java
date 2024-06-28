@@ -15,6 +15,98 @@ public record MtxAddress(
         String zipCode
     ) {
 
+    // Source: https://www.yourdictionary.com/articles/usps-street-building-abbreviations
+    private static final String[] STREET_ABBREVIATIONS = {
+            "Alley", "ALY",
+            "Avenue", "AVE",
+            "Boulevard", "BLV",
+            "Causeway", "CSWY",
+            "Center", "CTR",
+            "Circle", "CIR",
+            "Court", "CT",
+            "Cove", "CV",
+            "Crossing", "XING",
+            "Drive", "DR",
+            "Expressway", "EXPY",
+            "Extension", "EXT",
+            "Freeway", "FWY",
+            "Grove", "GRV",
+            "Highway", "HWY",
+            "Hollow", "HOLW",
+            "Junction", "JCT",
+            "Lane", "LN",
+            "Motorway", "MTWY",
+            "Overpass", "OPAS",
+            "Park", "PARK",
+            "Parkway", "PKWY",
+            "Place", "PL",
+            "Plaza", "PLZ",
+            "Point", "PT",
+            "Road", "RD",
+            "Route", "RTE",
+            "Skyway", "SKWY",
+            "Square", "SQ",
+            "Street", "ST",
+            "Terrace", "TERR",
+            "Trail", "TRL",
+            "Way", "WAY",
+            // Lesser used street suffixes and abbreviations:
+            "Annex", "ANX",
+            "Arcade", "ARC",
+            "Bayou", "BYU",
+            "Beach", "BCH",
+            "Bend", "BND",
+            "Bluff", "BLF",
+            "Bottom", "BTM",
+            "Branch", "BR",
+            "Bridge", "BRG",
+            "Brook", "BRK",
+            "Burg", "BG",
+            "Bypass", "BYP",
+            "Camp", "CP",
+            "Cliff", "CLF",
+            "Club", "CLB",
+            "Commons", "CMNS",
+            "Corner", "CNR",
+            "Corners", "CORS",
+            "Course", "CRSE",
+            "Creek", "CRK",
+            "Crescent", "CRES",
+            "Dale", "DL",
+            "Estate", "EST",
+            "Falls", "FLS",
+            "Field", "FLD",
+            "Flats", "FLTS",
+            "Ford", "FRD",
+            "Forge", "FRG",
+            "Gateway", "GTWY",
+            "Glen", "GLN",
+            "Haven", "HVN",
+            "Heights", "HTS",
+            "Ridge", "RDG",
+            "Station", "STA"
+    };
+
+    // Source: https://www.yourdictionary.com/articles/usps-street-building-abbreviations
+    private static final String[] BUILDING_ABBREVIATIONS = {
+            "Apartment", "APT",
+            "Basement", "BSMT",
+            "Building", "BLDG",
+            "Department", "DEPT",
+            "Floor", "FL",
+            "Hanger", "HNGR",
+            "Lobby", "LBBY",
+            "Lower", "LOWR",
+            "Number", "#",
+            "Office", "OFC",
+            "Penthouse", "PH",
+            "Room", "RM",
+            "Suite", "STE",
+            "Trailer", "TRLR",
+            "Unit", "UNIT",
+            "Upper", "UPPR"
+    };
+
     private static final MtxBiMap<String, String> STATES_TO_CODES = new MtxHashBiMap<>();
     static {
         STATES_TO_CODES.put("Alabama","AL");
@@ -148,4 +240,7 @@ public record MtxAddress(
     }
 
     // @TODO: Add parseAddress(): MtxAddress - converts a string into an MtxAddress
+    public static MtxAddress parseAddress(String address) {
+        //
+    }
 }
