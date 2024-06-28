@@ -1,9 +1,9 @@
 package com.edavalos.mtx.util.address;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
+import com.edavalos.mtx.util.map.MtxBiMap;
+import com.edavalos.mtx.util.map.MtxHashBiMap;
 import com.edavalos.mtx.util.string.MtxStringUtil;
 
 public record MtxAddress(
@@ -15,8 +15,7 @@ public record MtxAddress(
         String zipCode
     ) {
 
-    private static final Map<String, String> STATES_TO_CODES = new HashMap<>();
-    private static final Map<String, String> CODES_TO_STATES = new HashMap<>();
+    private static final MtxBiMap<String, String> STATES_TO_CODES = new MtxHashBiMap<>();
     static {
         STATES_TO_CODES.put("Alabama","AL");
         STATES_TO_CODES.put("Alaska","AK");
@@ -89,74 +88,6 @@ public record MtxAddress(
         STATES_TO_CODES.put("Wisconsin","WI");
         STATES_TO_CODES.put("Wyoming","WY");
         STATES_TO_CODES.put("Yukon Territory","YT");
-
-        CODES_TO_STATES.put("AL", "Alabama");
-        CODES_TO_STATES.put("AK", "Alaska");
-        CODES_TO_STATES.put("AB", "Alberta");
-        CODES_TO_STATES.put("AZ", "Arizona");
-        CODES_TO_STATES.put("AR", "Arkansas");
-        CODES_TO_STATES.put("BC", "British Columbia");
-        CODES_TO_STATES.put("CA", "California");
-        CODES_TO_STATES.put("CO", "Colorado");
-        CODES_TO_STATES.put("CT", "Connecticut");
-        CODES_TO_STATES.put("DE", "Delaware");
-        CODES_TO_STATES.put("DC", "District Of Columbia");
-        CODES_TO_STATES.put("FL", "Florida");
-        CODES_TO_STATES.put("GA", "Georgia");
-        CODES_TO_STATES.put("GU", "Guam");
-        CODES_TO_STATES.put("HI", "Hawaii");
-        CODES_TO_STATES.put("ID", "Idaho");
-        CODES_TO_STATES.put("IL", "Illinois");
-        CODES_TO_STATES.put("IN", "Indiana");
-        CODES_TO_STATES.put("IA", "Iowa");
-        CODES_TO_STATES.put("KS", "Kansas");
-        CODES_TO_STATES.put("KY", "Kentucky");
-        CODES_TO_STATES.put("LA", "Louisiana");
-        CODES_TO_STATES.put("ME", "Maine");
-        CODES_TO_STATES.put("MB", "Manitoba");
-        CODES_TO_STATES.put("MD", "Maryland");
-        CODES_TO_STATES.put("MA", "Massachusetts");
-        CODES_TO_STATES.put("MI", "Michigan");
-        CODES_TO_STATES.put("MN", "Minnesota");
-        CODES_TO_STATES.put("MS", "Mississippi");
-        CODES_TO_STATES.put("MO", "Missouri");
-        CODES_TO_STATES.put("MT", "Montana");
-        CODES_TO_STATES.put("NE", "Nebraska");
-        CODES_TO_STATES.put("NV", "Nevada");
-        CODES_TO_STATES.put("NB", "New Brunswick");
-        CODES_TO_STATES.put("NH", "New Hampshire");
-        CODES_TO_STATES.put("NJ", "New Jersey");
-        CODES_TO_STATES.put("NM", "New Mexico");
-        CODES_TO_STATES.put("NY", "New York");
-        CODES_TO_STATES.put("NF", "Newfoundland");
-        CODES_TO_STATES.put("NC", "North Carolina");
-        CODES_TO_STATES.put("ND", "North Dakota");
-        CODES_TO_STATES.put("NT", "Northwest Territories");
-        CODES_TO_STATES.put("NS", "Nova Scotia");
-        CODES_TO_STATES.put("NU", "Nunavut");
-        CODES_TO_STATES.put("OH", "Ohio");
-        CODES_TO_STATES.put("OK", "Oklahoma");
-        CODES_TO_STATES.put("ON", "Ontario");
-        CODES_TO_STATES.put("OR", "Oregon");
-        CODES_TO_STATES.put("PA", "Pennsylvania");
-        CODES_TO_STATES.put("PE", "Prince Edward Island");
-        CODES_TO_STATES.put("PR", "Puerto Rico");
-        CODES_TO_STATES.put("QC", "Quebec");
-        CODES_TO_STATES.put("RI", "Rhode Island");
-        CODES_TO_STATES.put("SK", "Saskatchewan");
-        CODES_TO_STATES.put("SC", "South Carolina");
-        CODES_TO_STATES.put("SD", "South Dakota");
-        CODES_TO_STATES.put("TN", "Tennessee");
-        CODES_TO_STATES.put("TX", "Texas");
-        CODES_TO_STATES.put("UT", "Utah");
-        CODES_TO_STATES.put("VT", "Vermont");
-        CODES_TO_STATES.put("VI", "Virgin Islands");
-        CODES_TO_STATES.put("VA", "Virginia");
-        CODES_TO_STATES.put("WA", "Washington");
-        CODES_TO_STATES.put("WV", "West Virginia");
-        CODES_TO_STATES.put("WI", "Wisconsin");
-        CODES_TO_STATES.put("WY", "Wyoming");
-        CODES_TO_STATES.put("YT", "Yukon Territory");
     }
 
     public MtxAddress(
@@ -207,7 +138,7 @@ public record MtxAddress(
         String stateStr;
         if (STATES_TO_CODES.containsKey(state)) {
             stateStr = STATES_TO_CODES.get(state);
-        } else if (CODES_TO_STATES.containsKey(state)) {
+        } else if (STATES_TO_CODES.inverse().containsKey(state)) {
             stateStr = state;
         } else {
             throw new IllegalArgumentException(state);
