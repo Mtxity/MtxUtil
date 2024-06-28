@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.address;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,168 +11,172 @@ import static org.junit.jupiter.api.Assertions.fail;
 public final class MtxAddressTest {
     private MtxAddress mtxAddress;
 
-    @Test
-    public void testConstructor_validInput() {
-        try {
-            mtxAddress = new MtxAddress(
+    @Nested
+    class ConstructorTests {
+
+        @Test
+        public void testConstructor_validInput() {
+            try {
+                mtxAddress = new MtxAddress(
+                        124,
+                        "Valley Dr.",
+                        null,
+                        "San Carlos",
+                        "CA",
+                        "93210"
+                );
+            } catch (NullPointerException | IllegalArgumentException e) {
+                fail();
+            }
+        }
+
+        @Test
+        public void testConstructor_invalidZipcode() {
+            assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
                     124,
                     "Valley Dr.",
                     null,
                     "San Carlos",
                     "CA",
-                    "93210"
-            );
-        } catch (NullPointerException | IllegalArgumentException e) {
-            fail();
+                    "932100"
+            ));
         }
-    }
 
-    @Test
-    public void testConstructor_invalidZipcode() {
-        assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                "CA",
-                "932100"
-        ));
-    }
+        @Test
+        public void testConstructor_nullStreetName() {
+            assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
+                    124,
+                    null,
+                    null,
+                    "San Carlos",
+                    "CA",
+                    "932100"
+            ));
+        }
 
-    @Test
-    public void testConstructor_nullStreetName() {
-        assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                null,
-                null,
-                "San Carlos",
-                "CA",
-                "932100"
-        ));
-    }
+        @Test
+        public void testConstructor_nullCityName() {
+            assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
+                    124,
+                    "Valley Dr.",
+                    null,
+                    null,
+                    "CA",
+                    "932100"
+            ));
+        }
 
-    @Test
-    public void testConstructor_nullCityName() {
-        assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                null,
-                "CA",
-                "932100"
-        ));
-    }
+        @Test
+        public void testConstructor_nullState() {
+            assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
+                    124,
+                    "Valley Dr.",
+                    null,
+                    "San Carlos",
+                    null,
+                    "932100"
+            ));
+        }
 
-    @Test
-    public void testConstructor_nullState() {
-        assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                null,
-                "932100"
-        ));
-    }
-
-    @Test
-    public void testConstructor_nullZipCode() {
-        assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                "CA",
-                null
-        ));
-    }
-
-    @Test
-    public void testConstructor_validIntZipcode() {
-        try {
-            mtxAddress = new MtxAddress(
+        @Test
+        public void testConstructor_nullZipCode() {
+            assertThrows(NullPointerException.class, () -> mtxAddress = new MtxAddress(
                     124,
                     "Valley Dr.",
                     null,
                     "San Carlos",
                     "CA",
-                    93210
-            );
-        } catch (NullPointerException | IllegalArgumentException e) {
-            fail();
+                    null
+            ));
         }
-    }
 
-    @Test
-    public void testConstructor_invalidIntZipcode() {
-        assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                "CA",
-                932100
-        ));
-    }
+        @Test
+        public void testConstructor_validIntZipcode() {
+            try {
+                mtxAddress = new MtxAddress(
+                        124,
+                        "Valley Dr.",
+                        null,
+                        "San Carlos",
+                        "CA",
+                        93210
+                );
+            } catch (NullPointerException | IllegalArgumentException e) {
+                fail();
+            }
+        }
 
-    @Test
-    public void testConstructor_validStateName() {
-        try {
-            mtxAddress = new MtxAddress(
+        @Test
+        public void testConstructor_invalidIntZipcode() {
+            assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
                     124,
                     "Valley Dr.",
                     null,
                     "San Carlos",
-                    "Arizona",
-                    93210
-            );
-        } catch (NullPointerException | IllegalArgumentException e) {
-            fail();
+                    "CA",
+                    932100
+            ));
         }
 
-        assertEquals("AZ", mtxAddress.state());
-    }
+        @Test
+        public void testConstructor_validStateName() {
+            try {
+                mtxAddress = new MtxAddress(
+                        124,
+                        "Valley Dr.",
+                        null,
+                        "San Carlos",
+                        "Arizona",
+                        93210
+                );
+            } catch (NullPointerException | IllegalArgumentException e) {
+                fail();
+            }
 
-    @Test
-    public void testConstructor_invalidStateName() {
-        assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                "Westlandia",
-                932100
-        ));
-    }
+            assertEquals("AZ", mtxAddress.state());
+        }
 
-    @Test
-    public void testConstructor_validStateCode() {
-        try {
-            mtxAddress = new MtxAddress(
+        @Test
+        public void testConstructor_invalidStateName() {
+            assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
                     124,
                     "Valley Dr.",
                     null,
                     "San Carlos",
-                    "Arizona",
-                    93210
-            );
-        } catch (NullPointerException | IllegalArgumentException e) {
-            fail();
+                    "Westlandia",
+                    932100
+            ));
         }
 
-        assertEquals("AZ", mtxAddress.state());
-    }
+        @Test
+        public void testConstructor_validStateCode() {
+            try {
+                mtxAddress = new MtxAddress(
+                        124,
+                        "Valley Dr.",
+                        null,
+                        "San Carlos",
+                        "Arizona",
+                        93210
+                );
+            } catch (NullPointerException | IllegalArgumentException e) {
+                fail();
+            }
 
-    @Test
-    public void testConstructor_invalidStateCode() {
-        assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
-                124,
-                "Valley Dr.",
-                null,
-                "San Carlos",
-                "XX",
-                932100
-        ));
+            assertEquals("AZ", mtxAddress.state());
+        }
+
+        @Test
+        public void testConstructor_invalidStateCode() {
+            assertThrows(IllegalArgumentException.class, () -> mtxAddress = new MtxAddress(
+                    124,
+                    "Valley Dr.",
+                    null,
+                    "San Carlos",
+                    "XX",
+                    932100
+            ));
+        }
     }
 
     @Test
