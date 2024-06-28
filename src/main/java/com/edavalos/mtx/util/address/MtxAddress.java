@@ -239,8 +239,28 @@ public record MtxAddress(
         return stateStr;
     }
 
-    // @TODO: Add parseAddress(): MtxAddress - converts a string into an MtxAddress
+    // @TODO: Handle street and city names with spaces
     public static MtxAddress parseAddress(String address) {
-        //
+        String[] parts = address.split(" ");
+        int streetNumber = Integer.parseInt(parts[0]);
+        String streetName = parts[1];
+        String streetAbv = parts[2];
+        String unitAbv = "";
+        String unitNumber = "";
+        String city;
+        String state;
+        int zipcode;
+        if (parts.length > 6) {
+            unitAbv = parts[3];
+            unitNumber = " " + parts[4];
+            city = parts[5];
+            state = parts[6];
+            zipcode = Integer.parseInt(parts[7]);
+        } else {
+            city = parts[3];
+            state = parts[4];
+            zipcode = Integer.parseInt(parts[5]);
+        }
+        return new MtxAddress(streetNumber, streetName + " " + streetAbv, unitAbv + unitNumber, city, state, zipcode);
     }
 }
