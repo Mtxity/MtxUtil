@@ -1,6 +1,9 @@
 package com.edavalos.mtx.util.address;
 
+import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 import com.edavalos.mtx.util.map.MtxBiMap;
 import com.edavalos.mtx.util.map.MtxHashBiMap;
@@ -182,6 +185,8 @@ public record MtxAddress(
         STATES_TO_CODES.put("Yukon Territory","YT");
     }
 
+    private static final String ERROR_CANNOT_PARSE_ADDRESS_COMPONENT = "Could not parse %s component of address: %s";
+
     public MtxAddress(
             int buildingNumber,
             String streetName,
@@ -239,28 +244,53 @@ public record MtxAddress(
         return stateStr;
     }
 
-    // @TODO: Handle street and city names with spaces
-    public static MtxAddress parseAddress(String address) {
-        String[] parts = address.split(" ");
-        int streetNumber = Integer.parseInt(parts[0]);
-        String streetName = parts[1];
-        String streetAbv = parts[2];
-        String unitAbv = "";
-        String unitNumber = "";
+    public static MtxAddress parseAddress(String address) throws ParseException {
+        int streetNumber;
+        String streetName;
+        String unitAbvAndNum;
         String city;
         String state;
-        int zipcode;
-        if (parts.length > 6) {
-            unitAbv = parts[3];
-            unitNumber = " " + parts[4];
-            city = parts[5];
-            state = parts[6];
-            zipcode = Integer.parseInt(parts[7]);
-        } else {
-            city = parts[3];
-            state = parts[4];
-            zipcode = Integer.parseInt(parts[5]);
+        String zip;
+
+        address = address.replaceAll("\n", " ").replaceAll(Pattern.quote("  "), " ").replaceAll(Pattern.quote("."), "");
+        String[] splitOffStreet = MtxStringUtil.splitAtMultiple(address, STREET_ABBREVIATIONS, true, false);
+        if (splitOffStreet.length == 1) {
+            throw new ParseException(String.format(ERROR_CANNOT_PARSE_ADDRESS_COMPONENT, "street name", address), 1);
         }
-        return new MtxAddress(streetNumber, streetName + " " + streetAbv, unitAbv + unitNumber, city, state, zipcode);
+
+        String fullStreetName = splitOffStreet[0];
+        String restOfAddr = splitOffStreet[1];
+        try {
+            streetNumber = Integer.parseInt(fullStreetName.split(" ")[0]);
+        } catch (NumberFormatException e) {
+            throw new ParseException(String.format(ERROR_CANNOT_PARSE_ADDRESS_COMPONENT, "street number", address), 0);
+        }
+        streetName = String.join(" ", Arrays.copyOfRange(fullStreetName.split(" "), 1, fullStreetName.split(" ").length));
+
+        unitAbvAndNum = null;
+        String cityAndState = null;
+        for (String aptCode : BUILDING_ABBREVIATIONS) {
+            if (restOfAddr.contains(aptCode)) {
+                String[] restOfAddrSplit = restOfAddr.split(" ");
+                unitAbvAndNum = restOfAddrSplit[1] + " " + restOfAddrSplit[2];
+                cityAndState = String.join(" ", Arrays.copyOfRange(restOfAddrSplit, 3, restOfAddrSplit.length - 2)) + ", " + String.join(" ", Arrays.copyOfRange(restOfAddrSplit, restOfAddrSplit.length - 2, restOfAddrSplit.length));
+                streetName += " " + splitOffStreet[1].split(" ")[0];
+                break;
+            }
+        }
+
+        if (cityAndState == null) {
+            cityAndState = MtxStringUtil.splitAtMultiple(restOfAddr, STREET_ABBREVIATIONS, true, false)[0];
+        }
+        String[] casComponents = cityAndState.replaceAll(",,", ",").split(",");
+        if (casComponents.length == 1) {
+            throw new ParseException(String.format(ERROR_CANNOT_PARSE_ADDRESS_COMPONENT, "city", address), 0);
+        }
+
+        city = casComponents[0];
+        state = casComponents[1].split(" ")[1];
+        zip = casComponents[1].split(" ")[2];
+
+        return new MtxAddress(streetNumber, streetName, unitAbvAndNum, city, state, zip);
     }
 }
