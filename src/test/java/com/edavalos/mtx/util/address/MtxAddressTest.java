@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.address;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.text.ParseException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -249,5 +251,31 @@ public final class MtxAddressTest {
         assertEquals(city, mtxAddress.cityName());
         assertEquals("CA", mtxAddress.state());
         assertEquals(String.valueOf(zipCode), mtxAddress.zipCode());
+    }
+
+    @Nested
+    class ParseAddressTests {
+        private static final String ADDRESS = "98 Bishop Drive Little Falls, NJ 17424";
+        private static final String ADDRESS_WITH_APTCODE = "511 High Point St. APT 80 Lake In The Hills, IL 60156";
+
+        @Test
+        public void testParseAddress_validAddress_noAptCode() {
+            MtxAddress expected = new MtxAddress(98, "Bishop Drive", null, "Little Falls", "NJ", 17424);
+            try {
+                assertEquals(expected, MtxAddress.parseAddress(ADDRESS));
+            } catch (ParseException e) {
+                fail();
+            }
+        }
+
+        @Test
+        public void testParseAddress_validAddress_withAptCode() {
+            MtxAddress expected = new MtxAddress(511, "High Point St", "APT 80", "Lake In The Hills", "IL", 60156);
+            try {
+                assertEquals(expected, MtxAddress.parseAddress(ADDRESS_WITH_APTCODE));
+            } catch (ParseException e) {
+                fail();
+            }
+        }
     }
 }
