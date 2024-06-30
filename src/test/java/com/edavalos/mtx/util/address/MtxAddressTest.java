@@ -277,5 +277,27 @@ public final class MtxAddressTest {
                 fail();
             }
         }
+
+        @Test
+        public void testParseAddress_invalidAddress_badStreetName() {
+            String expectedMsg = "Could not parse street name component of address: 12 yes";
+            String actualMsg = assertThrows(ParseException.class, () -> MtxAddress.parseAddress("12 yes")).getMessage();
+            assertEquals(expectedMsg, actualMsg);
+        }
+
+        @Test
+        public void testParseAddress_invalidAddress_badStreetNumber() {
+            String expectedMsg = "Could not parse street number component of address: o" + ADDRESS;
+            String actualMsg = assertThrows(ParseException.class, () -> MtxAddress.parseAddress("o" + ADDRESS)).getMessage();
+            assertEquals(expectedMsg, actualMsg);
+        }
+
+        @Test
+        public void testParseAddress_invalidAddress_badCity() {
+            String faultyAddress = ADDRESS.replace(",", "");
+            String expectedMsg = "Could not parse city component of address: " + faultyAddress;
+            String actualMsg = assertThrows(ParseException.class, () -> MtxAddress.parseAddress(faultyAddress)).getMessage();
+            assertEquals(expectedMsg, actualMsg);
+        }
     }
 }
