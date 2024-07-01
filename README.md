@@ -10,7 +10,12 @@ In order of package names
 
 ## DB ID Generator ([com.edavalos.mtx.util.db.id](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/id))
 `MtxAutoIdBuilder` generates IDs given a specified criteria
-<!-- @TODO: Add list of implementations -->
+
+These are its implementations:
+* `MtxChecksumIdGenerator` - uses the Luhn algorithm to get a unique ID.
+* `MtxChecksumIterativeIdGenerator` - an ordered version of `MtxChecksumIdGenerator`.
+* `MtxIdGenerator` - base class for generating IDs.
+* `MtxUuidGenerator` - uses passed data for hashing
 
 ## DB Query Generator ([com.edavalos.mtx.util.db.query](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/query))
 <!-- @TODO: Add description -->
