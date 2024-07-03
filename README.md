@@ -97,7 +97,7 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 <!-- @TODO: Add description -->
 
 ## Roman Numerals ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
-<!-- @TODO: Add description -->
+`MtxRomanNumeral` converts year integers into roman numerals and roman numeral strings into year integers.
 
 ## HTTP Request Reader ([com.edavalos.mtx.util.network](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/network))
 `MtxRequestReader` takes a serialized HTTP request and parses it.
