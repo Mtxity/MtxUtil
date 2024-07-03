@@ -94,7 +94,15 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 <!-- @TODO: Add description -->
 
 ## Math Utils ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
-<!-- @TODO: Add description -->
+`MtxMath` holds a collection of mathematical utility classes, constants and methods:
+* `MtxFactorial` - procedurally generates an infinite number of factorial integers
+* `MtxFibonacci` - procedurally generates an infinite number of fibonacci integers
+* `MtxCatalan` - procedurally generates an infinite number of catalan integers
+* `MtxStats` - takes an array of numbers and calculates values with them such as mean, median, mode, standard deviation, variance, and total
+* `PI`, `TAU`, `E`, `Y`, and `PHI` - public constants holding semi-frequently used mathematical values
+* `isPrime()` - checks if an integer is a prime number
+* `quadraticFormulaSolver()` - gets the positive x value from a quadratic equation given a, b, and c
+* `twoDimensionArrayCopy()` - copies a two dimension integer array
 
 ## Roman Numerals ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxRomanNumeral` converts year integers into roman numerals and roman numeral strings into year integers.
