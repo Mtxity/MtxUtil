@@ -52,6 +52,26 @@ public class MtxRunningTotal {
         return runningTotal / (double) lastNumbersToUse;
     }
 
+    public double getMedian(int lastNumbersToUse) {
+        if (lastNumbersToUse > this.integerList.size()) {
+            lastNumbersToUse = this.integerList.size();
+        }
+
+        List<Integer> runningTotal = new ArrayList<>();
+        for (int i = this.integerList.size(); i >= this.integerList.size() - lastNumbersToUse; i--) {
+            runningTotal.add(this.integerList.get(i - 1));
+        }
+
+        int middleIdx = runningTotal.size() / 2;
+        if (lastNumbersToUse % 2 == 0) {
+            // If val is even, average the two middle values
+            return (runningTotal.get(middleIdx - 1) + runningTotal.get(middleIdx)) / 2.0;
+        } else {
+            // val is odd, return the middle value
+            return runningTotal.get(middleIdx);
+        }
+    }
+
     public double getMax(int lastNumbersToUse) {
         if (lastNumbersToUse > this.integerList.size()) {
             lastNumbersToUse = this.integerList.size();
