@@ -39,4 +39,16 @@ public class MtxRunningTotal {
     public void removeLast() {
         integerList.remove(integerList.size() - 1);
     }
+
+    public double getAvg(int lastNumbersToUse) {
+        if (lastNumbersToUse > this.integerList.size()) {
+            lastNumbersToUse = this.integerList.size();
+        }
+
+        int runningTotal = 0;
+        for (int i = this.integerList.size(); i >= this.integerList.size() - lastNumbersToUse; i--) {
+            runningTotal += this.integerList.get(i - 1);
+        }
+        return runningTotal / (double) lastNumbersToUse;
+    }
 }
