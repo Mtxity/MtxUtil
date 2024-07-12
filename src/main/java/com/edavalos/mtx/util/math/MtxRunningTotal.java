@@ -65,4 +65,18 @@ public class MtxRunningTotal {
         }
         return max;
     }
+
+    public double getMin(int lastNumbersToUse) {
+        if (lastNumbersToUse > this.integerList.size()) {
+            lastNumbersToUse = this.integerList.size();
+        }
+
+        int min = Integer.MAX_VALUE;
+        for (int i = this.integerList.size(); i >= this.integerList.size() - lastNumbersToUse; i--) {
+            if (min > this.integerList.get(i - 1)) {
+                min = this.integerList.get(i - 1);
+            }
+        }
+        return min;
+    }
 }
