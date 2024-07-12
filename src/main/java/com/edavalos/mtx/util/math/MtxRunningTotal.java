@@ -51,4 +51,18 @@ public class MtxRunningTotal {
         }
         return runningTotal / (double) lastNumbersToUse;
     }
+
+    public double getMax(int lastNumbersToUse) {
+        if (lastNumbersToUse > this.integerList.size()) {
+            lastNumbersToUse = this.integerList.size();
+        }
+
+        int max = 0;
+        for (int i = this.integerList.size(); i >= this.integerList.size() - lastNumbersToUse; i--) {
+            if (max < this.integerList.get(i - 1)) {
+                max = this.integerList.get(i - 1);
+            }
+        }
+        return max;
+    }
 }
