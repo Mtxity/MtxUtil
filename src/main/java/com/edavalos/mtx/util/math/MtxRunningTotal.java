@@ -5,6 +5,7 @@ import java.util.List;
 
 public class MtxRunningTotal {
     private static final int DEFAULT_LIMIT = 100;
+    private static final int MAX_LIMIT = 100000;
 
     private final List<Integer> integerList;
     private final int limit;
@@ -12,6 +13,15 @@ public class MtxRunningTotal {
     public MtxRunningTotal() {
         this.integerList = new ArrayList<>();
         this.limit = DEFAULT_LIMIT;
+    }
+
+    public MtxRunningTotal(int limit) {
+        this.integerList = new ArrayList<>();
+        if (limit > MAX_LIMIT) {
+            this.limit = MAX_LIMIT;
+        } else {
+            this.limit = limit;
+        }
     }
 
     public void add(int value) {
