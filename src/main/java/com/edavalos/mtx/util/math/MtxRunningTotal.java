@@ -9,4 +9,8 @@ public class MtxRunningTotal {
     public MtxRunningTotal() {
         this.integerList = new ArrayList<>();
     }
+
+    public void add(int value) {
+        integerList.add(value);
+    }
 }
