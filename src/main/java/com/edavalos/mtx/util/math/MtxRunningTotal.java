@@ -13,4 +13,12 @@ public class MtxRunningTotal {
     public void add(int value) {
         integerList.add(value);
     }
+
+    public boolean remove(int value) {
+        return integerList.remove(Integer.valueOf(value));
+    }
+
+    public void removeLast() {
+        integerList.remove(integerList.size() - 1);
+    }
 }
