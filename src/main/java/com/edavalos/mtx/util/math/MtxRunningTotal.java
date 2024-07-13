@@ -33,6 +33,12 @@ public class MtxRunningTotal {
         integerList.add(value);
     }
 
+    public void add(Iterable<Integer> values) {
+        for (Integer value : values) {
+            add(value);
+        }
+    }
+
     public boolean remove(int value) {
         return integerList.remove(Integer.valueOf(value));
     }
@@ -42,6 +48,14 @@ public class MtxRunningTotal {
             return;
         }
         integerList.remove(integerList.size() - 1);
+    }
+
+    public int length() {
+        return integerList.size();
+    }
+
+    public int limit() {
+        return this.limit;
     }
 
     public double getAvg(int lastNumbersToUse) {
