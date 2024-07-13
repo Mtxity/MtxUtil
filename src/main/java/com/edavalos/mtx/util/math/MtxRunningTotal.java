@@ -41,16 +41,16 @@ public class MtxRunningTotal {
     }
 
     public void add(int value) {
-        if (integerList.size() >= limit) {
-            integerList.remove(0);
+        if (this.integerList.size() >= limit) {
+            this.integerList.remove(0);
         }
 
-        integerList.add(value);
+        this.integerList.add(value);
     }
 
     public void add(Iterable<Integer> values) {
         for (Integer value : values) {
-            add(value);
+            this.add(value);
         }
     }
 
@@ -66,7 +66,7 @@ public class MtxRunningTotal {
     }
 
     public int length() {
-        return integerList.size();
+        return this.integerList.size();
     }
 
     public int limit() {
