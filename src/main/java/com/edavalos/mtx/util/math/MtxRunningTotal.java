@@ -76,6 +76,14 @@ public class MtxRunningTotal {
         return this.getMin(DEFAULT_LAST);
     }
 
+    public double getSum(int lastNumbersToUse) {
+        return this.calculate(Property.SUM, lastNumbersToUse);
+    }
+
+    public double getSum() {
+        return this.getSum(DEFAULT_LAST);
+    }
+
     private double calculate(Property property, int sampleSize) {
         if (sampleSize > this.integerList.size()) {
             sampleSize = this.integerList.size();
@@ -127,7 +135,11 @@ public class MtxRunningTotal {
             }
 
             case SUM -> {
-                yield 0;
+                int sum = 0;
+                for (int i = this.integerList.size(); i > this.integerList.size() - sampleSize; i--) {
+                    sum += this.integerList.get(i - 1);
+                }
+                yield sum;
             }
         };
     }
