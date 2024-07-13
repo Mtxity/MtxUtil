@@ -22,11 +22,7 @@ public class MtxRunningTotal {
 
     public MtxRunningTotal(int limit) {
         this.integerList = new ArrayList<>();
-        if (limit > MAX_LIMIT) {
-            this.limit = MAX_LIMIT;
-        } else {
-            this.limit = limit;
-        }
+        this.limit = Math.min(limit, MAX_LIMIT);
     }
 
     public void add(int value) {
@@ -42,6 +38,9 @@ public class MtxRunningTotal {
     }
 
     public void removeLast() {
+        if (integerList.isEmpty()) {
+            return;
+        }
         integerList.remove(integerList.size() - 1);
     }
 
@@ -125,6 +124,10 @@ public class MtxRunningTotal {
                     }
                 }
                 yield max;
+            }
+
+            case SUM -> {
+                yield 0;
             }
         };
     }
