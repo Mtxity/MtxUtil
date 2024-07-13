@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.math;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MtxRunningTotal {
@@ -23,6 +24,20 @@ public class MtxRunningTotal {
     public MtxRunningTotal(int limit) {
         this.integerList = new ArrayList<>();
         this.limit = Math.min(limit, MAX_LIMIT);
+    }
+
+    public MtxRunningTotal(Iterable<Integer> values) {
+        List<Integer> list = new LinkedList<>();
+        for (Integer value : values) {
+            list.add(value);
+        }
+        int size = Math.min(list.size(), MAX_LIMIT);
+        this.integerList = new ArrayList<>();
+        this.limit = size;
+
+        for (int i = list.size() - size; i < list.size(); i++) {
+            this.integerList.add(list.get(i));
+        }
     }
 
     public void add(int value) {
