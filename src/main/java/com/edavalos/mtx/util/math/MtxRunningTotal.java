@@ -10,6 +10,7 @@ public class MtxRunningTotal {
 
     private static final int DEFAULT_LIMIT = 100;
     private static final int MAX_LIMIT = 100000;
+    private static final int DEFAULT_LAST = 10;
 
     private final List<Integer> integerList;
     private final int limit;
@@ -48,16 +49,32 @@ public class MtxRunningTotal {
         return this.calculate(Property.AVERAGE, lastNumbersToUse);
     }
 
+    public double getAvg() {
+        return this.getAvg(DEFAULT_LAST);
+    }
+
     public double getMedian(int lastNumbersToUse) {
         return this.calculate(Property.MEDIAN, lastNumbersToUse);
+    }
+
+    public double getMedian() {
+        return this.getMedian(DEFAULT_LAST);
     }
 
     public double getMax(int lastNumbersToUse) {
         return this.calculate(Property.MAX, lastNumbersToUse);
     }
 
+    public double getMax() {
+        return this.getMax(DEFAULT_LAST);
+    }
+
     public double getMin(int lastNumbersToUse) {
         return this.calculate(Property.MIN, lastNumbersToUse);
+    }
+
+    public double getMin() {
+        return this.getMin(DEFAULT_LAST);
     }
 
     private double calculate(Property property, int sampleSize) {
