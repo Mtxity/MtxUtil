@@ -6,7 +6,7 @@ import java.util.List;
 
 public class MtxRunningTotal {
     private enum Property {
-        AVERAGE, MEDIAN, MIN, MAX, SUM;
+        AVERAGE, MEDIAN, MIN, MAX, SUM, RANGE;
     }
 
     private static final int DEFAULT_LIMIT = 100;
@@ -113,6 +113,14 @@ public class MtxRunningTotal {
         return this.getSum(DEFAULT_LAST);
     }
 
+    public int getRange(int lastNumbersToUse) {
+        return (int) this.calculate(Property.RANGE, lastNumbersToUse);
+    }
+
+    public int getRange() {
+        return this.getRange(DEFAULT_LAST);
+    }
+
     private double calculate(Property property, int sampleSize) {
         if (sampleSize > this.integerList.size()) {
             sampleSize = this.integerList.size();
@@ -169,6 +177,12 @@ public class MtxRunningTotal {
                     sum += this.integerList.get(i - 1);
                 }
                 yield sum;
+            }
+
+            case RANGE -> {
+                double min = this.calculate(Property.MIN, sampleSize);
+                double max = this.calculate(Property.MAX, sampleSize);
+                yield max - min;
             }
         };
     }
