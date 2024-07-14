@@ -112,6 +112,11 @@ public class MtxRunningTotalTest {
         public void testGetSum() {
             assertEquals(105, mtxRunningTotal.getSum());
         }
+
+        @Test
+        public void testRange() {
+            assertEquals(9, mtxRunningTotal.getRange());
+        }
     }
 
     @Nested
