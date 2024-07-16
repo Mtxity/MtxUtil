@@ -105,11 +105,11 @@ public class MtxRunningTotal {
         return this.getMin(DEFAULT_LAST);
     }
 
-    public double getSum(int lastNumbersToUse) {
-        return this.calculate(Property.SUM, lastNumbersToUse);
+    public int getSum(int lastNumbersToUse) {
+        return (int) this.calculate(Property.SUM, lastNumbersToUse);
     }
 
-    public double getSum() {
+    public int getSum() {
         return this.getSum(DEFAULT_LAST);
     }
 
