@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.math;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,6 +83,12 @@ public class MtxRunningTotal {
     public int limit() {
         return this.limit;
     }
+
+    public boolean hasDuplicates() {
+        return (new HashSet<>(this.integerList)).size() != this.integerList.size();
+    }
+
+    // @TODO: Add hasDuplicates() for last n values
 
     public double getAvg(int lastNumbersToUse) {
         return this.calculate(Property.AVERAGE, lastNumbersToUse);
