@@ -65,6 +65,16 @@ public class MtxRunningTotal {
         integerList.remove(integerList.size() - 1);
     }
 
+    public void removeLast(int count) {
+        if (count >= integerList.size()) {
+            integerList.clear();
+        } else {
+            for (int i = 0; i < count; i++) {
+                integerList.remove(integerList.size() - 1);
+            }
+        }
+    }
+
     public int length() {
         return this.integerList.size();
     }
