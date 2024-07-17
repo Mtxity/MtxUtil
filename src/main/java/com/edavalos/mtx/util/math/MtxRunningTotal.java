@@ -83,10 +83,6 @@ public class MtxRunningTotal {
         return this.limit;
     }
 
-    public int size() {
-        return this.integerList.size();
-    }
-
     public double getAvg(int lastNumbersToUse) {
         return this.calculate(Property.AVERAGE, lastNumbersToUse);
     }
