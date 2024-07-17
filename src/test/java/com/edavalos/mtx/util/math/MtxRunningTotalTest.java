@@ -205,7 +205,7 @@ public class MtxRunningTotalTest {
     }
 
     @Test
-    public void testRemoveLast() {
+    public void testRemoveLast_one() {
         assertEquals(10.5, mtxRunningTotal.getAvg());
         assertEquals(10.5, mtxRunningTotal.getMedian());
         assertEquals(15, mtxRunningTotal.getMax());
@@ -218,6 +218,38 @@ public class MtxRunningTotalTest {
         assertEquals(14, mtxRunningTotal.getMax());
         assertEquals(6, mtxRunningTotal.getMin());
         assertEquals(90, mtxRunningTotal.getSum());
+    }
+
+    @Test
+    public void testRemoveLast_multiple() {
+        assertEquals(10.5, mtxRunningTotal.getAvg());
+        assertEquals(10.5, mtxRunningTotal.getMedian());
+        assertEquals(15, mtxRunningTotal.getMax());
+        assertEquals(6, mtxRunningTotal.getMin());
+        assertEquals(105, mtxRunningTotal.getSum());
+
+        mtxRunningTotal.removeLast(3);
+        assertEquals(9, mtxRunningTotal.getAvg());
+        assertEquals(9, mtxRunningTotal.getMedian());
+        assertEquals(12, mtxRunningTotal.getMax());
+        assertEquals(6, mtxRunningTotal.getMin());
+        assertEquals(63, mtxRunningTotal.getSum());
+    }
+
+    @Test
+    public void testRemoveLast_all() {
+        assertEquals(10.5, mtxRunningTotal.getAvg());
+        assertEquals(10.5, mtxRunningTotal.getMedian());
+        assertEquals(15, mtxRunningTotal.getMax());
+        assertEquals(6, mtxRunningTotal.getMin());
+        assertEquals(105, mtxRunningTotal.getSum());
+
+        mtxRunningTotal.removeLast(20);
+        assertEquals(0, mtxRunningTotal.getAvg());
+        assertEquals(0, mtxRunningTotal.getMedian());
+        assertEquals(0, mtxRunningTotal.getMax());
+        assertEquals(0, mtxRunningTotal.getMin());
+        assertEquals(0, mtxRunningTotal.getSum());
     }
 
     @Test
