@@ -136,6 +136,10 @@ public class MtxRunningTotal {
             sampleSize = this.integerList.size();
         }
 
+        if (sampleSize == 0) {
+            return 0.0;
+        }
+
         return switch (property) {
             case AVERAGE -> {
                 int runningTotal = 0;
