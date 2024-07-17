@@ -269,4 +269,14 @@ public class MtxRunningTotalTest {
             assertEquals(i, new MtxRunningTotal(i).limit());
         }
     }
+
+    @Test
+    public void testSize() {
+        final int testCases = 50;
+        mtxRunningTotal = new MtxRunningTotal();
+        for (int i = 0; i < Math.min(testCases, 100000); i++) {
+            mtxRunningTotal.add(i);
+            assertEquals(i + 1, mtxRunningTotal.length());
+        }
+    }
 }
