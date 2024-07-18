@@ -60,18 +60,18 @@ public class MtxRunningTotal {
     }
 
     public void removeLast() {
-        if (integerList.isEmpty()) {
+        if (this.integerList.isEmpty()) {
             return;
         }
-        integerList.remove(integerList.size() - 1);
+        this.integerList.remove(integerList.size() - 1);
     }
 
     public void removeLast(int count) {
-        if (count >= integerList.size()) {
-            integerList.clear();
+        if (count >= this.integerList.size()) {
+            this.integerList.clear();
         } else {
             for (int i = 0; i < count; i++) {
-                integerList.remove(integerList.size() - 1);
+                this.integerList.remove(this.integerList.size() - 1);
             }
         }
     }
