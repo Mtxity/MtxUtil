@@ -88,7 +88,18 @@ public class MtxRunningTotal {
         return (new HashSet<>(this.integerList)).size() != this.integerList.size();
     }
 
-    // @TODO: Add hasDuplicates() for last n values
+    public boolean hasDuplicates(int count) {
+        if (count >= this.integerList.size()) {
+            return this.hasDuplicates();
+        }
+
+        List<Integer> list = this.integerList.subList(
+                this.integerList.size() - count,
+                this.integerList.size()
+        );
+        HashSet<Integer> set = new HashSet<>(list);
+        return set.size() != list.size();
+    }
 
     public double getAvg(int lastNumbersToUse) {
         return this.calculate(Property.AVERAGE, lastNumbersToUse);
