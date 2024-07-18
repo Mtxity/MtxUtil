@@ -273,7 +273,7 @@ public class MtxRunningTotalTest {
     }
 
     @Test
-    public void testHasDuplicates() {
+    public void testHasDuplicates_allList() {
         mtxRunningTotal = new MtxRunningTotal();
         assertFalse(mtxRunningTotal.hasDuplicates());
 
@@ -284,5 +284,23 @@ public class MtxRunningTotalTest {
 
         mtxRunningTotal.add(30);
         assertTrue(mtxRunningTotal.hasDuplicates());
+        assertTrue(mtxRunningTotal.hasDuplicates(5));
+    }
+
+    @Test
+    public void testHasDuplicates_partialList() {
+        mtxRunningTotal = new MtxRunningTotal();
+        mtxRunningTotal.add(10);
+        mtxRunningTotal.add(20);
+        mtxRunningTotal.add(20);
+        mtxRunningTotal.add(30);
+        mtxRunningTotal.add(40);
+        mtxRunningTotal.add(50);
+        assertFalse(mtxRunningTotal.hasDuplicates(4));
+        assertTrue(mtxRunningTotal.hasDuplicates(5));
+
+        mtxRunningTotal.add(60);
+        assertFalse(mtxRunningTotal.hasDuplicates(5));
+        assertTrue(mtxRunningTotal.hasDuplicates(6));
     }
 }
