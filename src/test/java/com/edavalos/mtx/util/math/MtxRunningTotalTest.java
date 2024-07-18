@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxRunningTotalTest {
     private static final int[] SAMPLE_VALUES = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
@@ -268,5 +270,19 @@ public class MtxRunningTotalTest {
         for (int i = 0; i < testCases; i++) {
             assertEquals(i, new MtxRunningTotal(i).limit());
         }
+    }
+
+    @Test
+    public void testHasDuplicates() {
+        mtxRunningTotal = new MtxRunningTotal();
+        assertFalse(mtxRunningTotal.hasDuplicates());
+
+        mtxRunningTotal.add(10);
+        mtxRunningTotal.add(20);
+        mtxRunningTotal.add(30);
+        assertFalse(mtxRunningTotal.hasDuplicates());
+
+        mtxRunningTotal.add(30);
+        assertTrue(mtxRunningTotal.hasDuplicates());
     }
 }
