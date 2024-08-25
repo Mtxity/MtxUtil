@@ -1119,4 +1119,54 @@ public final class MtxStringUtilTest {
             assertThrows(NullPointerException.class, () -> MtxStringUtil.levenshteinDistance(TEST_STR, null));
         }
     }
+
+    @Nested
+    class TestJaroWinklerDistance {
+        private static final String TEST_STR = "given";
+        private static final Map<String, Double> EXPECTED_SIMILARITY_SCORES = Map.of(
+                "gibon", 0.7866666666666667,
+                "giveb", 0.92,
+                "givenn", 0.9666666666666667,
+                "triven", 0.8222222222222223,
+                "driven", 0.8222222222222223,
+                "lisben", 0.7000000000000001,
+                "tempor", 0.45555555555555555,
+                "ipsum", 0.4666666666666666,
+                "sit", 0.5111111111111111,
+                "incididunt", 0.5333333333333333
+        );
+
+        @Test
+        public void testJaroWinklerDistance_realValues() {
+            for (Map.Entry<String, Double> test : EXPECTED_SIMILARITY_SCORES.entrySet()) {
+                assertEquals(test.getValue(), MtxStringUtil.jaroWinklerDistance(TEST_STR, test.getKey()));
+            }
+        }
+
+        @Test
+        public void testJaroWinklerDistance_nullA() {
+            assertEquals(0.0, MtxStringUtil.jaroWinklerDistance(null, TEST_STR));
+        }
+
+        @Test
+        public void testJaroWinklerDistance_nullB() {
+            assertEquals(0.0, MtxStringUtil.jaroWinklerDistance(TEST_STR, null));
+        }
+
+        @Test
+        public void testJaroWinklerDistance_lengthZero() {
+            assertEquals(1.0, MtxStringUtil.jaroWinklerDistance("", ""));
+        }
+
+        @Test
+        public void testJaroWinklerDistance_lengthOne() {
+            assertEquals(0.0, MtxStringUtil.jaroWinklerDistance("a", ""));
+            assertEquals(0.0, MtxStringUtil.jaroWinklerDistance("", "b"));
+        }
+
+        @Test
+        public void testJaroWinklerDistance_noMatches() {
+            assertEquals(0.0, MtxStringUtil.jaroWinklerDistance("xyz", "abc"));
+        }
+    }
 }
