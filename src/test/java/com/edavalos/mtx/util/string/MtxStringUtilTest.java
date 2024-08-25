@@ -1085,4 +1085,38 @@ public final class MtxStringUtilTest {
             assertArrayEquals(expected, parts);
         }
     }
+
+    @Nested
+    class TestLevenshteinDistance {
+        private static final String TEST_STR = "given";
+        private static final Map<String, Integer> EXPECTED_SIMILARITY_SCORES = Map.of(
+                "gibon", 2,
+                "giveb", 1,
+                "givenn", 1,
+                "triven", 2,
+                "driven", 2,
+                "lisben", 3,
+                "tempor", 6,
+                "ipsum", 5,
+                "sit", 4,
+                "incididunt", 8
+        );
+
+        @Test
+        public void testLevenshteinDistance_realValues() {
+            for (Map.Entry<String, Integer> test : EXPECTED_SIMILARITY_SCORES.entrySet()) {
+                assertEquals(test.getValue(), MtxStringUtil.levenshteinDistance(TEST_STR, test.getKey()));
+            }
+        }
+
+        @Test
+        public void testLevenshteinDistance_nullA() {
+            assertThrows(NullPointerException.class, () -> MtxStringUtil.levenshteinDistance(null, TEST_STR));
+        }
+
+        @Test
+        public void testLevenshteinDistance_nullB() {
+            assertThrows(NullPointerException.class, () -> MtxStringUtil.levenshteinDistance(TEST_STR, null));
+        }
+    }
 }
