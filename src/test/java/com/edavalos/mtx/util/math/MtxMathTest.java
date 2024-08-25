@@ -470,4 +470,39 @@ public class MtxMathTest {
             assertArrayEquals(source[i], dest[i]);
         }
     }
+
+    @Nested
+    class MinMaxTests {
+        private static final int[] SAMPLE_INT_ARRAY = new int[]{50, 100, 150, 10, 120};
+
+        @Test
+        public void testMin_givenValues() {
+            assertEquals(10, MtxMath.min(SAMPLE_INT_ARRAY));
+        }
+
+        @Test
+        public void testMin_nullValues() {
+            assertThrows(NullPointerException.class, () -> MtxMath.min(null));
+        }
+
+        @Test
+        public void testMin_zeroValues() {
+            assertEquals(0, MtxMath.min());
+        }
+
+        @Test
+        public void testMax_givenValues() {
+            assertEquals(150, MtxMath.max(SAMPLE_INT_ARRAY));
+        }
+
+        @Test
+        public void testMax_nullValues() {
+            assertThrows(NullPointerException.class, () -> MtxMath.max(null));
+        }
+
+        @Test
+        public void testMax_zeroValues() {
+            assertEquals(0, MtxMath.max());
+        }
+    }
 }
