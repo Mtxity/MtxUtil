@@ -333,4 +333,24 @@ public final class MtxMath {
             System.arraycopy(source[i], 0, destination[i], 0, destination[i].length);
         }
     }
+
+    public static int min(int... val) {
+        int smallest = val.length == 0 ? 0 : val[0];
+        for (int i : val) {
+            if (i < smallest) {
+                smallest = i;
+            }
+        }
+        return smallest;
+    }
+
+    public static int max(int... val) {
+        int biggest = val.length == 0 ? 0 : val[0];
+        for (int i : val) {
+            if (i > biggest) {
+                biggest = i;
+            }
+        }
+        return biggest;
+    }
 }
