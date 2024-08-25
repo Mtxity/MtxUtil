@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.string;
 
+import com.edavalos.mtx.util.math.MtxMath;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -478,5 +480,94 @@ public final class MtxStringUtil {
             }
         }
         return dp[a.length()][b.length()];
+    }
+
+
+    /**
+     * Calculates the Jaro-Winkler distance between two strings.
+     * Source: <a href="https://chatgpt.com/share/b9eb9a6d-dbb1-4315-b3f4-81fee8df4eef">ChatGPT</a>
+     * @param a first string to compare
+     * @param b second string to compare
+     * @return distance score between strings a and b
+     */
+    public static double jaroWinklerDistance(String a, String b) {
+        if (a == null || b == null) {
+            return 0.0;
+        }
+
+        int s1Len = a.length();
+        int s2Len = b.length();
+
+        if (s1Len == 0 && s2Len == 0) {
+            return 1.0;
+        }
+
+        if (s1Len == 0 || s2Len == 0) {
+            return 0.0;
+        }
+
+        int matchDistance = Math.max(s1Len, s2Len) / 2 - 1;
+
+        boolean[] s1Matches = new boolean[s1Len];
+        boolean[] s2Matches = new boolean[s2Len];
+
+        int matches = 0;
+        int transpositions = 0;
+
+        for (int i = 0; i < s1Len; i++) {
+            int start = Math.max(0, i - matchDistance);
+            int end = Math.min(i + matchDistance + 1, s2Len);
+
+            for (int j = start; j < end; j++) {
+                if (s2Matches[j]) {
+                    continue;
+                }
+                if (a.charAt(i) != b.charAt(j)) {
+                    continue;
+                }
+                s1Matches[i] = true;
+                s2Matches[j] = true;
+                matches++;
+                break;
+            }
+        }
+
+        if (matches == 0) {
+            return 0.0;
+        }
+
+        int k = 0;
+        for (int i = 0; i < s1Len; i++) {
+            if (!s1Matches[i]) {
+                continue;
+            }
+            while (!s2Matches[k]) {
+                k++;
+            }
+            // This is not needed (until it is)
+//            if (a.charAt(i) != b.charAt(k)) {
+//                transpositions++;
+//            }
+            k++;
+        }
+        transpositions /= 2;
+
+        double jaroDistance = ((double) matches / s1Len +
+                (double) matches / s2Len +
+                (double) (matches - transpositions) / matches) / 3.0;
+
+        int prefixLength = 0;
+        int maxPrefixLength = 4;
+
+        for (int i = 0; i < MtxMath.min(maxPrefixLength, s1Len, s2Len); i++) {
+            if (a.charAt(i) == b.charAt(i)) {
+                prefixLength++;
+            } else {
+                break;
+            }
+        }
+
+        double winklerBoost = 0.1 * prefixLength * (1 - jaroDistance);
+        return jaroDistance + winklerBoost;
     }
 }
