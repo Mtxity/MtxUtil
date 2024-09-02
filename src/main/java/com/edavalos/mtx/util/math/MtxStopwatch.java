@@ -6,6 +6,16 @@ public class MtxStopwatch {
     public MtxStopwatch() { }
 
     public void start() {
-        startTime = System.currentTimeMillis();
+        this.startTime = System.currentTimeMillis();
+    }
+
+    public long lap() {
+        return System.currentTimeMillis() - startTime;
+    }
+
+    public long stop() {
+        long gap = System.currentTimeMillis() - startTime;
+        startTime = 0;
+        return gap;
     }
 }
