@@ -3,14 +3,20 @@ package com.edavalos.mtx.util.math;
 public class MtxStopwatch {
     private long startTime;
     private boolean started;
+    private long resetTime;
 
     public MtxStopwatch() {
         this.startTime = 0;
         this.started = false;
+        this.resetTime = 0;
     }
 
     public void start() {
-        this.startTime = System.currentTimeMillis();
+        if (this.resetTime == 0) {
+            this.startTime = System.currentTimeMillis();
+        } else {
+            this.startTime = resetTime;
+        }
         this.started = true;
     }
 
@@ -24,7 +30,7 @@ public class MtxStopwatch {
         }
 
         long gap = System.currentTimeMillis() - this.startTime;
-        this.startTime = 0;
+        this.resetTime = this.startTime;
         this.started = false;
         return gap;
     }
