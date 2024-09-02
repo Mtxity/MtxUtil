@@ -1169,4 +1169,48 @@ public final class MtxStringUtilTest {
             assertEquals(0.0, MtxStringUtil.jaroWinklerDistance("xyz", "abc"));
         }
     }
+
+    @Nested
+    class GenericHashDistance {
+        private static final String TEST_STR = "given";
+        private static final Map<String, Integer> EXPECTED_SIMILARITY_SCORES = Map.of(
+                "gibon", 30,
+                "giveb", 12,
+                "givenn", 110,
+                "triven", 171,
+                "driven", 161,
+                "lisben", 130,
+                "tempor", 152,
+                "ipsum", 29,
+                "sit", 225,
+                "given", 0
+        );
+
+        @Test
+        public void testGenericHashDistance_realValues() {
+            for (Map.Entry<String, Integer> test : EXPECTED_SIMILARITY_SCORES.entrySet()) {System.out.println(test.getKey() + " : " + MtxStringUtil.genericHashDistance(TEST_STR, test.getKey()));
+                assertEquals(test.getValue(), MtxStringUtil.genericHashDistance(TEST_STR, test.getKey()));
+            }
+        }
+
+        @Test
+        public void testGenericHashDistance_nullA() {
+            assertEquals(-1, MtxStringUtil.genericHashDistance(null, TEST_STR));
+        }
+
+        @Test
+        public void testGenericHashDistance_emptyA() {
+            assertEquals(-1, MtxStringUtil.genericHashDistance("", TEST_STR));
+        }
+
+        @Test
+        public void testGenericHashDistance_nullB() {
+            assertEquals(-1, MtxStringUtil.genericHashDistance(TEST_STR, null));
+        }
+
+        @Test
+        public void testGenericHashDistance_emptyB() {
+            assertEquals(-1, MtxStringUtil.genericHashDistance(TEST_STR, ""));
+        }
+    }
 }
