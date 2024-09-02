@@ -482,7 +482,6 @@ public final class MtxStringUtil {
         return dp[a.length()][b.length()];
     }
 
-
     /**
      * Calculates the Jaro-Winkler distance between two strings.
      * Source: <a href="https://chatgpt.com/share/b9eb9a6d-dbb1-4315-b3f4-81fee8df4eef">ChatGPT</a>
@@ -571,6 +570,12 @@ public final class MtxStringUtil {
         return jaroDistance + winklerBoost;
     }
 
+    /**
+     * Calculates an abstract distance between two strings based on their characters' char values.
+     * @param a first string to compare
+     * @param b second string to compare
+     * @return distance score between strings a and b
+     */
     public static int genericHashDistance(String a, String b) {
         if (a == null || a.isEmpty() || b == null || b.isEmpty()) {
             return -1;
