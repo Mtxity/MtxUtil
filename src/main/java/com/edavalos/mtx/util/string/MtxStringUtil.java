@@ -570,4 +570,35 @@ public final class MtxStringUtil {
         double winklerBoost = 0.1 * prefixLength * (1 - jaroDistance);
         return jaroDistance + winklerBoost;
     }
+
+    public static int genericHashDistance(String a, String b) {
+        if (a == null || a.isEmpty() || b == null || b.isEmpty()) {
+            return -1;
+        }
+
+        if (a.equals(b)) {
+            return 0;
+        }
+
+        int size = Math.max(a.length(), b.length());
+        int totalDiff = 0;
+        for (int i = 0; i < size; i++) {
+            int aChar;
+            try {
+                aChar = a.charAt(i);
+            } catch (IndexOutOfBoundsException e) {
+                aChar = 0;
+            }
+
+            int bChar;
+            try {
+                bChar = b.charAt(i);
+            } catch (IndexOutOfBoundsException e) {
+                bChar = 0;
+            }
+
+            totalDiff += Math.abs(aChar - bChar);
+        }
+        return totalDiff;
+    }
 }
