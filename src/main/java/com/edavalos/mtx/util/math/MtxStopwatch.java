@@ -1,6 +1,6 @@
 package com.edavalos.mtx.util.math;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class MtxStopwatch {
@@ -13,7 +13,7 @@ public class MtxStopwatch {
         this.startTime = 0;
         this.started = false;
         this.resetTime = 0;
-        this.laps = new ArrayList<>();
+        this.laps = new LinkedList<>();
     }
 
     public void start() {
