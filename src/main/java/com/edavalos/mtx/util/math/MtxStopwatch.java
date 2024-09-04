@@ -1,14 +1,19 @@
 package com.edavalos.mtx.util.math;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MtxStopwatch {
     private long startTime;
     private boolean started;
     private long resetTime;
+    private List<Long> laps;
 
     public MtxStopwatch() {
         this.startTime = 0;
         this.started = false;
         this.resetTime = 0;
+        this.laps = new ArrayList<>();
     }
 
     public void start() {
