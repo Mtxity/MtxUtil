@@ -20,7 +20,7 @@ public class MtxStopwatch {
         if (this.resetTime == 0) {
             this.startTime = System.currentTimeMillis();
         } else {
-            this.startTime = resetTime;
+            this.startTime = this.resetTime;
         }
         this.started = true;
         this.laps.clear();
@@ -28,7 +28,7 @@ public class MtxStopwatch {
 
     public long lap() {
         long lap = System.currentTimeMillis() - this.startTime;
-        laps.add(lap);
+        this.laps.add(lap);
         return lap;
     }
 
