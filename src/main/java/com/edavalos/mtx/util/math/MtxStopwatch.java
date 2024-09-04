@@ -23,6 +23,7 @@ public class MtxStopwatch {
             this.startTime = resetTime;
         }
         this.started = true;
+        this.laps.clear();
     }
 
     public long lap() {
