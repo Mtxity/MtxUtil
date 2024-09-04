@@ -26,7 +26,9 @@ public class MtxStopwatch {
     }
 
     public long lap() {
-        return System.currentTimeMillis() - this.startTime;
+        long lap = System.currentTimeMillis() - this.startTime;
+        laps.add(lap);
+        return lap;
     }
 
     public long stop() {
