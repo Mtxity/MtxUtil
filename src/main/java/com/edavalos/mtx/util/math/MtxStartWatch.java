@@ -3,13 +3,13 @@ package com.edavalos.mtx.util.math;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MtxStopwatch {
+public class MtxStartWatch {
     private long startTime;
     private boolean started;
     private long resetTime;
     private List<Long> laps;
 
-    public MtxStopwatch() {
+    public MtxStartWatch() {
         this.startTime = 0;
         this.started = false;
         this.resetTime = 0;
