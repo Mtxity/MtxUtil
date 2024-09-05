@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class MtxStopwatch {
-    private long startTime;
-    private boolean started;
-    private long resetTime;
-    private List<Long> laps;
+    protected long startTime;
+    protected boolean started;
+    protected long resetTime;
+    protected List<Long> laps;
 
     public MtxStopwatch() {
         this.startTime = 0;
@@ -60,8 +60,8 @@ public class MtxStopwatch {
 
     public long getLastLap() {
         try {
-            return this.laps.getLast();
-        } catch (NoSuchElementException e) {
+            return this.laps.get(this.laps.size() - 1);
+        } catch (NoSuchElementException | IndexOutOfBoundsException e) {
             return 0;
         }
     }
