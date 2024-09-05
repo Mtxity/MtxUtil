@@ -4,13 +4,13 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class MtxStartWatch {
+public class MtxStopwatch {
     private long startTime;
     private boolean started;
     private long resetTime;
     private List<Long> laps;
 
-    public MtxStartWatch() {
+    public MtxStopwatch() {
         this.startTime = 0;
         this.started = false;
         this.resetTime = 0;
