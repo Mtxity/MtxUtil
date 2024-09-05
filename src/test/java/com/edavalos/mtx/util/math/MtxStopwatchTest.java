@@ -200,6 +200,7 @@ public class MtxStopwatchTest {
 
     @Nested
     public class StartStopResetStartStopTests {
+        private static final int X = 25;
 
         @Test
         public void testStartStopResetStartStop() throws InterruptedException {
@@ -245,6 +246,30 @@ public class MtxStopwatchTest {
                 if (laps.contains(((long) i))) {
                     assertNotNull(laps.get(i));
                     assertTrue(laps.get(i) >= 1);
+                }
+            }
+        }
+
+        @Test
+        public void testStartStopLapStartStopXTimes() throws InterruptedException {
+            mtxStopwatch.start();
+            Thread.sleep(1);
+
+            for (int i = 0; i < X; i++) {
+                mtxStopwatch.lap();
+                Thread.sleep(1);
+                mtxStopwatch.lap();
+                Thread.sleep(1);
+                mtxStopwatch.lap();
+                Thread.sleep(1);
+                mtxStopwatch.stop();
+
+                List<Long> laps = mtxStopwatch.getLaps();
+                for (int j = 0; j < 3; j++) {
+                    if (laps.contains(((long) j))) {
+                        assertNotNull(laps.get(j));
+                        assertTrue(laps.get(j) >= 1);
+                    }
                 }
             }
         }
