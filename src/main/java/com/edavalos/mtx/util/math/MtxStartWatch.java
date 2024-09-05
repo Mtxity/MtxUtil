@@ -65,4 +65,8 @@ public class MtxStartWatch {
             return 0;
         }
     }
+
+    public long getResetTime() {
+        return this.resetTime;
+    }
 }
