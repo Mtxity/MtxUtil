@@ -87,18 +87,43 @@ public class MtxStopwatchTest {
 
             assertNotEquals(0, mtxStopwatch.getResetTime());
         }
-
-        private static void verifyStartingValues(MtxStopwatch sampleStopwatch) {
-            assertEquals(0, sampleStopwatch.startTime);
-            assertEquals(0, sampleStopwatch.resetTime);
-            assertFalse(sampleStopwatch.started);
-            assertTrue(sampleStopwatch.laps.isEmpty());
-        }
     }
 
     @Nested
     public class StartStopTwiceTests {
-        // @TODO: Implement test for this
+
+        @Test
+        public void testStartStopTwice() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            long gap1 = mtxStopwatch.stop();
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            long gap2 = mtxStopwatch.stop();
+
+            assertEquals(mtxStopwatch.resetTime, mtxStopwatch.startTime);
+            assertFalse(mtxStopwatch.started);
+            assertTrue(gap1 >= 10);
+            assertTrue(gap2 >= 20);
+        }
+
+        @Test
+        public void testGetResetTime() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            mtxStopwatch.stop();
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            mtxStopwatch.stop();
+
+            assertTrue(mtxStopwatch.getResetTime() >= 20);
+        }
     }
 
     @Nested
@@ -124,5 +149,12 @@ public class MtxStopwatchTest {
     @Nested
     public class StartStopResetStartStopResetXTimesTests {
         // @TODO: Implement test for this
+    }
+
+    private static void verifyStartingValues(MtxStopwatch sampleStopwatch) {
+        assertEquals(0, sampleStopwatch.startTime);
+        assertEquals(0, sampleStopwatch.resetTime);
+        assertFalse(sampleStopwatch.started);
+        assertTrue(sampleStopwatch.laps.isEmpty());
     }
 }
