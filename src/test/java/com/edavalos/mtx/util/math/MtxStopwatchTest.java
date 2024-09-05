@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -128,27 +131,117 @@ public class MtxStopwatchTest {
 
     @Nested
     public class StartStopXTimesTests {
-        // @TODO: Implement test for this
+        private static final int X = 25;
+
+        @Test
+        public void testStartStopXTimes() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            HashMap<Integer, Long> expectedTimes = new HashMap<>();
+            for (int i = 0; i < X; i++) {
+                mtxStopwatch.start();
+                assertTrue(mtxStopwatch.started);
+
+                Thread.sleep(1);
+                long x = mtxStopwatch.stop();
+
+                assertTrue(x >= i);
+                expectedTimes.put(i, x);
+            }
+
+            for (Map.Entry<Integer, Long> expectedTime : expectedTimes.entrySet()) {
+                assertTrue(expectedTime.getValue() >= expectedTime.getKey());
+            }
+        }
     }
 
     @Nested
     public class StartStopResetTests {
-        // @TODO: Implement test for this
+
+        @Test
+        public void testStartStopReset() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            long gap = mtxStopwatch.stop();
+            mtxStopwatch.reset();
+
+            assertEquals(0, mtxStopwatch.startTime);
+            assertEquals(0, mtxStopwatch.resetTime);
+            assertTrue(gap >= 10);
+            assertFalse(mtxStopwatch.started);
+            assertTrue(mtxStopwatch.laps.isEmpty());
+        }
     }
 
     @Nested
     public class StartStopResetStartTests {
-        // @TODO: Implement test for this
+
+        @Test
+        public void testStartStopResetStart() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            mtxStopwatch.stop();
+            Thread.sleep(5);
+            mtxStopwatch.reset();
+            Thread.sleep(10);
+            mtxStopwatch.start();
+
+            assertNotEquals(0, mtxStopwatch.startTime);
+            assertEquals(0, mtxStopwatch.resetTime);
+            assertTrue(mtxStopwatch.started);
+        }
     }
 
     @Nested
     public class StartStopResetStartStopTests {
-        // @TODO: Implement test for this
+
+        @Test
+        public void testStartStopResetStartStop() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            mtxStopwatch.stop();
+            Thread.sleep(5);
+            mtxStopwatch.reset();
+            Thread.sleep(10);
+            mtxStopwatch.start();
+            Thread.sleep(10);
+            long gap = mtxStopwatch.stop();
+            mtxStopwatch.reset();
+
+            assertEquals(0, mtxStopwatch.startTime);
+            assertEquals(0, mtxStopwatch.resetTime);
+            assertTrue(gap >= 10);
+            assertFalse(mtxStopwatch.started);
+        }
     }
 
     @Nested
     public class StartStopResetStartStopResetXTimesTests {
-        // @TODO: Implement test for this
+        private static final int X = 25;
+
+        @Test
+        public void testStartStopResetStartStop() {
+            verifyStartingValues(mtxStopwatch);
+
+            for (int i = 0; i < X; i++) {
+                mtxStopwatch.start();
+                mtxStopwatch.stop();
+                mtxStopwatch.reset();
+                mtxStopwatch.start();
+                mtxStopwatch.stop();
+                mtxStopwatch.reset();
+            }
+
+            assertEquals(0, mtxStopwatch.startTime);
+            assertEquals(0, mtxStopwatch.resetTime);
+            assertFalse(mtxStopwatch.started);
+        }
     }
 
     private static void verifyStartingValues(MtxStopwatch sampleStopwatch) {
