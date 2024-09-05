@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxStopwatchTest {
@@ -218,6 +220,33 @@ public class MtxStopwatchTest {
             assertEquals(0, mtxStopwatch.resetTime);
             assertTrue(gap >= 10);
             assertFalse(mtxStopwatch.started);
+        }
+
+        @Test
+        public void testStartStopLapStartStop() throws InterruptedException {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            Thread.sleep(1);
+            mtxStopwatch.lap();
+            Thread.sleep(1);
+            mtxStopwatch.lap();
+            Thread.sleep(1);
+            mtxStopwatch.lap();
+            Thread.sleep(1);
+            long gap = mtxStopwatch.stop();
+
+            assertTrue(mtxStopwatch.startTime >= 10);
+            assertTrue(gap >= 5);
+            assertFalse(mtxStopwatch.started);
+
+            List<Long> laps = mtxStopwatch.getLaps();
+            for (int i = 0; i < 3; i++) {
+                if (laps.contains(((long) i))) {
+                    assertNotNull(laps.get(i));
+                    assertTrue(laps.get(i) >= 1);
+                }
+            }
         }
     }
 
