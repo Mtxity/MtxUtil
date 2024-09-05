@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.math;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class MtxStartWatch {
     private long startTime;
@@ -55,5 +56,13 @@ public class MtxStartWatch {
 
     public List<Long> getLaps() {
         return this.laps;
+    }
+
+    public long getLastLap() {
+        try {
+            return this.laps.getLast();
+        } catch (NoSuchElementException e) {
+            return 0;
+        }
     }
 }
