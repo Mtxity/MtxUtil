@@ -52,4 +52,8 @@ public class MtxStartWatch {
 
         return lap;
     }
+
+    public List<Long> getLaps() {
+        return this.laps;
+    }
 }
