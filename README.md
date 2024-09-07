@@ -110,6 +110,9 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 ## Running Total Integer Analyzer ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxRunningTotal` takes in integers (as a stream or individually) then runs calculations on the last x values.
 
+## StopWatch
+`MtxStopwatch` begins counting when told to and marks laps or pauses / resets counter when told to as well.
+
 ## HTTP Request Reader ([com.edavalos.mtx.util.network](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/network))
 `MtxRequestReader` takes a serialized HTTP request and parses it.
 Something like: `GET /test/14/twelve?key1=value1&key2=value2 HTTP/1.1` would be consumed by an `MtxRequestReader` object to have the following properties accessible:
