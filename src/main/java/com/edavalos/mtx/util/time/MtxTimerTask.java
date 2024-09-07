@@ -25,16 +25,14 @@ public class MtxTimerTask {
         public void run() {
             synchronized (this) {
                 this.notify();
-            }
 
-            if (this.timesRan > this.timesToRun) {
-                synchronized (this) {
+                if (this.timesRan > this.timesToRun) {
                     this.cancel();
                 }
-            }
 
-            this.executable.execute();
-            this.timesRan ++;
+                this.executable.execute();
+                this.timesRan ++;
+            }
         }
     }
 
