@@ -14,10 +14,17 @@ public class MtxTimerTask {
     }
 
     private Timer timer;
+    private long delay;
+    private long period;
     private TimerTask timerTask;
 
     public MtxTimerTask(long delay, long period) {
         this.timer = new Timer();
-        this.timer.schedule(new MtxTimerTaskSchedule(), delay, period);
+        this.delay = delay;
+        this.period = period;
+    }
+
+    public void start() {
+        timer.schedule(new MtxTimerTaskSchedule(), this.delay, this.period);
     }
 }
