@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class MtxTimerTaskTest {
-    private static final long SAMPLE_DELAY = 5;
+    private static final long SAMPLE_DELAY = 1;
     private static final long SAMPLE_PERIOD = 1;
     private static final int SAMPLE_TIMES_TO_RUN = 1;
     private static final MtxTimerTask.Executable SAMPLE_METHOD = () -> System.out.println("Test");
