@@ -1,10 +1,14 @@
 package com.edavalos.mtx.util.time;
 
-import java.lang.reflect.Executable;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class MtxTimerTask {
+
+    @FunctionalInterface
+    public interface Executable {
+        void execute();
+    }
 
     private class MtxTimerTaskSchedule extends TimerTask {
         private final int timesToRun;
