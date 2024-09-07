@@ -38,10 +38,10 @@ public class MtxTimerTask {
         }
     }
 
-    private Timer timer;
-    private long delay;
-    private long period;
-    private TimerTask timerTask;
+    private final Timer timer;
+    private final long delay;
+    private final long period;
+    private final TimerTask timerTask;
 
     public MtxTimerTask(Executable executable, long delay, long period, int timesToRun) {
         this.timer = new Timer();
