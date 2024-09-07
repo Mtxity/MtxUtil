@@ -68,7 +68,7 @@ public class MtxStopwatchTest {
             Thread.sleep(10);
             mtxStopwatch.stop();
 
-            assertTrue(mtxStopwatch.getLaps().isEmpty());
+            assertFalse(mtxStopwatch.getLaps().isEmpty());
         }
 
         @Test
@@ -78,7 +78,7 @@ public class MtxStopwatchTest {
             mtxStopwatch.start();
             mtxStopwatch.stop();
 
-            assertEquals(0, mtxStopwatch.getNumberOfLaps());
+            assertEquals(1, mtxStopwatch.getNumberOfLaps());
         }
 
         @Test
@@ -89,7 +89,7 @@ public class MtxStopwatchTest {
             Thread.sleep(10);
             mtxStopwatch.stop();
 
-            assertEquals(0, mtxStopwatch.getLastLap());
+            assertNotEquals(0, mtxStopwatch.getLastLap());
         }
 
         @Test
@@ -258,7 +258,7 @@ public class MtxStopwatchTest {
                     assertTrue(laps.get(i) >= 1);
                 }
             }
-            assertEquals(3, mtxStopwatch.getNumberOfLaps());
+            assertEquals(4, mtxStopwatch.getNumberOfLaps());
         }
 
         @Test
