@@ -110,7 +110,7 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 ## Running Total Integer Analyzer ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxRunningTotal` takes in integers (as a stream or individually) then runs calculations on the last x values.
 
-## StopWatch
+## StopWatch ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxStopwatch` begins counting when told to and marks laps or pauses / resets counter when told to as well. Core methods are:
 * `start()` - begins counting (or continues where paused)
 * `lap()` - marks a lap but continues counting
