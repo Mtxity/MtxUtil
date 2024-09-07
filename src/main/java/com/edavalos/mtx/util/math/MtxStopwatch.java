@@ -56,7 +56,7 @@ public class MtxStopwatch {
     }
 
     public List<Long> getLaps() {
-        return this.laps;
+        return new LinkedList<>(this.laps);
     }
 
     public int getNumberOfLaps() {
