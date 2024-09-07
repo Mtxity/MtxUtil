@@ -10,7 +10,7 @@ public class MtxTimerTask {
         void execute();
     }
 
-    private class MtxTimerTaskSchedule extends TimerTask {
+    private static class MtxTimerTaskSchedule extends TimerTask {
         private final int timesToRun;
         private final Executable executable;
         private int timesRan;
