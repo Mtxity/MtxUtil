@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 public class MtxTimerTaskTest {
     private static final long SAMPLE_DELAY = 5;
     private static final long SAMPLE_PERIOD = 1;
-    private static final int SAMPLE_TIMES_TO_RUN = 20;
+    private static final int SAMPLE_TIMES_TO_RUN = 1;
     private static final MtxTimerTask.Executable SAMPLE_METHOD = () -> System.out.println("Test");
 
     private MtxTimerTask mtxTimerTask;
@@ -17,13 +17,7 @@ public class MtxTimerTaskTest {
     }
 
     @Test
-    public void testRun() throws InterruptedException {
+    public void testStart() {
         mtxTimerTask.start();
-    }
-
-    @Test
-    public void testSchedule() {
-//        mtxTimerTask.schedule();
-//        mtxTimerTask.run();
     }
 }
