@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.math;
+package com.edavalos.mtx.util.time;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
