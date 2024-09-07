@@ -40,6 +40,7 @@ public class MtxStopwatch {
         long gap = System.currentTimeMillis() - this.startTime;
         this.resetTime = this.startTime;
         this.started = false;
+        this.laps.add(gap);
         return gap;
     }
 
