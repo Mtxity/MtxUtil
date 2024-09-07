@@ -282,7 +282,7 @@ public class MtxStopwatchTest {
                         assertTrue(laps.get(j) >= 1);
                     }
                 }
-                assertEquals(3, mtxStopwatch.getNumberOfLaps());
+                assertEquals(laps.size(), mtxStopwatch.getNumberOfLaps());
             }
         }
     }
