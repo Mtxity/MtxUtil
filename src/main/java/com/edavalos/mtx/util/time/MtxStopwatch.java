@@ -1,4 +1,4 @@
-package com.edavalos.mtx.util.math;
+package com.edavalos.mtx.util.time;
 
 import java.util.LinkedList;
 import java.util.List;
