@@ -111,7 +111,12 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 `MtxRunningTotal` takes in integers (as a stream or individually) then runs calculations on the last x values.
 
 ## StopWatch
-`MtxStopwatch` begins counting when told to and marks laps or pauses / resets counter when told to as well.
+`MtxStopwatch` begins counting when told to and marks laps or pauses / resets counter when told to as well. Core methods are:
+* `start()` - begins counting (or continues where paused)
+* `lap()` - marks a lap but continues counting
+* `stop()` - marks a lap and pauses counting
+* `reset()` - clears all laps and resets counting to zero (but does not start counting again)
+* `getLaps()` - gets all marked laps since last reset or creation
 
 ## HTTP Request Reader ([com.edavalos.mtx.util.network](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/network))
 `MtxRequestReader` takes a serialized HTTP request and parses it.
