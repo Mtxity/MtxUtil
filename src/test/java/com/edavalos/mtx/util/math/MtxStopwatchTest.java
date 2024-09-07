@@ -317,5 +317,6 @@ public class MtxStopwatchTest {
         assertEquals(0, sampleStopwatch.resetTime);
         assertFalse(sampleStopwatch.started);
         assertTrue(sampleStopwatch.laps.isEmpty());
+        assertEquals(0, sampleStopwatch.getLastLap());
     }
 }
