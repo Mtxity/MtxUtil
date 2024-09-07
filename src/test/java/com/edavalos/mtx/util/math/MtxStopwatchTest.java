@@ -159,6 +159,8 @@ public class MtxStopwatchTest {
 
                 assertTrue(x >= i);
                 expectedTimes.put(i, x);
+
+                assertEquals(i + 1, mtxStopwatch.getNumberOfLaps());
             }
 
             for (Map.Entry<Integer, Long> expectedTime : expectedTimes.entrySet()) {
