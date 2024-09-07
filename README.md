@@ -161,3 +161,10 @@ It has support for these methods:
 * `isValidTime()` - checks if a string fits the pattern used by `MtxTime`
 * `extractTimeDigits()` - converts a time string into an integer array of time components
 * `getRelativeTimeToNow()` - gets the difference between a specified time and now, in a human-readable format
+
+`MtxStopwatch` begins counting when told to and marks laps or pauses / resets counter when told to as well. Core methods are:
+* `start()` - begins counting (or continues where paused)
+* `lap()` - marks a lap but continues counting
+* `stop()` - marks a lap and pauses counting
+* `reset()` - clears all laps and resets counting to zero (but does not start counting again)
+* `getLaps()` - gets all marked laps since last reset or creation
