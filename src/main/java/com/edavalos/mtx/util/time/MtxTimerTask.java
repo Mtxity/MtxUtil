@@ -16,8 +16,14 @@ public class MtxTimerTask {
 
         @Override
         public void run() {
+            synchronized (this) {
+                this.notify();
+            }
+
             if (this.timesRan > this.timesToRun) {
-                this.cancel();
+                synchronized (this) {
+                    this.cancel();
+                }
             }
 
             System.out.println("Test");
