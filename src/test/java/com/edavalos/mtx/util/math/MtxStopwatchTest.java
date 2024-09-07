@@ -72,6 +72,16 @@ public class MtxStopwatchTest {
         }
 
         @Test
+        public void testGetNumberOfLaps() {
+            verifyStartingValues(mtxStopwatch);
+
+            mtxStopwatch.start();
+            mtxStopwatch.stop();
+
+            assertEquals(0, mtxStopwatch.getNumberOfLaps());
+        }
+
+        @Test
         public void testGetLastLap() throws InterruptedException {
             verifyStartingValues(mtxStopwatch);
 
@@ -248,6 +258,7 @@ public class MtxStopwatchTest {
                     assertTrue(laps.get(i) >= 1);
                 }
             }
+            assertEquals(3, mtxStopwatch.getNumberOfLaps());
         }
 
         @Test
@@ -271,6 +282,7 @@ public class MtxStopwatchTest {
                         assertTrue(laps.get(j) >= 1);
                     }
                 }
+                assertEquals(3, mtxStopwatch.getNumberOfLaps());
             }
         }
     }
