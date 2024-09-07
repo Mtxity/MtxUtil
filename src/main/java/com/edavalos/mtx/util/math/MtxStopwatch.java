@@ -58,6 +58,10 @@ public class MtxStopwatch {
         return this.laps;
     }
 
+    public int getNumberOfLaps() {
+        return this.laps.size();
+    }
+
     public long getLastLap() {
         try {
             return this.laps.get(this.laps.size() - 1);
