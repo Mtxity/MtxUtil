@@ -47,16 +47,26 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean containsAll(List<T> elements) {
-        return MtxSet.super.containsAll(elements);
+        for (int i = 0; i < this.treeSet.size(); i++) {
+            if (!this.contains(elements.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
      * @param elements
-     * @return
+     * @return true if this set contains all the specified elements, false otherwise
      */
     @Override
     public boolean containsAll(T[] elements) {
-        return MtxSet.super.containsAll(elements);
+        for (int i = 0; i < this.treeSet.size(); i++) {
+            if (!this.contains(elements[i])) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
