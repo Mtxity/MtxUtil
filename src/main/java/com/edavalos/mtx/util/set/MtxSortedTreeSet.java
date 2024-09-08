@@ -6,10 +6,10 @@ import java.util.Spliterator;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
-public class MtxTreeSet<T> implements MtxSet<T> {
+public class MtxSortedTreeSet<T> implements MtxSet<T> {
     private final TreeSet<T> tree;
 
-    public MtxTreeSet() {
+    public MtxSortedTreeSet() {
         this.tree = new TreeSet<>();
     }
 
