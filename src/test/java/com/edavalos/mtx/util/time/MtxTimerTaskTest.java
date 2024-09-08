@@ -24,8 +24,8 @@ public class MtxTimerTaskTest {
     @Test
     public void testStart() throws InterruptedException {
         mtxTimerTask.start();
-
         Thread.sleep(10);
+
         assertEquals(3, SAMPLE_COUNTER);
     }
 }
