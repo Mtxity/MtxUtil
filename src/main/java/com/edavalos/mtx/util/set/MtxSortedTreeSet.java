@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Spliterator;
@@ -7,10 +8,18 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
-    private final TreeSet<T> tree;
+
+    private class MtxComparable<T> implements Comparable<T> {
+        @Override
+        public int compareTo(T o) {
+            return 0;
+        }
+    }
+
+    private final TreeSet<MtxComparable<T>> tree;
 
     public MtxSortedTreeSet() {
-        this.tree = new TreeSet<>();
+        this.tree = new TreeSet<MtxComparable<T>>();
     }
 
     /**
