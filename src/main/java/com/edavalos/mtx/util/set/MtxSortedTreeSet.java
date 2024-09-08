@@ -21,7 +21,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public int size() {
-        return 0;
+        return this.treeSet.size();
     }
 
     /**
@@ -29,7 +29,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.treeSet.isEmpty();
     }
 
     /**
@@ -38,7 +38,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean contains(T element) {
-        return false;
+        return this.treeSet.contains(element);
     }
 
     /**
