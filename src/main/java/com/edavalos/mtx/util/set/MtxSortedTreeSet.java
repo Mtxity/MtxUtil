@@ -129,7 +129,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public T[] toArray() {
-        return null;
+        return (T[]) this.treeSet.toArray();
     }
 
     /**
