@@ -33,6 +33,10 @@ public interface MtxSet<T> extends Iterable<T> {
         }
         return true;
     }
+
+    /**
+     * @return true if this array contains all the specified elements, false otherwise
+     */
     default boolean containsAll(T[] elements) {
         return this.containsAll(Arrays.asList(elements));
     }
