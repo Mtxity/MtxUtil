@@ -149,7 +149,12 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean add(T element) {
-        return false;
+        if (this.contains(element)) {
+            return false;
+        } else {
+            this.treeSet.add(element);
+            return true;
+        }
     }
 
     /**
