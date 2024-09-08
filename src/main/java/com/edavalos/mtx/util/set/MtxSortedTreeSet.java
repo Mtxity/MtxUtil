@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
     private final TreeSet<T> treeSet;
     private final Comparator<T> comparator;
+    private int nextIndex;
 
     public MtxSortedTreeSet(Comparator<T> comparator) {
         this.treeSet = new TreeSet<>(comparator);
@@ -209,5 +210,51 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     @Override
     public void clear() {
         this.treeSet.clear();
+    }
+
+    protected void sort() {
+        if (this.isEmpty()) {
+            return;
+        }
+
+        mergeSort(((T[]) this.treeSet.toArray()), this.nextIndex, this.comparator);
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <C> void mergeSort(C[] array, int length, Comparator<C> comparator) {
+        if (length < 2) {
+            return;
+        }
+        int mid = length / 2;
+        C[] l = (C[]) new Object[mid];
+        C[] r = (C[]) new Object[length - mid];
+
+        System.arraycopy(array, 0, l, 0, mid);
+        if (length - mid >= 0) {
+            System.arraycopy(array, mid, r, 0, length - mid);
+        }
+
+        mergeSort(l, mid, comparator);
+        mergeSort(r, length - mid, comparator);
+
+        merge(array, l, r, mid, length - mid, comparator);
+    }
+
+    private static <C> void merge(C[] a, C[] l, C[] r, int left, int right, Comparator<C> comparator) {
+        int i = 0, j = 0, k = 0;
+        while (i < left && j < right) {
+//            if (l[i] <= r[j]) {
+            if (comparator.compare(l[i], r[j]) <= 0) {
+                a[k++] = l[i++];
+            } else {
+                a[k++] = r[j++];
+            }
+        }
+        while (i < left) {
+            a[k++] = l[i++];
+        }
+        while (j < right) {
+            a[k++] = r[j++];
+        }
     }
 }
