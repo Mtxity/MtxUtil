@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
     private final TreeSet<T> treeSet;
     private final Comparator<T> comparator;
+    public T setContents;
     private int nextIndex;
 
     public MtxSortedTreeSet(Comparator<T> comparator) {
