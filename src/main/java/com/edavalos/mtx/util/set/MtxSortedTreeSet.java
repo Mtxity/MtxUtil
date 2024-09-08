@@ -8,8 +8,9 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
+    private final Comparator<T> comparator;
 
-    private class MtxComparable<T> implements Comparable<T> {
+    private static class MtxComparable<T> implements Comparable<T> {
         @Override
         public int compareTo(T o) {
             return 0;
@@ -18,7 +19,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
 
     private final TreeSet<MtxComparable<T>> tree;
 
-    public MtxSortedTreeSet() {
+    public MtxSortedTreeSet(Comparator<T> comparator) {
+        this.comparator = comparator;
         this.tree = new TreeSet<MtxComparable<T>>();
     }
 
