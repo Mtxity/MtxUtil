@@ -169,4 +169,6 @@ It has support for these methods:
 * `reset()` - clears all laps and resets counting to zero (but does not start counting again)
 * `getLaps()` - gets all marked laps since last reset or creation
 
-`MtxTimerTask` executes code asynchronously when specified for the number of times specified
+`MtxTimerTask` executes code asynchronously when specified for the number of times specified. Code, frequency, and delay
+are specified in constructor. Methods are:
+* `start()` - begins countdown to running code, and once code is ran, manages and begins countdown for next run
