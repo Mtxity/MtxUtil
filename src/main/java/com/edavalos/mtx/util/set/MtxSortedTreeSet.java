@@ -177,27 +177,30 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean remove(T element) {
-        return false;
+        return this.treeSet.remove(element);
     }
 
     /**
      * Removes an element from this set and returns it. If the given argument is null then this will have no effect.
-     * TODO: Update this javaoc lol
      *
      * @return {@code T} if element was found (and removed), null if element was not found.
      */
-    public boolean removeAndReturn(T element) {
+    public T removeAndReturn(T element) {
         if (element == null) {
-            return false;
+            return null;
         }
 
         if (!this.treeSet.contains(element)) {
-            return false;
+            return null;
         }
 
-        boolean elementToRemove = this.removeAndReturn(element);
-        T lastVal = this.treeSet.getLast();
-        return this.treeSet.remove(this.removeAndReturn(element));
+        for (T elementInList : this.treeSet) {
+            if (element.equals(elementInList)) {
+                this.treeSet.remove(elementInList);
+                return elementInList;
+            }
+        }
+        return null;
     }
 
     /**
@@ -205,6 +208,6 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public void clear() {
-
+        this.treeSet.clear();
     }
 }
