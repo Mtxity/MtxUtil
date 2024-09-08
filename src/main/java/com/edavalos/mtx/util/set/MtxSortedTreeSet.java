@@ -4,12 +4,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Spliterator;
+import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
+    private final TreeSet<T> treeSet;
     private final Comparator<T> comparator;
 
     public MtxSortedTreeSet(Comparator<T> comparator) {
+        this.treeSet = new TreeSet<>(comparator);
         this.comparator = comparator;
     }
 
