@@ -134,4 +134,11 @@ public class MtxSortedTreeSetTest {
             assertNull(mtxSortedTreeSet.removeAndReturn(null));
         }
     }
+
+    @Test
+    public void testClear() {
+        mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
+        mtxSortedTreeSet.clear();
+        assertTrue(mtxSortedTreeSet.isEmpty());
+    }
 }
