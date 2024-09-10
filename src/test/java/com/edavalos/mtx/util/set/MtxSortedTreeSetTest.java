@@ -141,4 +141,13 @@ public class MtxSortedTreeSetTest {
         mtxSortedTreeSet.clear();
         assertTrue(mtxSortedTreeSet.isEmpty());
     }
+
+    @Test
+    public void testSize() {
+        mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
+        assertEquals(5, mtxSortedTreeSet.size());
+
+        mtxSortedTreeSet.clear();
+        assertEquals(0, mtxSortedTreeSet.size());
+    }
 }
