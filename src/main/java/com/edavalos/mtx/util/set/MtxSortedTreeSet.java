@@ -8,13 +8,12 @@ import java.util.TreeSet;
 import java.util.function.Consumer;
 
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
-    private final TreeSet<T> treeSet;
+    protected final TreeSet<T> setContents;
     private final Comparator<T> comparator;
-    public T setContents;
     private int nextIndex;
 
     public MtxSortedTreeSet(Comparator<T> comparator) {
-        this.treeSet = new TreeSet<>(comparator);
+        this.setContents = new TreeSet<>(comparator);
         this.comparator = comparator;
     }
 
@@ -23,7 +22,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public int size() {
-        return this.treeSet.size();
+        return this.setContents.size();
     }
 
     /**
@@ -31,7 +30,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean isEmpty() {
-        return this.treeSet.isEmpty();
+        return this.setContents.isEmpty();
     }
 
     /**
@@ -40,7 +39,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean contains(T element) {
-        return this.treeSet.contains(element);
+        return this.setContents.contains(element);
     }
 
     /**
@@ -49,7 +48,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean containsAll(List<T> elements) {
-        for (int i = 0; i < this.treeSet.size(); i++) {
+        for (int i = 0; i < this.setContents.size(); i++) {
             if (!this.contains(elements.get(i))) {
                 return false;
             }
@@ -63,7 +62,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean containsAll(T[] elements) {
-        for (int i = 0; i < this.treeSet.size(); i++) {
+        for (int i = 0; i < this.setContents.size(); i++) {
             if (!this.contains(elements[i])) {
                 return false;
             }
@@ -131,7 +130,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public T[] toArray() {
-        return (T[]) this.treeSet.toArray();
+        return (T[]) this.setContents.toArray();
     }
 
     /**
@@ -154,7 +153,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         if (this.contains(element)) {
             return false;
         } else {
-            this.treeSet.add(element);
+            this.setContents.add(element);
             return true;
         }
     }
@@ -179,7 +178,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean remove(T element) {
-        return this.treeSet.remove(element);
+        return this.setContents.remove(element);
     }
 
     /**
@@ -192,13 +191,13 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
             return null;
         }
 
-        if (!this.treeSet.contains(element)) {
+        if (!this.setContents.contains(element)) {
             return null;
         }
 
-        for (T elementInList : this.treeSet) {
+        for (T elementInList : this.setContents) {
             if (element.equals(elementInList)) {
-                this.treeSet.remove(elementInList);
+                this.setContents.remove(elementInList);
                 return elementInList;
             }
         }
@@ -210,7 +209,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public void clear() {
-        this.treeSet.clear();
+        this.setContents.clear();
     }
 
     protected void sort() {
@@ -218,7 +217,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
             return;
         }
 
-        mergeSort(((T[]) this.treeSet.toArray()), this.nextIndex, this.comparator);
+        mergeSort(((T[]) this.setContents.toArray()), this.nextIndex, this.comparator);
     }
 
     @SuppressWarnings("unchecked")
