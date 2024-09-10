@@ -17,6 +17,14 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         this.comparator = comparator;
     }
 
+    public MtxSortedTreeSet(Comparator<T> comparator, T... contents) {
+        this.setContents = new TreeSet<>(comparator);
+        this.comparator = comparator;
+        for (T content : contents) {
+            this.add(content);
+        }
+    }
+
     /**
      * @return size/length of this set
      */
