@@ -7,6 +7,10 @@ import java.util.Spliterator;
 import java.util.TreeSet;
 import java.util.function.Consumer;
 
+/**
+ * Ordered and auto-sorted implementation of MtxSet backed by a treeset.
+ * Nulls are not allowed in this one.
+ */
 public class MtxSortedTreeSet<T> implements MtxSet<T> {
     protected final TreeSet<T> setContents;
     private final Comparator<T> comparator;
