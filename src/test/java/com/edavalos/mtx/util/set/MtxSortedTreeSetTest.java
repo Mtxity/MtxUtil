@@ -47,68 +47,6 @@ public class MtxSortedTreeSetTest {
             assertEquals(5, mtxSortedTreeSet.setContents.size());
         }
     }
-//
-//    @Nested
-//    class SortTests {
-//
-//        @BeforeEach
-//        public void setUp() {
-//            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 3);
-//            mtxSortedTreeSet.nextIndex = 3;
-//        }
-//
-//        @Test
-//        public void testSort_oneElement() {
-//            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 1);
-//            mtxSortedTreeSet.nextIndex = 0;
-//            mtxSortedTreeSet.setContents[0] = 1.0;
-//
-//            mtxSortedTreeSet.sort();
-//            assertArrayEquals(new Object[]{1.0}, mtxSortedTreeSet.setContents);
-//        }
-//
-//        @Test
-//        public void testSort_noSorting() {
-//            mtxSortedTreeSet.setContents[0] = 1.0;
-//            mtxSortedTreeSet.setContents[1] = 3.0;
-//            mtxSortedTreeSet.setContents[2] = 5.0;
-//
-//            mtxSortedTreeSet.sort();
-//            assertArrayEquals(new Object[]{1.0, 3.0, 5.0}, mtxSortedTreeSet.setContents);
-//        }
-//
-//        @Test
-//        public void testSort_withSorting_oddNumber() {
-//            mtxSortedTreeSet.setContents[0] = 5.0;
-//            mtxSortedTreeSet.setContents[1] = 1.0;
-//            mtxSortedTreeSet.setContents[2] = 3.0;
-//
-//            mtxSortedTreeSet.sort();
-//            assertArrayEquals(new Object[]{1.0, 3.0, 5.0}, mtxSortedTreeSet.setContents);
-//        }
-//
-//        @Test
-//        public void testSort_withSorting_evenNumber() {
-//            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 4);
-//            mtxSortedTreeSet.nextIndex = 4;
-//
-//            mtxSortedTreeSet.setContents[0] = 8.0;
-//            mtxSortedTreeSet.setContents[1] = 1.0;
-//            mtxSortedTreeSet.setContents[2] = 3.0;
-//            mtxSortedTreeSet.setContents[3] = 5.0;
-//
-//            mtxSortedTreeSet.sort();
-//            assertArrayEquals(new Object[]{1.0, 3.0, 5.0, 8.0}, mtxSortedTreeSet.setContents);
-//        }
-//
-//        @Test
-//        public void testSort_empty() {
-//            mtxSortedTreeSet.nextIndex = 0;
-//
-//            mtxSortedTreeSet.sort();
-//            assertArrayEquals(new Object[]{null, null, null}, mtxSortedTreeSet.setContents);
-//        }
-//    }
 
     @Nested
     class AddTests {
@@ -137,17 +75,6 @@ public class MtxSortedTreeSetTest {
             }
             assertArrayEquals(SORTED_VALS, mtxSortedTreeSet.toArray());
         }
-
-//        @Test
-//        public void testAdd_increaseArraySize() {
-//            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 3);
-//            for (int i = 0; i < UNSORTED_VALS.length; i++) {
-//                double val = UNSORTED_VALS[i];
-//                assertTrue(mtxSortedTreeSet.add(val));
-//                assertFalse(mtxSortedTreeSet.add(val));
-//            }
-//            assertArrayEquals(SORTED_VALS, mtxSortedTreeSet.toArray());
-//        }
 
         @Test
         public void testAdd_nullElement() {
