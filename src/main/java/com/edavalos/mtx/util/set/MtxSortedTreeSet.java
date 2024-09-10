@@ -158,7 +158,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean add(T element) {
-        if (this.contains(element)) {
+        if (element == null || this.contains(element)) {
             return false;
         } else {
             this.setContents.add(element);
@@ -186,6 +186,10 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean remove(T element) {
+        if (element == null) {
+            return false;
+        }
+
         return this.setContents.remove(element);
     }
 
