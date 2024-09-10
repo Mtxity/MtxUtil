@@ -27,7 +27,7 @@ public class MtxSortedTreeSetTest {
             mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR);
             assertTrue(mtxSortedTreeSet.isEmpty());
             assertEquals("()", mtxSortedTreeSet.toString());
-            assertEquals(MtxArraySet.STARTING_SIZE, mtxSortedTreeSet.setContents.size());
+            assertEquals(0, mtxSortedTreeSet.setContents.size());
         }
 
         @Test
@@ -35,7 +35,7 @@ public class MtxSortedTreeSetTest {
             mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 10.0, 20.0, 30.0);
             assertFalse(mtxSortedTreeSet.isEmpty());
             assertEquals("(10.0, 20.0, 30.0)", mtxSortedTreeSet.toString());
-            assertEquals(MtxArraySet.STARTING_SIZE + 3, mtxSortedTreeSet.setContents.size());
+            assertEquals(3, mtxSortedTreeSet.setContents.size());
         }
 
         @Test
@@ -44,7 +44,7 @@ public class MtxSortedTreeSetTest {
             assertFalse(mtxSortedTreeSet.isEmpty());
             assertArrayEquals(SORTED_VALS, mtxSortedTreeSet.toArray());
             assertEquals("(1.1, 2.2, 3.3, 4.4, 5.5)", mtxSortedTreeSet.toString());
-            assertEquals(MtxArraySet.STARTING_SIZE + 5, mtxSortedTreeSet.setContents.size());
+            assertEquals(5, mtxSortedTreeSet.setContents.size());
         }
     }
 //
