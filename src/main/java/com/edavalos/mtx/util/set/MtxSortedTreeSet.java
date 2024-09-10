@@ -220,6 +220,23 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         this.setContents.clear();
     }
 
+    /**
+     * @return a string representation of this set
+     */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("(");
+        for (Object item : this.setContents) {
+            if (item == null) {
+                continue;
+            }
+
+            sb.append(item).append(", ");
+        }
+        sb.append(")");
+        return sb.toString().replace(", )", ")");
+    }
+
     protected void sort() {
         if (this.isEmpty()) {
             return;
