@@ -15,6 +15,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         this.setContents = new TreeSet<>(comparator);
     }
 
+    @SafeVarargs
     public MtxSortedTreeSet(Comparator<T> comparator, T... contents) {
         this.setContents = new TreeSet<>(comparator);
         for (T content : contents) {
