@@ -154,6 +154,11 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         return sb.toString().replace(", )", ")");
     }
 
+    /**
+     * Compare equality of this MtxSortedTreeSet with another object
+     * @param obj Other object to compare
+     * @return true if obj is instanceof MtxSortedTreeSet and all the elements are equal. False otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof MtxSortedTreeSet<?> otherTreeSet)) {
