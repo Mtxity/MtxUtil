@@ -182,4 +182,35 @@ public class MtxSortedTreeSetTest {
         mtxSortedTreeSet.clear();
         assertEquals(0, mtxSortedTreeSet.size());
     }
+
+    @Nested
+    class EqualsTests {
+        MtxSortedTreeSet<Double> OTHER_EQUAL_TREESET = new MtxSortedTreeSet<>(COMPARATOR, 10.0, 20.0, 30.0);
+        MtxSortedTreeSet<Double> OTHER_RANDOM_TREESET = new MtxSortedTreeSet<>(COMPARATOR, 10.0, 20.5, 30.0);
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, 10.0, 20.0, 30.0);
+        }
+
+        @Test
+        public void testEquals_null() {
+            assertFalse(mtxSortedTreeSet.equals(null));
+        }
+
+        @Test
+        public void testEquals_otherObject() {
+            assertFalse(mtxSortedTreeSet.equals("x"));
+        }
+
+        @Test
+        public void testEquals_equalTreeSet() {
+            assertTrue(mtxSortedTreeSet.equals(OTHER_EQUAL_TREESET));
+        }
+
+        @Test
+        public void testEquals_unequalTreeSet() {
+            assertFalse(mtxSortedTreeSet.equals(OTHER_RANDOM_TREESET));
+        }
+    }
 }
