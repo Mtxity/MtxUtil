@@ -153,4 +153,13 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         sb.append(")");
         return sb.toString().replace(", )", ")");
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MtxSortedTreeSet<?> otherTreeSet)) {
+            return false;
+        }
+
+        return this.setContents.equals(otherTreeSet.setContents);
+    }
 }
