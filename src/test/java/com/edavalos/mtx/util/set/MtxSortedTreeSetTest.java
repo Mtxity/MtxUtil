@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -134,6 +135,37 @@ public class MtxSortedTreeSetTest {
             assertNull(mtxSortedTreeSet.removeAndReturn(null));
         }
     }
+
+    @Nested
+    class ContainsTests {
+        private static final Double[] SORTED_VALS_SUBARRAY = {2.2, 3.3, 4.4};
+        private static final List<Double> SORTED_VALS_SUBLIST = List.of(2.2, 3.3, 4.4);
+        private static final Double[] UNRELATED_ARRAY = {3.3, 6.6, 9.9};
+        private static final List<Double> UNRELATED_LIST = List.of(3.3, 6.6, 9.9);
+
+        @BeforeEach
+        public void setUp() {
+            mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
+        }
+
+        @Test
+        public void testContains() {
+            assertTrue(mtxSortedTreeSet.contains(2.2));
+        }
+
+        @Test
+        public void testContainsAll_arrayArg() {
+            assertTrue(mtxSortedTreeSet.containsAll(SORTED_VALS_SUBARRAY));
+            assertFalse(mtxSortedTreeSet.containsAll(UNRELATED_ARRAY));
+        }
+
+        @Test
+        public void testContainsAll_listArg() {
+            assertTrue(mtxSortedTreeSet.containsAll(SORTED_VALS_SUBLIST));
+            assertFalse(mtxSortedTreeSet.containsAll(UNRELATED_LIST));
+        }
+    }
+
 
     @Test
     public void testClear() {
