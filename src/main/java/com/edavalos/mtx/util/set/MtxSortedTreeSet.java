@@ -53,8 +53,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean containsAll(List<T> elements) {
-        for (int i = 0; i < elements.size(); i++) {
-            if (!this.contains(elements.get(i))) {
+        for (T element : elements) {
+            if (!this.contains(element)) {
                 return false;
             }
         }
@@ -67,8 +67,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public boolean containsAll(T[] elements) {
-        for (int i = 0; i < elements.length; i++) {
-            if (!this.contains(elements[i])) {
+        for (T element : elements) {
+            if (!this.contains(element)) {
                 return false;
             }
         }
