@@ -24,6 +24,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
+     * Gets the number of elements in this MtxSortedTreeSet
      * @return size/length of this set
      */
     @Override
@@ -32,6 +33,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
+     * Checks if this MtxSortedTreeSet has any elements or not
      * @return true if this set is empty, false otherwise
      */
     @Override
@@ -40,7 +42,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @param element
+     * Checks if this MtxSortedTreeSet contains the given element
+     * @param element element to check against
      * @return true if this set contains the specified element, false otherwise
      */
     @Override
@@ -49,7 +52,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @param elements
+     * Checks if this MtxSortedTreeSet contains all the given elements
+     * @param elements list of elements to check against
      * @return true if this set contains all the specified elements, false otherwise
      */
     @Override
@@ -63,7 +67,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @param elements
+     * Checks if this MtxSortedTreeSet contains all the given elements
+     * @param elements array of elements to check against
      * @return true if this set contains all the specified elements, false otherwise
      */
     @Override
@@ -77,7 +82,8 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @return an array of this set
+     * Converts all elements in this MtxSortedTreeSet into an array
+     * @return an array containing the elements in this set
      */
     @Override
     public T[] toArray() {
@@ -85,9 +91,9 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Adds an element to this set. If it already exists in the set, nothing happens.
+     * Adds an element to this MtxSortedTreeSet. If it already exists in the set, nothing happens.
      *
-     * @param element
+     * @param element element to attempt to add to this set
      * @return true if element was added to the set, false if it was already in it.
      */
     @Override
@@ -101,9 +107,9 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Removes an element from this set
+     * Removes an element from this MtxSortedTreeSet.
      *
-     * @param element
+     * @param element element to attempt to remove from this set
      * @return true if element was found (and removed), false if element was not found.
      */
     @Override
@@ -116,8 +122,10 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Removes an element from this set and returns it. If the given argument is null then this will have no effect.
+     * Removes an element from this MtxSortedTreeSet and returns it.
+     * If the given argument is null then this will have no effect.
      *
+     * @param element element to attempt to remove and return from this set
      * @return {@code T} if element was found (and removed), null if element was not found.
      */
     public T removeAndReturn(T element) {
@@ -135,7 +143,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Removes everything from this set
+     * Removes everything from this MtxSortedTreeSet
      */
     @Override
     public void clear() {
@@ -143,7 +151,9 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @return a string representation of this set
+     * Creates a String with all elements in this MtxSortedTreeSet bounded by parenthesis
+     * and separate by commas.
+     * @return a string representation of this MtxSortedTreeSet
      */
     @Override
     public String toString() {
@@ -158,7 +168,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     /**
      * Compare equality of this MtxSortedTreeSet with another object
      * @param obj Other object to compare
-     * @return true if obj is instanceof MtxSortedTreeSet and all the elements are equal. False otherwise.
+     * @return true if obj is instanceof MtxSortedTreeSet and all its elements are equal. False otherwise.
      */
     @Override
     public boolean equals(Object obj) {
