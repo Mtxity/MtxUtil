@@ -241,6 +241,12 @@ public final class MtxHashSetTest {
     }
 
     @Test
+    public void testAdd_nullElement() {
+        Double nullElement = null;
+        assertFalse(mtxHashSet.add(nullElement));
+    }
+
+    @Test
     public void testAddAll_allNewElements() {
         assertTrue(mtxHashSet.addAll(new Double[] {2.54, 3.65, 4.76}));
 
