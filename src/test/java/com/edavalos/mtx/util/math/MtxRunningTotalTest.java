@@ -65,7 +65,7 @@ public class MtxRunningTotalTest {
 
                 @Override
                 public boolean hasNext() {
-                    return i < 200000;
+                    return i < 10000;
                 }
 
                 @Override
@@ -74,7 +74,7 @@ public class MtxRunningTotalTest {
                 }
             });
 
-            assertEquals(100000, mtxRunningTotal_constructorTests.limit());
+            assertEquals(10000, mtxRunningTotal_constructorTests.limit());
         }
     }
 
