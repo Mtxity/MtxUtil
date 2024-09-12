@@ -89,6 +89,12 @@ public final class MtxArraySetTest {
     }
 
     @Test
+    public void testAdd_nullElement() {
+        mtxArraySet = new MtxArraySet<>("o");
+        assertFalse(mtxArraySet.add(null));
+    }
+
+    @Test
     public void testAddAll_allNewElements() {
         mtxArraySet = new MtxArraySet<>("o", "oo");
         assertTrue(mtxArraySet.addAll(new String[] {"ooo", "oooo", "ooooo"}));
