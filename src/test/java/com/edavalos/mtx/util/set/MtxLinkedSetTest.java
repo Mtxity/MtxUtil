@@ -223,6 +223,12 @@ public final class MtxLinkedSetTest {
     }
 
     @Test
+    public void testAdd_nullElement() {
+        Double nullElement = null;
+        assertFalse(mtxLinkedSet.add(nullElement));
+    }
+
+    @Test
     public void testAddAll_allNewElements() {
         assertTrue(mtxLinkedSet.addAll(new Double[] {2.54, 3.65, 4.76}));
 
@@ -253,5 +259,10 @@ public final class MtxLinkedSetTest {
             assertTrue(mtxLinkedSet.remove(j));
             assertFalse(mtxLinkedSet.remove(j));
         }
+    }
+
+    @Test
+    public void testRemove_nullElement() {
+        assertFalse(mtxLinkedSet.remove(null));
     }
 }
