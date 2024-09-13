@@ -110,10 +110,6 @@ public class MtxMapSet<T> implements MtxSet<T> {
             return null;
         }
 
-        if (element == null) {
-            return null;
-        }
-
         if (!this.setContents.containsValue(element)) {
             return null;
         }
