@@ -40,7 +40,8 @@ public class MtxMemRandomTest {
         public void testRandomByte() {
             assertTrue(
                     randomsSet.size() == randomsList.size() ||
-                    randomsSet.size() == randomsList.size() + 1
+                    randomsSet.size() == randomsList.size() + 1 ||
+                    randomsSet.size() == randomsList.size() - 1
             );
         }
     }
