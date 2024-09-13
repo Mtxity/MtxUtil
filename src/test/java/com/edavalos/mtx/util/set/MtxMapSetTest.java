@@ -92,6 +92,12 @@ public final class MtxMapSetTest {
     }
 
     @Test
+    public void testAdd_nullElement() {
+        mtxMapSet = new MtxMapSet<>(VAL1);
+        assertFalse(mtxMapSet.add(null));
+    }
+
+    @Test
     public void testAddAll_allNewElements() {
         mtxMapSet = new MtxMapSet<>();
         assertTrue(mtxMapSet.addAll(new Double[] {2.54, 3.65, 4.76}));
@@ -126,6 +132,12 @@ public final class MtxMapSetTest {
         assertFalse(mtxMapSet.remove(1.2));
 
         assertEquals(1, mtxMapSet.size());
+    }
+
+    @Test
+    public void testRemove_nullElement() {
+        mtxMapSet = new MtxMapSet<>(VAL1);
+        assertFalse(mtxMapSet.remove(null));
     }
 
     @Nested
