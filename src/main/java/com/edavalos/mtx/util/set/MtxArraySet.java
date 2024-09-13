@@ -181,11 +181,6 @@ public class MtxArraySet<T> implements MtxSet<T> {
 
         boolean found = false;
         for (int i = 0; i < this.nextIndex; i++) {
-            if (element == null && this.setContents[i] == null) {
-                found = true;
-                break;
-            }
-
             if (this.setContents[i].equals(element)) {
                 found = true;
                 this.setContents[i] = this.setContents[this.nextIndex - 1];
