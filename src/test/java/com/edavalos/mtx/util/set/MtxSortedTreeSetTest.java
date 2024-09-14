@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -171,6 +172,13 @@ public class MtxSortedTreeSetTest {
         mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
         List<Double> expectedList = List.of(SORTED_VALS);
         assertEquals(expectedList, mtxSortedTreeSet.toList());
+    }
+
+    @Test
+    public void testToSet() {
+        mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
+        Set<Double> expectedSet = Set.of(SORTED_VALS);
+        assertEquals(expectedSet, mtxSortedTreeSet.toSet());
     }
 
     @Test
