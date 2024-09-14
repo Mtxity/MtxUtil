@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -110,6 +111,18 @@ public class MtxArraySet<T> implements MtxSet<T> {
         Object[] arr = new Object[this.nextIndex];
         System.arraycopy(this.setContents, 0, arr, 0, this.nextIndex);
         return (T[]) arr;
+    }
+
+    /**
+     * @return a list containing the elements in this set
+     */
+    @Override
+    public List<T> toList() {
+        List<T> list = new ArrayList<>();
+        for (T element : this.toArray()) {
+            list.add(element);
+        }
+        return list;
     }
 
     /**
