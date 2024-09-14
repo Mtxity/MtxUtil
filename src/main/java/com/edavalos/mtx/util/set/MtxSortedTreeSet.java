@@ -1,7 +1,10 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 /**
@@ -88,6 +91,15 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     @Override
     public T[] toArray() {
         return (T[]) this.setContents.toArray();
+    }
+
+    // @TODO: Add javadocs & unit tests for this
+    public List<T> toList() {
+        List<T> list = new ArrayList<>();
+        for (T element : this.setContents) {
+            list.add(element);
+        }
+        return list;
     }
 
     /**
