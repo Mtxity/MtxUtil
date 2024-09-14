@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.set;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public interface MtxSet<T> extends Iterable<T> {
     // ---------------------- Query Operations ---------------------
@@ -66,6 +67,16 @@ public interface MtxSet<T> extends Iterable<T> {
      * @return an array of this set
      */
     T[] toArray();
+
+    /**
+     * @return a List of this set
+     */
+    List<T> toList();
+
+    /**
+     * @return a generic Set copy of this set
+     */
+    Set<T> toSet();
 
     /**
      * @return the hashcode of this set
