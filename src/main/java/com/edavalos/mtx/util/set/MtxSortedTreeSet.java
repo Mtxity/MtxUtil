@@ -93,7 +93,10 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         return (T[]) this.setContents.toArray();
     }
 
-    // @TODO: Add javadocs & unit tests for this
+    /**
+     * Converts all elements in this MtxSortedTreeSet into a list
+     * @return a list containing the elements in this set
+     */
     public List<T> toList() {
         List<T> list = new ArrayList<>();
         for (T element : this.setContents) {
