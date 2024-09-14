@@ -99,11 +99,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      */
     @Override
     public List<T> toList() {
-        List<T> list = new ArrayList<>();
-        for (T element : this.setContents) {
-            list.add(element);
-        }
-        return list;
+        return new ArrayList<>(this.setContents);
     }
 
     /**
