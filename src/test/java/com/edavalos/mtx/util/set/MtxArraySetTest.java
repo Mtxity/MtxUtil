@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -296,6 +297,13 @@ public final class MtxArraySetTest {
         List<String> sampleList = List.of("I", "II", "III", "IV", "V");
         mtxArraySet = new MtxArraySet<>("I", "II", "III", "IV", "V");
         assertEquals(sampleList, mtxArraySet.toList());
+    }
+
+    @Test
+    public void testToSet() {
+        Set<String> sampleList = Set.of("I", "II", "III", "IV", "V");
+        mtxArraySet = new MtxArraySet<>("I", "II", "III", "IV", "V");
+        assertEquals(sampleList, mtxArraySet.toSet());
     }
 
     @Nested
