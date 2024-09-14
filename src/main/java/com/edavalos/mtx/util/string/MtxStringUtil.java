@@ -108,11 +108,10 @@ public final class MtxStringUtil {
             return null;
         }
 
-        if (v == Math.floor(v) && v == Math.ceil(v)) {
+        if (v == Math.floor(v)) {
             return Integer.parseInt(v.toString().substring(0, v.toString().indexOf('.')));
-        } else {
-            return null;
         }
+        return null;
     }
 
     public static Double toDouble(String s) {
