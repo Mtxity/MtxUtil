@@ -254,11 +254,21 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        public void testToInt() {
+        public void testToInt_validInt() {
             assertEquals(5, MtxStringUtil.toInt("5"));
             assertEquals(5, MtxStringUtil.toInt("5.0"));
             assertEquals(-5, MtxStringUtil.toInt("-5"));
             assertEquals(-5, MtxStringUtil.toInt("-5.0"));
+        }
+
+        @Test
+        public void testToInt_invalidInt() {
+            assertNull(MtxStringUtil.toInt("5.2"));
+        }
+
+        @Test
+        public void testToInt_invalidNumber() {
+            assertNull(MtxStringUtil.toInt("-.0.1."));
         }
     }
 
