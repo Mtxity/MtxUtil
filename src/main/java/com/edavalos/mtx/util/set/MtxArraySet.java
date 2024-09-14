@@ -2,6 +2,7 @@ package com.edavalos.mtx.util.set;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -119,6 +120,14 @@ public class MtxArraySet<T> implements MtxSet<T> {
     @Override
     public List<T> toList() {
         return new ArrayList<>(Arrays.asList(this.toArray()));
+    }
+
+    /**
+     * @return a set containing the elements in this set
+     */
+    @Override
+    public Set<T> toSet() {
+        return new HashSet<>(Arrays.asList(this.toArray()));
     }
 
     /**
