@@ -94,15 +94,6 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Converts all elements in this MtxSortedTreeSet into a list
-     * @return a list containing the elements in this set
-     */
-    @Override
-    public List<T> toList() {
-        return new ArrayList<>(this.setContents);
-    }
-
-    /**
      * Gets a copy of the TreeSet backing this MtxSortedTreeSet and returns it as a Set
      * @return a generic set containing the elements in this set
      */

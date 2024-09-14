@@ -64,14 +64,6 @@ public class MtxMapSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @return a list containing the elements in this set
-     */
-    @Override
-    public List<T> toList() {
-        return new ArrayList<>(Arrays.asList(this.toArray()));
-    }
-
-    /**
      * @return a set containing the elements in this set
      */
     @Override

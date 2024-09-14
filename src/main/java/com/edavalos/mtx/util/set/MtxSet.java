@@ -71,7 +71,9 @@ public interface MtxSet<T> extends Iterable<T> {
     /**
      * @return a List of this set
      */
-    List<T> toList();
+    default List<T> toList() {
+        return Arrays.asList(this.toArray());
+    }
 
     /**
      * @return a generic Set copy of this set
