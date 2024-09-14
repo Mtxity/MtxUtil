@@ -166,6 +166,12 @@ public class MtxSortedTreeSetTest {
         }
     }
 
+    @Test
+    public void testToList() {
+        mtxSortedTreeSet = new MtxSortedTreeSet<>(COMPARATOR, SORTED_VALS);
+        List<Double> expectedList = List.of(SORTED_VALS);
+        assertEquals(expectedList, mtxSortedTreeSet.toList());
+    }
 
     @Test
     public void testClear() {
