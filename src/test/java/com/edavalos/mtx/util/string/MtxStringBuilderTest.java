@@ -58,6 +58,13 @@ public class MtxStringBuilderTest {
         }
 
         @Test
+        public void testAppend_string_null() {
+            String string = null;
+            mtxStringBuilder = mtxStringBuilder.append(string);
+            assertEquals(STARTING_STR, mtxStringBuilder.toString());
+        }
+
+        @Test
         public void testAppend_string_notEmpty() {
             mtxStringBuilder = mtxStringBuilder.append("_lmnop");
             assertEquals(STARTING_STR + "_lmnop", mtxStringBuilder.toString());
@@ -141,6 +148,13 @@ public class MtxStringBuilderTest {
         }
 
         @Test
+        public void testAppend_objects_array_null() {
+            String[] arr = null;
+            mtxStringBuilder = mtxStringBuilder.append(arr);
+            assertEquals(STARTING_STR, mtxStringBuilder.toString());
+        }
+
+        @Test
         public void testAppend_objects_list() {
             List<List<Integer>> mat = List.of(
                     List.of(1, 2, 3),
@@ -188,6 +202,15 @@ public class MtxStringBuilderTest {
 
     @Nested
     class TrimTests {
+
+        @Test
+        public void testTrim_emptyTrim() {
+            String starting = "";
+            String expected = "";
+
+            mtxStringBuilder = new MtxStringBuilder(starting);
+            assertEquals(expected, mtxStringBuilder.trim().toString());
+        }
 
         @Test
         public void testTrim_noTrim() {
@@ -289,6 +312,15 @@ public class MtxStringBuilderTest {
                 () -> mtxStringBuilder.charAt(1000)
         );
         assertEquals("Index outside bounds of MtxStringBuilder: 1000", e.getMessage());
+    }
+
+    @Test
+    public void testCharAt_outOfBounds_negative() {
+        IndexOutOfBoundsException e = assertThrows(
+                IndexOutOfBoundsException.class,
+                () -> mtxStringBuilder.charAt(-1)
+        );
+        assertEquals("Index outside bounds of MtxStringBuilder: -1", e.getMessage());
     }
 
     @Test
