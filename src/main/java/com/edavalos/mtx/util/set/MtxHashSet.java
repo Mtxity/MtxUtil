@@ -1,7 +1,12 @@
 package com.edavalos.mtx.util.set;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Unordered implementation of MtxSet backed by a hashmap.
@@ -53,6 +58,22 @@ public final class MtxHashSet<T> implements MtxSet<T> {
             newArray[idx++] = key;
         }
         return newArray;
+    }
+
+    /**
+     * @return a list containing the elements in this set
+     */
+    @Override
+    public List<T> toList() {
+        return new ArrayList<>(Arrays.asList(this.toArray()));
+    }
+
+    /**
+     * @return a set containing the elements in this set
+     */
+    @Override
+    public Set<T> toSet() {
+        return new HashSet<>(Arrays.asList(this.toArray()));
     }
 
     @Override

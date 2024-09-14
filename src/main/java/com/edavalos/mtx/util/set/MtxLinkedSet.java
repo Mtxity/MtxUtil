@@ -1,7 +1,10 @@
 package com.edavalos.mtx.util.set;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -92,6 +95,22 @@ public class MtxLinkedSet<T> implements MtxSet<T> {
             next = next.next;
         }
         return newArray;
+    }
+
+    /**
+     * @return a list containing the elements in this set
+     */
+    @Override
+    public List<T> toList() {
+        return new ArrayList<>(Arrays.asList(this.toArray()));
+    }
+
+    /**
+     * @return a set containing the elements in this set
+     */
+    @Override
+    public Set<T> toSet() {
+        return new HashSet<>(Arrays.asList(this.toArray()));
     }
 
     @Override

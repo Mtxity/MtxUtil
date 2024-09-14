@@ -1,6 +1,11 @@
 package com.edavalos.mtx.util.set;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -56,6 +61,22 @@ public class MtxMapSet<T> implements MtxSet<T> {
     @Override
     public T[] toArray() {
         return (T[]) this.setContents.values().toArray();
+    }
+
+    /**
+     * @return a list containing the elements in this set
+     */
+    @Override
+    public List<T> toList() {
+        return new ArrayList<>(Arrays.asList(this.toArray()));
+    }
+
+    /**
+     * @return a set containing the elements in this set
+     */
+    @Override
+    public Set<T> toSet() {
+        return new HashSet<>(Arrays.asList(this.toArray()));
     }
 
     /**
