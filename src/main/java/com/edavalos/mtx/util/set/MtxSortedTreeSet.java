@@ -105,7 +105,10 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         return list;
     }
 
-    // @TODO: Add javadocs & unit tests for this
+    /**
+     * Gets a copy of the TreeSet backing this MtxSortedTreeSet and returns it as a Set
+     * @return a generic set containing the elements in this set
+     */
     public Set<T> toSet() {
         return new HashSet<>(this.setContents);
     }
