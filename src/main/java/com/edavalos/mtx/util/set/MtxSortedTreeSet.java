@@ -102,6 +102,11 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
         return list;
     }
 
+    // @TODO: Add javadocs & unit tests for this
+    public Set<T> toSet() {
+        return new HashSet<>(this.setContents);
+    }
+
     /**
      * Adds an element to this MtxSortedTreeSet. If it already exists in the set, nothing happens.
      *
