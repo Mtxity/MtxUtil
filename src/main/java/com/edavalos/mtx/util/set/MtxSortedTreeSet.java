@@ -97,6 +97,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      * Converts all elements in this MtxSortedTreeSet into a list
      * @return a list containing the elements in this set
      */
+    @Override
     public List<T> toList() {
         List<T> list = new ArrayList<>();
         for (T element : this.setContents) {
@@ -109,6 +110,7 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
      * Gets a copy of the TreeSet backing this MtxSortedTreeSet and returns it as a Set
      * @return a generic set containing the elements in this set
      */
+    @Override
     public Set<T> toSet() {
         return new HashSet<>(this.setContents);
     }
