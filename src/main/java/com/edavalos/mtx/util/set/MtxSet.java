@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.set;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -73,6 +74,13 @@ public interface MtxSet<T> extends Iterable<T> {
      */
     default List<T> toList() {
         return Arrays.asList(this.toArray());
+    }
+
+    /**
+     * @return a Set copy containing the elements of this set
+     */
+    default Set<T> toSet() {
+        return new HashSet<>(Arrays.asList(this.toArray()));
     }
 
     /**
