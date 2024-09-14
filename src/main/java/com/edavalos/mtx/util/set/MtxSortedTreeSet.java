@@ -94,15 +94,6 @@ public class MtxSortedTreeSet<T> implements MtxSet<T> {
     }
 
     /**
-     * Gets a copy of the TreeSet backing this MtxSortedTreeSet and returns it as a Set
-     * @return a generic set containing the elements in this set
-     */
-    @Override
-    public Set<T> toSet() {
-        return new HashSet<>(this.setContents);
-    }
-
-    /**
      * Adds an element to this MtxSortedTreeSet. If it already exists in the set, nothing happens.
      *
      * @param element element to attempt to add to this set

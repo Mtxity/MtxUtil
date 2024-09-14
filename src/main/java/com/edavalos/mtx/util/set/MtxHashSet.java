@@ -60,14 +60,6 @@ public final class MtxHashSet<T> implements MtxSet<T> {
         return newArray;
     }
 
-    /**
-     * @return a set containing the elements in this set
-     */
-    @Override
-    public Set<T> toSet() {
-        return new HashSet<>(Arrays.asList(this.toArray()));
-    }
-
     @Override
     public boolean add(T element) {
         if (element == null) {

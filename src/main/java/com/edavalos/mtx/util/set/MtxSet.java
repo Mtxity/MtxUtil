@@ -77,16 +77,11 @@ public interface MtxSet<T> extends Iterable<T> {
     }
 
     /**
-     * @return a Set copy containing the elements of this set
+     * @return a generic Set copy of this set
      */
     default Set<T> toSet() {
         return new HashSet<>(Arrays.asList(this.toArray()));
     }
-
-    /**
-     * @return a generic Set copy of this set
-     */
-    Set<T> toSet();
 
     /**
      * @return the hashcode of this set

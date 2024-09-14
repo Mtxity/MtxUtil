@@ -64,14 +64,6 @@ public class MtxMapSet<T> implements MtxSet<T> {
     }
 
     /**
-     * @return a set containing the elements in this set
-     */
-    @Override
-    public Set<T> toSet() {
-        return new HashSet<>(Arrays.asList(this.toArray()));
-    }
-
-    /**
      * Adds an element to this set. If it already exists in the set, nothing happens.
      *
      * @param element

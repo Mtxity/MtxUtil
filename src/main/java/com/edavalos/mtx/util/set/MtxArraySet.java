@@ -115,14 +115,6 @@ public class MtxArraySet<T> implements MtxSet<T> {
     }
 
     /**
-     * @return a set containing the elements in this set
-     */
-    @Override
-    public Set<T> toSet() {
-        return new HashSet<>(Arrays.asList(this.toArray()));
-    }
-
-    /**
      * @return the hashcode of this set
      */
     @Override
