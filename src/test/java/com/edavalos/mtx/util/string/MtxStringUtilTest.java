@@ -1181,7 +1181,7 @@ public final class MtxStringUtilTest {
     }
 
     @Nested
-    class GenericHashDistance {
+    class TestGenericHashDistance {
         private static final String TEST_STR = "given";
         private static final Map<String, Integer> EXPECTED_SIMILARITY_SCORES = Map.of(
                 "gibon", 30,
@@ -1221,6 +1221,26 @@ public final class MtxStringUtilTest {
         @Test
         public void testGenericHashDistance_emptyB() {
             assertEquals(-1, MtxStringUtil.genericHashDistance(TEST_STR, ""));
+        }
+    }
+
+    @Nested
+    class TestCountOccurrences {
+        private static final String TEST_STR = "x y z z y";
+
+        @Test
+        public void testCountOccurrences_oneFound() {
+            assertEquals(1, MtxStringUtil.countOccurrences(TEST_STR, "x"));
+        }
+
+        @Test
+        public void testCountOccurrences_multipleFound() {
+            assertEquals(2, MtxStringUtil.countOccurrences(TEST_STR, "z"));
+        }
+
+        @Test
+        public void testCountOccurrences_noneFound() {
+            assertEquals(0, MtxStringUtil.countOccurrences(TEST_STR, "w"));
         }
     }
 }
