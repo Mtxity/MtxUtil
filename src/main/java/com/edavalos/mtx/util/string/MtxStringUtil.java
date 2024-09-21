@@ -616,6 +616,11 @@ public final class MtxStringUtil {
     }
 
     public static String logFill(String template, String... args) {
+        // @TODO: Make a const to store '{}' template
+        if (countOccurrences(template, "{}") != args.length) {
+            throw new IllegalArgumentException("Argument count mismatch");
+        }
+
         for (String arg : args) {
             template = template.replaceFirst(Pattern.quote("{}"), arg);
         }
