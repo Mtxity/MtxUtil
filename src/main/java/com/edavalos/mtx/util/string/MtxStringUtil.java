@@ -606,6 +606,15 @@ public final class MtxStringUtil {
         return totalDiff;
     }
 
+    public static int countOccurrences(String fullString, String substring) {
+        int occurrences = 0;
+        while (fullString.contains(substring)) {
+            fullString = fullString.replace(substring, "");
+            occurrences++;
+        }
+        return occurrences;
+    }
+
     public static String logFill(String template, String... args) {
         for (String arg : args) {
             template = template.replaceFirst(Pattern.quote("{}"), arg);
