@@ -609,7 +609,7 @@ public final class MtxStringUtil {
     public static int countOccurrences(String fullString, String substring) {
         int occurrences = 0;
         while (fullString.contains(substring)) {
-            fullString = fullString.replace(substring, "");
+            fullString = fullString.replaceFirst(substring, "");
             occurrences++;
         }
         return occurrences;
