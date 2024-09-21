@@ -605,4 +605,11 @@ public final class MtxStringUtil {
         }
         return totalDiff;
     }
+
+    public static String logFill(String template, String... args) {
+        for (String arg : args) {
+            template = template.replaceFirst(Pattern.quote("{}"), arg);
+        }
+        return template;
+    }
 }
