@@ -1243,4 +1243,42 @@ public final class MtxStringUtilTest {
             assertEquals(0, MtxStringUtil.countOccurrences(TEST_STR, "w"));
         }
     }
+
+    @Nested
+    class TestLogFill {
+        private static final String TEST_STR = "check {} at {} by {} for {}";
+
+        @Test
+        public void testLogFill_allTemplatesFilled() {
+            String expected = "check a at b by c for d";
+            assertEquals(expected, MtxStringUtil.logFill(TEST_STR, "a", "b", "c", "d"));
+        }
+
+        @Test
+        public void testLogFill_someTemplatesFilled() {
+            IllegalArgumentException e = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.logFill(TEST_STR, "a", "b")
+            );
+            assertEquals("Argument count mismatch", e.getMessage());
+        }
+
+        @Test
+        public void testLogFill_noTemplatesFilled() {
+            IllegalArgumentException e = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.logFill(TEST_STR)
+            );
+            assertEquals("Argument count mismatch", e.getMessage());
+        }
+
+        @Test
+        public void testLogFill_tooManyTemplatesFilled() {
+            IllegalArgumentException e = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.logFill(TEST_STR, "a", "b", "c", "d", "e")
+            );
+            assertEquals("Argument count mismatch", e.getMessage());
+        }
+    }
 }
