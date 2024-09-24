@@ -1281,4 +1281,29 @@ public final class MtxStringUtilTest {
             assertEquals("Argument count mismatch", e.getMessage());
         }
     }
+
+    @Nested
+    class TestLogMapFill {
+        private static final String TEST_STR = "k1={}, k2={}, k3={}, k4={}";
+        private static final String[] TEST_ARGS = {"v1", "v2", "v3", "v4"};
+
+        @Test
+        public void testLogMapFill_allTemplatesFilled() {
+            Map<String, String> expected = Map.of("k1", "v1", "k2", "v2", "k3", "v3", "k4", "v4");
+            assertStringMapEquals(expected, MtxStringUtil.logMapFill(TEST_STR, TEST_ARGS));
+        }
+
+        @Test
+        public void testLogMapFill_mismatchedFormat() {
+            Map<String, String> expected = Map.of("k1", "v1", "k2", "v2", "k3", "v3", "k4", "v4");
+            assertStringMapEquals(expected, MtxStringUtil.logMapFill(TEST_STR + ", k5=v5=i5", TEST_ARGS));
+        }
+
+        private void assertStringMapEquals(Map<String, String> expected, Map<String, String> actual) {
+            assertEquals(expected.size(), actual.size());
+            for (Map.Entry<String, String> entry : expected.entrySet()) {
+                assertEquals(expected.get(entry.getKey()), actual.get(entry.getKey()));
+            }
+        }
+    }
 }
