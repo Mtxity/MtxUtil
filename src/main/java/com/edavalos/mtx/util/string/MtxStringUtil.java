@@ -4,6 +4,7 @@ import com.edavalos.mtx.util.math.MtxMath;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -625,5 +626,20 @@ public final class MtxStringUtil {
             template = template.replaceFirst(Pattern.quote("{}"), arg);
         }
         return template;
+    }
+
+    // ("k1=v1, k2=v2, k3={}", "v3") -> Map.of("k1", "v1", "k2", "v2", "k3", "v3")
+    public static Map<String, String> logMapFill(String template, String... args) {
+        Map<String, String> kvMap = new HashMap<>();
+
+        String log = logFill(template, args);
+        String[] kvPairs = log.split(",");
+        for (String kvPair : kvPairs) {
+            if (countOccurrences(kvPair, "=") == 1) {
+                String[] kv = kvPair.split("=");
+                kvMap.put(kv[0].trim(), kv[1].trim());
+            }
+        }
+        return Collections.unmodifiableMap(kvMap);
     }
 }
