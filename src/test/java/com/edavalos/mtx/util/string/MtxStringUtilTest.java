@@ -1290,20 +1290,13 @@ public final class MtxStringUtilTest {
         @Test
         public void testLogMapFill_allTemplatesFilled() {
             Map<String, String> expected = Map.of("k1", "v1", "k2", "v2", "k3", "v3", "k4", "v4");
-            assertStringMapEquals(expected, MtxStringUtil.logMapFill(TEST_STR, TEST_ARGS));
+            assertEquals(expected, MtxStringUtil.logMapFill(TEST_STR, TEST_ARGS));
         }
 
         @Test
         public void testLogMapFill_mismatchedFormat() {
             Map<String, String> expected = Map.of("k1", "v1", "k2", "v2", "k3", "v3", "k4", "v4");
-            assertStringMapEquals(expected, MtxStringUtil.logMapFill(TEST_STR + ", k5=v5=i5", TEST_ARGS));
-        }
-
-        private void assertStringMapEquals(Map<String, String> expected, Map<String, String> actual) {
-            assertEquals(expected.size(), actual.size());
-            for (Map.Entry<String, String> entry : expected.entrySet()) {
-                assertEquals(expected.get(entry.getKey()), actual.get(entry.getKey()));
-            }
+            assertEquals(expected, MtxStringUtil.logMapFill(TEST_STR + ", k5=v5=i5", TEST_ARGS));
         }
     }
 }
