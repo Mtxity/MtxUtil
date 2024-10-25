@@ -102,4 +102,12 @@ public class MtxTypeBoundMap extends HashMap<String, Object> {
             throw new WrongMethodTypeException("Value for key '" + key + "' is not a map");
         }
     }
+
+    public <T> T get(String key, Class<T> clazz) {
+        if (super.get(key) == null) {
+            return null;
+        }
+
+        return (T) super.get(key);
+    }
 }

@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.map;
 
+import com.edavalos.mtx.util.string.MtxLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxTypeBoundMapTest {
+    private final MtxLogger mtxLogger = new MtxLogger();
     private MtxTypeBoundMap mtxTypeBoundMap;
 
     @BeforeEach
@@ -27,6 +29,8 @@ public class MtxTypeBoundMapTest {
         mtxTypeBoundMap.put("char", 'Y');
         mtxTypeBoundMap.put("list", List.of(1, 2, 3));
         mtxTypeBoundMap.put("map", Map.of(1, 2));
+
+        mtxTypeBoundMap.put("logger", mtxLogger);
     }
 
     @Test
@@ -83,6 +87,19 @@ public class MtxTypeBoundMapTest {
         assertNull(mtxTypeBoundMap.getMap("unknown"));
         assertEquals(Map.of(1, 2), mtxTypeBoundMap.getMap("map"));
         testWrongMethodType("string", () -> mtxTypeBoundMap.getMap("string"), "map");
+    }
+
+    @Test
+    public void testGet() {
+        assertNull(mtxTypeBoundMap.get("unknown", MtxLogger.class));
+        assertEquals(mtxLogger, mtxTypeBoundMap.get("logger", MtxLogger.class));
+
+        MtxLogger logger = mtxTypeBoundMap.get("logger", MtxLogger.class);
+        assertEquals(MtxLogger.class, logger.getClass());
+
+        assertThrows(ClassCastException.class, () -> {
+            MtxLogger notLogger = mtxTypeBoundMap.get("string", MtxLogger.class);
+        });
     }
 
     private void testWrongMethodType(String key, Executable executable, String typeName) {
