@@ -2,6 +2,8 @@ package com.edavalos.mtx.util.map;
 
 import java.lang.invoke.WrongMethodTypeException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MtxTypeBoundMap extends HashMap<String, Object> {
 
@@ -74,6 +76,30 @@ public class MtxTypeBoundMap extends HashMap<String, Object> {
             return (Character) super.get(key);
         } catch (ClassCastException cce) {
             throw new WrongMethodTypeException("Value for key '" + key + "' is not a character");
+        }
+    }
+
+    public List<?> getList(String key) {
+        if (super.get(key) == null) {
+            return null;
+        }
+
+        try {
+            return (List<?>) super.get(key);
+        } catch (ClassCastException cce) {
+            throw new WrongMethodTypeException("Value for key '" + key + "' is not a list");
+        }
+    }
+
+    public Map<?, ?> getMap(String key) {
+        if (super.get(key) == null) {
+            return null;
+        }
+
+        try {
+            return (Map<?, ?>) super.get(key);
+        } catch (ClassCastException cce) {
+            throw new WrongMethodTypeException("Value for key '" + key + "' is not a map");
         }
     }
 }
