@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
 import java.lang.invoke.WrongMethodTypeException;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -23,6 +25,8 @@ public class MtxTypeBoundMapTest {
         mtxTypeBoundMap.put("double", 5.5);
         mtxTypeBoundMap.put("long", 640L);
         mtxTypeBoundMap.put("char", 'Y');
+        mtxTypeBoundMap.put("list", List.of(1, 2, 3));
+        mtxTypeBoundMap.put("map", Map.of(1, 2));
     }
 
     @Test
@@ -65,6 +69,20 @@ public class MtxTypeBoundMapTest {
         assertNull(mtxTypeBoundMap.getCharacter("unknown"));
         assertEquals('Y', mtxTypeBoundMap.getCharacter("char"));
         testWrongMethodType("string", () -> mtxTypeBoundMap.getCharacter("string"), "character");
+    }
+
+    @Test
+    public void testGetList() {
+        assertNull(mtxTypeBoundMap.getList("unknown"));
+        assertEquals(List.of(1, 2, 3), mtxTypeBoundMap.getList("list"));
+        testWrongMethodType("string", () -> mtxTypeBoundMap.getList("string"), "list");
+    }
+
+    @Test
+    public void testGetMap() {
+        assertNull(mtxTypeBoundMap.getMap("unknown"));
+        assertEquals(Map.of(1, 2), mtxTypeBoundMap.getMap("map"));
+        testWrongMethodType("string", () -> mtxTypeBoundMap.getMap("string"), "map");
     }
 
     private void testWrongMethodType(String key, Executable executable, String typeName) {
