@@ -90,6 +90,40 @@ public class MtxCountMapTest {
         assertEquals(mapToJson(expectedSortedMap), mapToJson(sortedMap));
     }
 
+    @Test
+    public void testDecrementCount_newKey() {
+        assertFalse(mtxCountMap.decrementCount("F"));
+
+        expectedSortedMap = new LinkedHashMap<>();
+        expectedSortedMap.put("D", 7);
+        expectedSortedMap.put("A", 3);
+        expectedSortedMap.put("B", 1);
+        expectedSortedMap.put("F", 1);
+        expectedSortedMap.put("E", 0);
+        expectedSortedMap.put("C", -4);
+
+        LinkedHashMap<String, Integer> sortedMap = mtxCountMap.getMapSortedByCount();
+        assertEquals(mapToJson(expectedSortedMap), mapToJson(sortedMap));
+    }
+
+    @Test
+    public void testDecrementCount_existingKey() {
+        int decCount = 5;
+        for (int i = 0; i < decCount; i++) {
+            assertTrue(mtxCountMap.decrementCount("D"));
+        }
+
+        expectedSortedMap = new LinkedHashMap<>();
+        expectedSortedMap.put("A", 3);
+        expectedSortedMap.put("D", 7 - decCount);
+        expectedSortedMap.put("B", 1);
+        expectedSortedMap.put("E", 0);
+        expectedSortedMap.put("C", -4);
+
+        LinkedHashMap<String, Integer> sortedMap = mtxCountMap.getMapSortedByCount();
+        assertEquals(mapToJson(expectedSortedMap), mapToJson(sortedMap));
+    }
+
     private String mapToJson(Map<String, Integer> map) {
         StringBuilder sb = new StringBuilder("{");
         if (map.isEmpty()) {
