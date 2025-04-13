@@ -46,6 +46,16 @@ public class MtxCountMapTest {
         assertEquals("D", mtxCountMap.getMostCommonKey());
     }
 
+    @Test
+    public void testToJson_empty() {
+        assertEquals("{}", new MtxCountMap().toJson());
+    }
+
+    @Test
+    public void testToJson_full() {
+        assertEquals("{\"D\":7,\"A\":3,\"B\":1,\"E\":0,\"C\":-4}", mtxCountMap.toJson());
+    }
+
     private String mapToJson(Map<String, Integer> map) {
         StringBuilder sb = new StringBuilder("{");
         if (map.isEmpty()) {
