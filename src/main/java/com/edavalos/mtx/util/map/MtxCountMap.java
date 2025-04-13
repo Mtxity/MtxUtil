@@ -30,4 +30,18 @@ public class MtxCountMap  extends HashMap<String, Integer> {
         }
         return mostCommonKey;
     }
+
+    public String toJson() {
+        StringBuilder sb = new StringBuilder("{");
+        if (this.isEmpty()) {
+            sb.append("}");
+            return sb.toString();
+        }
+
+        for (Map.Entry<String, Integer> entry : this.getMapSortedByCount().entrySet()) {
+            sb.append("\"").append(entry.getKey()).append("\":").append(entry.getValue()).append(",");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        return sb.append("}").toString();
+    }
 }
