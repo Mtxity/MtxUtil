@@ -31,6 +31,16 @@ public class MtxCountMap  extends HashMap<String, Integer> {
         return mostCommonKey;
     }
 
+    public boolean incrementCount(String key) {
+        boolean addedNew = false;
+        if (!this.containsKey(key)) {
+            this.put(key, 0);
+            addedNew = true;
+        }
+        this.put(key, this.get(key) + 1);
+        return !addedNew;
+    }
+
     public String toJson() {
         StringBuilder sb = new StringBuilder("{");
         if (this.isEmpty()) {
