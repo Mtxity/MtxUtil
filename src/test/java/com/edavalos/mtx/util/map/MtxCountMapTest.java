@@ -7,7 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxCountMapTest {
     private MtxCountMap mtxCountMap;
@@ -54,6 +56,38 @@ public class MtxCountMapTest {
     @Test
     public void testToJson_full() {
         assertEquals("{\"D\":7,\"A\":3,\"B\":1,\"E\":0,\"C\":-4}", mtxCountMap.toJson());
+    }
+
+    @Test
+    public void testIncrementCount_newKey() {
+        assertFalse(mtxCountMap.incrementCount("F"));
+
+        expectedSortedMap = new LinkedHashMap<>();
+        expectedSortedMap.put("D", 7);
+        expectedSortedMap.put("A", 3);
+        expectedSortedMap.put("B", 1);
+        expectedSortedMap.put("F", 1);
+        expectedSortedMap.put("E", 0);
+        expectedSortedMap.put("C", -4);
+
+        LinkedHashMap<String, Integer> sortedMap = mtxCountMap.getMapSortedByCount();
+        assertEquals(mapToJson(expectedSortedMap), mapToJson(sortedMap));
+    }
+
+    @Test
+    public void testIncrementCount_existingKey() {
+        assertTrue(mtxCountMap.incrementCount("E"));
+        assertTrue(mtxCountMap.incrementCount("E"));
+
+        expectedSortedMap = new LinkedHashMap<>();
+        expectedSortedMap.put("D", 7);
+        expectedSortedMap.put("A", 3);
+        expectedSortedMap.put("E", 2);
+        expectedSortedMap.put("B", 1);
+        expectedSortedMap.put("C", -4);
+
+        LinkedHashMap<String, Integer> sortedMap = mtxCountMap.getMapSortedByCount();
+        assertEquals(mapToJson(expectedSortedMap), mapToJson(sortedMap));
     }
 
     private String mapToJson(Map<String, Integer> map) {
