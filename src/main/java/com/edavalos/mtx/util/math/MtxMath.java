@@ -348,6 +348,20 @@ public final class MtxMath {
         return min(val.stream().mapToInt(Integer::intValue).toArray());
     }
 
+    public static double min(double... val) {
+        double smallest = val.length == 0 ? 0 : val[0];
+        for (double i : val) {
+            if (i < smallest) {
+                smallest = i;
+            }
+        }
+        return smallest;
+    }
+
+    public static double minFromList(List<Double> val) {
+        return min(val.stream().mapToDouble(Double::doubleValue).toArray());
+    }
+
     public static int max(int... val) {
         int biggest = val.length == 0 ? 0 : val[0];
         for (int i : val) {
@@ -360,5 +374,19 @@ public final class MtxMath {
 
     public static int max(List<Integer> val) {
         return max(val.stream().mapToInt(Integer::intValue).toArray());
+    }
+
+    public static double max(double... val) {
+        double biggest = val.length == 0 ? 0 : val[0];
+        for (double i : val) {
+            if (i > biggest) {
+                biggest = i;
+            }
+        }
+        return biggest;
+    }
+
+    public static double maxFromList(List<Double> val) {
+        return max(val.stream().mapToDouble(Double::doubleValue).toArray());
     }
 }
