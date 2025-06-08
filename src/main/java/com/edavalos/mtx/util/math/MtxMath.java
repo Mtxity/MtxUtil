@@ -344,6 +344,10 @@ public final class MtxMath {
         return smallest;
     }
 
+    public static int min(List<Integer> val) {
+        return min(val.stream().mapToInt(Integer::intValue).toArray());
+    }
+
     public static int max(int... val) {
         int biggest = val.length == 0 ? 0 : val[0];
         for (int i : val) {
@@ -352,5 +356,9 @@ public final class MtxMath {
             }
         }
         return biggest;
+    }
+
+    public static int max(List<Integer> val) {
+        return max(val.stream().mapToInt(Integer::intValue).toArray());
     }
 }
