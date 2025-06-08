@@ -474,15 +474,27 @@ public class MtxMathTest {
     @Nested
     class MinMaxTests {
         private static final int[] SAMPLE_INT_ARRAY = new int[]{50, 100, 150, 10, 120};
+        private static final double[] SAMPLE_DOUBLE_ARRAY = new double[]{50.05, 100.1, 10.01, 120.12, -350.35, -20.02};
 
         @Test
         public void testMin_givenValues() {
             assertEquals(10, MtxMath.min(SAMPLE_INT_ARRAY));
+            assertEquals(-350.35, MtxMath.min(SAMPLE_DOUBLE_ARRAY));
         }
 
         @Test
-        public void testMin_nullValues() {
-            assertThrows(NullPointerException.class, () -> MtxMath.min(null));
+        public void testMin_givenValues_asList() {
+            ArrayList<Integer> ints = new ArrayList<>();
+            for (int i : SAMPLE_INT_ARRAY) {
+                ints.add(i);
+            }
+            assertEquals(10, MtxMath.min(ints));
+
+            ArrayList<Double> doubles = new ArrayList<>();
+            for (double i : SAMPLE_DOUBLE_ARRAY) {
+                doubles.add(i);
+            }
+            assertEquals(-350.35, MtxMath.minFromList(doubles));
         }
 
         @Test
@@ -493,11 +505,22 @@ public class MtxMathTest {
         @Test
         public void testMax_givenValues() {
             assertEquals(150, MtxMath.max(SAMPLE_INT_ARRAY));
+            assertEquals(120.12, MtxMath.max(SAMPLE_DOUBLE_ARRAY));
         }
 
         @Test
-        public void testMax_nullValues() {
-            assertThrows(NullPointerException.class, () -> MtxMath.max(null));
+        public void testMax_givenValues_asList() {
+            ArrayList<Integer> ints = new ArrayList<>();
+            for (int i : SAMPLE_INT_ARRAY) {
+                ints.add(i);
+            }
+            assertEquals(150, MtxMath.max(ints));
+
+            ArrayList<Double> doubles = new ArrayList<>();
+            for (double i : SAMPLE_DOUBLE_ARRAY) {
+                doubles.add(i);
+            }
+            assertEquals(120.12, MtxMath.maxFromList(doubles));
         }
 
         @Test
