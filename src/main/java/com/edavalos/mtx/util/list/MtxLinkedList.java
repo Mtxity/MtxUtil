@@ -346,4 +346,31 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         }
         return foundDuplicate;
     }
+
+    // @TODO: Add null and size zero checks to this and other instances
+    public void rotateLeft(int times) {
+        for (int i = 0; i < times; i++) {
+            MtxNode currentHead = this.head;
+            while (currentHead.next != null) {
+                currentHead = currentHead.next;
+            }
+            currentHead.next = this.head;
+            currentHead = currentHead.next;
+            this.head = this.head.next;
+            currentHead.next = null;
+        }
+    }
+
+    public void rotateRight(int times) {
+        for (int i = 0; i < times; i++) {
+            MtxNode currentHead = this.head;
+            while (currentHead.next.next != null) {
+                currentHead = currentHead.next;
+            }
+            MtxNode end = currentHead.next;
+            currentHead.next = null;
+            end.next = this.head;
+            this.head = end;
+        }
+    }
 }
