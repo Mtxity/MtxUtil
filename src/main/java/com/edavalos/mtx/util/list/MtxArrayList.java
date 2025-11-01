@@ -295,6 +295,14 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
         reverse(0, size - 1);
     }
 
+    public void rotateRight(int times) {
+        int size = this.content.length;
+        times %= size;
+        reverse(0, size - times - 1);
+        reverse(size - times, size - 1);
+        reverse(0, size - 1);
+    }
+
     private void reverse(int start, int end) {
         while (start < end) {
             Object temp = this.content[start];
