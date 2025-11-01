@@ -524,4 +524,49 @@ public final class MtxArrayListTest {
             assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
         }
     }
+
+    @Nested
+    class RotateRightTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateLeft_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateRight(0);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_oneTime() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateRight(1);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_noOverflow() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateRight(4);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_withOverflow() {
+            Integer[] rotatedArray = {4, 5, 1, 2, 3};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateRight(7);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+    }
 }
