@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -477,5 +478,50 @@ public final class MtxArrayListTest {
         assertTrue(integerMtxArrayList.removeDuplicates());
         assertTrue(integerMtxArrayList.equals(arrayWithoutDuplicates));
         assertFalse(integerMtxArrayList.removeDuplicates());
+    }
+
+    @Nested
+    class RotateLeftTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateLeft_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateLeft(0);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_oneTime() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateLeft(1);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_noOverflow() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateLeft(4);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_withOverflow() {
+            Integer[] rotatedArray = {3, 4, 5, 1, 2};
+
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(TEST_ARRAY);
+            integerMtxArrayList.rotateLeft(7);
+
+            assertArrayEquals(rotatedArray, integerMtxArrayList.toArray());
+        }
     }
 }
