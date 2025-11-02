@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -446,5 +447,129 @@ public final class MtxLinkedListTest {
         assertTrue(integerMtxLinkedList.removeDuplicates());
         assertTrue(integerMtxLinkedList.equals(arrayWithoutDuplicates));
         assertFalse(integerMtxLinkedList.removeDuplicates());
+    }
+
+    @Nested
+    class RotateLeftTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateLeft_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateLeft(0);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_oneTime() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateLeft(1);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_noOverflow() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateLeft(4);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_withOverflow() {
+            Integer[] rotatedArray = {3, 4, 5, 1, 2};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateLeft(7);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_manyTimes() {
+            Integer[][] rotatedArrays = {
+                    {2, 3, 4, 5, 1},
+                    {3, 4, 5, 1, 2},
+                    {4, 5, 1, 2, 3},
+                    {5, 1, 2, 3, 4},
+                    {1, 2, 3, 4, 5}
+            };
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            for (int i = 0; i < rotatedArrays.length * 3; i++) {
+                integerMtxLinkedList.rotateLeft(1);
+                assertArrayEquals(rotatedArrays[i % 5], integerMtxLinkedList.toArray());
+            }
+        }
+    }
+
+    @Nested
+    class RotateRightTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateRight_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateRight(0);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_oneTime() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateRight(1);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_nTimes_noOverflow() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateRight(4);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_nTimes_withOverflow() {
+            Integer[] rotatedArray = {4, 5, 1, 2, 3};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.rotateRight(7);
+
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_manyTimes() {
+            Integer[][] rotatedArrays = {
+                    {5, 1, 2, 3, 4},
+                    {4, 5, 1, 2, 3},
+                    {3, 4, 5, 1, 2},
+                    {2, 3, 4, 5, 1},
+                    {1, 2, 3, 4, 5}
+            };
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            for (int i = 0; i < rotatedArrays.length * 3; i++) {
+                integerMtxLinkedList.rotateRight(1);
+                assertArrayEquals(rotatedArrays[i % 5], integerMtxLinkedList.toArray());
+            }
+        }
     }
 }
