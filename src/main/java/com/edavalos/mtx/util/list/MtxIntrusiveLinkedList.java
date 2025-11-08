@@ -311,21 +311,31 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     // Source: https://www.geeksforgeeks.org/dsa/rotate-doubly-linked-list-n-nodes/
     public void rotateLeft(int times) {
-        MtxItrNode start = this.head;
-        MtxItrNode end = this.head;
-        while (end.next != null) {
-            end = end.next;
-        }
-        end.next = start;
-        start.prev = end;
-        for (int i = 1; i <= times; i++) {
-            start = start.next;
-            end = end.next;
-        }
-        end.next = null;
-        start.prev = null;
+        if (head == null || times <= 0 || size <= 1) return;
 
-        this.head = start;
+        // Normalize x in case it’s greater than size
+        times = times % size;
+        if (times == 0) return;
+
+        // Step 1: Find the x-th node
+        MtxItrNode current = head;
+        for (int i = 1; i < times; i++) {
+            current = current.next;
+        }
+
+        // Step 2: The (x+1)th node becomes the new head
+        MtxItrNode newHead = current.next;
+
+        // Step 3: Update links to break and reconnect the list
+        newHead.prev = null;       // new head has no previous
+        current.next = null;       // old head segment ends here
+
+        tail.next = head;          // link old tail to old head
+        head.prev = tail;          // maintain back link
+
+        // Step 4: Update head and tail
+        head = newHead;
+        tail = current;
     }
 
     private MtxItrNode mergeSort(MtxItrNode start, Comparator<T> comparator) {
