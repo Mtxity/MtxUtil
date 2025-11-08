@@ -311,29 +311,50 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     // Source: https://www.geeksforgeeks.org/dsa/rotate-doubly-linked-list-n-nodes/
     public void rotateLeft(int times) {
-        if (head == null || times <= 0 || size <= 1) return;
+        MtxItrNode head = null;
+        MtxItrNode tail = null;
+        if (head == null || times <= 0 || size <= 1) {
+            return;
+        }
 
-        // Normalize x in case it’s greater than size
+        // ensure tail is valid: if tail is null, find it
+        if (tail == null) {
+            tail = head;
+            while (tail.next != null) {
+                tail = tail.next;
+            }
+        }
+
+        // compute size (if you store size elsewhere, use that)
+        int size = 1;
+        MtxItrNode tmp = head;
+        while (tmp.next != null) {
+            size++;
+            tmp = tmp.next;
+        }
+
+        // normalize x
         times = times % size;
         if (times == 0) return;
 
-        // Step 1: Find the x-th node
+        // find x-th node (1-based indexing)
         MtxItrNode current = head;
         for (int i = 1; i < times; i++) {
             current = current.next;
         }
 
-        // Step 2: The (x+1)th node becomes the new head
+        // new head is (x+1)th node
         MtxItrNode newHead = current.next;
 
-        // Step 3: Update links to break and reconnect the list
-        newHead.prev = null;       // new head has no previous
-        current.next = null;       // old head segment ends here
+        // cut the list between current (x-th) and newHead
+        current.next = null;
+        if (newHead != null) newHead.prev = null;
 
-        tail.next = head;          // link old tail to old head
-        head.prev = tail;          // maintain back link
+        // attach old head segment after old tail
+        tail.next = head;
+        head.prev = tail;
 
-        // Step 4: Update head and tail
+        // update head and tail references
         head = newHead;
         tail = current;
     }
