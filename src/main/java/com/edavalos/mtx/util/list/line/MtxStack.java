@@ -97,12 +97,12 @@ public final class MtxStack<T> {
             throw new IndexOutOfBoundsException(index);
         }
 
-        MtxNode<T> next = this.head;
-        while (index > 0) {
-            next = next.getNext();
-            index --;
+        // Index 0 = top (head). Traverse towards older elements via 'previous'.
+        MtxNode<T> current = this.head;
+        for (int i = 0; i < index; i++) {
+            current = current.getPrevious();
         }
-        return next.getContent();
+        return current.getContent();
     }
 
     public static boolean isValidParenthesis(String s) {
