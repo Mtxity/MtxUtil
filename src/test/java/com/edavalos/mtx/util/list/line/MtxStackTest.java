@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStackTest {
@@ -116,6 +117,55 @@ public final class MtxStackTest {
             mtxStack.pop();
         }
         assertEquals(0, mtxStack.size());
+    }
+
+    @Test
+    public void testContains() {
+        assertFalse(mtxStack.contains(3));
+
+        mtxStack.push(3);
+        assertTrue(mtxStack.contains(3));
+
+        mtxStack.pop();
+        assertFalse(mtxStack.contains(3));
+    }
+
+    @Test
+    public void testIsEmpty() {
+        assertTrue(mtxStack.isEmpty());
+
+        mtxStack.push(3);
+        assertFalse(mtxStack.isEmpty());
+    }
+
+    @Test
+    public void testGet() {
+        // Empty stack → out of bounds
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxStack.get(0));
+
+        // One element
+        mtxStack.push(3);
+        assertEquals(3, mtxStack.get(0));
+
+        // Multiple elements (top-based indexing)
+        mtxStack.push(6);
+        mtxStack.push(9);
+        mtxStack.push(12);
+
+        // Stack (top→bottom): [12, 9, 6, 3]
+        assertEquals(12, mtxStack.get(0));
+        assertEquals(9, mtxStack.get(1));
+        assertEquals(6, mtxStack.get(2));
+        assertEquals(3, mtxStack.get(3));
+
+        // Out of bounds and negative
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxStack.get(4));
+        assertThrows(IndexOutOfBoundsException.class, () -> mtxStack.get(-1));
+
+        // Non-mutating
+        assertEquals(4, mtxStack.size());
+        assertEquals(12, mtxStack.peek());
+
     }
 
     @Nested
