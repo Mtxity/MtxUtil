@@ -611,5 +611,12 @@ public final class MtxArrayListTest {
                 assertArrayEquals(rotatedArrays[i % 5], integerMtxArrayList.toArray());
             }
         }
+
+        @Test
+        public void testRotateRight_oneElement() {
+            MtxArrayList<Integer> integerMtxArrayList = new MtxArrayList<>(new Integer[]{1});
+            integerMtxArrayList.rotateRight(1);
+            assertArrayEquals(new Integer[]{1}, integerMtxArrayList.toArray());
+        }
     }
 }
