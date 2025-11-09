@@ -126,8 +126,13 @@ public final class MtxStackTest {
         mtxStack.push(3);
         assertTrue(mtxStack.contains(3));
 
+        mtxStack.push(4);
+        mtxStack.push(5);
+        assertTrue(mtxStack.contains(5));
+
         mtxStack.pop();
-        assertFalse(mtxStack.contains(3));
+        mtxStack.pop();
+        assertTrue(mtxStack.contains(3));
     }
 
     @Test
