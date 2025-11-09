@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -522,5 +523,143 @@ public final class MtxStringListTest {
 
         assertThrows(IndexOutOfBoundsException.class, () -> stringMtxStringList.subList(-1, 1));
         assertThrows(IndexOutOfBoundsException.class, () -> stringMtxStringList.subList(1, 8));
+    }
+
+    @Nested
+    class RotateLeftTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateLeft_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateLeft(0);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_oneTime() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateLeft(1);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_noOverflow() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateLeft(4);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_nTimes_withOverflow() {
+            Integer[] rotatedArray = {3, 4, 5, 1, 2};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateLeft(7);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateLeft_manyTimes() {
+            Integer[][] rotatedArrays = {
+                    {2, 3, 4, 5, 1},
+                    {3, 4, 5, 1, 2},
+                    {4, 5, 1, 2, 3},
+                    {5, 1, 2, 3, 4},
+                    {1, 2, 3, 4, 5}
+            };
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            for (int i = 0; i < rotatedArrays.length * 3; i++) {
+                integerMtxStringList.rotateLeft(1);
+                assertArrayEquals(rotatedArrays[i % 5], integerMtxStringList.toArray());
+            }
+        }
+
+        @Test
+        public void testRotateLeft_oneElement() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, new Integer[]{1});
+            integerMtxStringList.rotateLeft(1);
+            assertArrayEquals(new Integer[]{1}, integerMtxStringList.toArray());
+        }
+    }
+
+    @Nested
+    class RotateRightTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateRight_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateRight(0);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_oneTime() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateRight(1);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_nTimes_noOverflow() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateRight(4);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_nTimes_withOverflow() {
+            Integer[] rotatedArray = {4, 5, 1, 2, 3};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.rotateRight(7);
+
+            assertArrayEquals(rotatedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_manyTimes() {
+            Integer[][] rotatedArrays = {
+                    {5, 1, 2, 3, 4},
+                    {4, 5, 1, 2, 3},
+                    {3, 4, 5, 1, 2},
+                    {2, 3, 4, 5, 1},
+                    {1, 2, 3, 4, 5}
+            };
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            for (int i = 0; i < rotatedArrays.length * 3; i++) {
+                integerMtxStringList.rotateRight(1);
+                assertArrayEquals(rotatedArrays[i % 5], integerMtxStringList.toArray());
+            }
+        }
+
+        @Test
+        public void testRotateRight_oneElement() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, new Integer[]{1});
+            integerMtxStringList.rotateRight(1);
+            assertArrayEquals(new Integer[]{1}, integerMtxStringList.toArray());
+        }
     }
 }
