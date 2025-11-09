@@ -314,19 +314,17 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
 
         int k = times % n;
         if (k < 0) {
-            k += n; // normalize negative rotations
+            k += n;
         }
         if (k == 0) {
             return;
         }
 
-        // Snapshot current (non-hole) elements in order
         List<T> elements = new ArrayList<>(n);
         for (T e : this) {
             elements.add(e);
         }
 
-        // Rebuild in rotated order (compacts holes)
         this.clear();
         for (int i = 0; i < n; i++) {
             this.add(elements.get((i + k) % n));
@@ -341,22 +339,19 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
 
         int k = times % n;
         if (k < 0) {
-            k += n; // normalize negative rotations
+            k += n;
         }
         if (k == 0) {
             return;
         }
 
-        // Right-rotate by k == left-rotate by n - k
         int left = n - k;
 
-        // Snapshot current (non-hole) elements in order
         List<T> elements = new ArrayList<>(n);
         for (T e : this) {
             elements.add(e);
         }
 
-        // Rebuild in rotated order (compacts holes)
         this.clear();
         for (int i = 0; i < n; i++) {
             this.add(elements.get((i + left) % n));
