@@ -311,52 +311,16 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
     // Source: https://www.geeksforgeeks.org/dsa/rotate-doubly-linked-list-n-nodes/
     public void rotateLeft(int times) {
-        MtxItrNode head = null;
-        MtxItrNode tail = null;
-        if (head == null || times <= 0 || size <= 1) {
-            return;
-        }
-
-        // ensure tail is valid: if tail is null, find it
-        if (tail == null) {
-            tail = head;
-            while (tail.next != null) {
-                tail = tail.next;
+        for (int i = 0; i < times; i++) {
+            MtxItrNode currentHead = this.head;
+            while (currentHead.next != null) {
+                currentHead = currentHead.next;
             }
+            currentHead.next = this.head;
+            currentHead = currentHead.next;
+            this.head = this.head.next;
+            currentHead.next = null;
         }
-
-        // compute size (if you store size elsewhere, use that)
-        int size = 1;
-        MtxItrNode tmp = head;
-        while (tmp.next != null) {
-            size++;
-            tmp = tmp.next;
-        }
-
-        // normalize x
-        times = times % size;
-        if (times == 0) return;
-
-        // find x-th node (1-based indexing)
-        MtxItrNode current = head;
-        for (int i = 1; i < times; i++) {
-            current = current.next;
-        }
-
-        // new head is (x+1)th node
-        MtxItrNode newHead = current.next;
-
-        // cut the list between current (x-th) and newHead
-        current.next = null;
-        if (newHead != null) newHead.prev = null;
-
-        // attach old head segment after old tail
-        tail.next = head;
-        head.prev = tail;
-
-        // update head and tail references
-        head = newHead;
-        tail = current;
     }
 
     private MtxItrNode mergeSort(MtxItrNode start, Comparator<T> comparator) {
