@@ -309,6 +309,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         this.head.prev = tail;
     }
 
+    @Override
     public void rotateLeft(int times) {
         if (size <= 1) {
             return;
@@ -329,6 +330,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         }
     }
 
+    @Override
     public void rotateRight(int times) {
         if (size <= 1) {
             return;

@@ -335,6 +335,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         return this.equalsTo(o);
     }
 
+    @Override
     public void rotateLeft(int times) {
         int n = this.size();
         if (n <= 1) {
@@ -379,6 +380,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.size = n;
     }
 
+    @Override
     public void rotateRight(int times) {
         int n = this.size();
         if (n <= 1) {

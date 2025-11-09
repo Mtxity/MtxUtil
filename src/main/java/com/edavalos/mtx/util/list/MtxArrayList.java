@@ -287,6 +287,7 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
         return false;
     }
 
+    @Override
     public void rotateLeft(int times) {
         int size = this.content.length;
         times %= size;
@@ -295,6 +296,7 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
         reverse(0, size - 1);
     }
 
+    @Override
     public void rotateRight(int times) {
         int size = this.content.length;
         times %= size;

@@ -347,6 +347,7 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         return foundDuplicate;
     }
 
+    @Override
     public void rotateLeft(int times) {
         if (this.size() <= 1) {
             return;
@@ -364,6 +365,7 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    @Override
     public void rotateRight(int times) {
         if (this.size() <= 1) {
             return;

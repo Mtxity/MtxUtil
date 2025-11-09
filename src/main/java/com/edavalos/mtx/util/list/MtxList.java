@@ -221,4 +221,16 @@ public interface MtxList<T> {
      * @throws IndexOutOfBoundsException when the fromIndex or toIndex is larger than the size of this list minus one (or is negative)
      */
     MtxList<T> subList(int fromIndex, int toIndex) throws IndexOutOfBoundsException;
+
+    /**
+     * Shifts this list left by times times
+     * @param times number of times to shift left
+     */
+    void rotateLeft(int times);
+
+    /**
+     * Shifts this list right by times times
+     * @param times number of times to shift right
+     */
+    void rotateRight(int times);
 }

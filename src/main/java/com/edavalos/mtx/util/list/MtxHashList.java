@@ -306,6 +306,7 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         return foundDuplicate;
     }
 
+    @Override
     public void rotateLeft(int times) {
         int n = this.size();
         if (n <= 1) {
@@ -331,6 +332,7 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    @Override
     public void rotateRight(int times) {
         int n = this.size();
         if (n <= 1) {
