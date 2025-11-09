@@ -305,4 +305,35 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         }
         return foundDuplicate;
     }
+
+    public void rotateLeft(int times) {
+        int n = this.size();
+        if (n <= 1) {
+            return;
+        }
+
+        int k = times % n;
+        if (k < 0) {
+            k += n; // normalize negative rotations
+        }
+        if (k == 0) {
+            return;
+        }
+
+        // Snapshot current (non-hole) elements in order
+        List<T> elements = new ArrayList<>(n);
+        for (T e : this) {
+            elements.add(e);
+        }
+
+        // Rebuild in rotated order (compacts holes)
+        this.clear();
+        for (int i = 0; i < n; i++) {
+            this.add(elements.get((i + k) % n));
+        }
+    }
+
+    public void rotateRight(int times) {
+        this.rotateLeft(times);
+    }
 }
