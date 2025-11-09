@@ -329,6 +329,26 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         }
     }
 
+    public void rotateRight(int times) {
+        if (size <= 1) {
+            return;
+        }
+
+        for (int i = 0; i < times; i++) {
+            MtxItrNode first = head.next;
+            MtxItrNode second = first.next;
+            MtxItrNode last = head.prev;
+
+            head.next = second;
+            second.prev = head;
+
+            last.next = first;
+            first.prev = last;
+            first.next = head;
+            head.prev = first;
+        }
+    }
+
     private MtxItrNode mergeSort(MtxItrNode start, Comparator<T> comparator) {
         if (start == null || start.next == this.head || start == this.head) {
             return start;
