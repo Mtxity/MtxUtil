@@ -378,4 +378,51 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.content = sb.toString();
         this.size = n;
     }
+
+    public void rotateRight(int times) {
+        int n = this.size();
+        if (n <= 1) {
+            return;
+        }
+
+        int k = times % n;
+        if (k < 0) {
+            k += n;
+        }
+        if (k == 0) {
+            return;
+        }
+
+        int left = n - k;
+
+        T[] elements = this.toArray();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < n; i++) {
+            if (i != 0) {
+                sb.append(DELIMITER);
+            }
+
+            T element = elements[(i + left) % n];
+            String elementAsString;
+            try {
+                elementAsString = this.mtxStringDecoder.convertToString(element);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(this.classType.getName() + " is not serializable!");
+            }
+
+            if (elementAsString.contains(DELIMITER)) {
+                throw new IllegalArgumentException(
+                        "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
+                        "to be in an element of this MtxList"
+                );
+            }
+
+            sb.append(elementAsString);
+        }
+
+        this.content = sb.toString();
+        this.size = n;
+
+    }
 }
