@@ -11,7 +11,10 @@ import java.util.regex.Pattern;
  * Disclaimer: This implementation of MtxList is purposefully stupid
  * */
 public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
-    @FunctionalInterface
+    private static final String ILLEGAL_DELIMITER_MSG = "A comma followed by a space (', ') is MtxStringList's " +
+                                                        "delimiter and therefore is not allowed to be in an element " +
+                                                        "of this MtxList";
+
     public interface MtxStringDecoder<E> {
         E fromString(String stringRepresentation);
 
@@ -367,10 +370,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
             }
 
             if (elementAsString.contains(DELIMITER)) {
-                throw new IllegalArgumentException(
-                        "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
-                        "to be in an element of this MtxList"
-                );
+                throw new IllegalArgumentException(ILLEGAL_DELIMITER_MSG);
             }
 
             sb.append(elementAsString);
@@ -414,10 +414,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
             }
 
             if (elementAsString.contains(DELIMITER)) {
-                throw new IllegalArgumentException(
-                        "A comma followed by a space (', ') is MtxStringList's delimiter and therefore is not allowed " +
-                        "to be in an element of this MtxList"
-                );
+                throw new IllegalArgumentException(ILLEGAL_DELIMITER_MSG);
             }
 
             sb.append(elementAsString);
