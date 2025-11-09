@@ -26,4 +26,8 @@ public class MtxNode<E> {
     public void setPrevious(MtxNode<E> prev) {
         this.previous = prev;
     }
+
+    public MtxNode<E> getNext() {
+        return this.next;
+    }
 }
