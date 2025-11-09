@@ -3,10 +3,13 @@ package com.edavalos.mtx.util.list.line;
 import com.edavalos.mtx.util.list.MtxArrayList;
 import com.edavalos.mtx.util.list.MtxList;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class MtxStackTest {
     private MtxStack<Integer> mtxStack;
@@ -113,5 +116,33 @@ public final class MtxStackTest {
             mtxStack.pop();
         }
         assertEquals(0, mtxStack.size());
+    }
+
+    @Nested
+    class IsValidParenthesisTests {
+
+        @Test
+        public void testIsValidParenthesis_valid() {
+            final String validParenthesis = "()[]{}<({test}{test2})test3>";
+            assertTrue(MtxStack.isValidParenthesis(validParenthesis));
+        }
+
+        @Test
+        public void testIsValidParenthesis_invalid1() {
+            final String invalidParenthesis = "([)]{(}<({test}{test2})test3(>";
+            assertFalse(MtxStack.isValidParenthesis(invalidParenthesis));
+        }
+
+        @Test
+        public void testIsValidParenthesis_invalid2() {
+            final String invalidParenthesis = "()[]{}<({test}{test2<<})test3>";
+            assertFalse(MtxStack.isValidParenthesis(invalidParenthesis));
+        }
+
+        @Test
+        public void testIsValidParenthesis_invalid3() {
+            final String invalidParenthesis = "()[]{}[<({test}{test2<<})test3>";
+            assertFalse(MtxStack.isValidParenthesis(invalidParenthesis));
+        }
     }
 }
