@@ -1,6 +1,15 @@
 package com.edavalos.mtx.util.list.line;
 
+import java.util.HashMap;
+
 public final class MtxStack<T> {
+    private static final HashMap<Character, Character> PARENTHESIS_PAIRS = new HashMap<>() {{
+        put(')', '(');
+        put('}', '{');
+        put(']', '[');
+        put('>', '<');
+    }};
+
     private MtxNode<T> head;
     private int size;
 
@@ -66,5 +75,33 @@ public final class MtxStack<T> {
 
         string.append('[');
         return string.reverse().toString().replace(", ]", "]");
+    }
+
+    public boolean contains(T element) {
+        MtxNode<T> next = this.head;
+        while (next != null) {
+            if (next.getContent().equals(element)) {
+                return true;
+            }
+            next = next.getNext();
+        }
+        return false;
+    }
+
+    public boolean isEmpty() {
+        return this.size == 0;
+    }
+
+    public T get(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException(index);
+        }
+
+        MtxNode<T> next = this.head;
+        while (index > 0) {
+            next = next.getNext();
+            index --;
+        }
+        return next.getContent();
     }
 }
