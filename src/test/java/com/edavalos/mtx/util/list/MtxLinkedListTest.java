@@ -509,6 +509,14 @@ public final class MtxLinkedListTest {
                 assertArrayEquals(rotatedArrays[i % 5], integerMtxLinkedList.toArray());
             }
         }
+
+        @Test
+        public void testRotateLeft_oneElement() {
+            Integer[] rotatedArray = {1};
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(new Integer[]{1});
+            integerMtxLinkedList.rotateLeft(1);
+            assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
+        }
     }
 
     @Nested

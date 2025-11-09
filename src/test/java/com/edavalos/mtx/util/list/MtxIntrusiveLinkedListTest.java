@@ -509,5 +509,12 @@ public final class MtxIntrusiveLinkedListTest {
                 assertArrayEquals(rotatedArrays[i % 5], integerMtxIntrusiveLinkedList.toArray());
             }
         }
+
+        @Test
+        public void testRotateLeft_oneElement() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(new Integer[]{1});
+            integerMtxIntrusiveLinkedList.rotateLeft(1);
+            assertArrayEquals(new Integer[]{1}, integerMtxIntrusiveLinkedList.toArray());
+        }
     }
 }
