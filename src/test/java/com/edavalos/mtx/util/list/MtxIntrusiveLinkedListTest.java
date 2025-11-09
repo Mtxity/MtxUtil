@@ -517,4 +517,73 @@ public final class MtxIntrusiveLinkedListTest {
             assertArrayEquals(new Integer[]{1}, integerMtxIntrusiveLinkedList.toArray());
         }
     }
+
+    @Nested
+    class RotateRightTests {
+        private static final Integer[] TEST_ARRAY = {1, 2, 3, 4, 5};
+
+        @Test
+        public void testRotateRight_zeroTimes() {
+            Integer[] rotatedArray = {1, 2, 3, 4, 5};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.rotateRight(0);
+
+            assertArrayEquals(rotatedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_oneTime() {
+            Integer[] rotatedArray = {5, 1, 2, 3, 4};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.rotateRight(1);
+
+            assertArrayEquals(rotatedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_nTimes_noOverflow() {
+            Integer[] rotatedArray = {2, 3, 4, 5, 1};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.rotateRight(4);
+
+            assertArrayEquals(rotatedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void dtestRotateRight_nTimes_withOverflow() {
+            Integer[] rotatedArray = {4, 5, 1, 2, 3};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.rotateRight(7);
+
+            assertArrayEquals(rotatedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void testRotateRight_manyTimes() {
+            Integer[][] rotatedArrays = {
+                    {5, 1, 2, 3, 4},
+                    {4, 5, 1, 2, 3},
+                    {3, 4, 5, 1, 2},
+                    {2, 3, 4, 5, 1},
+                    {1, 2, 3, 4, 5}
+            };
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            for (int i = 0; i < rotatedArrays.length * 3; i++) {
+                integerMtxIntrusiveLinkedList.rotateRight(1);
+                assertArrayEquals(rotatedArrays[i % 5], integerMtxIntrusiveLinkedList.toArray());
+            }
+        }
+
+        @Test
+        public void testRotateRight_oneElement() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(new Integer[]{1});
+            integerMtxIntrusiveLinkedList.rotateRight(1);
+            assertArrayEquals(new Integer[]{1}, integerMtxIntrusiveLinkedList.toArray());
+        }
+    }
 }
