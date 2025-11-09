@@ -104,4 +104,21 @@ public final class MtxStack<T> {
         }
         return next.getContent();
     }
+
+    public static boolean isValidParenthesis(String s) {
+        MtxStack<Character> parStack = new MtxStack<>();
+        for (char c : s.toCharArray()) {
+            if (PARENTHESIS_PAIRS.containsKey(c)) {
+                if (parStack.isEmpty()) {
+                    return false;
+                }
+                if (parStack.pop() != PARENTHESIS_PAIRS.get(c)) {
+                    return false;
+                }
+            } else if (parStack.PARENTHESIS_PAIRS.containsValue(c)) {
+                parStack.push(c);
+            }
+        }
+        return parStack.isEmpty();
+    }
 }
