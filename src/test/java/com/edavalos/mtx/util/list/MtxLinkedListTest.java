@@ -588,4 +588,38 @@ public final class MtxLinkedListTest {
             assertArrayEquals(rotatedArray, integerMtxLinkedList.toArray());
         }
     }
+
+    @Nested
+    class ReverseTests {
+        private static final Integer[] TEST_ARRAY = {30, 60, 90, 120, 150};
+
+        @Test
+        public void testReverse() {
+            Integer[] reversedArray = {150, 120, 90, 60, 30};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testReverse_emptyList() {
+            Integer[] reversedArray = {};
+
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(reversedArray);
+            integerMtxLinkedList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxLinkedList.toArray());
+        }
+
+        @Test
+        public void testReverse_unreverse() {
+            MtxLinkedList<Integer> integerMtxLinkedList = new MtxLinkedList<>(TEST_ARRAY);
+            integerMtxLinkedList.reverse();
+            integerMtxLinkedList.reverse();
+
+            assertArrayEquals(integerMtxLinkedList.toArray(), integerMtxLinkedList.toArray());
+        }
+    }
 }
