@@ -586,4 +586,38 @@ public final class MtxIntrusiveLinkedListTest {
             assertArrayEquals(new Integer[]{1}, integerMtxIntrusiveLinkedList.toArray());
         }
     }
+
+    @Nested
+    class ReverseTests {
+        private static final Integer[] TEST_ARRAY = {30, 60, 90, 120, 150};
+
+        @Test
+        public void testReverse() {
+            Integer[] reversedArray = {150, 120, 90, 60, 30};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void testReverse_emptyList() {
+            Integer[] reversedArray = {};
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(reversedArray);
+            integerMtxIntrusiveLinkedList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxIntrusiveLinkedList.toArray());
+        }
+
+        @Test
+        public void testReverse_unreverse() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(TEST_ARRAY);
+            integerMtxIntrusiveLinkedList.reverse();
+            integerMtxIntrusiveLinkedList.reverse();
+
+            assertArrayEquals(TEST_ARRAY, integerMtxIntrusiveLinkedList.toArray());
+        }
+    }
 }
