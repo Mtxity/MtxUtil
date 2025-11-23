@@ -662,4 +662,63 @@ public final class MtxStringListTest {
             assertArrayEquals(new Integer[]{1}, integerMtxStringList.toArray());
         }
     }
+
+    @Nested
+    class ReverseTests {
+        private static final Integer[] TEST_ARRAY = {30, 60, 90, 120, 150};
+
+        @Test
+        public void testReverse() {
+            Integer[] reversedArray = {150, 120, 90, 60, 30};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testReverse_emptyList() {
+            Integer[] reversedArray = {};
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, reversedArray);
+            integerMtxStringList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testReverse_unreverse() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, TEST_ARRAY);
+            integerMtxStringList.reverse();
+            integerMtxStringList.reverse();
+
+            assertArrayEquals(TEST_ARRAY, integerMtxStringList.toArray());
+        }
+
+        @Test
+        public void testReverse_illegalDelimiter() {
+            final boolean[] makeIllegal = {false};
+            MtxStringList.MtxStringDecoder<Integer> togglingDecoder = new MtxStringList.MtxStringDecoder<>() {
+                @Override
+                public Integer fromString(String stringRepresentation) {
+                    return Integer.valueOf(stringRepresentation);
+                }
+
+                @Override
+                public String convertToString(Integer element) {
+                    if (makeIllegal[0]) {
+                        return element + ", " + "X";
+                    }
+                    return element.toString();
+                }
+            };
+
+            Integer[] contents = {1, 2, 3};
+            MtxStringList<Integer> list = new MtxStringList<>(togglingDecoder, Integer.class, contents);
+
+            makeIllegal[0] = true;
+            assertThrows(IllegalArgumentException.class, list::reverse);
+        }
+    }
 }
