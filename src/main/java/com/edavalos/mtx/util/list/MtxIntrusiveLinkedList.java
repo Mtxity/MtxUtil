@@ -402,4 +402,19 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         }
         return slow;
     }
+
+    public void reverse() {
+        if (this.size <= 1) {
+            return;
+        }
+
+        MtxItrNode current = this.head;
+        do {
+            MtxItrNode tmp = current.next;
+            current.next = current.prev;
+            current.prev = tmp;
+
+            current = current.prev;
+        } while (current != this.head);
+    }
 }
