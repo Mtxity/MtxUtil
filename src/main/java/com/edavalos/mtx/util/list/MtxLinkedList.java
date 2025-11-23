@@ -382,4 +382,21 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
             this.head = end;
         }
     }
+
+    public void reverse() {
+        this.head = this.reverseList(this.head);
+    }
+
+    private MtxNode reverseList(MtxNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        MtxNode newHead = reverseList(head.next);
+
+        head.next.next = head;
+        head.next = null;
+
+        return newHead;
+    }
 }
