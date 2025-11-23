@@ -619,7 +619,7 @@ public final class MtxLinkedListTest {
             integerMtxLinkedList.reverse();
             integerMtxLinkedList.reverse();
 
-            assertArrayEquals(integerMtxLinkedList.toArray(), integerMtxLinkedList.toArray());
+            assertArrayEquals(TEST_ARRAY, integerMtxLinkedList.toArray());
         }
     }
 }
