@@ -358,6 +358,23 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         for (int i = 0; i < n; i++) {
             this.add(elements.get((i + left) % n));
         }
-
     }
+
+    public void reverse() {
+        int n = this.size();
+        if (n <= 1) {
+            return;
+        }
+
+        List<T> elements = new ArrayList<>(n);
+        for (T e : this) {
+            elements.add(e);
+        }
+
+        this.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            this.add(elements.get(i));
+        }
+    }
+
 }
