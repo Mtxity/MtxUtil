@@ -314,4 +314,11 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
             end --;
         }
     }
+
+    public void reverse() {
+        if (this.size() <= 1) {
+            return;
+        }
+        this.reverse(0, this.size() - 1);
+    }
 }
