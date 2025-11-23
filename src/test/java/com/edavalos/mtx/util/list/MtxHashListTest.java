@@ -646,4 +646,38 @@ public final class MtxHashListTest {
             assertArrayEquals(new Integer[]{1}, integerMtxHashList.toArray());
         }
     }
+
+    @Nested
+    class ReverseTests {
+        private static final Integer[] TEST_ARRAY = {30, 60, 90, 120, 150};
+
+        @Test
+        public void testReverse() {
+            Integer[] reversedArray = {150, 120, 90, 60, 30};
+
+            MtxHashList<Integer> integerMtxHashList = new MtxHashList<>(TEST_ARRAY);
+            integerMtxHashList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxHashList.toArray());
+        }
+
+        @Test
+        public void testReverse_emptyList() {
+            Integer[] reversedArray = {};
+
+            MtxHashList<Integer> integerMtxHashList = new MtxHashList<>(reversedArray);
+            integerMtxHashList.reverse();
+
+            assertArrayEquals(reversedArray, integerMtxHashList.toArray());
+        }
+
+        @Test
+        public void testReverse_unreverse() {
+            MtxHashList<Integer> integerMtxHashList = new MtxHashList<>(TEST_ARRAY);
+            integerMtxHashList.reverse();
+            integerMtxHashList.reverse();
+
+            assertArrayEquals(TEST_ARRAY, integerMtxHashList.toArray());
+        }
+    }
 }
