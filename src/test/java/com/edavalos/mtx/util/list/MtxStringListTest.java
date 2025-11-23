@@ -720,5 +720,34 @@ public final class MtxStringListTest {
             makeIllegal[0] = true;
             assertThrows(IllegalArgumentException.class, list::reverse);
         }
+
+        @Test
+        public void testReverse_convertToStringError() {
+            class TestEncodingException extends RuntimeException {
+                TestEncodingException(String message) { super(message); }
+            }
+
+            java.util.concurrent.atomic.AtomicBoolean throwNow = new java.util.concurrent.atomic.AtomicBoolean(false);
+            MtxStringList.MtxStringDecoder<Integer> togglingDecoder = new MtxStringList.MtxStringDecoder<>() {
+                @Override
+                public Integer fromString(String stringRepresentation) {
+                    return Integer.valueOf(stringRepresentation);
+                }
+
+                @Override
+                public String convertToString(Integer element) {
+                    if (throwNow.get()) {
+                        throw new TestEncodingException("Serialization failed");
+                    }
+                    return element.toString();
+                }
+            };
+
+            Integer[] contents = {1, 2, 3};
+            MtxStringList<Integer> list = new MtxStringList<>(togglingDecoder, Integer.class, contents);
+
+            throwNow.set(true);
+            assertThrows(IllegalArgumentException.class, list::reverse);
+        }
     }
 }
