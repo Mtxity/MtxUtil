@@ -422,6 +422,38 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
 
         this.content = sb.toString();
         this.size = n;
+    }
 
+    public void reverse() {
+        int n = this.size();
+        if (n <= 1) {
+            return;
+        }
+
+        T[] elements = this.toArray();
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = n - 1; i >= 0; i--) {
+            if (i != n - 1) {
+                sb.append(DELIMITER);
+            }
+
+            T element = elements[i];
+            String elementAsString;
+            try {
+                elementAsString = this.mtxStringDecoder.convertToString(element);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(this.classType.getName() + " is not serializable!");
+            }
+
+            if (elementAsString.contains(DELIMITER)) {
+                throw new IllegalArgumentException(ILLEGAL_DELIMITER_MSG);
+            }
+
+            sb.append(elementAsString);
+        }
+
+        this.content = sb.toString();
+        this.size = n;
     }
 }
