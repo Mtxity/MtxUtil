@@ -315,6 +315,7 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    @Override
     public void reverse() {
         if (this.size() <= 1) {
             return;

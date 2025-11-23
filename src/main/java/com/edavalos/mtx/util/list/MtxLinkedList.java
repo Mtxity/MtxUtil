@@ -383,6 +383,7 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    @Override
     public void reverse() {
         this.head = this.reverseList(this.head);
     }

@@ -360,6 +360,7 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    @Override
     public void reverse() {
         int n = this.size();
         if (n <= 1) {

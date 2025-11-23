@@ -233,4 +233,6 @@ public interface MtxList<T> {
      * @param times number of times to shift right
      */
     void rotateRight(int times);
+
+    void reverse();
 }
