@@ -1,5 +1,7 @@
 package com.edavalos.mtx.util.list;
 
+import com.edavalos.mtx.util.list.line.MtxStack;
+
 import java.util.Comparator;
 import java.util.Iterator;
 
@@ -399,5 +401,34 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         head.next = null;
 
         return newHead;
+    }
+
+    public boolean isPalindrome() {
+        return isPalindrome(this.head);
+    }
+
+    private boolean isPalindrome(MtxNode head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+
+        MtxStack<T> vals = new MtxStack<>();
+        MtxNode slow = head;
+        MtxNode fast = head;
+        while (fast != null && fast.next != null) {
+            vals.push(slow.content);
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        if (fast != null) {
+            slow = slow.next;
+        }
+        while (slow != null) {
+            if (slow.content != vals.pop()) {
+                return false;
+            }
+            slow = slow.next;
+        }
+        return true;
     }
 }
