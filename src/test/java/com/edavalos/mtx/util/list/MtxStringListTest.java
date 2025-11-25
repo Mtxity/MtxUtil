@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -727,7 +728,7 @@ public final class MtxStringListTest {
                 TestEncodingException(String message) { super(message); }
             }
 
-            java.util.concurrent.atomic.AtomicBoolean throwNow = new java.util.concurrent.atomic.AtomicBoolean(false);
+            AtomicBoolean throwNow = new AtomicBoolean(false);
             MtxStringList.MtxStringDecoder<Integer> togglingDecoder = new MtxStringList.MtxStringDecoder<>() {
                 @Override
                 public Integer fromString(String stringRepresentation) {
