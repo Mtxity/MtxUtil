@@ -234,5 +234,10 @@ public interface MtxList<T> {
      */
     void rotateRight(int times);
 
+    /**
+     * Reverses the order of the elements in this list.
+     * This method modifies the original list so that the first element becomes the last, the second becomes the
+     * second to last, and so on, with all elements reversed in place.
+     */
     void reverse();
 }
