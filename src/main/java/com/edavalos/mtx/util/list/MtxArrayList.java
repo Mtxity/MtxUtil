@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
     private static final int DEFAULT_CAPACITY = 10;
@@ -321,5 +322,23 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
             return;
         }
         this.reverse(0, this.size() - 1);
+    }
+
+    public boolean isPalindrome() {
+        int i = 0;
+        int j = this.size() - 1;
+
+        while (i < j) {
+            Object left = this.content[i];
+            Object right = this.content[j];
+
+            if (!Objects.equals(left, right)) {
+                return false;
+            }
+
+            i++;
+            j--;
+        }
+        return true;
     }
 }
