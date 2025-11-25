@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.list;
 
+import com.edavalos.mtx.util.list.line.MtxStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -618,6 +620,65 @@ public final class MtxIntrusiveLinkedListTest {
             integerMtxIntrusiveLinkedList.reverse();
 
             assertArrayEquals(TEST_ARRAY, integerMtxIntrusiveLinkedList.toArray());
+        }
+    }
+
+    @Nested
+    class IsPalindromeTests {
+        private static final Integer[] YES_PALINDROME = {30, 60, 90, 60, 30};
+        private static final Integer[] NOT_PALINDROME = {30, 60, 90, 120, 150};
+        private static final Integer[] EMPTY = {};
+        private static final int LARGE_TEST_SIZE = 300;
+
+        @Test
+        public void testIsPalindrome_yes_short() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(YES_PALINDROME);
+            assertTrue(integerMtxIntrusiveLinkedList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_long() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE + 1];
+            for (int i = 0; i <= LARGE_TEST_SIZE / 2; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+            for (int i = LARGE_TEST_SIZE / 2; i <= LARGE_TEST_SIZE; i++) {
+                testArray[i] = values.pop();
+            }
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(testArray);
+            assertTrue(integerMtxIntrusiveLinkedList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_empty() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(EMPTY);
+            assertTrue(integerMtxIntrusiveLinkedList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_no_short() {
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(NOT_PALINDROME);
+            assertFalse(integerMtxIntrusiveLinkedList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_no_long() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE];
+            for (int i = 0; i < LARGE_TEST_SIZE; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(testArray);
+            assertFalse(integerMtxIntrusiveLinkedList.isPalindrome());
         }
     }
 }
