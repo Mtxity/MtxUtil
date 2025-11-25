@@ -119,12 +119,12 @@ public final class MtxArrayListTest {
 
         @Test
         public void testRemove_emptyList() {
-            MtxLinkedList<Object> mtxLinkedList_empty = new MtxLinkedList<>();
+            MtxArrayList<Object> MtxArrayList_empty = new MtxArrayList<>();
 
-            assertEquals(0, mtxLinkedList_empty.size());
+            assertEquals(0, MtxArrayList_empty.size());
             String sample = "Sample Nonexistent Object";
 
-            assertFalse(mtxLinkedList_empty.remove(sample));
+            assertFalse(MtxArrayList_empty.remove(sample));
         }
 
         @Test
@@ -210,8 +210,8 @@ public final class MtxArrayListTest {
         String[] sampleElements = {"One", "Two", "Three"};
         String expectedElements = "[One, Two, Three]";
 
-        MtxArrayList<String> customMtxLinkedList = new MtxArrayList<>(sampleElements);
-        assertEquals(expectedElements, customMtxLinkedList.toString());
+        MtxArrayList<String> customMtxArrayList = new MtxArrayList<>(sampleElements);
+        assertEquals(expectedElements, customMtxArrayList.toString());
     }
 
     @Test
