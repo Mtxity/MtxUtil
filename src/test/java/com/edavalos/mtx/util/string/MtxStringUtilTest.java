@@ -1,10 +1,13 @@
 package com.edavalos.mtx.util.string;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -1348,6 +1351,51 @@ public final class MtxStringUtilTest {
                     () -> MtxStringUtil.logFill(TEST_STR, "a", "b", "c", "d", "e")
             );
             assertEquals("Argument count mismatch", e.getMessage());
+        }
+
+        @Nested
+        class TestLogFillVariableReplacement {
+            private static MtxStringWrapper customTestReplVar;
+            private static String customTestStr;
+
+            @BeforeEach
+            public void setUp() {
+                customTestReplVar = new MtxStringWrapper(UUID.randomUUID().toString());
+                customTestStr = TEST_STR.replace("{}", customTestReplVar.toString());
+            }
+
+            @Test
+            public void testLogFill_allTemplatesFilled() {
+                String expected = "check a at b by c for d";
+                assertEquals(expected, MtxStringUtil.logFill(customTestReplVar, customTestStr, "a", "b", "c", "d"));
+            }
+
+            @Test
+            public void testLogFill_someTemplatesFilled() {
+                IllegalArgumentException e = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxStringUtil.logFill(customTestReplVar, customTestStr, "a", "b")
+                );
+                assertEquals("Argument count mismatch", e.getMessage());
+            }
+
+            @Test
+            public void testLogFill_noTemplatesFilled() {
+                IllegalArgumentException e = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxStringUtil.logFill(customTestReplVar, customTestStr)
+                );
+                assertEquals("Argument count mismatch", e.getMessage());
+            }
+
+            @Test
+            public void testLogFill_tooManyTemplatesFilled() {
+                IllegalArgumentException e = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxStringUtil.logFill(customTestReplVar, customTestStr, "a", "b", "c", "d", "e")
+                );
+                assertEquals("Argument count mismatch", e.getMessage());
+            }
         }
     }
 
