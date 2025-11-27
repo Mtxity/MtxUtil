@@ -324,6 +324,7 @@ public final class MtxArrayList<T> implements MtxList<T>, Iterable<T> {
         this.reverse(0, this.size() - 1);
     }
 
+    @Override
     public boolean isPalindrome() {
         int i = 0;
         int j = this.size() - 1;

@@ -420,6 +420,7 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
         } while (current != this.head);
     }
 
+    @Override
     public boolean isPalindrome() {
         if (this.size() <= 1) {
             return true;

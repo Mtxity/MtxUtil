@@ -240,4 +240,12 @@ public interface MtxList<T> {
      * second to last, and so on, with all elements reversed in place.
      */
     void reverse();
+
+    /**
+     * Checks if the elements in this list form a palindrome.
+     * A palindrome is a sequence that reads the same backward as forward.
+     *
+     * @return true if the list is a palindrome, false otherwise
+     */
+    boolean isPalindrome();
 }

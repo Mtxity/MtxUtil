@@ -458,6 +458,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.size = n;
     }
 
+    @Override
     public boolean isPalindrome() {
         int n = this.size();
         if (n <= 1) {

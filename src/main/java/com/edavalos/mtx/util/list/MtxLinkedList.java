@@ -403,6 +403,7 @@ public final class MtxLinkedList<T> implements MtxList<T>, Iterable<T> {
         return newHead;
     }
 
+    @Override
     public boolean isPalindrome() {
         return isPalindrome(this.head);
     }
