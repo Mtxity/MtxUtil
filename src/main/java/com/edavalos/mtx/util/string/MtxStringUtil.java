@@ -279,6 +279,30 @@ public final class MtxStringUtil {
         return true;
     }
 
+    public static boolean isPalindrome(String string, String delimiter) {
+        if (isEmpty(string) || isEmpty(delimiter)) {
+            return true;
+        }
+
+        String[] splitString = string.split(Pattern.quote(delimiter));
+
+        if (splitString.length <= 1) {
+            return true;
+        }
+
+        int left = 0;
+        int right = splitString.length - 1;
+        while (left < right) {
+            if (!splitString[left].equals(splitString[right])) {
+                return false;
+            }
+
+            left ++;
+            right --;
+        }
+        return true;
+    }
+
     public static char mostCommonChar(String string) {
         if (string == null || string.length() == 0) {
             return '\u0000';
