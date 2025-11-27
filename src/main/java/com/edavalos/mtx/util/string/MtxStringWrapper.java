@@ -29,7 +29,12 @@ public class MtxStringWrapper {
         this.wrappedString += toAdd;
     }
 
-    // @TODO: Add remove()
+    public boolean remove(String toRemove) {
+        String newStr = this.wrappedString.replace(toRemove, "");
+        boolean removed = !newStr.equals(this.wrappedString);
+        this.wrappedString = newStr;
+        return removed;
+    }
 
     public boolean clear() {
         if (this.wrappedString.isEmpty()) {
