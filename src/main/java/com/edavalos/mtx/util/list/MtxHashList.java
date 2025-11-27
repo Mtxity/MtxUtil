@@ -378,4 +378,32 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         }
     }
 
+    public boolean isPalindrome() {
+        int n = this.size();
+        if (n <= 1) {
+            return true;
+        }
+
+        List<T> elements = new ArrayList<>(n);
+        for (int key : new TreeSet<>(this.content.keySet())) {
+            if (this.holes.contains(key)) {
+                continue;
+            }
+            elements.add(this.content.get(key));
+        }
+
+        int i = 0;
+        int j = n - 1;
+        while (i < j) {
+            T left = elements.get(i);
+            T right = elements.get(j);
+            if (!java.util.Objects.equals(left, right)) {
+                return false;
+            }
+
+            i ++;
+            j --;
+        }
+        return true;
+    }
 }
