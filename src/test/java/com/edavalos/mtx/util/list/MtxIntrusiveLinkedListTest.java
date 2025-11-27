@@ -637,7 +637,7 @@ public final class MtxIntrusiveLinkedListTest {
         }
 
         @Test
-        public void testIsPalindrome_yes_long() {
+        public void testIsPalindrome_yes_long_odd() {
             Random random = new Random();
             MtxStack<Integer> values = new MtxStack<>();
             Integer[] testArray = new Integer[LARGE_TEST_SIZE + 1];
@@ -647,6 +647,24 @@ public final class MtxIntrusiveLinkedListTest {
                 testArray[i] = randomInt;
             }
             for (int i = LARGE_TEST_SIZE / 2; i <= LARGE_TEST_SIZE; i++) {
+                testArray[i] = values.pop();
+            }
+
+            MtxIntrusiveLinkedList<Integer> integerMtxIntrusiveLinkedList = new MtxIntrusiveLinkedList<>(testArray);
+            assertTrue(integerMtxIntrusiveLinkedList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_long_even() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE];
+            for (int i = 0; i <= LARGE_TEST_SIZE / 2 - 1; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+            for (int i = LARGE_TEST_SIZE / 2; i < LARGE_TEST_SIZE; i++) {
                 testArray[i] = values.pop();
             }
 
