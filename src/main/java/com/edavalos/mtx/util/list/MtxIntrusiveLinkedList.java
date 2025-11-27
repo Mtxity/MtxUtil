@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.list;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 
 public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> {
@@ -417,5 +418,28 @@ public final class MtxIntrusiveLinkedList<T> implements MtxList<T>, Iterable<T> 
 
             current = current.prev;
         } while (current != this.head);
+    }
+
+    public boolean isPalindrome() {
+        if (this.size() <= 1) {
+            return true;
+        }
+
+        MtxItrNode left = this.head.next;
+        MtxItrNode right = this.head.prev;
+
+        while (left != right && left.prev != right) {
+            T leftData = ((MtxItrData<T>) left).data;
+            T rightData = ((MtxItrData<T>) right).data;
+
+            if (!Objects.equals(leftData, rightData)) {
+                return false;
+            }
+
+            left = left.next;
+            right = right.prev;
+        }
+
+        return true;
     }
 }
