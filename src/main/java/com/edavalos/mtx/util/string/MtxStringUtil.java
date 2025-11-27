@@ -18,6 +18,7 @@ public final class MtxStringUtil {
     public static final String COMMA = ",";
     public static final char SEPARATOR_CHAR = 'ҁ';
     public static final String SPACE_QUOTED_PATTERN = Pattern.quote(" ");
+    public static final String DEFAULT_TESTLOG_VARIABLE_REPLACEMENT = "{}";
 
     protected static Map<String, String> leetSpeakMap = null;
 
@@ -641,8 +642,7 @@ public final class MtxStringUtil {
     }
 
     public static String logFill(String template, String... args) {
-        // @TODO: Make a const to store '{}' template
-        if (countOccurrences(template, "{}") != args.length) {
+        if (countOccurrences(template, DEFAULT_TESTLOG_VARIABLE_REPLACEMENT) != args.length) {
             throw new IllegalArgumentException("Argument count mismatch");
         }
 
