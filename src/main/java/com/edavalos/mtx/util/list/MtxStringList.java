@@ -457,4 +457,43 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         this.content = sb.toString();
         this.size = n;
     }
+
+    public boolean isPalindrome() {
+        int n = this.size();
+        if (n <= 1) {
+            return true;
+        }
+
+        String[] parts = new String[n];
+        int delimPos = DELIMITER.length();
+        int start = 0;
+        int idx = 0;
+
+        for (; idx < n - 1; idx++) {
+            int pos = this.content.indexOf(DELIMITER, start);
+            if (pos < 0) {
+                parts[idx] = this.content.substring(start);
+                idx++;
+                break;
+            }
+            parts[idx] = this.content.substring(start, pos);
+            start = pos + delimPos;
+        }
+
+        if (idx < n) {
+            parts[idx] = this.content.substring(start);
+        }
+
+        int i = 0;
+        int j = n - 1;
+        while (i < j) {
+            if (!java.util.Objects.equals(parts[i], parts[j])) {
+                return false;
+            }
+
+            i ++;
+            j --;
+        }
+        return true;
+    }
 }
