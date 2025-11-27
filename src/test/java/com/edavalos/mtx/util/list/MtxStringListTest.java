@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.list;
 
+import com.edavalos.mtx.util.list.line.MtxStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -749,6 +751,83 @@ public final class MtxStringListTest {
 
             throwNow.set(true);
             assertThrows(IllegalArgumentException.class, list::reverse);
+        }
+    }
+
+    @Nested
+    class IsPalindromeTests {
+        private static final Integer[] YES_PALINDROME = {30, 60, 90, 60, 30};
+        private static final Integer[] NOT_PALINDROME = {30, 60, 90, 120, 150};
+        private static final Integer[] EMPTY = {};
+        private static final int LARGE_TEST_SIZE = 300;
+
+        @Test
+        public void testIsPalindrome_yes_short() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, YES_PALINDROME);
+            assertTrue(integerMtxStringList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_long_odd() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE + 1];
+            for (int i = 0; i <= LARGE_TEST_SIZE / 2; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+            for (int i = LARGE_TEST_SIZE / 2; i <= LARGE_TEST_SIZE; i++) {
+                testArray[i] = values.pop();
+            }
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, testArray);
+            assertTrue(integerMtxStringList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_long_even() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE];
+            for (int i = 0; i <= LARGE_TEST_SIZE / 2 - 1; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+            for (int i = LARGE_TEST_SIZE / 2; i < LARGE_TEST_SIZE; i++) {
+                testArray[i] = values.pop();
+            }
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, testArray);
+            assertTrue(integerMtxStringList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_yes_empty() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, EMPTY);
+            assertTrue(integerMtxStringList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_no_short() {
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, NOT_PALINDROME);
+            assertFalse(integerMtxStringList.isPalindrome());
+        }
+
+        @Test
+        public void testIsPalindrome_no_long() {
+            Random random = new Random();
+            MtxStack<Integer> values = new MtxStack<>();
+            Integer[] testArray = new Integer[LARGE_TEST_SIZE];
+            for (int i = 0; i < LARGE_TEST_SIZE; i++) {
+                int randomInt = random.nextInt(1, 100);
+                values.push(randomInt);
+                testArray[i] = randomInt;
+            }
+
+            MtxStringList<Integer> integerMtxStringList = new MtxStringList<>(intStringDecoder, Integer.class, testArray);
+            assertFalse(integerMtxStringList.isPalindrome());
         }
     }
 }
