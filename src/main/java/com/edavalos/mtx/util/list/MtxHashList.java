@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.TreeSet;
 
 public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
@@ -397,7 +398,7 @@ public final class MtxHashList<T> implements MtxList<T>, Iterable<T> {
         while (i < j) {
             T left = elements.get(i);
             T right = elements.get(j);
-            if (!java.util.Objects.equals(left, right)) {
+            if (!Objects.equals(left, right)) {
                 return false;
             }
 

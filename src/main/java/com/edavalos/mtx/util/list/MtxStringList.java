@@ -487,7 +487,7 @@ public final class MtxStringList<T> implements MtxList<T>, Iterable<T> {
         int i = 0;
         int j = n - 1;
         while (i < j) {
-            if (!java.util.Objects.equals(parts[i], parts[j])) {
+            if (!parts[i].equals(parts[j])) {
                 return false;
             }
 
