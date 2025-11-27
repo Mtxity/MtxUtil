@@ -3,7 +3,6 @@ package com.edavalos.mtx.util.string;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -712,6 +711,76 @@ public final class MtxStringUtilTest {
         public void testIsPalindrome_notPalindromes() {
             for (String testCase : sampleNonPalindomes) {
                 assertFalse(MtxStringUtil.isPalindrome(testCase));
+            }
+        }
+
+        @Nested
+        class IsPalindromeArrayTests {
+            String[] samplePalindromeArraysEvenLength = new String[]{
+                    "sample text |sample text ",
+                    "a|b|b|a",
+                    "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1"
+            };
+            String[] samplePalindromeArraysOddLength = new String[]{
+                    "test",
+                    "a|b|a",
+                    "a|b|c|b|a",
+                    "1|2|3|4|5|6|7|8|9|10|11|12|13|14|15|16|17|18|19|20|19|18|17|16|15|14|13|12|11|10|9|8|7|6|5|4|3|2|1"
+            };
+            String[] sampleNonPalindromeArrays = new String[]{
+                    "random|word",
+                    "phras|e",
+                    "hello|there",
+                    "|test",
+                    "x|c|s",
+                    "Ca|Ps|Te|St",
+                    "Lorem | Ipsum",
+                    "xd|m",
+                    "123|32",
+                    "a|b|c|d|c|b|x",
+                    "l|m|n|n|m|o"
+            };
+            String sampleDelimiter = "|";
+
+            @Test
+            public void testIsPalindromeArray_emptyString() {
+                assertTrue(MtxStringUtil.isPalindrome("", sampleDelimiter));
+            }
+
+            @Test
+            public void testIsPalindromeArray_emptyDelimiter() {
+                assertTrue(MtxStringUtil.isPalindrome("abc", ""));
+            }
+
+            @Test
+            public void testIsPalindromeArray_tooSmall() {
+                assertTrue(MtxStringUtil.isPalindrome("abc", sampleDelimiter));
+            }
+
+            @Test
+            public void testIsPalindromeArray_palindromes_evenLength() {
+                assertTrue(MtxStringUtil.isPalindrome("abc", ", "));
+            }
+
+            @Test
+            public void testIsPalindrome_palindromes_evenLength() {
+                for (String testCase : samplePalindromeArraysEvenLength) {
+                    assertTrue(MtxStringUtil.isPalindrome(testCase, sampleDelimiter));
+                }
+            }
+
+            @Test
+            public void testIsPalindrome_palindromes_oddLength() {
+                for (String testCase : samplePalindromeArraysOddLength) {
+                    assertTrue(MtxStringUtil.isPalindrome(testCase, sampleDelimiter));
+                }
+            }
+
+            @Test
+            public void testIsPalindrome_notPalindromes() {
+                for (String testCase : sampleNonPalindromeArrays) {
+                    assertFalse(MtxStringUtil.isPalindrome(testCase, sampleDelimiter));
+                }
             }
         }
     }
