@@ -641,15 +641,19 @@ public final class MtxStringUtil {
         return occurrences;
     }
 
-    public static String logFill(String template, String... args) {
-        if (countOccurrences(template, DEFAULT_TESTLOG_VARIABLE_REPLACEMENT) != args.length) {
+    public static String logFill(MtxStringWrapper variableReplacement, String template, String... args) {
+        if (countOccurrences(template, variableReplacement.toString()) != args.length) {
             throw new IllegalArgumentException("Argument count mismatch");
         }
 
         for (String arg : args) {
-            template = template.replaceFirst(Pattern.quote("{}"), arg);
+            template = template.replaceFirst(Pattern.quote(variableReplacement.toString()), arg);
         }
         return template;
+    }
+
+    public static String logFill(String template, String... args) {
+        return logFill(new MtxStringWrapper(DEFAULT_TESTLOG_VARIABLE_REPLACEMENT), template, args);
     }
 
     // ("k1=v1, k2=v2, k3={}", "v3") -> Map.of("k1", "v1", "k2", "v2", "k3", "v3")
