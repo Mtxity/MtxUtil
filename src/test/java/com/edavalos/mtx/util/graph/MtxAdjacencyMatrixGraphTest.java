@@ -140,8 +140,7 @@ public final class MtxAdjacencyMatrixGraphTest {
         String vertexToRemove = "Rob";
 
         assertTrue(mtxAdjacencyMatrixGraph.removeVertex(vertexToRemove));
-        // @TODO: Fix this
-//        assertEquals(expected, mtxAdjacencyMatrixGraph.toString());
+        assertEquals(expected, mtxAdjacencyMatrixGraph.toString());
     }
 
     @Test
