@@ -19,7 +19,10 @@ public class MtxKmpSearch {
             if (this.text.charAt(i) == pattern.charAt(j)) {
                 i++;
                 j++;
-                if (j == m) return i - j;  // match found
+                if (j == m) {
+                    // match found
+                    return i - j;
+                }
             } else {
                 if (j != 0) {
                     j = lps[j - 1];
