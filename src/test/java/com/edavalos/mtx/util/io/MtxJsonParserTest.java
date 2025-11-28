@@ -648,4 +648,102 @@ public final class MtxJsonParserTest {
             }
         }
     }
+
+    @Nested
+    class RemoveSpacesTests {
+
+        @Test
+        public void testRemoveSpaces_preserveInsideQuotes() {
+            String input = " {  \"a b\"  :  \"c d\" , e  : [  \"f g\" ] } ";
+            String expected = "{\"a b\":\"c d\",e:[\"f g\"]}";
+            assertEquals(expected, MtxJsonParser.removeSpaces(input));
+        }
+
+        @Test
+        public void testRemoveSpaces_noQuotes() {
+            String input = " a   b  c ";
+            String expected = "abc";
+            assertEquals(expected, MtxJsonParser.removeSpaces(input));
+        }
+
+        @Test
+        public void testRemoveSpaces_empty() {
+            String input = "";
+            String expected = "";
+            assertEquals(expected, MtxJsonParser.removeSpaces(input));
+        }
+    }
+
+    @Nested
+    class TokenizeRawJsonAdditionalTests {
+
+        @Test
+        public void testTokenizeRawJson_empty() {
+            try {
+                assertEquals(List.of(), MtxJsonParser.tokenizeRawJson(""));
+            } catch (ParseException e) {
+                fail();
+            }
+        }
+    }
+
+    @Nested
+    class ProcessListWithObjectTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_LIST_WITH_OBJECT = new ArrayList<>() {{
+            // ["x", {"k":"v"}, ["y"]]
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "x"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            // object {"k":"v"}
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "k"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "v"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COMMA, ","));
+            // nested list ["y"]
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACE, "["));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "y"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACE, "]"));
+        }};
+
+        private static final LinkedList<Object> EXPECTED_LIST_WITH_OBJECT = new LinkedList<>() {{
+            add("x");
+            add(new LinkedHashMap<String, Object>() {{
+                put("k", "v");
+            }});
+            add(new LinkedList<>() {{
+                add("y");
+            }});
+        }};
+
+        @Test
+        public void testProcessList_withEmbeddedObject() {
+            assertEquals(EXPECTED_LIST_WITH_OBJECT, MtxJsonParser.processList(TOKENS_LIST_WITH_OBJECT));
+        }
+    }
+
+    @Nested
+    class ProcessObjectAdditionalTests {
+        private static final List<MtxJsonParser.MtxJsonToken> TOKENS_OBJECT_NESTED_OBJECT_VALUE = new ArrayList<>() {{
+            // {"outer": {"inner":"val"}}
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "outer"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.OPENING_BRACKET, "{"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "inner"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.COLON, ":"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.STRING, "val"));
+            add(new MtxJsonParser.MtxJsonToken(MtxJsonParser.MtxJsonTokenType.CLOSING_BRACKET, "}"));
+        }};
+
+        private static final LinkedHashMap<String, Object> EXPECTED_OBJECT_NESTED_OBJECT_VALUE = new LinkedHashMap<>() {{
+            put("outer", new LinkedHashMap<String, Object>() {{
+                put("inner", "val");
+            }});
+        }};
+
+        @Test
+        public void testProcessObject_nestedObjectValue() {
+            assertEquals(EXPECTED_OBJECT_NESTED_OBJECT_VALUE, MtxJsonParser.processObject(TOKENS_OBJECT_NESTED_OBJECT_VALUE));
+        }
+    }
 }
