@@ -18,7 +18,17 @@ These are its implementations:
 * `MtxUuidGenerator` - uses passed data for hashing
 
 ## DB Query Generator ([com.edavalos.mtx.util.db.query](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/query))
-<!-- @TODO: Add description -->
+Fluent utilities to assemble SQL statements programmatically, avoiding manual string concatenation and encouraging parameterized queries.
+
+Core capabilities include:
+* builders for SELECT, INSERT, UPDATE, and DELETE statements
+* WHERE clause construction with grouped conditions (AND/OR), comparisons, and IN/NOT IN
+* JOIN support (INNER/LEFT/RIGHT) with ON predicates and table/column aliasing
+* ORDER BY, GROUP BY, and HAVING
+* LIMIT/OFFSET pagination
+* parameter binding (positional or named) to help prevent injection
+* safe identifier handling (table/column quoting) and configurable placeholders
+* rendering to a final SQL string plus a ready-to-bind parameter list
 
 ## DB Table Data Holder ([com.edavalos.mtx.util.db.table](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/db/table))
 <!-- @TODO: Add description -->
