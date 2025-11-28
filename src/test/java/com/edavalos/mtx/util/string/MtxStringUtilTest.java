@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Pattern;
 
@@ -362,6 +361,7 @@ public final class MtxStringUtilTest {
         public void testCountOccurrencesOf_nullValues() {
             assertEquals(0, MtxStringUtil.countOccurrencesOf("", ""));
             assertEquals(0, MtxStringUtil.countOccurrencesOf(null, null));
+            assertEquals(0, MtxStringUtil.countOccurrencesOf("x", null));
         }
 
         @Test
@@ -806,6 +806,13 @@ public final class MtxStringUtilTest {
 
             assertEquals(nullChar, MtxStringUtil.mostCommonChar(testCase));
         }
+
+        @Test
+        public void testMostCommonChar_nullInput() {
+            char nullChar = '\u0000';
+
+            assertEquals(nullChar, MtxStringUtil.mostCommonChar(null));
+        }
     }
 
     @Nested
@@ -975,6 +982,37 @@ public final class MtxStringUtilTest {
         public void concatenateWithOverlapTest_nullArgs() {
             assertThrows(NullPointerException.class, () -> MtxStringUtil.concatenateWithOverlap(null, "test"));
             assertThrows(NullPointerException.class, () -> MtxStringUtil.concatenateWithOverlap("test", null));
+        }
+
+        // Exercises the inner while-loop with multiple successful iterations and drains ix down to -1,
+        // then hits: if (ix == -1) { return s1 + s2.substring(indexOfLast2 + 1); }
+        @Test
+        public void concatenateWithOverlapTest_multiCharOverlap_returnsWithIxMinusOne() {
+            String s1 = "abXYZ";
+            String s2 = "XYZ12";
+            String result = MtxStringUtil.concatenateWithOverlap(s1, s2);
+            assertEquals("abXYZ12", result);
+        }
+
+        // Exercises the inner while-loop for a single-character overlap (ix starts at 0),
+        // then ix == -1 branch triggers.
+        @Test
+        public void concatenateWithOverlapTest_singleCharOverlap_returnsWithIxMinusOne() {
+            String s1 = "abc";
+            String s2 = "cde";
+            String result = MtxStringUtil.concatenateWithOverlap(s1, s2);
+            assertEquals("abcde", result);
+        }
+
+        // Enters the inner while-loop, matches once at the last char, then mismatches on the next comparison,
+        // so ix != -1 and the function does NOT take the ix == -1 early return. No other overlap is found,
+        // so it returns s1 + s2.
+        @Test
+        public void concatenateWithOverlapTest_partialPrefixMismatch_breaksInnerWhile_noOverlap() {
+            String s1 = "abQRS";
+            String s2 = "QTS";
+            String result = MtxStringUtil.concatenateWithOverlap(s1, s2);
+            assertEquals("abQRSQTS", result);
         }
     }
 
