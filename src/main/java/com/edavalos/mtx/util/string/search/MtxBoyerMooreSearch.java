@@ -12,8 +12,15 @@ public class MtxBoyerMooreSearch implements MtxSearch {
 
     @Override
     public int search(String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            return -1;
+        }
+
         int n = this.text.length();
         int m = pattern.length();
+        if (m > n) {
+            return -1;
+        }
 
         int[] badChar = buildBadChar(pattern);
 
@@ -29,7 +36,8 @@ public class MtxBoyerMooreSearch implements MtxSearch {
                 // match found
                 return shift;
             } else {
-                shift += Math.max(1, j - badChar[this.text.charAt(shift + j)]);
+                int ch = this.text.charAt(shift + j) & 0xFF;
+                shift += Math.max(1, j - badChar[ch]);
             }
         }
         return -1;
@@ -40,7 +48,7 @@ public class MtxBoyerMooreSearch implements MtxSearch {
         Arrays.fill(badChar, -1);
 
         for (int i = 0; i < pattern.length(); i++) {
-            badChar[pattern.charAt(i)] = i;
+            badChar[pattern.charAt(i) & 0xFF] = i;
         }
         return badChar;
     }

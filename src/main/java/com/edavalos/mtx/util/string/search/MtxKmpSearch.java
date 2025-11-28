@@ -10,8 +10,15 @@ public class MtxKmpSearch implements MtxSearch {
 
     @Override
     public int search(String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            return -1;
+        }
+
         int n = this.text.length();
         int m = pattern.length();
+        if (m > n) {
+            return -1;
+        }
 
         int[] lps = buildLPS(pattern);
         int i = 0, j = 0;

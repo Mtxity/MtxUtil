@@ -11,8 +11,15 @@ public class MtxRabinKarpSearch implements MtxSearch {
 
     @Override
     public int search(String pattern) {
+        if (pattern == null || pattern.isEmpty()) {
+            return -1;
+        }
+
         int n = this.text.length();
         int m = pattern.length();
+        if (m > n) {
+            return -1;
+        }
 
         int pHash = 0;
         int tHash = 0, h = 1;
@@ -23,7 +30,7 @@ public class MtxRabinKarpSearch implements MtxSearch {
 
         for (int i = 0; i < m; i++) {
             pHash = (BASE * pHash + pattern.charAt(i)) % MOD;
-            tHash = (BASE * tHash + text.charAt(i)) % MOD;
+            tHash = (BASE * tHash + this.text.charAt(i)) % MOD;
         }
 
         for (int i = 0; i <= n - m; i++) {
@@ -34,7 +41,7 @@ public class MtxRabinKarpSearch implements MtxSearch {
             }
 
             if (i < n - m) {
-                tHash = (BASE * (tHash - this.text.charAt(i) * h) + this.text.charAt(i + 1 + m - 1)) % MOD;
+                tHash = (BASE * (tHash - this.text.charAt(i) * h) + this.text.charAt(i + m)) % MOD;
                 if (tHash < 0) {
                     tHash += MOD;
                 }
