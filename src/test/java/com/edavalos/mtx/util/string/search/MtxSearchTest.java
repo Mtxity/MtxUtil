@@ -77,5 +77,58 @@ public class MtxSearchTest {
             assertEquals(-1, mtxKnuthMorrisPrattSearch.search(SAMPLE_PATTERN_EMPTY));
             assertEquals(-1, mtxRabinKarpSearch.search(SAMPLE_PATTERN_EMPTY));
         }
+
+        @Test
+        public void testSearch_nullPattern() {
+            assertEquals(-1, mtxNativeSearch.search(null));
+            assertEquals(-1, mtxBoyerMooreSearch.search(null));
+            assertEquals(-1, mtxKnuthMorrisPrattSearch.search(null));
+            assertEquals(-1, mtxRabinKarpSearch.search(null));
+        }
+
+        @Test
+        public void testSearch_patternLongerThanText() {
+            String tooLong = SAMPLE_TEXT + "x";
+            assertEquals(-1, mtxNativeSearch.search(tooLong));
+            assertEquals(-1, mtxBoyerMooreSearch.search(tooLong));
+            assertEquals(-1, mtxKnuthMorrisPrattSearch.search(tooLong));
+            assertEquals(-1, mtxRabinKarpSearch.search(tooLong));
+        }
+
+        @Test
+        public void testSearch_patternEqualsEntireText() {
+            assertEquals(0, mtxNativeSearch.search(SAMPLE_TEXT));
+            assertEquals(0, mtxBoyerMooreSearch.search(SAMPLE_TEXT));
+            assertEquals(0, mtxKnuthMorrisPrattSearch.search(SAMPLE_TEXT));
+            assertEquals(0, mtxRabinKarpSearch.search(SAMPLE_TEXT));
+        }
+    }
+
+    @Nested
+    class AlgorithmBranchCoverage {
+
+        @Test
+        public void testKmp_fallbackBranch_jNotZero() {
+            // Triggers KMP mismatch with j != 0 (uses LPS fallback), then finds a match at index 2
+            MtxSearch kmp = new MtxKmpSearch("aaaaab");
+            assertEquals(2, kmp.search("aaab"));
+        }
+
+        @Test
+        public void testBoyerMoore_shiftEqualsOneBranch() {
+            // Forces a mismatch where the bad character appears just before j in the pattern,
+            // yielding a shift of exactly 1 via Math.max(1, j - badChar[ch])
+            MtxSearch bm = new MtxBoyerMooreSearch("abb");
+            assertEquals(-1, bm.search("aba"));
+        }
+
+        @Test
+        public void testRabinKarp_hashCollisionButNoMatch() {
+            // Construct a known hash collision for m=2 under BASE=256, MOD=101:
+            // pattern "AA" and text window "B\u001F" produce the same hash modulo 101,
+            // so pHash == tHash but regionMatches is false.
+            MtxSearch rk = new MtxRabinKarpSearch("B\u001F");
+            assertEquals(-1, rk.search("AA"));
+        }
     }
 }
