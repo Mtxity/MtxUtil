@@ -1,13 +1,14 @@
 package com.edavalos.mtx.util.string.search;
 
 // Knuth–Morris–Pratt
-public class MtxKmpSearch {
+public class MtxKmpSearch implements MtxSearch {
     private final String text;
 
     public MtxKmpSearch(String text) {
         this.text = text;
     }
 
+    @Override
     public int search(String pattern) {
         int n = this.text.length();
         int m = pattern.length();
@@ -52,6 +53,7 @@ public class MtxKmpSearch {
         return lps;
     }
 
+    @Override
     public String getText() {
         return this.text;
     }

@@ -2,7 +2,7 @@ package com.edavalos.mtx.util.string.search;
 
 import java.util.Arrays;
 
-public class MtxBoyerMooreSearch {
+public class MtxBoyerMooreSearch implements MtxSearch {
     private static final int ALPHABET_SIZE = 256;
     private final String text;
 
@@ -10,6 +10,7 @@ public class MtxBoyerMooreSearch {
         this.text = text;
     }
 
+    @Override
     public int search(String pattern) {
         int n = this.text.length();
         int m = pattern.length();
@@ -44,6 +45,7 @@ public class MtxBoyerMooreSearch {
         return badChar;
     }
 
+    @Override
     public String getText() {
         return this.text;
     }

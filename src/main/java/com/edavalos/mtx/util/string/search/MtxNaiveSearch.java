@@ -1,12 +1,13 @@
 package com.edavalos.mtx.util.string.search;
 
-public class MtxNaiveSearch {
+public class MtxNaiveSearch implements MtxSearch {
     private final String text;
 
     public MtxNaiveSearch(String text) {
         this.text = text;
     }
 
+    @Override
     public int search(String pattern) {
         int n = this.text.length();
         int m = pattern.length();
@@ -25,6 +26,7 @@ public class MtxNaiveSearch {
         return -1;
     }
 
+    @Override
     public String getText() {
         return this.text;
     }
