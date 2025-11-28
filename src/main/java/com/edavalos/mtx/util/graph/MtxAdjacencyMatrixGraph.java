@@ -94,12 +94,46 @@ public final class MtxAdjacencyMatrixGraph implements MtxGraph {
             return false;
         }
 
-        // no nonexistent labels
-        if (!this.vertexIdxMap.containsKey(label) || !this.idxVertexMap.containsValue(label)) {
+        Integer removedIdx = this.vertexIdxMap.get(label);
+        if (removedIdx == null) {
             return false;
         }
 
-        this.idxVertexMap.remove(this.vertexIdxMap.remove(label), label);
+        // Remove mappings for the vertex
+        this.vertexIdxMap.remove(label);
+        this.idxVertexMap.remove(removedIdx);
+
+        // Physically remove the row and column from the adjacency matrix
+        if (removedIdx < this.adjacencyMatrix.size()) {
+            this.adjacencyMatrix.remove((int) removedIdx);
+            for (List<Boolean> row : this.adjacencyMatrix) {
+                if (removedIdx < row.size()) {
+                    row.remove((int) removedIdx);
+                }
+            }
+        }
+
+        // Reindex remaining vertices (shift indices > removedIdx down by 1)
+        Map<String, Integer> newVertexIdxMap = new HashMap<>();
+        Map<Integer, String> newIdxVertexMap = new HashMap<>();
+        for (Map.Entry<String, Integer> e : this.vertexIdxMap.entrySet()) {
+            String vLabel = e.getKey();
+            int idx = e.getValue();
+            if (idx > removedIdx) {
+                idx -= 1;
+            }
+            newVertexIdxMap.put(vLabel, idx);
+            newIdxVertexMap.put(idx, vLabel);
+        }
+        this.vertexIdxMap.clear();
+        this.vertexIdxMap.putAll(newVertexIdxMap);
+        this.idxVertexMap.clear();
+        this.idxVertexMap.putAll(newIdxVertexMap);
+
+        // Keep counters in sync with the compacted matrix
+        this.vertices = this.adjacencyMatrix.size();
+        this.nextSpot = this.vertexIdxMap.size();
+
         return true;
     }
 
