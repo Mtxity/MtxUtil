@@ -71,4 +71,18 @@ public final class MtxStringWrapperTest {
         MtxStringWrapper mtxStringWrapper = new MtxStringWrapper("test");
         assertFalse(mtxStringWrapper.isEmpty());
     }
+
+    @Test
+    public void testRemove_didRemove() {
+        MtxStringWrapper mtxStringWrapper = new MtxStringWrapper("test");
+        assertTrue(mtxStringWrapper.remove("es"));
+        assertEquals("tt", mtxStringWrapper.toString());
+    }
+
+    @Test
+    public void testRemove_didNotRemove() {
+        MtxStringWrapper mtxStringWrapper = new MtxStringWrapper("test");
+        assertFalse(mtxStringWrapper.remove("esx"));
+        assertEquals("test", mtxStringWrapper.toString());
+    }
 }
