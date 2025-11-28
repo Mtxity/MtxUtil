@@ -145,7 +145,17 @@ All of these support `equals()` and `iterator()` as well as the basic functions.
 <!-- @TODO: Add description -->
 
 ## String Utilities ([com.edavalos.mtx.util.string](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/string))
-<!-- @TODO: Add description -->
+A collection of helpers for inspecting, cleaning, and transforming text for everyday use.
+
+Common tasks include:
+* null/blank checks and safe comparisons (case-sensitive or case-insensitive)
+* trimming and whitespace normalization (including collapsing runs of spaces/tabs)
+* prefix/suffix operations to add, remove, or ensure markers
+* padding and alignment for fixed-width output (left, right, center)
+* case and word-style conversions (lower/upper, Title Case, camelCase, PascalCase, snake_case, kebab-case)
+* splitting/joining delimited strings with sensible defaults
+* bounds-safe substring and search helpers (starts/ends-with, contains)
+* lightweight sanitization (strip non-printables, keep alphanumeric)
 
 ## Time ([com.edavalos.mtx.util.time](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/time))
 `MtxTime` is an object for keeping a record of a time vector, with operations to modify it accordingly. It can be instantiated with a string to parse into a time, or directly with integers for each component. It will also self balance (so that its hours are no greater than 23 and its seconds and minutes are no greater than 59).
