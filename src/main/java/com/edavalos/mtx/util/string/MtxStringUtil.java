@@ -646,8 +646,9 @@ public final class MtxStringUtil {
             throw new IllegalArgumentException("Argument count mismatch");
         }
 
+        String pattern = Pattern.quote(variableReplacement.toString());
         for (String arg : args) {
-            template = template.replaceFirst(Pattern.quote(variableReplacement.toString()), arg);
+            template = template.replaceFirst(pattern, arg);
         }
         return template;
     }
