@@ -101,7 +101,18 @@ This is a representation (and real-world use case) of a multi-priority and bidir
 * `MtxElevator` - controlled with `queueFloor()` and `moveToNextFloor()`
 
 ## Maps ([com.edavalos.mtx.util.map](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/map))
-<!-- @TODO: Add description -->
+<!-- @TODO: Revisit this section / update with specifics -->
+`MtxMap` is a general purpose key–value container for fast lookups with optional ordered or sorted iteration.
+
+It includes variants to fit different needs:
+* hash-backed maps — average O(1) `get()`/`put()`
+* linked maps — preserves insertion order with predictable iteration
+* tree-backed maps — sorted by key with O(log n) `get()`/`put()`
+* array-backed maps — compact footprint, best for small collections
+
+All of these support `equals()` and `iterator()` as well as the basic functions.
+(`get()`, `put()`, `remove()`, `containsKey()`, `containsValue()`, `keySet()`, `values()`, `entrySet()`, `size()`, etc.)
+See the interface for a complete list.
 
 ## Math Utils ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxMath` holds a collection of mathematical utility classes, constants, and methods:
