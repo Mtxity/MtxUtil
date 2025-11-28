@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxSearchTest {
     private static final String SAMPLE_TEXT = "This is a sample text to search in.";
@@ -129,6 +131,28 @@ public class MtxSearchTest {
                 MtxSearch rk = new MtxRabinKarpSearch("B\u001F");
                 assertEquals(-1, rk.search("AA"));
             }
+        }
+    }
+
+    @Nested
+    class ContainsTests {
+        private static final String SAMPLE_PATTERN_CONTAINED = "sample text";
+        private static final String SAMPLE_PATTERN_NOT_CONTAINED = "abc";
+
+        @Test
+        public void testContains_contains() {
+            assertTrue(mtxNativeSearch.contains(SAMPLE_PATTERN_CONTAINED));
+            assertTrue(mtxBoyerMooreSearch.contains(SAMPLE_PATTERN_CONTAINED));
+            assertTrue(mtxKnuthMorrisPrattSearch.contains(SAMPLE_PATTERN_CONTAINED));
+            assertTrue(mtxRabinKarpSearch.contains(SAMPLE_PATTERN_CONTAINED));
+        }
+
+        @Test
+        public void testContains_doesNotContain() {
+            assertFalse(mtxNativeSearch.contains(SAMPLE_PATTERN_NOT_CONTAINED));
+            assertFalse(mtxBoyerMooreSearch.contains(SAMPLE_PATTERN_NOT_CONTAINED));
+            assertFalse(mtxKnuthMorrisPrattSearch.contains(SAMPLE_PATTERN_NOT_CONTAINED));
+            assertFalse(mtxRabinKarpSearch.contains(SAMPLE_PATTERN_NOT_CONTAINED));
         }
     }
 }
