@@ -1454,4 +1454,30 @@ public final class MtxStringUtilTest {
             assertEquals(expected, MtxStringUtil.logMapFill(TEST_STR + ", k5=v5=i5", TEST_ARGS));
         }
     }
+
+    @Nested
+    class TestAreAnagrams {
+        private static final String[] ARE_ANAGRAMS = {"abc", "cba", "bac", "cba"};
+        private static final String[] NOT_ANAGRAMS = {"abc", "aba", "dac", "cb", "abcd"};
+
+        @Test
+        public void testAreAnagrams_yes() {
+            for (int i = 1; i < ARE_ANAGRAMS.length; i++) {
+                assertTrue(MtxStringUtil.areAnagrams(ARE_ANAGRAMS[0], ARE_ANAGRAMS[i]));
+            }
+        }
+
+        @Test
+        public void testAreAnagrams_no() {
+            for (int i = 1; i < NOT_ANAGRAMS.length; i++) {
+                assertFalse(MtxStringUtil.areAnagrams(NOT_ANAGRAMS[0], NOT_ANAGRAMS[i]));
+            }
+        }
+
+        @Test
+        public void testAreAnagrams_differentLengths() {
+            assertFalse(MtxStringUtil.areAnagrams("a", "abc"));
+            assertFalse(MtxStringUtil.areAnagrams("abc", "a"));
+        }
+    }
 }
