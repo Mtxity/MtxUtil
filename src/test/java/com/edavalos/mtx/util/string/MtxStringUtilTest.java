@@ -1485,5 +1485,10 @@ public final class MtxStringUtilTest {
             assertFalse(MtxStringUtil.areAnagrams(null, "abc"));
             assertFalse(MtxStringUtil.areAnagrams("abc", null));
         }
+
+        @Test
+        public void testAreAnagrams_emptyStrings() {
+            assertTrue(MtxStringUtil.areAnagrams("", ""));
+        }
     }
 }
