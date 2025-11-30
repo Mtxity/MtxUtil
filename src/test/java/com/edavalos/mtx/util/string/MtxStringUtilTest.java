@@ -1495,5 +1495,10 @@ public final class MtxStringUtilTest {
         public void testAreAnagrams_caseSensitivity() {
             assertFalse(MtxStringUtil.areAnagrams("abc", "ABC"));
         }
+
+        @Test
+        public void testAreAnagrams_alreadyEqual() {
+            assertTrue(MtxStringUtil.areAnagrams("abc", "abc"));
+        }
     }
 }
