@@ -679,6 +679,9 @@ public final class MtxStringUtil {
         if (str1.length() != str2.length()) {
             return false;
         }
+        if (str1.equals(str2)) {
+            return true;
+        }
         char[] charArray1 = str1.toCharArray();
         char[] charArray2 = str2.toCharArray();
         Arrays.sort(charArray1);
