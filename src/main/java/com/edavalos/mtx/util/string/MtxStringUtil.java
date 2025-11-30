@@ -657,7 +657,18 @@ public final class MtxStringUtil {
         return logFill(new MtxStringWrapper(DEFAULT_TESTLOG_VARIABLE_REPLACEMENT), template, args);
     }
 
-    // ("k1=v1, k2=v2, k3={}", "v3") -> Map.of("k1", "v1", "k2", "v2", "k3", "v3")
+    /**
+     * Parses a formatted log string into a map of key-value pairs.
+     * Utilizes a template and its corresponding variable replacements to generate a log string, which is then split
+     * into key-value pairs based on a predefined structure. Each key-value pair is further processed and stored in an
+     * immutable map.
+     * <p>
+     * Example: ("k1=v1, k2=v2, k3={}", "v3") -> Map.of("k1", "v1", "k2", "v2", "k3", "v3")
+     *
+     * @param template the template string containing placeholders for variable replacements
+     * @param args the variable replacements to substitute in the template
+     * @return an unmodifiable map containing key-value pairs parsed from the log string
+     */
     public static Map<String, String> logMapFill(String template, String... args) {
         Map<String, String> kvMap = new HashMap<>();
 
