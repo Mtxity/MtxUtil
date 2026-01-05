@@ -8,9 +8,15 @@ import java.util.Iterator;
  * the passkey every passkeyLength interval.
  */
 public class MtxPasskey implements Iterable<String> {
+    private static final String PASSKEY_VARIABLE_EXT = "_%V%_";
+
     private final String initialPasskey;
     private final int passkeyIncrement;
     private final int passkeyLength;
+
+    private String currentPasskey;
+    private int currentPasskeyKey;
+    private int currentPasskeysLeftBeforeRotation;
 
     /**
      * Create new MtxPasskey
@@ -19,9 +25,13 @@ public class MtxPasskey implements Iterable<String> {
      * @param passkeyLength Number of times to increment passkey before rotating entire result
      */
     public MtxPasskey(String initialPasskey, int passkeyIncrement, int passkeyLength) {
-        this.initialPasskey = initialPasskey;
+        this.initialPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
         this.passkeyIncrement = passkeyIncrement;
         this.passkeyLength = passkeyLength;
+
+        this.currentPasskey = this.initialPasskey;
+        this.currentPasskeyKey = 0;
+        this.currentPasskeysLeftBeforeRotation = this.passkeyLength;
     }
 
     /**
