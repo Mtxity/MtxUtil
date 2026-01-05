@@ -10,7 +10,6 @@ import java.util.Iterator;
 public class MtxPasskey implements Iterable<String> {
     private static final String PASSKEY_VARIABLE_EXT = "_%V%_";
 
-    private final String initialPasskey;
     private final String currentPasskey;
 
     private int currentPasskeyKey;
@@ -20,9 +19,7 @@ public class MtxPasskey implements Iterable<String> {
      * @param initialPasskey String to use as base / first passkey
      */
     public MtxPasskey(String initialPasskey) {
-        this.initialPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
-
-        this.currentPasskey = this.initialPasskey;
+        this.currentPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
         this.currentPasskeyKey = 0;
     }
 
