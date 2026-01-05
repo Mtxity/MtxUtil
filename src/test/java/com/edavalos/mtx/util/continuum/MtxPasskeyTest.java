@@ -27,5 +27,12 @@ public final class MtxPasskeyTest {
             assertEquals("0", mtxPasskey.getNextPasskey());
             assertEquals("1", mtxPasskey.getNextPasskey());
         }
+
+        @Test
+        public void testGetNextPasskey_handlesNullInitialPasskey() {
+            mtxPasskey = new MtxPasskey(null, 1, 1);
+
+            assertEquals("null0", mtxPasskey.getNextPasskey());
+        }
     }
 }
