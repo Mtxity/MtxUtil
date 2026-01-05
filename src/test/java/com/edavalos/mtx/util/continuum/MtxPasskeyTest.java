@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Iterator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -48,7 +49,7 @@ public final class MtxPasskeyTest {
             mtxPasskey = new MtxPasskey("test", 10);
             Iterator<String> it = mtxPasskey.iterator();
 
-            assertTrue(it.hasNext(), "Iterator should have next if increment max is within bounds");
+            assertTrue(it.hasNext());
             assertNotNull(it.next());
         }
 
@@ -64,6 +65,25 @@ public final class MtxPasskeyTest {
             }
 
             assertEquals(3, count);
+        }
+
+        @Test
+        public void testIterator_hasNext_isFalseWhenStartingAboveMax() {
+            mtxPasskey = new MtxPasskey("test", 101);
+            Iterator<String> it = mtxPasskey.iterator();
+
+            assertFalse(it.hasNext());
+        }
+
+        @Test
+        public void testIterator_hasNext_isTrueAtBoundary() {
+            mtxPasskey = new MtxPasskey("test", 100);
+            Iterator<String> it = mtxPasskey.iterator();
+
+            assertTrue(it.hasNext());
+            assertEquals("test0", it.next());
+
+            assertTrue(it.hasNext());
         }
     }
 }
