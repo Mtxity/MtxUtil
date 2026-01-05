@@ -37,6 +37,9 @@ public class MtxPasskey implements Iterable<String> {
     public String getNextPasskey() {
         String nextPasskey = this.currentPasskey.replaceFirst(PASSKEY_VARIABLE_EXT, String.valueOf(this.currentPasskeyKey));
         this.currentPasskeyKey++;
+        if (this.currentPasskeyKey >= this.passkeyIncrement) {
+            this.currentPasskeyKey = 0;
+        }
         return nextPasskey;
     }
 
