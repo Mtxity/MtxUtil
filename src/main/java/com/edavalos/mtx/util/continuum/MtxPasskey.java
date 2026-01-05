@@ -12,6 +12,7 @@ public class MtxPasskey implements Iterable<String> {
     private static final int MAX_AUTO_PASSKEYS = 100;
 
     private final String currentPasskey;
+    private final int passkeyIncrementMax;
 
     private int currentPasskeyKey;
 
@@ -19,9 +20,10 @@ public class MtxPasskey implements Iterable<String> {
      * Create new MtxPasskey
      * @param initialPasskey String to use as base / first passkey
      */
-    public MtxPasskey(String initialPasskey) {
+    public MtxPasskey(String initialPasskey, int passkeyIncrementMax) {
         this.currentPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
         this.currentPasskeyKey = 0;
+        this.passkeyIncrementMax = passkeyIncrementMax;
     }
 
     public String getNextPasskey() {
@@ -38,7 +40,7 @@ public class MtxPasskey implements Iterable<String> {
     @Override
     public Iterator<String> iterator() {
         return new Iterator<>() {
-            private int idx_itr = 0;
+            private final int idx_itr = passkeyIncrementMax;
 
             @Override
             public boolean hasNext() {
