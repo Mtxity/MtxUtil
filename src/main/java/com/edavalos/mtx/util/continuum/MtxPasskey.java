@@ -9,6 +9,7 @@ import java.util.Iterator;
  */
 public class MtxPasskey implements Iterable<String> {
     private static final String PASSKEY_VARIABLE_EXT = "_%V%_";
+    private static final int MAX_AUTO_PASSKEYS = 100;
 
     private final String currentPasskey;
 
