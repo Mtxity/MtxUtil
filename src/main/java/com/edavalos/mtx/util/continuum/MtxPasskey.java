@@ -11,8 +11,8 @@ public class MtxPasskey implements Iterable<String> {
     private static final String PASSKEY_VARIABLE_EXT = "_%V%_";
 
     private final String initialPasskey;
+    private final String currentPasskey;
 
-    private String currentPasskey;
     private int currentPasskeyKey;
 
     /**
