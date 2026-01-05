@@ -18,9 +18,8 @@ public class MtxPasskey implements Iterable<String> {
     /**
      * Create new MtxPasskey
      * @param initialPasskey String to use as base / first passkey
-     * @param passkeyIncrement Integer to add to passkey every passkeyLength (as a String)
      */
-    public MtxPasskey(String initialPasskey, int passkeyIncrement, int passkeyLength) {
+    public MtxPasskey(String initialPasskey) {
         this.initialPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
 
         this.currentPasskey = this.initialPasskey;

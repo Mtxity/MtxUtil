@@ -13,7 +13,7 @@ public final class MtxPasskeyTest {
 
         @Test
         public void testGetNextPasskey_incrementsCorrectly() {
-            mtxPasskey = new MtxPasskey("key", 10, 5);
+            mtxPasskey = new MtxPasskey("key");
 
             assertEquals("key0", mtxPasskey.getNextPasskey());
             assertEquals("key1", mtxPasskey.getNextPasskey());
@@ -22,7 +22,7 @@ public final class MtxPasskeyTest {
 
         @Test
         public void testGetNextPasskey_handlesEmptyInitialPasskey() {
-            mtxPasskey = new MtxPasskey("", 1, 1);
+            mtxPasskey = new MtxPasskey("");
 
             assertEquals("0", mtxPasskey.getNextPasskey());
             assertEquals("1", mtxPasskey.getNextPasskey());
@@ -30,7 +30,7 @@ public final class MtxPasskeyTest {
 
         @Test
         public void testGetNextPasskey_handlesNullInitialPasskey() {
-            mtxPasskey = new MtxPasskey(null, 1, 1);
+            mtxPasskey = new MtxPasskey(null);
 
             assertEquals("null0", mtxPasskey.getNextPasskey());
         }
