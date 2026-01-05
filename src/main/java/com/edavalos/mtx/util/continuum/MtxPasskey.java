@@ -11,35 +11,25 @@ public class MtxPasskey implements Iterable<String> {
     private static final String PASSKEY_VARIABLE_EXT = "_%V%_";
 
     private final String initialPasskey;
-    private final int passkeyIncrement;
-    private final int passkeyLength;
 
     private String currentPasskey;
     private int currentPasskeyKey;
-    private int currentPasskeysLeftBeforeRotation;
 
     /**
      * Create new MtxPasskey
      * @param initialPasskey String to use as base / first passkey
      * @param passkeyIncrement Integer to add to passkey every passkeyLength (as a String)
-     * @param passkeyLength Number of times to increment passkey before rotating entire result
      */
     public MtxPasskey(String initialPasskey, int passkeyIncrement, int passkeyLength) {
         this.initialPasskey = initialPasskey + PASSKEY_VARIABLE_EXT;
-        this.passkeyIncrement = passkeyIncrement;
-        this.passkeyLength = passkeyLength;
 
         this.currentPasskey = this.initialPasskey;
         this.currentPasskeyKey = 0;
-        this.currentPasskeysLeftBeforeRotation = this.passkeyLength;
     }
 
     public String getNextPasskey() {
         String nextPasskey = this.currentPasskey.replaceFirst(PASSKEY_VARIABLE_EXT, String.valueOf(this.currentPasskeyKey));
         this.currentPasskeyKey++;
-        if (this.currentPasskeyKey >= this.passkeyIncrement) {
-            this.currentPasskeyKey = 0;
-        }
         return nextPasskey;
     }
 
