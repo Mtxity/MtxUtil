@@ -34,6 +34,12 @@ public class MtxPasskey implements Iterable<String> {
         this.currentPasskeysLeftBeforeRotation = this.passkeyLength;
     }
 
+    private String getNextPasskey() {
+        String nextPasskey = this.currentPasskey.replaceFirst(PASSKEY_VARIABLE_EXT, String.valueOf(this.currentPasskeyKey));
+        this.currentPasskeyKey++;
+        return nextPasskey;
+    }
+
     /**
      * Returns an iterator over elements of type {@code T}.
      *
