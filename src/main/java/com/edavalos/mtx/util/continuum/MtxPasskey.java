@@ -37,6 +37,18 @@ public class MtxPasskey implements Iterable<String> {
      */
     @Override
     public Iterator<String> iterator() {
-        return null;
+        return new Iterator<>() {
+            private int idx_itr = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.idx_itr <= MAX_AUTO_PASSKEYS;
+            }
+
+            @Override
+            public String next() {
+                return getNextPasskey();
+            }
+        };
     }
 }
