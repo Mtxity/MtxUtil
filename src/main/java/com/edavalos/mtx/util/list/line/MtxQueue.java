@@ -1,6 +1,6 @@
 package com.edavalos.mtx.util.list.line;
 
-public final class MtxQueue<T> {
+public class MtxQueue<T> {
     private MtxNode<T> head;
     private MtxNode<T> tail;
     private int size;
