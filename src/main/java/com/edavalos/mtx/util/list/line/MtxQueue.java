@@ -1,9 +1,9 @@
 package com.edavalos.mtx.util.list.line;
 
 public class MtxQueue<T> {
-    private MtxNode<T> head;
-    private MtxNode<T> tail;
-    private int size;
+    protected MtxNode<T> head;
+    protected MtxNode<T> tail;
+    protected int size;
 
     public MtxQueue() {
         this.head = null;
