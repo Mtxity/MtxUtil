@@ -23,4 +23,15 @@ public final class MtxDequeTest {
 
         assertEquals(elementsListString, mtxDeque.toString());
     }
+
+    @Test
+    public void testEnqueueBack() {
+        int elements = 5;
+        String elementsListString = "[4, 3, 2, 1, 0]";
+        for (int i = 0; i < elements; i++) {
+            mtxDeque.enqueueBack(i);
+        }
+
+        assertEquals(elementsListString, mtxDeque.toString());
+    }
 }
