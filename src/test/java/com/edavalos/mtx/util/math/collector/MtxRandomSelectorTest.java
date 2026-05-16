@@ -74,4 +74,18 @@ public class MtxRandomSelectorTest {
             // @TODO: Mockstatic ThreadLocalRandom to be out of index
         }
     }
+
+    @Nested
+    class PickRandomArgTests {
+
+        @Test
+        public void testPickRandom_null_arg1() {
+            assertTrue(MtxRandomSelector.pickRandom(null, "y").isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_null_arg2() {
+            assertTrue(MtxRandomSelector.pickRandom("x", null).isEmpty());
+        }
+    }
 }
