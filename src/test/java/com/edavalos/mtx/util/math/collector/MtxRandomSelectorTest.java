@@ -4,20 +4,23 @@ import com.edavalos.mtx.util.math.collection.MtxRandomSelector;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+// @TODO: Fix coverage map in Intellij to verify coverage is complete
 public class MtxRandomSelectorTest {
 
     @Nested
-    class PickRandomTests {
+    class PickRandomCollectionTests {
 
         @Test
         public void testPickRandom_null() {
-            assertTrue(MtxRandomSelector.pickRandom(null).isEmpty());
+            Collection<String> collection = null;
+            assertTrue(MtxRandomSelector.pickRandom(collection).isEmpty());
         }
 
         @Test
@@ -41,6 +44,33 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_isNotList_outOfIndex() {
+            // @TODO: Mockstatic ThreadLocalRandom to be out of index
+        }
+    }
+
+    @Nested
+    class PickRandomArrayTests {
+
+        @Test
+        public void testPickRandom_null() {
+            String[] array = null;
+            assertTrue(MtxRandomSelector.pickRandom(array).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_empty() {
+            assertTrue(MtxRandomSelector.pickRandom(new String[] {}).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_isArray() {
+            String[] array = List.of("x", "y", "z").toArray(new String[0]);
+            String randomVal = MtxRandomSelector.pickRandom(array).getValue();
+            assertTrue(Arrays.stream(array).toList().contains(randomVal));
+        }
+
+        @Test
+        public void testPickRandom_outOfIndex() {
             // @TODO: Mockstatic ThreadLocalRandom to be out of index
         }
     }
