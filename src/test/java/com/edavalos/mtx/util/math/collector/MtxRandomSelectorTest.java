@@ -76,7 +76,7 @@ public class MtxRandomSelectorTest {
     }
 
     @Nested
-    class PickRandomArgTests {
+    class PickRandom2ArgTests {
 
         @Test
         public void testPickRandom_null_arg1() {
@@ -97,6 +97,42 @@ public class MtxRandomSelectorTest {
                 String randomVal = MtxRandomSelector.pickRandom(val1, val2).getValue();
                 assertTrue(val1.equals(randomVal) || val2.equals(randomVal));
             }
+        }
+    }
+
+    @Nested
+    class PickRandom6ArgTests {
+
+        @Test
+        public void testPickRandom_null() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null, null, null, null, null).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom("a", null, null, null, null, null).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom("a", "b", null, null, null, null).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", null, null, null).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", "d", null, null).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", null).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_validArgs() {
+            String[] vals = new String[]{"a", "b", "c", "d", "e", "f"};
+
+            for (int i = 0; i < 100; i++) {
+                String randomVal = MtxRandomSelector.pickRandom(vals).getValue();
+                assertTrue(
+                        vals[0].equals(randomVal)
+                     || vals[1].equals(randomVal)
+                     || vals[2].equals(randomVal)
+                     || vals[3].equals(randomVal)
+                     || vals[4].equals(randomVal)
+                     || vals[5].equals(randomVal)
+                );
+            }
+        }
+
+        @Test
+        public void testPickRandom_outOfIndex() {
+            // @TODO: Mockstatic ThreadLocalRandom to be out of index
         }
     }
 }
