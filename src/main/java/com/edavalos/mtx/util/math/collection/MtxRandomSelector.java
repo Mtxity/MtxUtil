@@ -46,4 +46,13 @@ public final class MtxRandomSelector {
 
         return MtxOptionalVar.empty();
     }
+
+    public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2) {
+        if (item1 == null || item2 == null) {
+            return MtxOptionalVar.empty();
+        }
+
+        int index = ThreadLocalRandom.current().nextInt(2);
+        return index == 1 ? MtxOptionalVar.ofNullable(item2) : MtxOptionalVar.ofNullable(item1);
+    }
 }
