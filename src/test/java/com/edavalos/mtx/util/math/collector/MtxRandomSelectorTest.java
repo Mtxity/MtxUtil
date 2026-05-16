@@ -87,5 +87,16 @@ public class MtxRandomSelectorTest {
         public void testPickRandom_null_arg2() {
             assertTrue(MtxRandomSelector.pickRandom("x", null).isEmpty());
         }
+
+        @Test
+        public void testPickRandom_validArgs() {
+            String val1 = "x";
+            String val2 = "y";
+
+            for (int i = 0; i < 100; i++) {
+                String randomVal = MtxRandomSelector.pickRandom(val1, val2).getValue();
+                assertTrue(val1.equals(randomVal) || val2.equals(randomVal));
+            }
+        }
     }
 }
