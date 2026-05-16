@@ -29,4 +29,21 @@ public final class MtxRandomSelector {
 
         return MtxOptionalVar.empty();
     }
+
+    public static <T> MtxOptionalVar<T> pickRandom(T[] array) {
+        if (array == null || array.length == 0) {
+            return MtxOptionalVar.empty();
+        }
+
+        int index = ThreadLocalRandom.current().nextInt(array.length);
+
+        int i = 0;
+        for (T item : array) {
+            if (i++ == index) {
+                return MtxOptionalVar.ofNullable(item);
+            }
+        }
+
+        return MtxOptionalVar.empty();
+    }
 }
