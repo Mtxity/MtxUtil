@@ -45,6 +45,20 @@ public class MtxOptionalVarTest {
     }
 
     @Test
+    public void testOfNullable_null() {
+        mtxOVar = MtxOptionalVar.ofNullable(null);
+        assertTrue(mtxOVar.isEmpty());
+        assertThrows(NoSuchElementException.class, () -> mtxOVar.getValue());
+    }
+
+    @Test
+    public void testOfNullable_nonNull() {
+        mtxOVar = MtxOptionalVar.ofNullable(SAMPLE_STR);
+        assertFalse(mtxOVar.isEmpty());
+        assertEquals(SAMPLE_STR, mtxOVar.getValue());
+    }
+
+    @Test
     public void testGetValue_hasValue() {
         mtxOVar = new MtxOptionalVar<>(SAMPLE_STR);
 
