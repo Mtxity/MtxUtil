@@ -1,6 +1,7 @@
 package com.edavalos.mtx.util.db.var;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 /**
  * A wrapper for an object that optionally has a value assigned. Accessing this should be preceded by checking if it
@@ -108,5 +109,20 @@ public class MtxOptionalVar<T> {
         }
 
         return false;
+    }
+
+    /**
+     * Returns an {@code MtxOptionalVar} describing the given value, if
+     * non-{@code null}, otherwise returns an empty {@code MtxOptionalVar}.
+     *
+     * @param value the possibly-{@code null} value to describe
+     * @param <T> the type of the value
+     * @return an {@code MtxOptionalVar} with a present value if the specified value
+     *         is non-{@code null}, otherwise an empty {@code MtxOptionalVar}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> MtxOptionalVar<T> ofNullable(T value) {
+        return value == null ? (MtxOptionalVar<T>) EMPTY
+                : new MtxOptionalVar<>(value);
     }
 }
