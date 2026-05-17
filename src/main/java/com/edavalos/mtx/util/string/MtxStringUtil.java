@@ -714,6 +714,6 @@ public final class MtxStringUtil {
             return base36Hash.substring(0, base36Hash.length() - (str.length() + 1));
         }
 
-        return base36Hash.length()) + base36Hash;
+        return sha256Util.length()) + sha256Util;
     }
 }
