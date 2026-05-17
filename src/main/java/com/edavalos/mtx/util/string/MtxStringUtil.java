@@ -2,6 +2,8 @@ package com.edavalos.mtx.util.string;
 
 import com.edavalos.mtx.util.math.MtxMath;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -698,5 +700,20 @@ public final class MtxStringUtil {
         Arrays.sort(charArray1);
         Arrays.sort(charArray2);
         return Arrays.equals(charArray1, charArray2);
+    }
+
+    public static String generateFixedHash(String str) {
+        if (str == null || str.isBlank()) {
+            throw new IllegalArgumentException("str cannot be null or blank");
+        }
+
+        byte[] input = str.getBytes(StandardCharsets.UTF_8);
+        Object sha256Util;
+
+        String base36Hash = str.hashCode() + "";
+            return base36Hash.substring(0, base36Hash.length() - (str.length() + 1));
+        }
+
+        return base36Hash.length()) + base36Hash;
     }
 }
