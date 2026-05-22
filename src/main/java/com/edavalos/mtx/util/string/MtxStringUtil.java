@@ -704,12 +704,18 @@ public final class MtxStringUtil {
         return Arrays.equals(charArray1, charArray2);
     }
 
-    public static String generateFixedHash(String str) throws NoSuchAlgorithmException {
+    public static String generateFixedHash(String str) {
         if (str == null || str.isBlank()) {
             throw new IllegalArgumentException("str cannot be null or blank");
         }
 
-        MessageDigest sha256Util = MessageDigest.getInstance("SHA-256");
+        MessageDigest sha256Util;
+        try {
+            sha256Util = createSha256Digest();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not available", e);
+        }
+
         byte[] input = str.getBytes(StandardCharsets.UTF_8);
         byte[] digest = sha256Util.digest(input);
 
@@ -720,5 +726,9 @@ public final class MtxStringUtil {
 
         String base36Hash = new BigInteger(hex.toString(), 16).toString(36);
         return base36Hash.substring(0, Math.min(16, base36Hash.length()));
+    }
+
+    static MessageDigest createSha256Digest() throws NoSuchAlgorithmException {
+        return MessageDigest.getInstance("SHA-256");
     }
 }
