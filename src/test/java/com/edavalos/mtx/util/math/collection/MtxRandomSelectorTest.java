@@ -1,17 +1,21 @@
-package com.edavalos.mtx.util.math.collector;
+package com.edavalos.mtx.util.math.collection;
 
-import com.edavalos.mtx.util.math.collection.MtxRandomSelector;
+import com.edavalos.mtx.util.db.var.MtxOptionalVar;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Answers.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mockStatic;
 
-// @TODO: Fix coverage map in Intellij to verify coverage is complete
 public class MtxRandomSelectorTest {
 
     @Nested
@@ -44,7 +48,15 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_isNotList_outOfIndex() {
-            // @TODO: Mockstatic ThreadLocalRandom to be out of index
+            Set<String> set = new LinkedHashSet<>(List.of("a", "b", "c"));
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(3)).thenReturn(999);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(set);
+
+                assertTrue(result.isEmpty());
+            }
         }
     }
 
@@ -71,7 +83,15 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_outOfIndex() {
-            // @TODO: Mockstatic ThreadLocalRandom to be out of index
+            String[] array = List.of("x", "y", "z").toArray(new String[0]);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(3)).thenReturn(999);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(array);
+
+                assertTrue(result.isEmpty());
+            }
         }
     }
 
@@ -118,7 +138,7 @@ public class MtxRandomSelectorTest {
             String[] vals = new String[]{"a", "b", "c", "d", "e", "f"};
 
             for (int i = 0; i < 100; i++) {
-                String randomVal = MtxRandomSelector.pickRandom(vals).getValue();
+                String randomVal = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f").getValue();
                 assertTrue(
                         vals[0].equals(randomVal)
                      || vals[1].equals(randomVal)
@@ -132,7 +152,13 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_outOfIndex() {
-            // @TODO: Mockstatic ThreadLocalRandom to be out of index
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(999);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue(result.isEmpty());
+            }
         }
     }
 }

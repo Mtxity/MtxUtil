@@ -14,7 +14,7 @@ public final class MtxRandomSelector {
             return MtxOptionalVar.empty();
         }
 
-        int index = ThreadLocalRandom.current().nextInt(collection.size());
+        int index = nextRandomInt(collection.size());
 
         if (collection instanceof List<T> list) {
             return MtxOptionalVar.ofNullable(list.get(index));
@@ -35,7 +35,7 @@ public final class MtxRandomSelector {
             return MtxOptionalVar.empty();
         }
 
-        int index = ThreadLocalRandom.current().nextInt(array.length);
+        int index = nextRandomInt(array.length);
 
         int i = 0;
         for (T item : array) {
@@ -52,7 +52,7 @@ public final class MtxRandomSelector {
             return MtxOptionalVar.empty();
         }
 
-        int index = ThreadLocalRandom.current().nextInt(2);
+        int index = nextRandomInt(2);
         return index == 1 ? MtxOptionalVar.ofNullable(item2) : MtxOptionalVar.ofNullable(item1);
     }
 
@@ -61,7 +61,7 @@ public final class MtxRandomSelector {
             return MtxOptionalVar.empty();
         }
 
-        int index = ThreadLocalRandom.current().nextInt(6);
+        int index = nextRandomInt(6);
         return switch (index) {
             case 0 -> MtxOptionalVar.ofNullable(item1);
             case 1 -> MtxOptionalVar.ofNullable(item2);
@@ -71,5 +71,9 @@ public final class MtxRandomSelector {
             case 5 -> MtxOptionalVar.ofNullable(item6);
             default -> MtxOptionalVar.empty();
         };
+    }
+
+    static int nextRandomInt(int bound) {
+        return ThreadLocalRandom.current().nextInt(bound);
     }
 }
