@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -13,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -1499,6 +1501,104 @@ public final class MtxStringUtilTest {
         @Test
         public void testAreAnagrams_alreadyEqual() {
             assertTrue(MtxStringUtil.areAnagrams("abc", "abc"));
+        }
+    }
+
+    @Nested
+    class TestGenerateFixedHash {
+
+        @Test
+        void testGenerateFixedHash_nullString() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.generateFixedHash(null)
+            );
+
+            assertEquals("str cannot be null or blank", exception.getMessage());
+        }
+
+        @Test
+        void testGenerateFixedHash_emptyString() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.generateFixedHash("")
+            );
+
+            assertEquals("str cannot be null or blank", exception.getMessage());
+        }
+
+        @Test
+        void testGenerateFixedHash_blankString() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxStringUtil.generateFixedHash("   ")
+            );
+
+            assertEquals("str cannot be null or blank", exception.getMessage());
+        }
+
+        @Test
+        void testGenerateFixedHash_validString_returnsNonNullHash() throws NoSuchAlgorithmException {
+            String result = MtxStringUtil.generateFixedHash("hello");
+
+            assertNotNull(result);
+            assertFalse(result.isBlank());
+        }
+
+        @Test
+        void testGenerateFixedHash_validString_returnsFixedLength() throws NoSuchAlgorithmException {
+            String result = MtxStringUtil.generateFixedHash("hello");
+
+            assertEquals(16, result.length());
+        }
+
+        @Test
+        void testGenerateFixedHash_sameInput_returnsSameHash() throws NoSuchAlgorithmException {
+            String hash1 = MtxStringUtil.generateFixedHash("consistent-input");
+            String hash2 = MtxStringUtil.generateFixedHash("consistent-input");
+
+            assertEquals(hash1, hash2);
+        }
+
+        @Test
+        void testGenerateFixedHash_differentInputs_returnDifferentHashes() throws NoSuchAlgorithmException {
+            String hash1 = MtxStringUtil.generateFixedHash("input-one");
+            String hash2 = MtxStringUtil.generateFixedHash("input-two");
+
+            assertNotEquals(hash1, hash2);
+        }
+
+        @Test
+        void testGenerateFixedHash_unicodeInput() throws NoSuchAlgorithmException {
+            String result = MtxStringUtil.generateFixedHash("こんにちは世界");
+
+            assertNotNull(result);
+            assertEquals(16, result.length());
+        }
+
+        @Test
+        void testGenerateFixedHash_specialCharactersInput() throws NoSuchAlgorithmException {
+            String result = MtxStringUtil.generateFixedHash("!@#$%^&*()_+-=[]{}|;':,.<>/?");
+
+            assertNotNull(result);
+            assertEquals(16, result.length());
+        }
+
+        @Test
+        void testGenerateFixedHash_longInput() throws NoSuchAlgorithmException {
+            String input = "a".repeat(10_000);
+
+            String result = MtxStringUtil.generateFixedHash(input);
+
+            assertNotNull(result);
+            assertEquals(16, result.length());
+        }
+
+        @Test
+        void testGenerateFixedHash_resultContainsOnlyBase36Characters() throws NoSuchAlgorithmException {
+            String result = MtxStringUtil.generateFixedHash("base36-test");
+
+            assertTrue(result.matches("[0-9a-z]+"));
         }
     }
 }
