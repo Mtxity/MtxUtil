@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.string;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -13,13 +14,17 @@ import java.util.regex.Pattern;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Answers.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.mockStatic;
 
 public final class MtxStringUtilTest {
+
     @Nested
     class IsEmptyTests {
         @Test
@@ -1508,7 +1513,7 @@ public final class MtxStringUtilTest {
     class TestGenerateFixedHash {
 
         @Test
-        void testGenerateFixedHash_nullString() {
+        public void testGenerateFixedHash_nullString() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxStringUtil.generateFixedHash(null)
@@ -1518,7 +1523,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_emptyString() {
+        public void testGenerateFixedHash_emptyString() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxStringUtil.generateFixedHash("")
@@ -1528,7 +1533,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_blankString() {
+        public void testGenerateFixedHash_blankString() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxStringUtil.generateFixedHash("   ")
@@ -1538,7 +1543,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_validString_returnsNonNullHash() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_validString_returnsNonNullHash() {
             String result = MtxStringUtil.generateFixedHash("hello");
 
             assertNotNull(result);
@@ -1546,14 +1551,14 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_validString_returnsFixedLength() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_validString_returnsFixedLength() {
             String result = MtxStringUtil.generateFixedHash("hello");
 
             assertEquals(16, result.length());
         }
 
         @Test
-        void testGenerateFixedHash_sameInput_returnsSameHash() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_sameInput_returnsSameHash() {
             String hash1 = MtxStringUtil.generateFixedHash("consistent-input");
             String hash2 = MtxStringUtil.generateFixedHash("consistent-input");
 
@@ -1561,7 +1566,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_differentInputs_returnDifferentHashes() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_differentInputs_returnDifferentHashes() {
             String hash1 = MtxStringUtil.generateFixedHash("input-one");
             String hash2 = MtxStringUtil.generateFixedHash("input-two");
 
@@ -1569,7 +1574,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_unicodeInput() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_unicodeInput() {
             String result = MtxStringUtil.generateFixedHash("こんにちは世界");
 
             assertNotNull(result);
@@ -1577,7 +1582,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_specialCharactersInput() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_specialCharactersInput() {
             String result = MtxStringUtil.generateFixedHash("!@#$%^&*()_+-=[]{}|;':,.<>/?");
 
             assertNotNull(result);
@@ -1585,7 +1590,7 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_longInput() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_longInput() {
             String input = "a".repeat(10_000);
 
             String result = MtxStringUtil.generateFixedHash(input);
@@ -1595,10 +1600,25 @@ public final class MtxStringUtilTest {
         }
 
         @Test
-        void testGenerateFixedHash_resultContainsOnlyBase36Characters() throws NoSuchAlgorithmException {
+        public void testGenerateFixedHash_resultContainsOnlyBase36Characters() {
             String result = MtxStringUtil.generateFixedHash("base36-test");
 
             assertTrue(result.matches("[0-9a-z]+"));
+        }
+
+        @Test
+        public void testGenerateFixedHash_sha256AlgorithmUnavailable() {
+            try (MockedStatic<MtxStringUtil> mockedStatic = mockStatic(MtxStringUtil.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(MtxStringUtil::createSha256Digest).thenThrow(new NoSuchAlgorithmException("Algorithm missing"));
+
+                RuntimeException exception = assertThrows(
+                        RuntimeException.class,
+                        () -> MtxStringUtil.generateFixedHash("test")
+                );
+
+                assertEquals("SHA-256 algorithm not available", exception.getMessage());
+                assertInstanceOf(NoSuchAlgorithmException.class, exception.getCause());
+            }
         }
     }
 }
