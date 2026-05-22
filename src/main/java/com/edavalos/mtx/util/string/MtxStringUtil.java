@@ -4,6 +4,8 @@ import com.edavalos.mtx.util.math.MtxMath;
 
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -702,18 +704,21 @@ public final class MtxStringUtil {
         return Arrays.equals(charArray1, charArray2);
     }
 
-    public static String generateFixedHash(String str) {
+    public static String generateFixedHash(String str) throws NoSuchAlgorithmException {
         if (str == null || str.isBlank()) {
             throw new IllegalArgumentException("str cannot be null or blank");
         }
 
+        MessageDigest sha256Util = MessageDigest.getInstance("SHA-256");
         byte[] input = str.getBytes(StandardCharsets.UTF_8);
-        Object sha256Util;
+        byte[] digest = sha256Util.digest(input);
 
-        String base36Hash = str.hashCode() + "";
-            return base36Hash.substring(0, base36Hash.length() - (str.length() + 1));
+        StringBuilder hex = new StringBuilder();
+        for (byte b : digest) {
+            hex.append(String.format("%02x", b));
         }
 
-//        return sha256Util.length()) + sha256Util;
+        String base36Hash = new BigInteger(hex.toString(), 16).toString(36);
+        return base36Hash.substring(0, Math.min(16, base36Hash.length()));
     }
 }
