@@ -56,6 +56,16 @@ public final class MtxRandomSelector {
         return index == 1 ? MtxOptionalVar.ofNullable(item2) : MtxOptionalVar.ofNullable(item1);
     }
 
+    public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4) {
+        if (item1 == null || item2 == null || item3 == null || item4 == null) {
+            return MtxOptionalVar.empty();
+        }
+
+        MtxOptionalVar<T> result1 = pickRandom(item1, item2);
+        MtxOptionalVar<T> result2 = pickRandom(item3, item4);
+        return pickRandom(result1.getValue(), result2.getValue());
+    }
+
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4, T item5, T item6) {
         if (item1 == null || item2 == null || item3 == null || item4 == null || item5 == null || item6 == null) {
             return MtxOptionalVar.empty();
