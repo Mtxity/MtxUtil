@@ -121,6 +121,48 @@ public class MtxRandomSelectorTest {
     }
 
     @Nested
+    class PickRandom4ArgTests {
+
+        @Test
+        public void testPickRandom_null_arg1() {
+            assertTrue(MtxRandomSelector.pickRandom(null, "y", "a", "b").isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_null_arg2() {
+            assertTrue(MtxRandomSelector.pickRandom("x", null, "a", "b").isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_null_arg3() {
+            assertTrue(MtxRandomSelector.pickRandom("x", "y", null, "b").isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_null_arg4() {
+            assertTrue(MtxRandomSelector.pickRandom("x", "y", "a", null).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_validArgs() {
+            String val1 = "x";
+            String val2 = "y";
+            String val3 = "a";
+            String val4 = "b";
+
+            for (int i = 0; i < 100; i++) {
+                String randomVal = MtxRandomSelector.pickRandom(val1, val2, val3, val4).getValue();
+                assertTrue(
+                        val1.equals(randomVal)
+                     || val2.equals(randomVal)
+                     || val3.equals(randomVal)
+                     || val4.equals(randomVal)
+                );
+            }
+        }
+    }
+
+    @Nested
     class PickRandom6ArgTests {
 
         @Test
