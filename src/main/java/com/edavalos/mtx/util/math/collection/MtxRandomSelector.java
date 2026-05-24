@@ -48,7 +48,7 @@ public final class MtxRandomSelector {
     }
 
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2) {
-        if (item1 == null || item2 == null) {
+        if (item1 == null && item2 == null) {
             return MtxOptionalVar.empty();
         }
 
@@ -57,7 +57,7 @@ public final class MtxRandomSelector {
     }
 
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4) {
-        if (item1 == null || item2 == null || item3 == null || item4 == null) {
+        if (item1 == null && item2 == null && item3 == null && item4 == null) {
             return MtxOptionalVar.empty();
         }
 
@@ -67,7 +67,7 @@ public final class MtxRandomSelector {
     }
 
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4, T item5, T item6) {
-        if (item1 == null || item2 == null || item3 == null || item4 == null || item5 == null || item6 == null) {
+        if (item1 == null && item2 == null && item3 == null && item4 == null && item5 == null && item6 == null) {
             return MtxOptionalVar.empty();
         }
 
