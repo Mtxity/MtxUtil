@@ -130,6 +130,19 @@ public final class MtxRandomSelector {
         };
     }
 
+    public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4, T item5, T item6, T item7, T item8) {
+        if (
+                item1 == null && item2 == null && item3 == null && item4 == null
+             && item5 == null && item6 == null && item7 == null && item8 == null
+        ) {
+            return MtxOptionalVar.empty();
+        }
+
+        MtxOptionalVar<T> result1 = pickRandom(item1, item2, item3, item4);
+        MtxOptionalVar<T> result2 = pickRandom(item5, item6, item7, item8);
+        return pickRandom(result1.getValue(), result2.getValue());
+    }
+
     static int nextRandomInt(int bound) {
         return ThreadLocalRandom.current().nextInt(bound);
     }
