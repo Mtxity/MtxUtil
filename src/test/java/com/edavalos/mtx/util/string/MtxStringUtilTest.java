@@ -1621,4 +1621,32 @@ public final class MtxStringUtilTest {
             }
         }
     }
+
+    @Nested
+    class TestLastChar {
+
+        @Test
+        public void testLastChar_oneChar() {
+            String x = "y";
+            assertEquals('y', MtxStringUtil.lastChar(x));
+        }
+
+        @Test
+        public void testLastChar_multipleChar() {
+            String x = "wxy";
+            assertEquals('y', MtxStringUtil.lastChar(x));
+        }
+
+        @Test
+        public void testLastChar_noChar() {
+            String x = "";
+            assertEquals('0', MtxStringUtil.lastChar(x));
+        }
+
+        @Test
+        public void testLastChar_nullChar() {
+            String x = null;
+            assertEquals('0', MtxStringUtil.lastChar(x));
+        }
+    }
 }
