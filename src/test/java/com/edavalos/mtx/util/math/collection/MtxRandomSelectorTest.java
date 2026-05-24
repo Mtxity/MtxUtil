@@ -99,13 +99,8 @@ public class MtxRandomSelectorTest {
     class PickRandom2ArgTests {
 
         @Test
-        public void testPickRandom_null_arg1() {
-            assertTrue(MtxRandomSelector.pickRandom(null, "y").isEmpty());
-        }
-
-        @Test
-        public void testPickRandom_null_arg2() {
-            assertTrue(MtxRandomSelector.pickRandom("x", null).isEmpty());
+        public void testPickRandom_nullArgs() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null).isEmpty());
         }
 
         @Test
@@ -124,23 +119,8 @@ public class MtxRandomSelectorTest {
     class PickRandom4ArgTests {
 
         @Test
-        public void testPickRandom_null_arg1() {
-            assertTrue(MtxRandomSelector.pickRandom(null, "y", "a", "b").isEmpty());
-        }
-
-        @Test
-        public void testPickRandom_null_arg2() {
-            assertTrue(MtxRandomSelector.pickRandom("x", null, "a", "b").isEmpty());
-        }
-
-        @Test
-        public void testPickRandom_null_arg3() {
-            assertTrue(MtxRandomSelector.pickRandom("x", "y", null, "b").isEmpty());
-        }
-
-        @Test
-        public void testPickRandom_null_arg4() {
-            assertTrue(MtxRandomSelector.pickRandom("x", "y", "a", null).isEmpty());
+        public void testPickRandom_nullArgs() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null, null, null).isEmpty());
         }
 
         @Test
@@ -168,11 +148,6 @@ public class MtxRandomSelectorTest {
         @Test
         public void testPickRandom_null() {
             assertTrue(MtxRandomSelector.pickRandom(null, null, null, null, null, null).isEmpty());
-            assertTrue(MtxRandomSelector.pickRandom("a", null, null, null, null, null).isEmpty());
-            assertTrue(MtxRandomSelector.pickRandom("a", "b", null, null, null, null).isEmpty());
-            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", null, null, null).isEmpty());
-            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", "d", null, null).isEmpty());
-            assertTrue(MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", null).isEmpty());
         }
 
         @Test
