@@ -731,4 +731,13 @@ public final class MtxStringUtil {
     static MessageDigest createSha256Digest() throws NoSuchAlgorithmException {
         return MessageDigest.getInstance("SHA-256");
     }
+
+    public static char lastChar(String str) {
+        if (str == null || str.isEmpty()) {
+            return '0';
+        }
+
+        int lastCharPos = str.length() - 1;
+        return str.charAt(lastCharPos);
+    }
 }
