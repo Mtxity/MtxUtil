@@ -138,12 +138,13 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_firstArgNullSecondArgPresent() {
-            TestItem item2 = new TestItem(100);
+            TestItem item2 = new TestItem(400);
+            TestItem item3 = new TestItem(400);
 
             try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
                 mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(1);
 
-                TestItem result = MtxRandomSelector.pickRandom(null, item2, null).getValue();
+                TestItem result = MtxRandomSelector.pickRandom(null, item2, item3).getValue();
 
                 assertTrue(result == item2);
             }
@@ -153,13 +154,9 @@ public class MtxRandomSelectorTest {
         public void testPickRandom_firstTwoArgsNullThirdArgPresent() {
             TestItem item3 = new TestItem(700);
 
-            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
-                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(1, 1, 0);
+            MtxOptionalVar<TestItem> result = MtxRandomSelector.pickRandom(null, null, item3);
 
-                TestItem result = MtxRandomSelector.pickRandom(null, null, item3).getValue();
-
-                assertTrue(result == item3);
-            }
+            assertTrue(result.isEmpty());
         }
 
         @Test
