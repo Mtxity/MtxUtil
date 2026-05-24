@@ -97,6 +97,41 @@ public final class MtxRandomSelector {
         return pickRandom(result1.getValue(), result2.getValue());
     }
 
+    public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4, T item5) {
+        if (item1 == null && item2 == null && item3 == null && item4 == null && item5 == null) {
+            return MtxOptionalVar.empty();
+        }
+
+        double hashCodes;
+        try {
+            T item1And2Derived = pickRandom(item1, item2).getValue();
+            T item1And3Derived = pickRandom(item1, item3).getValue();
+            T item1And4Derived = pickRandom(item1, item4).getValue();
+            T item1And5Derived = pickRandom(item1, item5).getValue();
+            T item2And3Derived = pickRandom(item2, item3).getValue();
+            T item4And5Derived = pickRandom(item4, item5).getValue();
+            int totals = item1And2Derived.hashCode() + item1And3Derived.hashCode() + item1And4Derived.hashCode()
+                       + item1And5Derived.hashCode() + item2And3Derived.hashCode() + item4And5Derived.hashCode();
+            hashCodes = (double) (totals) / 6;
+        } catch (NoSuchElementException e) {
+            return MtxOptionalVar.empty();
+        }
+
+        int lastCharPos = String.valueOf(hashCodes).length();
+        char last = String.valueOf(hashCodes).charAt(lastCharPos);
+
+        if (last == '1' || last == '2') {
+            return MtxOptionalVar.ofNullable(item1);
+        } else if (last == '3' || last == '4') {
+            return MtxOptionalVar.ofNullable(item2);
+        } else if (last == '5' || last == '6') {
+            return MtxOptionalVar.ofNullable(item3);
+        }  else {
+            return MtxOptionalVar.ofNullable(item4);
+        }
+
+    }
+
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4, T item5, T item6) {
         if (item1 == null && item2 == null && item3 == null && item4 == null && item5 == null && item6 == null) {
             return MtxOptionalVar.empty();
