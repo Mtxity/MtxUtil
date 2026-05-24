@@ -4,6 +4,7 @@ import com.edavalos.mtx.util.db.var.MtxOptionalVar;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.ThreadLocalRandom;
 
 public final class MtxRandomSelector {
@@ -54,6 +55,36 @@ public final class MtxRandomSelector {
 
         int index = nextRandomInt(2);
         return index == 1 ? MtxOptionalVar.ofNullable(item2) : MtxOptionalVar.ofNullable(item1);
+    }
+
+    public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3) {
+        if (item1 == null && item2 == null && item3 == null) {
+            return MtxOptionalVar.empty();
+        }
+
+        double hashCodes;
+        try {
+            T item1And2Derived = pickRandom(item1, item2).getValue();
+            T item2And3Derived = pickRandom(item2, item3).getValue();
+            T item1And3Derived = pickRandom(item1, item3).getValue();
+            hashCodes = (double) (item1And2Derived.hashCode() + item2And3Derived.hashCode() + item1And3Derived.hashCode()) / 3;
+        } catch (NoSuchElementException e) {
+            return MtxOptionalVar.empty();
+        }
+
+        char first = String.valueOf(hashCodes).charAt(0);
+        if (first == '-') {
+            first = String.valueOf(hashCodes).charAt(1);
+        }
+
+        if (first == '1' || first == '2' || first == '3') {
+            return MtxOptionalVar.ofNullable(item1);
+        } else if (first == '4' || first == '5' || first == '6') {
+            return MtxOptionalVar.ofNullable(item2);
+        }  else {
+            return MtxOptionalVar.ofNullable(item3);
+        }
+
     }
 
     public static <T> MtxOptionalVar<T> pickRandom(T item1, T item2, T item3, T item4) {
