@@ -116,6 +116,185 @@ public class MtxRandomSelectorTest {
     }
 
     @Nested
+    class PickRandom3ArgTests {
+
+        private class TestItem {
+            private final int hashCode;
+
+            private TestItem(int hashCode) {
+                this.hashCode = hashCode;
+            }
+
+            @Override
+            public int hashCode() {
+                return hashCode;
+            }
+        }
+
+        @Test
+        public void testPickRandom_nullArgs() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null, null).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_firstArgNullSecondArgPresent() {
+            TestItem item2 = new TestItem(100);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(1);
+
+                TestItem result = MtxRandomSelector.pickRandom(null, item2, null).getValue();
+
+                assertTrue(result == item2);
+            }
+        }
+
+        @Test
+        public void testPickRandom_firstTwoArgsNullThirdArgPresent() {
+            TestItem item3 = new TestItem(700);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(1, 1, 0);
+
+                TestItem result = MtxRandomSelector.pickRandom(null, null, item3).getValue();
+
+                assertTrue(result == item3);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem1ForFirstDigit1() {
+            TestItem item1 = new TestItem(100);
+            TestItem item2 = new TestItem(100);
+            TestItem item3 = new TestItem(100);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item1);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem1ForFirstDigit2() {
+            TestItem item1 = new TestItem(200);
+            TestItem item2 = new TestItem(200);
+            TestItem item3 = new TestItem(200);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item1);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem1ForFirstDigit3() {
+            TestItem item1 = new TestItem(300);
+            TestItem item2 = new TestItem(300);
+            TestItem item3 = new TestItem(300);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item1);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem2ForFirstDigit4() {
+            TestItem item1 = new TestItem(400);
+            TestItem item2 = new TestItem(400);
+            TestItem item3 = new TestItem(400);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item2);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem2ForFirstDigit5() {
+            TestItem item1 = new TestItem(500);
+            TestItem item2 = new TestItem(500);
+            TestItem item3 = new TestItem(500);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item2);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem2ForFirstDigit6() {
+            TestItem item1 = new TestItem(600);
+            TestItem item2 = new TestItem(600);
+            TestItem item3 = new TestItem(600);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item2);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem3() {
+            TestItem item1 = new TestItem(700);
+            TestItem item2 = new TestItem(700);
+            TestItem item3 = new TestItem(700);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item3);
+            }
+        }
+
+        @Test
+        public void testPickRandom_negativeHashCodeReturnsItem1() {
+            TestItem item1 = new TestItem(-100);
+            TestItem item2 = new TestItem(-100);
+            TestItem item3 = new TestItem(-100);
+
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(0);
+
+                TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
+
+                assertTrue(result == item1);
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsEmptyWhenDerivedValueIsEmpty() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2)).thenReturn(1);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", null, null);
+
+                assertTrue(result.isEmpty());
+            }
+        }
+    }
+
+    @Nested
     class PickRandom4ArgTests {
 
         @Test
