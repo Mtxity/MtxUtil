@@ -462,6 +462,127 @@ public class MtxRandomSelectorTest {
         }
 
         @Test
+        public void testPickRandom_secondArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(1);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, "b", null, null, null, null);
+
+                assertTrue("b".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_thirdArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(2);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, "c", null, null, null);
+
+                assertTrue("c".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_fourthArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(3);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, "d", null, null);
+
+                assertTrue("d".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_fifthArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(4);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, "e", null);
+
+                assertTrue("e".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_sixthArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(5);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, null, "f");
+
+                assertTrue("f".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem1() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(0);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("a".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem2() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(1);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("b".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem3() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(2);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("c".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem4() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(3);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("d".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem5() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(4);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("e".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem6() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(6)).thenReturn(5);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
+
+                assertTrue("f".equals(result.getValue()));
+            }
+        }
+
+        @Test
         public void testPickRandom_validArgs() {
             String[] vals = new String[]{"a", "b", "c", "d", "e", "f"};
 
