@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Answers.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mockStatic;
@@ -607,6 +608,51 @@ public class MtxRandomSelectorTest {
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
                 assertTrue(result.isEmpty());
+            }
+        }
+    }
+
+    @Nested
+    class PickRandom8ArgTests {
+
+        @Test
+        public void testPickRandom_nullArgs() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null, null, null, null, null, null, null).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_returnsItem2() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2))
+                        .thenReturn(1, 0, 0, 0, 0, 0, 0);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f", "g", "h");
+
+                assertTrue("b".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_partialNullArgs() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2))
+                        .thenReturn(0, 0, 0, 0, 0, 0, 0);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", null, "c", null, "e", null, "g", null);
+
+                assertTrue("a".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_returnsItem1() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(2))
+                        .thenReturn(0, 0, 0, 0, 0, 0, 0);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f", "g", "h");
+
+                assertTrue("a".equals(result.getValue()));
             }
         }
     }
