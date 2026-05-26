@@ -140,6 +140,14 @@ See the interface for a complete list.
 * `reset()` - clears all laps and resets counting to zero (but does not start counting again)
 * `getLaps()` - gets all marked laps since last reset or creation
 
+## Random Selector ([com.edavalos.mtx.util.math.collection](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math/collection))
+`MtxRandomSelector` provides utility methods to select a random element from a collection, array, or a predefined set of items. It wraps the selected element in an `MtxOptionalVar` (which returns empty if the input is empty or all elements are null).
+
+Supported methods:
+* `pickRandom(Collection<T> collection)` - selects a random element from any collection
+* `pickRandom(T[] array)` - selects a random element from an array
+* `pickRandom(T item1, T item2, ...)` - selects a random element from 2 to eight specified arguments
+
 ## HTTP Request Reader ([com.edavalos.mtx.util.network](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/network))
 `MtxRequestReader` takes a serialized HTTP request and parses it.
 Something like: `GET /test/14/twelve?key1=value1&key2=value2 HTTP/1.1` would be consumed by an `MtxRequestReader` object to have the following properties accessible:
