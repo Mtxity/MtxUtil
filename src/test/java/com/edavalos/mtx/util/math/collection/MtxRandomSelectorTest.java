@@ -71,7 +71,7 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_empty() {
-            assertTrue(MtxRandomSelector.pickRandom(new String[] {}).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom(new String[]{}).isEmpty());
         }
 
         @Test
@@ -405,6 +405,50 @@ public class MtxRandomSelectorTest {
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
                 assertTrue(result.isEmpty());
+            }
+        }
+
+        @Test
+        public void testPickRandom_secondArgOnlyPresent() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(5)).thenReturn(1);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, "b", null, null, null);
+
+                assertTrue("b".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_thirdArgOnlyPresent() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(5)).thenReturn(2);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, "c", null, null);
+
+                assertTrue("c".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_fourthArgOnlyPresent() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(5)).thenReturn(3);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, "d", null);
+
+                assertTrue("d".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_fifthArgOnlyPresent() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(5)).thenReturn(4);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, "e");
+
+                assertTrue("e".equals(result.getValue()));
             }
         }
     }
