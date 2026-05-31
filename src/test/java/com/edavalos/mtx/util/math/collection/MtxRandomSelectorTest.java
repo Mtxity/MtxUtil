@@ -25,8 +25,7 @@ public class MtxRandomSelectorTest {
 
         @Test
         public void testPickRandom_null() {
-            Collection<String> collection = null;
-            assertTrue(MtxRandomSelector.pickRandom(collection).isEmpty());
+            assertTrue(MtxRandomSelector.pickRandom((Collection<String>) null).isEmpty());
         }
 
         @Test
