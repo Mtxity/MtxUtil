@@ -13,11 +13,11 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Answers.CALLS_REAL_METHODS;
 import static org.mockito.Mockito.mockStatic;
 
-// @TODO: Replace assertTrue() statements with assertEquals() where applicable
 public class MtxRandomSelectorTest {
 
     @Nested
@@ -148,7 +148,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(null, item2, item3).getValue();
 
-                assertTrue(result == item2);
+                assertSame(result, item2);
             }
         }
 
@@ -172,7 +172,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item1);
+                assertSame(result, item1);
             }
         }
 
@@ -187,7 +187,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item1);
+                assertSame(result, item1);
             }
         }
 
@@ -202,7 +202,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item1);
+                assertSame(result, item1);
             }
         }
 
@@ -217,7 +217,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item2);
+                assertSame(result, item2);
             }
         }
 
@@ -232,7 +232,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item2);
+                assertSame(result, item2);
             }
         }
 
@@ -247,7 +247,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item2);
+                assertSame(result, item2);
             }
         }
 
@@ -262,7 +262,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item3);
+                assertSame(result, item3);
             }
         }
 
@@ -277,7 +277,7 @@ public class MtxRandomSelectorTest {
 
                 TestItem result = MtxRandomSelector.pickRandom(item1, item2, item3).getValue();
 
-                assertTrue(result == item1);
+                assertSame(result, item1);
             }
         }
 
@@ -335,7 +335,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
-                assertTrue("a".equals(result.getValue()));
+                assertEquals("a", result.getValue());
             }
         }
 
@@ -346,7 +346,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
-                assertTrue("b".equals(result.getValue()));
+                assertEquals("b", result.getValue());
             }
         }
 
@@ -357,7 +357,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
-                assertTrue("c".equals(result.getValue()));
+                assertEquals("c", result.getValue());
             }
         }
 
@@ -368,7 +368,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
-                assertTrue("d".equals(result.getValue()));
+                assertEquals("d", result.getValue());
             }
         }
 
@@ -379,7 +379,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e");
 
-                assertTrue("e".equals(result.getValue()));
+                assertEquals("e", result.getValue());
             }
         }
 
@@ -417,7 +417,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, "b", null, null, null);
 
-                assertTrue("b".equals(result.getValue()));
+                assertEquals("b", result.getValue());
             }
         }
 
@@ -428,7 +428,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, "c", null, null);
 
-                assertTrue("c".equals(result.getValue()));
+                assertEquals("c", result.getValue());
             }
         }
 
@@ -439,7 +439,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, "d", null);
 
-                assertTrue("d".equals(result.getValue()));
+                assertEquals("d", result.getValue());
             }
         }
 
@@ -450,7 +450,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, "e");
 
-                assertTrue("e".equals(result.getValue()));
+                assertEquals("e", result.getValue());
             }
         }
     }
@@ -470,7 +470,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, "b", null, null, null, null);
 
-                assertTrue("b".equals(result.getValue()));
+                assertEquals("b", result.getValue());
             }
         }
 
@@ -481,7 +481,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, "c", null, null, null);
 
-                assertTrue("c".equals(result.getValue()));
+                assertEquals("c", result.getValue());
             }
         }
 
@@ -492,7 +492,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, "d", null, null);
 
-                assertTrue("d".equals(result.getValue()));
+                assertEquals("d", result.getValue());
             }
         }
 
@@ -503,7 +503,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, "e", null);
 
-                assertTrue("e".equals(result.getValue()));
+                assertEquals("e", result.getValue());
             }
         }
 
@@ -514,7 +514,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, null, null, null, "f");
 
-                assertTrue("f".equals(result.getValue()));
+                assertEquals("f", result.getValue());
             }
         }
 
@@ -525,7 +525,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("a".equals(result.getValue()));
+                assertEquals("a", result.getValue());
             }
         }
 
@@ -536,7 +536,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("b".equals(result.getValue()));
+                assertEquals("b", result.getValue());
             }
         }
 
@@ -547,7 +547,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("c".equals(result.getValue()));
+                assertEquals("c", result.getValue());
             }
         }
 
@@ -558,7 +558,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("d".equals(result.getValue()));
+                assertEquals("d", result.getValue());
             }
         }
 
@@ -569,7 +569,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("e".equals(result.getValue()));
+                assertEquals("e", result.getValue());
             }
         }
 
@@ -580,7 +580,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f");
 
-                assertTrue("f".equals(result.getValue()));
+                assertEquals("f", result.getValue());
             }
         }
 
@@ -810,7 +810,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f", "g", "h");
 
-                assertTrue("b".equals(result.getValue()));
+                assertEquals("b", result.getValue());
             }
         }
 
@@ -822,7 +822,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", null, "c", null, "e", null, "g", null);
 
-                assertTrue("a".equals(result.getValue()));
+                assertEquals("a", result.getValue());
             }
         }
 
@@ -834,7 +834,7 @@ public class MtxRandomSelectorTest {
 
                 MtxOptionalVar<String> result = MtxRandomSelector.pickRandom("a", "b", "c", "d", "e", "f", "g", "h");
 
-                assertTrue("a".equals(result.getValue()));
+                assertEquals("a", result.getValue());
             }
         }
     }
