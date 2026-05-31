@@ -613,6 +613,37 @@ public class MtxRandomSelectorTest {
     }
 
     @Nested
+    class PickRandom7ArgTests {
+
+        @Test
+        public void testPickRandom_null() {
+            assertTrue(MtxRandomSelector.pickRandom(null, null, null, null, null, null, null).isEmpty());
+        }
+
+        @Test
+        public void testPickRandom_secondArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(7)).thenReturn(1);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, "b", null, null, null, null, null);
+
+                assertTrue("b".equals(result.getValue()));
+            }
+        }
+
+        @Test
+        public void testPickRandom_thirdArgPresentForNullCheckCoverage() {
+            try (MockedStatic<MtxRandomSelector> mockedStatic = mockStatic(MtxRandomSelector.class, CALLS_REAL_METHODS)) {
+                mockedStatic.when(() -> MtxRandomSelector.nextRandomInt(7)).thenReturn(2);
+
+                MtxOptionalVar<String> result = MtxRandomSelector.pickRandom(null, null, "c", null, null, null, null);
+
+                assertTrue("c".equals(result.getValue()));
+            }
+        }
+    }
+
+    @Nested
     class PickRandom8ArgTests {
 
         @Test
