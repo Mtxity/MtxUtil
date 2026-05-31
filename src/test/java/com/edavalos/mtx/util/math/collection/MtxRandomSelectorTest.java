@@ -119,7 +119,7 @@ public class MtxRandomSelectorTest {
     @Nested
     class PickRandom3ArgTests {
 
-        private class TestItem {
+        private static class TestItem {
             private final int hashCode;
 
             private TestItem(int hashCode) {
