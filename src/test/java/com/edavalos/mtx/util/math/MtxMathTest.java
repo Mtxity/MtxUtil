@@ -528,4 +528,17 @@ public class MtxMathTest {
             assertEquals(0, MtxMath.max());
         }
     }
+
+    @Nested
+    class HasRemainderTest {
+
+        @Test
+        public void testHasRemainder_true() {
+            assertTrue(MtxMath.hasRemainder(6, 3));
+        }
+        @Test
+        public void testHasRemainder_false() {
+            assertTrue(MtxMath.hasRemainder(7, 3));
+        }
+    }
 }

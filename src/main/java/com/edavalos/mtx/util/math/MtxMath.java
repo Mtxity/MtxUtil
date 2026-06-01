@@ -390,6 +390,7 @@ public final class MtxMath {
         return max(val.stream().mapToDouble(Double::doubleValue).toArray());
     }
 
+    // @TODO: Improve this
     public static boolean hasRemainder(int xDiv, int yDev) {
         double z = (double) xDiv / yDev;
         return String.valueOf(z).contains(".");
