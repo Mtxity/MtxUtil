@@ -389,4 +389,9 @@ public final class MtxMath {
     public static double maxFromList(List<Double> val) {
         return max(val.stream().mapToDouble(Double::doubleValue).toArray());
     }
+
+    public static boolean hasRemainder(int xDiv, int yDev) {
+        double z = (double) xDiv / yDev;
+        return String.valueOf(z).contains(".");
+    }
 }
