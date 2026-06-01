@@ -536,9 +536,32 @@ public class MtxMathTest {
         public void testHasRemainder_true() {
             assertTrue(MtxMath.hasRemainder(7, 3));
         }
+
         @Test
         public void testHasRemainder_false() {
             assertFalse(MtxMath.hasRemainder(6, 3));
+        }
+    }
+
+    @Nested
+    class DividesEvenlyEitherWayTest {
+
+        @Test
+        public void testDividesEvenlyEitherWay_true() {
+            assertTrue(MtxMath.dividesEvenlyEitherWay(4, 12));
+            assertTrue(MtxMath.dividesEvenlyEitherWay(12, 4));
+        }
+
+        @Test
+        public void testDividesEvenlyEitherWay_false() {
+            assertFalse(MtxMath.dividesEvenlyEitherWay(5, 12));
+            assertFalse(MtxMath.dividesEvenlyEitherWay(12, 5));
+        }
+
+        @Test
+        public void testDividesEvenlyEitherWay_zero() {
+            assertFalse(MtxMath.dividesEvenlyEitherWay(0, 12));
+            assertFalse(MtxMath.dividesEvenlyEitherWay(12, 0));
         }
     }
 }
