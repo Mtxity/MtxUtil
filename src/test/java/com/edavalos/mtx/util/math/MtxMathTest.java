@@ -564,4 +564,29 @@ public class MtxMathTest {
             assertFalse(MtxMath.dividesEvenlyEitherWay(12, 0));
         }
     }
+
+    @Nested
+    class GcdTests {
+
+        @Test
+        public void testGcd_positive() {
+            assertEquals(5, MtxMath.gcd(10, 5));
+            assertEquals(5, MtxMath.gcd(5, 10));
+            assertEquals(1, MtxMath.gcd(7, 3));
+            assertEquals(6, MtxMath.gcd(12, 18));
+        }
+
+        @Test
+        public void testGcd_zero() {
+            assertEquals(12, MtxMath.gcd(0, 12));
+            assertEquals(12, MtxMath.gcd(12, 0));
+        }
+
+        @Test
+        public void testGcd_negative() {
+            // Note: This reflects the current implementation's behavior with negative inputs
+            assertEquals(5, MtxMath.gcd(-10, 5));
+            assertEquals(-5, MtxMath.gcd(10, -5));
+        }
+    }
 }
