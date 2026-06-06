@@ -401,4 +401,8 @@ public final class MtxMath {
 
         return a % b == 0 || b % a == 0;
     }
+
+    public static int gcd(int a, int b) {
+        return b == 0 ? a : gcd(b, a % b);
+    }
 }
