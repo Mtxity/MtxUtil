@@ -409,4 +409,18 @@ public final class MtxMath {
     public static int lcm(int a, int b) {
         return Math.abs(a * b) / gcd(a, b);
     }
+
+    public static int power(int base, int exponent);
+
+    public static int absoluteValue(int n);
+
+    public static int sumOfDigits(int n);
+
+    public static int reverseNumber(int n);
+
+    public static int countDigits(int n);
+
+    public static boolean isEven(int n);
+
+    public static boolean isOdd(int n);
 }
