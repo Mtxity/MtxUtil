@@ -728,4 +728,42 @@ public class MtxMathTest {
             );
         }
     }
+
+    @Nested
+    class IsEvenTests {
+
+        @Test
+        void testIsEven_True() {
+            assertTrue(MtxMath.isEven(2));
+        }
+
+        @Test
+        void testIsEven_False() {
+            assertFalse(MtxMath.isEven(1));
+        }
+
+        @Test
+        void testIsEven_Zero() {
+            assertTrue(MtxMath.isEven(0));
+        }
+    }
+
+    @Nested
+    class IsOddTests {
+
+        @Test
+        void testIsOdd_True() {
+            assertTrue(MtxMath.isOdd(1));
+        }
+
+        @Test
+        void testIsOdd_False() {
+            assertFalse(MtxMath.isOdd(2));
+        }
+
+        @Test
+        void testIsOdd_Zero() {
+            assertFalse(MtxMath.isOdd(0));
+        }
+    }
 }
