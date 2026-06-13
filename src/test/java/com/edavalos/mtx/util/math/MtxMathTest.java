@@ -624,5 +624,16 @@ public class MtxMathTest {
             assertEquals(12, MtxMath.lcm(3, -12));
             assertEquals(-12, MtxMath.lcm(-3, -12));
         }
+
+        @Test
+        void testZeroAndNumber() {
+            assertEquals(0, MtxMath.lcm(0, 5));
+        }
+
+        @Test
+        void testBothZero() {
+            assertThrows(ArithmeticException.class,
+                    () -> MtxMath.lcm(0, 0));
+        }
     }
 }
