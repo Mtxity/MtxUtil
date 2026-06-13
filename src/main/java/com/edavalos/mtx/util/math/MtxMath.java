@@ -441,7 +441,19 @@ public final class MtxMath {
 
     public static int countDigits(int n);
 
-    public static boolean isEven(int n);
+    public static boolean isEven(int n) {
+        if (n == 0) {
+            return true;
+        }
 
-    public static boolean isOdd(int n);
+        return n % 2 == 0;
+    }
+
+    public static boolean isOdd(int n) {
+        if (n == 0) {
+            return false;
+        }
+
+        return n % 2 != 0;
+    }
 }
