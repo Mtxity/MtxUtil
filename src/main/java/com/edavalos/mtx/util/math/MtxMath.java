@@ -407,12 +407,21 @@ public final class MtxMath {
     }
 
     public static int lcm(int a, int b) {
-        return Math.abs(a * b) / gcd(a, b);
+        return abs(a * b) / gcd(a, b);
+    }
+
+    public static boolean coprime(int a, int b) {
+        return gcd(a, b) == 1;
     }
 
     public static int power(int base, int exponent);
 
-    public static int absoluteValue(int n);
+    public static int abs(int n) {
+        if (n < 0) {
+            return -n;
+        }
+        return n;
+    }
 
     public static int sumOfDigits(int n);
 
