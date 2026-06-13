@@ -632,8 +632,10 @@ public class MtxMathTest {
 
         @Test
         void testBothZero() {
-            assertThrows(ArithmeticException.class,
-                    () -> MtxMath.lcm(0, 0));
+            assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.lcm(0, 0)
+            );
         }
     }
 
@@ -682,6 +684,48 @@ public class MtxMathTest {
         @Test
         void testAbs_Zero() {
             assertEquals(0, MtxMath.abs(0));
+        }
+    }
+
+    @Nested
+    class PowerTests {
+
+        @Test
+        void testPower_PositiveExponent() {
+            assertEquals(8, MtxMath.power(2, 3));
+        }
+
+        @Test
+        void testPower_ExponentZero() {
+            assertEquals(1, MtxMath.power(5, 0));
+        }
+
+        @Test
+        void testPower_ExponentOne() {
+            assertEquals(7, MtxMath.power(7, 1));
+        }
+
+        @Test
+        void testPower_NegativeBaseOddExponent() {
+            assertEquals(-8,MtxMath.power(-2, 3));
+        }
+
+        @Test
+        void testPower_NegativeBaseEvenExponent() {
+            assertEquals(16, MtxMath.power(-2, 4));
+        }
+
+        @Test
+        void testPower_ZeroBasePositiveExponent() {
+            assertEquals(0, MtxMath.power(0, 5));
+        }
+
+        @Test
+        void testPower_NegativeExponentThrows() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.power(2, -1)
+            );
         }
     }
 }
