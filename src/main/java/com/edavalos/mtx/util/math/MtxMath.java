@@ -414,7 +414,19 @@ public final class MtxMath {
         return gcd(a, b) == 1;
     }
 
-    public static int power(int base, int exponent);
+    public static int power(int base, int exponent) {
+        if (exponent < 0) {
+            throw new IllegalArgumentException("Exponent must be non-negative");
+        }
+
+        int result = 1;
+
+        for (int i = 0; i < exponent; i++) {
+            result *= base;
+        }
+
+        return result;
+    }
 
     public static int abs(int n) {
         if (n < 0) {
