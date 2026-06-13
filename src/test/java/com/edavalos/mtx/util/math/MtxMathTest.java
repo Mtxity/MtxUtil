@@ -589,4 +589,40 @@ public class MtxMathTest {
             assertEquals(-5, MtxMath.gcd(10, -5));
         }
     }
+
+    @Nested
+    class LcmTests {
+
+        @Test
+        void testLcm_sameNumbers() {
+            assertEquals(5, MtxMath.lcm(5, 5));
+        }
+
+        @Test
+        void testLcm_commonMultiples() {
+            assertEquals(24, MtxMath.lcm(6, 8));
+        }
+
+        @Test
+        void testLcm_coPrimeNumbers() {
+            assertEquals(35, MtxMath.lcm(5, 7));
+        }
+
+        @Test
+        void testLcm_oneIsMultipleOfOther() {
+            assertEquals(12, MtxMath.lcm(3, 12));
+        }
+
+        @Test
+        void testLcm_withOne() {
+            assertEquals(7, MtxMath.lcm(1, 7));
+        }
+
+        @Test
+        void testLcm_negativeNumbers() {
+            assertEquals(-12, MtxMath.lcm(-3, 12));
+            assertEquals(12, MtxMath.lcm(3, -12));
+            assertEquals(-12, MtxMath.lcm(-3, -12));
+        }
+    }
 }
