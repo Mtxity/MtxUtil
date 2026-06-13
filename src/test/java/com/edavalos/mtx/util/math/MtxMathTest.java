@@ -636,4 +636,52 @@ public class MtxMathTest {
                     () -> MtxMath.lcm(0, 0));
         }
     }
+
+    @Nested
+    class CoprimeTests {
+
+        @Test
+        void testCoprime_TrueForCoPrimeNumbers() {
+            assertTrue(MtxMath.coprime(8, 15)); // gcd = 1
+        }
+
+        @Test
+        void testCoprime_FalseForNonCoPrimeNumbers() {
+            assertFalse(MtxMath.coprime(8, 12)); // gcd = 4
+        }
+
+        @Test
+        void testCoprime_ConsecutiveNumbersAreCoPrime() {
+            assertTrue(MtxMath.coprime(14, 15));
+        }
+
+        @Test
+        void testCoprime_SameNumberGreaterThanOne() {
+            assertFalse(MtxMath.coprime(7, 7));
+        }
+
+        @Test
+        void testCoprime_WithOne() {
+            assertTrue(MtxMath.coprime(1, 100));
+        }
+    }
+
+    @Nested
+    class AbsTests {
+
+        @Test
+        void testAbs_PositiveNumber() {
+            assertEquals(7, MtxMath.abs(7));
+        }
+
+        @Test
+        void testAbs_NegativeNumber() {
+            assertEquals(7, MtxMath.abs(-7));
+        }
+
+        @Test
+        void testAbs_Zero() {
+            assertEquals(0, MtxMath.abs(0));
+        }
+    }
 }
