@@ -435,7 +435,16 @@ public final class MtxMath {
         return n;
     }
 
-    public static int sumOfDigits(int n);
+    public static int sumOfDigits(int n) {
+        int sum = 0;
+        n = Math.abs(n);
+
+        while (n > 0) {
+            sum += n % 10;
+            n /= 10;
+        }
+        return sum;
+    }
 
     public static int reverseNumber(int n) {
         int reversed = 0;
