@@ -437,9 +437,17 @@ public final class MtxMath {
 
     public static int sumOfDigits(int n);
 
-    public static int reverseNumber(int n);
+    public static int reverseNumber(int n) {
+        int reversed = 0;
+        int num = Math.abs(n);
 
-    public static int countDigits(int n);
+        while (num > 0) {
+            reversed = reversed * 10 + (num % 10);
+            num /= 10;
+        }
+
+        return n < 0 ? -reversed : reversed;
+    }
 
     public static boolean isEven(int n) {
         if (n == 0) {
