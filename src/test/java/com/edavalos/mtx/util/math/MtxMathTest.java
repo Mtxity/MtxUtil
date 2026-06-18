@@ -814,4 +814,38 @@ public class MtxMathTest {
             assertEquals(3, MtxMath.countDigits(100));
         }
     }
+
+    @Nested
+    class SumOfDigitsTests {
+
+        @Test
+        void testSumOfDigits_Positive_One() {
+            assertEquals(4, MtxMath.sumOfDigits(4));
+        }
+
+        @Test
+        void testSumOfDigits_Positive_Many() {
+            assertEquals(10, MtxMath.sumOfDigits(1234));
+        }
+
+        @Test
+        void testSumOfDigits_Negative() {
+            assertEquals(10, MtxMath.sumOfDigits(-1234));
+        }
+
+        @Test
+        void testSumOfDigits_Zero() {
+            assertEquals(0, MtxMath.sumOfDigits(0));
+        }
+
+        @Test
+        void testSumOfDigits_WithTrailingZeros() {
+            assertEquals(1, MtxMath.sumOfDigits(100));
+        }
+
+        @Test
+        void testSumOfDigits_WithLeadingZeros() {
+            assertEquals(2, MtxMath.sumOfDigits(100001));
+        }
+    }
 }
