@@ -449,6 +449,22 @@ public final class MtxMath {
         return n < 0 ? -reversed : reversed;
     }
 
+    public static int countDigits(int n) {
+        if (n == 0) {
+            return 1;
+        }
+
+        int count = 0;
+        int num = Math.abs(n);
+
+        while (num > 0) {
+            count++;
+            num /= 10;
+        }
+
+        return count;
+    }
+
     public static boolean isEven(int n) {
         if (n == 0) {
             return true;
