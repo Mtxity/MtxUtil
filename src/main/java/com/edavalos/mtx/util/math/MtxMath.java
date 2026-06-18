@@ -27,6 +27,7 @@ public final class MtxMath {
      * The golden ratio, or Phi (𝜑) to the 32nd decimal place
      */
     public static final double PHI = 1.61803398874989484820458683436564;
+    public static final double LN2 = 0.69314718055994530941723212145818;
 
     public static class MtxFactorial implements Iterable<Integer> {
         private static final String NEGATIVE_SIZE_ERR = "Factorial is not defined for negative numbers.";
