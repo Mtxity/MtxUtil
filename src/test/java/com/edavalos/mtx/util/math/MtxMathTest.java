@@ -766,4 +766,52 @@ public class MtxMathTest {
             assertFalse(MtxMath.isOdd(0));
         }
     }
+
+    @Nested
+    class ReverseNumberTests {
+
+        @Test
+        void testReverseNumber_Positive() {
+            assertEquals(4321, MtxMath.reverseNumber(1234));
+        }
+
+        @Test
+        void testReverseNumber_Negative() {
+            assertEquals(-4321, MtxMath.reverseNumber(-1234));
+        }
+
+        @Test
+        void testReverseNumber_EndsWithZero() {
+            assertEquals(1, MtxMath.reverseNumber(100));
+        }
+
+        @Test
+        void testReverseNumber_Zero() {
+            assertEquals(0, MtxMath.reverseNumber(0));
+        }
+    }
+
+    @Nested
+    class CountDigitsTests {
+
+        @Test
+        void testCountDigits_Positive() {
+            assertEquals(4, MtxMath.countDigits(1234));
+        }
+
+        @Test
+        void testCountDigits_Negative() {
+            assertEquals(4, MtxMath.countDigits(-1234));
+        }
+
+        @Test
+        void testCountDigits_Zero() {
+            assertEquals(1, MtxMath.countDigits(0));
+        }
+
+        @Test
+        void testCountDigits_WithTrailingZeros() {
+            assertEquals(3, MtxMath.countDigits(100));
+        }
+    }
 }
