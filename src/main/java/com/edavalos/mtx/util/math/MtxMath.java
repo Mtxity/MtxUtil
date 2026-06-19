@@ -31,6 +31,9 @@ public final class MtxMath {
      * The natural logarithm of 2
      */
     public static final double LN2 = 0.69314718055994530941723212145818;
+    /**
+     * The natural logarithm of 3
+     */
     public static final double LN3 = 1.09861228866810969139524523692205;
 
     public static class MtxFactorial implements Iterable<Integer> {
