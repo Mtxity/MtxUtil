@@ -67,6 +67,12 @@ public class MtxMathTest {
             assertEquals(expectedLn2, this.round(MtxMath.LN2, 15));
         }
 
+        @Test
+        public void testLn3() {
+            double expectedLn3 = 1.09861228866811;
+            assertEquals(expectedLn3, this.round(MtxMath.LN3, 15));
+        }
+
         private double round(double input, int digits) {
             double flattener = Long.parseLong("1" + "0".repeat(digits));
             return Math.round(input * flattener) / flattener;
