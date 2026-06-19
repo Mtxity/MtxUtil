@@ -463,7 +463,7 @@ public final class MtxMath {
             num /= 10;
         }
 
-        return n < 0 ? -reversed : reversed;
+        return (n < 0 ? -1 : 1) * reversed;
     }
 
     public static int countDigits(int n) {
