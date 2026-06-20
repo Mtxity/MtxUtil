@@ -511,7 +511,27 @@ public final class MtxMath {
         return candidate;
     }
 
-    public static List<Integer> primeFactors(int n);
+    public static List<Integer> primeFactors(int n) {
+        List<Integer> factors = new ArrayList<>();
+        int num = Math.abs(n);
+
+        if (num <= 1) {
+            return factors;
+        }
+
+        for (int factor = 2; factor <= num / factor; factor++) {
+            while (num % factor == 0) {
+                factors.add(factor);
+                num /= factor;
+            }
+        }
+
+        if (num > 1) {
+            factors.add(num);
+        }
+
+        return factors;
+    }
 
     public static boolean isComposite(int n);
 
