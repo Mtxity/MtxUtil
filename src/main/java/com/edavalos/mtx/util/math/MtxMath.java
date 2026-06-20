@@ -498,7 +498,18 @@ public final class MtxMath {
         return n % 2 != 0;
     }
 
-    public static int nextPrime(int n);
+    public static int nextPrime(int n) {
+        if (n <= 2) {
+            return 2;
+        }
+
+        int candidate = n;
+        while (!isPrime(candidate)) {
+            candidate++;
+        }
+
+        return candidate;
+    }
 
     public static List<Integer> primeFactors(int n);
 
