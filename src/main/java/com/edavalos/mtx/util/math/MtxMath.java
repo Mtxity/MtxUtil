@@ -537,7 +537,13 @@ public final class MtxMath {
         return n > 1 && !isPrime(n);
     }
 
-    public static boolean isDivisibleBy(int n, int divisor);
+    public static boolean isDivisibleBy(int n, int divisor) {
+        if (divisor == 0) {
+            return false;
+        }
+
+        return n % divisor == 0;
+    }
 
     public static boolean isPalindromeNumber(int n);
 
