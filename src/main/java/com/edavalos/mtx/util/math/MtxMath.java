@@ -533,7 +533,9 @@ public final class MtxMath {
         return factors;
     }
 
-    public static boolean isComposite(int n);
+    public static boolean isComposite(int n) {
+        return n > 1 && !isPrime(n);
+    }
 
     public static boolean isDivisibleBy(int n, int divisor);
 
