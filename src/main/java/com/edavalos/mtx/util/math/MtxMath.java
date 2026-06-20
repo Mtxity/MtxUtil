@@ -497,4 +497,24 @@ public final class MtxMath {
 
         return n % 2 != 0;
     }
+
+    public static int nextPrime(int n);
+
+    public static List<Integer> primeFactors(int n);
+
+    public static boolean isComposite(int n);
+
+    public static boolean isDivisibleBy(int n, int divisor);
+
+    public static boolean isPalindromeNumber(int n);
+
+    public static boolean isArmstrongNumber(int n);
+
+    public static int digitalRoot(int n);
+
+    public static int clamp(int value, int min, int max);
+
+    public static double clamp(double value, double min, double max);
+
+    public static boolean isBetween(int value, int min, int max);
 }
