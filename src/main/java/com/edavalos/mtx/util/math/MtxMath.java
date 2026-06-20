@@ -545,7 +545,13 @@ public final class MtxMath {
         return n % divisor == 0;
     }
 
-    public static boolean isPalindromeNumber(int n);
+    public static boolean isPalindromeNumber(int n) {
+        if (n < 0) {
+            return false;
+        }
+
+        return n == reverseNumber(n);
+    }
 
     public static boolean isArmstrongNumber(int n);
 
