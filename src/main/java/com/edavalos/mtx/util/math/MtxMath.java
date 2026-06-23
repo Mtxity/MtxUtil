@@ -553,7 +553,23 @@ public final class MtxMath {
         return n == reverseNumber(n);
     }
 
-    public static boolean isArmstrongNumber(int n);
+    public static boolean isArmstrongNumber(int n) {
+        if (n < 0) {
+            return false;
+        }
+
+        int digits = countDigits(n);
+        int num = n;
+        int sum = 0;
+
+        while (num > 0) {
+            int digit = num % 10;
+            sum += power(digit, digits);
+            num /= 10;
+        }
+
+        return sum == n;
+    }
 
     public static int digitalRoot(int n);
 
