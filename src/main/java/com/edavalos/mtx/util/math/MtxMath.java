@@ -571,7 +571,15 @@ public final class MtxMath {
         return sum == n;
     }
 
-    public static int digitalRoot(int n);
+    public static int digitalRoot(int n) {
+        int root = Math.abs(n);
+
+        while (root >= 10) {
+            root = sumOfDigits(root);
+        }
+
+        return root;
+    }
 
     public static int clamp(int value, int min, int max);
 
