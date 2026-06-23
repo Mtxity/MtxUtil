@@ -964,4 +964,44 @@ public class MtxMathTest {
             assertFalse(MtxMath.isComposite(-100));
         }
     }
+
+    @Nested
+    class IsDivisibleByTests {
+
+        @Test
+        void testIsDivisibleBy_DivisibleNumbers_ReturnsTrue() {
+            assertTrue(MtxMath.isDivisibleBy(10, 2));
+            assertTrue(MtxMath.isDivisibleBy(12, 3));
+            assertTrue(MtxMath.isDivisibleBy(100, 10));
+            assertTrue(MtxMath.isDivisibleBy(0, 5));
+        }
+
+        @Test
+        void testIsDivisibleBy_NonDivisibleNumbers_ReturnsFalse() {
+            assertFalse(MtxMath.isDivisibleBy(10, 3));
+            assertFalse(MtxMath.isDivisibleBy(14, 5));
+            assertFalse(MtxMath.isDivisibleBy(100, 6));
+        }
+
+        @Test
+        void testIsDivisibleBy_ZeroDivisor_ReturnsFalse() {
+            assertFalse(MtxMath.isDivisibleBy(10, 0));
+            assertFalse(MtxMath.isDivisibleBy(0, 0));
+        }
+
+        @Test
+        void testIsDivisibleBy_NegativeNumbers_ReturnsExpectedResult() {
+            assertTrue(MtxMath.isDivisibleBy(-10, 2));
+            assertTrue(MtxMath.isDivisibleBy(10, -2));
+            assertTrue(MtxMath.isDivisibleBy(-10, -2));
+            assertFalse(MtxMath.isDivisibleBy(-10, 3));
+        }
+
+        @Test
+        void testIsDivisibleBy_DivisorOne_ReturnsTrue() {
+            assertTrue(MtxMath.isDivisibleBy(10, 1));
+            assertTrue(MtxMath.isDivisibleBy(-10, 1));
+            assertTrue(MtxMath.isDivisibleBy(0, 1));
+        }
+    }
 }
