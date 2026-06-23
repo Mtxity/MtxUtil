@@ -929,4 +929,39 @@ public class MtxMathTest {
             assertEquals(List.of(3, 3, 5), MtxMath.primeFactors(-45));
         }
     }
+
+    @Nested
+    class IsCompositeTests {
+
+        @Test
+        void testIsComposite_CompositeNumbers_ReturnsTrue() {
+            assertTrue(MtxMath.isComposite(4));
+            assertTrue(MtxMath.isComposite(6));
+            assertTrue(MtxMath.isComposite(9));
+            assertTrue(MtxMath.isComposite(12));
+            assertTrue(MtxMath.isComposite(100));
+        }
+
+        @Test
+        void testIsComposite_PrimeNumbers_ReturnsFalse() {
+            assertFalse(MtxMath.isComposite(2));
+            assertFalse(MtxMath.isComposite(3));
+            assertFalse(MtxMath.isComposite(5));
+            assertFalse(MtxMath.isComposite(17));
+            assertFalse(MtxMath.isComposite(97));
+        }
+
+        @Test
+        void testIsComposite_ZeroAndOne_ReturnsFalse() {
+            assertFalse(MtxMath.isComposite(0));
+            assertFalse(MtxMath.isComposite(1));
+        }
+
+        @Test
+        void testIsComposite_NegativeNumbers_ReturnsFalse() {
+            assertFalse(MtxMath.isComposite(-1));
+            assertFalse(MtxMath.isComposite(-4));
+            assertFalse(MtxMath.isComposite(-100));
+        }
+    }
 }
