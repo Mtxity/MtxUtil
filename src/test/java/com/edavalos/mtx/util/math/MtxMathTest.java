@@ -878,17 +878,55 @@ public class MtxMathTest {
 
         @Test
         void testNextPrime_InputAlreadyPrime_ReturnsSameNumber() {
-            assertEquals(3, MtxMath.nextPrime(3));
+            assertEquals(3,  MtxMath.nextPrime(3));
             assertEquals(17, MtxMath.nextPrime(17));
             assertEquals(97, MtxMath.nextPrime(97));
         }
 
         @Test
         void testNextPrime_InputComposite_ReturnsNextPrime() {
-            assertEquals(5, MtxMath.nextPrime(4));
-            assertEquals(11, MtxMath.nextPrime(8));
-            assertEquals(17, MtxMath.nextPrime(15));
+            assertEquals(5,   MtxMath.nextPrime(4));
+            assertEquals(11,  MtxMath.nextPrime(8));
+            assertEquals(17,  MtxMath.nextPrime(15));
             assertEquals(101, MtxMath.nextPrime(100));
+        }
+    }
+
+    @Nested
+    class PrimeFactorsTests {
+
+        @Test
+        void testPrimeFactors_NumberLessThanTwo_ReturnsEmptyList() {
+            assertEquals(List.of(), MtxMath.primeFactors(0));
+            assertEquals(List.of(), MtxMath.primeFactors(1));
+        }
+
+        @Test
+        void testPrimeFactors_PrimeNumber_ReturnsNumberItself() {
+            assertEquals(List.of(2),  MtxMath.primeFactors(2));
+            assertEquals(List.of(13), MtxMath.primeFactors(13));
+            assertEquals(List.of(97), MtxMath.primeFactors(97));
+        }
+
+        @Test
+        void testPrimeFactors_CompositeNumber_ReturnsPrimeFactors() {
+            assertEquals(List.of(2, 2),    MtxMath.primeFactors(4));
+            assertEquals(List.of(2, 3),    MtxMath.primeFactors(6));
+            assertEquals(List.of(2, 2, 3), MtxMath.primeFactors(12));
+            assertEquals(List.of(2, 3, 5), MtxMath.primeFactors(30));
+        }
+
+        @Test
+        void testPrimeFactors_RepeatedPrimeFactors_ReturnsAllOccurrences() {
+            assertEquals(List.of(2, 2, 2), MtxMath.primeFactors(8));
+            assertEquals(List.of(3, 3),    MtxMath.primeFactors(9));
+            assertEquals(List.of(5, 5, 5), MtxMath.primeFactors(125));
+        }
+
+        @Test
+        void testPrimeFactors_NegativeCompositeNumber_UsesAbsoluteValue() {
+            assertEquals(List.of(2, 2, 3), MtxMath.primeFactors(-12));
+            assertEquals(List.of(3, 3, 5), MtxMath.primeFactors(-45));
         }
     }
 }
