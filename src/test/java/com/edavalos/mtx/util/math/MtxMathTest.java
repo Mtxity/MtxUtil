@@ -1004,4 +1004,44 @@ public class MtxMathTest {
             assertTrue(MtxMath.isDivisibleBy(0, 1));
         }
     }
+
+    @Nested
+    class IsPalindromeNumberTests {
+
+        @Test
+        void testIsPalindromeNumber_SingleDigitNumbers_ReturnTrue() {
+            assertTrue(MtxMath.isPalindromeNumber(0));
+            assertTrue(MtxMath.isPalindromeNumber(1));
+            assertTrue(MtxMath.isPalindromeNumber(7));
+        }
+
+        @Test
+        void testIsPalindromeNumber_EvenLengthPalindrome_ReturnsTrue() {
+            assertTrue(MtxMath.isPalindromeNumber(11));
+            assertTrue(MtxMath.isPalindromeNumber(1221));
+            assertTrue(MtxMath.isPalindromeNumber(9009));
+        }
+
+        @Test
+        void testIsPalindromeNumber_OddLengthPalindrome_ReturnsTrue() {
+            assertTrue(MtxMath.isPalindromeNumber(121));
+            assertTrue(MtxMath.isPalindromeNumber(12321));
+            assertTrue(MtxMath.isPalindromeNumber(90709));
+        }
+
+        @Test
+        void testIsPalindromeNumber_NonPalindrome_ReturnsFalse() {
+            assertFalse(MtxMath.isPalindromeNumber(10));
+            assertFalse(MtxMath.isPalindromeNumber(123));
+            assertFalse(MtxMath.isPalindromeNumber(1234));
+            assertFalse(MtxMath.isPalindromeNumber(100));
+        }
+
+        @Test
+        void testIsPalindromeNumber_NegativeNumber_ReturnsFalse() {
+            assertFalse(MtxMath.isPalindromeNumber(-1));
+            assertFalse(MtxMath.isPalindromeNumber(-121));
+            assertFalse(MtxMath.isPalindromeNumber(-12321));
+        }
+    }
 }
