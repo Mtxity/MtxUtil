@@ -860,4 +860,35 @@ public class MtxMathTest {
             assertEquals(2, MtxMath.sumOfDigits(100001));
         }
     }
+
+    @Nested
+    class NextPrimeTests {
+
+        @Test
+        void testNextPrime_InputLessThanTwo_ReturnsTwo() {
+            assertEquals(2, MtxMath.nextPrime(-10));
+            assertEquals(2, MtxMath.nextPrime(0));
+            assertEquals(2, MtxMath.nextPrime(1));
+        }
+
+        @Test
+        void testNextPrime_InputTwo_ReturnsTwo() {
+            assertEquals(2, MtxMath.nextPrime(2));
+        }
+
+        @Test
+        void testNextPrime_InputAlreadyPrime_ReturnsSameNumber() {
+            assertEquals(3, MtxMath.nextPrime(3));
+            assertEquals(17, MtxMath.nextPrime(17));
+            assertEquals(97, MtxMath.nextPrime(97));
+        }
+
+        @Test
+        void testNextPrime_InputComposite_ReturnsNextPrime() {
+            assertEquals(5, MtxMath.nextPrime(4));
+            assertEquals(11, MtxMath.nextPrime(8));
+            assertEquals(17, MtxMath.nextPrime(15));
+            assertEquals(101, MtxMath.nextPrime(100));
+        }
+    }
 }
