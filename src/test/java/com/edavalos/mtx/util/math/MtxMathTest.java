@@ -1044,4 +1044,41 @@ public class MtxMathTest {
             assertFalse(MtxMath.isPalindromeNumber(-12321));
         }
     }
+
+    @Nested
+    class IsArmstrongNumberTests {
+
+        @Test
+        void testIsArmstrongNumber_SingleDigitNumbers_ReturnTrue() {
+            assertTrue(MtxMath.isArmstrongNumber(0));
+            assertTrue(MtxMath.isArmstrongNumber(1));
+            assertTrue(MtxMath.isArmstrongNumber(7));
+            assertTrue(MtxMath.isArmstrongNumber(9));
+        }
+
+        @Test
+        void testIsArmstrongNumber_KnownArmstrongNumbers_ReturnTrue() {
+            assertTrue(MtxMath.isArmstrongNumber(153));
+            assertTrue(MtxMath.isArmstrongNumber(370));
+            assertTrue(MtxMath.isArmstrongNumber(371));
+            assertTrue(MtxMath.isArmstrongNumber(407));
+            assertTrue(MtxMath.isArmstrongNumber(9474));
+        }
+
+        @Test
+        void testIsArmstrongNumber_NonArmstrongNumbers_ReturnFalse() {
+            assertFalse(MtxMath.isArmstrongNumber(10));
+            assertFalse(MtxMath.isArmstrongNumber(100));
+            assertFalse(MtxMath.isArmstrongNumber(152));
+            assertFalse(MtxMath.isArmstrongNumber(200));
+            assertFalse(MtxMath.isArmstrongNumber(9475));
+        }
+
+        @Test
+        void testIsArmstrongNumber_NegativeNumbers_ReturnFalse() {
+            assertFalse(MtxMath.isArmstrongNumber(-1));
+            assertFalse(MtxMath.isArmstrongNumber(-153));
+            assertFalse(MtxMath.isArmstrongNumber(-9474));
+        }
+    }
 }
