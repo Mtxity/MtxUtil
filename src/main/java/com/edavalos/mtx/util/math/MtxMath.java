@@ -581,9 +581,37 @@ public final class MtxMath {
         return root;
     }
 
-    public static int clamp(int value, int min, int max);
+    public static int clamp(int value, int min, int max) {
+        if (min > max) {
+            throw new IllegalArgumentException("Minimum cannot be greater than maximum.");
+        }
 
-    public static double clamp(double value, double min, double max);
+        if (value < min) {
+            return min;
+        }
+
+        if (value > max) {
+            return max;
+        }
+
+        return value;
+    }
+
+    public static double clamp(double value, double min, double max) {
+        if (min > max) {
+            throw new IllegalArgumentException("Minimum cannot be greater than maximum.");
+        }
+
+        if (value < min) {
+            return min;
+        }
+
+        if (value > max) {
+            return max;
+        }
+
+        return value;
+    }
 
     public static boolean isBetween(int value, int min, int max);
 }
