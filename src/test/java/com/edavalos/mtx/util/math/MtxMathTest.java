@@ -1150,7 +1150,35 @@ public class MtxMathTest {
 
             @Test
             void testClamp_int_valueBetweenMinAndMax() {
-                assertEquals(1, MtxMath.clamp(1, 1, 2));
+                assertEquals(2, MtxMath.clamp(2, 1, 3));
+            }
+        }
+
+        @Nested
+        class DoubleClampTests {
+
+            @Test
+            void testClamp_int_minGreaterThanMax() {
+                String message = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.clamp(3.0, 2.0, 1.0)
+                ).getMessage();
+                assertEquals("Minimum cannot be greater than maximum.", message);
+            }
+
+            @Test
+            void testClamp_int_valueLessThanMin() {
+                assertEquals(1.5, MtxMath.clamp(0.5, 1.5, 2.5));
+            }
+
+            @Test
+            void testClamp_int_valueGreaterThanMax() {
+                assertEquals(1.1, MtxMath.clamp(2.2, 0.0, 1.1));
+            }
+
+            @Test
+            void testClamp_int_valueBetweenMinAndMax() {
+                assertEquals(1.3, MtxMath.clamp(1.3, 1.2, 2.4));
             }
         }
     }
