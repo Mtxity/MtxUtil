@@ -1081,4 +1081,45 @@ public class MtxMathTest {
             assertFalse(MtxMath.isArmstrongNumber(-9474));
         }
     }
+
+    @Nested
+    class DigitalRootTests {
+
+        @Test
+        void testDigitalRoot_SingleDigitNumber_ReturnsSameNumber() {
+            assertEquals(0, MtxMath.digitalRoot(0));
+            assertEquals(1, MtxMath.digitalRoot(1));
+            assertEquals(7, MtxMath.digitalRoot(7));
+            assertEquals(9, MtxMath.digitalRoot(9));
+        }
+
+        @Test
+        void testDigitalRoot_MultipleDigitsOneIteration_ReturnsDigitSum() {
+            assertEquals(3, MtxMath.digitalRoot(12));
+            assertEquals(6, MtxMath.digitalRoot(123));
+            assertEquals(9, MtxMath.digitalRoot(45));
+        }
+
+        @Test
+        void testDigitalRoot_MultipleDigitsSeveralIterations_ReturnsSingleDigitRoot() {
+            assertEquals(1, MtxMath.digitalRoot(10));
+            assertEquals(1, MtxMath.digitalRoot(100));
+            assertEquals(2, MtxMath.digitalRoot(9992));
+            assertEquals(3, MtxMath.digitalRoot(9876));
+        }
+
+        @Test
+        void testDigitalRoot_NegativeNumber_UsesAbsoluteValue() {
+            assertEquals(6, MtxMath.digitalRoot(-123));
+            assertEquals(9, MtxMath.digitalRoot(-45));
+            assertEquals(2, MtxMath.digitalRoot(-9992));
+        }
+
+        @Test
+        void testDigitalRoot_NumberWithZeros_ReturnsExpectedRoot() {
+            assertEquals(1, MtxMath.digitalRoot(1000));
+            assertEquals(5, MtxMath.digitalRoot(5000));
+            assertEquals(9, MtxMath.digitalRoot(9000));
+        }
+    }
 }
