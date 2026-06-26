@@ -1252,5 +1252,55 @@ public class MtxMathTest {
                 assertEquals(29, MtxMath.countSetBits(-15));
             }
         }
+
+        @Nested
+        class LerpTests {
+
+            @Test
+            void testLerp_startWhenTIsZero() {
+                assertEquals(10.0, MtxMath.lerp(10.0, 20.0, 0.0));
+            }
+
+            @Test
+            void testLerp_endWhenTIsOne() {
+                assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 1.0));
+            }
+
+            @Test
+            void testLerp_midpoint() {
+                assertEquals(15.0, MtxMath.lerp(10.0, 20.0, 0.5));
+            }
+
+            @Test
+            void testLerp_interpolatesCorrectly() {
+                assertEquals(12.5, MtxMath.lerp(10.0, 20.0, 0.25));
+                assertEquals(17.5, MtxMath.lerp(10.0, 20.0, 0.75));
+            }
+
+            @Test
+            void testLerp_clampsNegativeTToZero() {
+                assertEquals(10.0, MtxMath.lerp(10.0, 20.0, -1.0));
+            }
+
+            @Test
+            void testLerp_clampsTGreaterThanOneToOne() {
+                assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 2.0));
+            }
+
+            @Test
+            void testLerp_worksWithNegativeNumbers() {
+                assertEquals(-5.0, MtxMath.lerp(-10.0, 10.0, 0.25));
+                assertEquals(0.0,  MtxMath.lerp(-10.0, 10.0, 0.5));
+                assertEquals(10.0, MtxMath.lerp(-10.0, 10.0, 1.5)); // clamped
+            }
+
+            @Test
+            void testLerp_sameValueWhenEndpointsAreEqual() {
+                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.0));
+                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.5));
+                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 1.0));
+                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 2.0));
+            }
+        }
     }
 }
