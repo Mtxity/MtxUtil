@@ -613,5 +613,7 @@ public final class MtxMath {
         return value;
     }
 
-    public static boolean isBetween(int value, int min, int max);
+    public static boolean isBetween(int value, int min, int max) {
+        return value >= min && value <= max;
+    }
 }
