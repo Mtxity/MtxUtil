@@ -636,4 +636,9 @@ public final class MtxMath {
 
         return count;
     }
+
+    public static double lerp(double a, double b, double t) {
+        t = Math.max(0.0, Math.min(1.0, t));
+        return a + (b - a) * t;
+    }
 }
