@@ -625,4 +625,15 @@ public final class MtxMath {
         long root = (long) Math.sqrt(n);
         return root * root == n;
     }
+
+    public static int countSetBits(int n) {
+        int count = 0;
+
+        while (n != 0) {
+            count++;
+            n &= (n - 1);
+        }
+
+        return count;
+    }
 }
