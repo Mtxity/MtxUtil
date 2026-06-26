@@ -1181,126 +1181,126 @@ public class MtxMathTest {
                 assertEquals(1.3, MtxMath.clamp(1.3, 1.2, 2.4));
             }
         }
+    }
 
-        @Nested
-        class IsBetweenTests {
+    @Nested
+    class IsBetweenTests {
 
-            @Test
-            void testIsBetween_valueLessThanMin() {
-                assertFalse(MtxMath.isBetween(0, 1, 2));
-            }
-
-            @Test
-            void testIsBetween_valueGreaterThanOrEqualToMin_valueGreaterThanMax() {
-                assertFalse(MtxMath.isBetween(2, 1, 1));
-                assertFalse(MtxMath.isBetween(2, 2, 1));
-            }
-
-            @Test
-            void testIsBetween_valueGreaterThanOrEqualToMin_valueLessThanOrEqualToMax() {
-                assertTrue(MtxMath.isBetween(2, 1, 3));
-                assertTrue(MtxMath.isBetween(2, 1, 2));
-            }
+        @Test
+        void testIsBetween_valueLessThanMin() {
+            assertFalse(MtxMath.isBetween(0, 1, 2));
         }
 
-        @Nested
-        class IsPerfectSquareTests {
-
-            @Test
-            void testIsPerfectSquare_negativeInteger() {
-                assertFalse(MtxMath.isPerfectSquare(-1));
-            }
-
-            @Test
-            void testIsPerfectSquare_zero() {
-                assertTrue(MtxMath.isPerfectSquare(0));
-            }
-
-            @Test
-            void testIsPerfectSquare_positiveInteger_true() {
-                assertTrue(MtxMath.isPerfectSquare(9));
-                assertTrue(MtxMath.isPerfectSquare(16));
-                assertTrue(MtxMath.isPerfectSquare(25));
-            }
-
-            @Test
-            void testIsPerfectSquare_positiveInteger_false() {
-                assertFalse(MtxMath.isPerfectSquare(20));
-                assertFalse(MtxMath.isPerfectSquare(24));
-                assertFalse(MtxMath.isPerfectSquare(30));
-            }
+        @Test
+        void testIsBetween_valueGreaterThanOrEqualToMin_valueGreaterThanMax() {
+            assertFalse(MtxMath.isBetween(2, 1, 1));
+            assertFalse(MtxMath.isBetween(2, 2, 1));
         }
 
-        @Nested
-        class CountSetBitTests {
+        @Test
+        void testIsBetween_valueGreaterThanOrEqualToMin_valueLessThanOrEqualToMax() {
+            assertTrue(MtxMath.isBetween(2, 1, 3));
+            assertTrue(MtxMath.isBetween(2, 1, 2));
+        }
+    }
 
-            @Test
-            void testCountSetBit_zero() {
-                assertEquals(0, MtxMath.countSetBits(0));
-            }
+    @Nested
+    class IsPerfectSquareTests {
 
-            @Test
-            void testCountSetBit_positive() {
-                assertEquals(2, MtxMath.countSetBits(5));
-                assertEquals(4, MtxMath.countSetBits(15));
-                assertEquals(1, MtxMath.countSetBits(16));
-            }
-
-            @Test
-            void testCountSetBit_negative() {
-                assertEquals(31, MtxMath.countSetBits(-5));
-                assertEquals(29, MtxMath.countSetBits(-15));
-            }
+        @Test
+        void testIsPerfectSquare_negativeInteger() {
+            assertFalse(MtxMath.isPerfectSquare(-1));
         }
 
-        @Nested
-        class LerpTests {
+        @Test
+        void testIsPerfectSquare_zero() {
+            assertTrue(MtxMath.isPerfectSquare(0));
+        }
 
-            @Test
-            void testLerp_startWhenTIsZero() {
-                assertEquals(10.0, MtxMath.lerp(10.0, 20.0, 0.0));
-            }
+        @Test
+        void testIsPerfectSquare_positiveInteger_true() {
+            assertTrue(MtxMath.isPerfectSquare(9));
+            assertTrue(MtxMath.isPerfectSquare(16));
+            assertTrue(MtxMath.isPerfectSquare(25));
+        }
 
-            @Test
-            void testLerp_endWhenTIsOne() {
-                assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 1.0));
-            }
+        @Test
+        void testIsPerfectSquare_positiveInteger_false() {
+            assertFalse(MtxMath.isPerfectSquare(20));
+            assertFalse(MtxMath.isPerfectSquare(24));
+            assertFalse(MtxMath.isPerfectSquare(30));
+        }
+    }
 
-            @Test
-            void testLerp_midpoint() {
-                assertEquals(15.0, MtxMath.lerp(10.0, 20.0, 0.5));
-            }
+    @Nested
+    class CountSetBitTests {
 
-            @Test
-            void testLerp_interpolatesCorrectly() {
-                assertEquals(12.5, MtxMath.lerp(10.0, 20.0, 0.25));
-                assertEquals(17.5, MtxMath.lerp(10.0, 20.0, 0.75));
-            }
+        @Test
+        void testCountSetBit_zero() {
+            assertEquals(0, MtxMath.countSetBits(0));
+        }
 
-            @Test
-            void testLerp_clampsNegativeTToZero() {
-                assertEquals(10.0, MtxMath.lerp(10.0, 20.0, -1.0));
-            }
+        @Test
+        void testCountSetBit_positive() {
+            assertEquals(2, MtxMath.countSetBits(5));
+            assertEquals(4, MtxMath.countSetBits(15));
+            assertEquals(1, MtxMath.countSetBits(16));
+        }
 
-            @Test
-            void testLerp_clampsTGreaterThanOneToOne() {
-                assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 2.0));
-            }
+        @Test
+        void testCountSetBit_negative() {
+            assertEquals(31, MtxMath.countSetBits(-5));
+            assertEquals(29, MtxMath.countSetBits(-15));
+        }
+    }
 
-            @Test
-            void testLerp_worksWithNegativeNumbers() {
-                assertEquals(-5.0, MtxMath.lerp(-10.0, 10.0, 0.25));
-                assertEquals(0.0,  MtxMath.lerp(-10.0, 10.0, 0.5));
-                assertEquals(10.0, MtxMath.lerp(-10.0, 10.0, 1.5)); // clamped
-            }
+    @Nested
+    class LerpTests {
 
-            @Test
-            void testLerp_sameValueWhenEndpointsAreEqual() {
-                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.0));
-                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.5));
-                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 1.0));
-                assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 2.0));
-            }
+        @Test
+        void testLerp_startWhenTIsZero() {
+            assertEquals(10.0, MtxMath.lerp(10.0, 20.0, 0.0));
+        }
+
+        @Test
+        void testLerp_endWhenTIsOne() {
+            assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 1.0));
+        }
+
+        @Test
+        void testLerp_midpoint() {
+            assertEquals(15.0, MtxMath.lerp(10.0, 20.0, 0.5));
+        }
+
+        @Test
+        void testLerp_interpolatesCorrectly() {
+            assertEquals(12.5, MtxMath.lerp(10.0, 20.0, 0.25));
+            assertEquals(17.5, MtxMath.lerp(10.0, 20.0, 0.75));
+        }
+
+        @Test
+        void testLerp_clampsNegativeTToZero() {
+            assertEquals(10.0, MtxMath.lerp(10.0, 20.0, -1.0));
+        }
+
+        @Test
+        void testLerp_clampsTGreaterThanOneToOne() {
+            assertEquals(20.0, MtxMath.lerp(10.0, 20.0, 2.0));
+        }
+
+        @Test
+        void testLerp_worksWithNegativeNumbers() {
+            assertEquals(-5.0, MtxMath.lerp(-10.0, 10.0, 0.25));
+            assertEquals(0.0,  MtxMath.lerp(-10.0, 10.0, 0.5));
+            assertEquals(10.0, MtxMath.lerp(-10.0, 10.0, 1.5)); // clamped
+        }
+
+        @Test
+        void testLerp_sameValueWhenEndpointsAreEqual() {
+            assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.0));
+            assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 0.5));
+            assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 1.0));
+            assertEquals(42.0, MtxMath.lerp(42.0, 42.0, 2.0));
         }
     }
 
