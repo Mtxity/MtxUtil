@@ -670,8 +670,10 @@ public final class MtxMath {
             }
         }
 
-        return Arrays.stream(primes.toArray())
-                     .mapToInt(Integer::intValue)
-                     .toArray();
+        int[] result = new int[primes.size()];
+        for (int i = 0; i < primes.size(); i++) {
+            result[i] = primes.get(i);
+        }
+        return result;
     }
 }
