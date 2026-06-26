@@ -1230,5 +1230,27 @@ public class MtxMathTest {
                 assertFalse(MtxMath.isPerfectSquare(30));
             }
         }
+
+        @Nested
+        class CountSetBitTests {
+
+            @Test
+            void testCountSetBit_zero() {
+                assertEquals(0, MtxMath.countSetBits(0));
+            }
+
+            @Test
+            void testCountSetBit_positive() {
+                assertEquals(2, MtxMath.countSetBits(5));
+                assertEquals(4, MtxMath.countSetBits(15));
+                assertEquals(1, MtxMath.countSetBits(16));
+            }
+
+            @Test
+            void testCountSetBit_negative() {
+                assertEquals(31, MtxMath.countSetBits(-5));
+                assertEquals(29, MtxMath.countSetBits(-15));
+            }
+        }
     }
 }
