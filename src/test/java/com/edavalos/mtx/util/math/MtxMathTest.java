@@ -1202,5 +1202,33 @@ public class MtxMathTest {
                 assertTrue(MtxMath.isBetween(2, 1, 2));
             }
         }
+
+        @Nested
+        class IsPerfectSquareTests {
+
+            @Test
+            void testIsPerfectSquare_negativeInteger() {
+                assertFalse(MtxMath.isPerfectSquare(-1));
+            }
+
+            @Test
+            void testIsPerfectSquare_zero() {
+                assertTrue(MtxMath.isPerfectSquare(0));
+            }
+
+            @Test
+            void testIsPerfectSquare_positiveInteger_true() {
+                assertTrue(MtxMath.isPerfectSquare(9));
+                assertTrue(MtxMath.isPerfectSquare(16));
+                assertTrue(MtxMath.isPerfectSquare(25));
+            }
+
+            @Test
+            void testIsPerfectSquare_positiveInteger_false() {
+                assertFalse(MtxMath.isPerfectSquare(20));
+                assertFalse(MtxMath.isPerfectSquare(24));
+                assertFalse(MtxMath.isPerfectSquare(30));
+            }
+        }
     }
 }
