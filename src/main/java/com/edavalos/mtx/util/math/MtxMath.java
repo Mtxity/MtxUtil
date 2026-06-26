@@ -616,4 +616,13 @@ public final class MtxMath {
     public static boolean isBetween(int value, int min, int max) {
         return value >= min && value <= max;
     }
+
+    public static boolean isPerfectSquare(int n) {
+        if (n < 0) {
+            return false;
+        }
+
+        long root = (long) Math.sqrt(n);
+        return root * root == n;
+    }
 }
