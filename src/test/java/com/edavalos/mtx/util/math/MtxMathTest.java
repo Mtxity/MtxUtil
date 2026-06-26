@@ -1181,5 +1181,26 @@ public class MtxMathTest {
                 assertEquals(1.3, MtxMath.clamp(1.3, 1.2, 2.4));
             }
         }
+
+        @Nested
+        class IsBetweenTests {
+
+            @Test
+            void testIsBetween_valueLessThanMin() {
+                assertFalse(MtxMath.isBetween(0, 1, 2));
+            }
+
+            @Test
+            void testIsBetween_valueGreaterThanOrEqualToMin_valueGreaterThanMax() {
+                assertFalse(MtxMath.isBetween(2, 1, 1));
+                assertFalse(MtxMath.isBetween(2, 2, 1));
+            }
+
+            @Test
+            void testIsBetween_valueGreaterThanOrEqualToMin_valueLessThanOrEqualToMax() {
+                assertTrue(MtxMath.isBetween(2, 1, 3));
+                assertTrue(MtxMath.isBetween(2, 1, 2));
+            }
+        }
     }
 }
