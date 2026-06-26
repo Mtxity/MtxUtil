@@ -1303,4 +1303,68 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class SieveOfEratosthenesTests {
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsEmptyListForNegativeLimit() {
+            assertArrayEquals(new int[0], MtxMath.sieveOfEratosthenes(-1));
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsEmptyListForZero() {
+            assertArrayEquals(new int[0], MtxMath.sieveOfEratosthenes(0));
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsEmptyListForOne() {
+            assertArrayEquals(new int[0], MtxMath.sieveOfEratosthenes(1));
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsTwoForLimitTwo() {
+            assertArrayEquals(new int[] {2}, MtxMath.sieveOfEratosthenes(2));
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsPrimesUpToTen() {
+            assertArrayEquals(
+                    new int[] {2, 3, 5, 7},
+                    MtxMath.sieveOfEratosthenes(10)
+            );
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsPrimesUpToTwenty() {
+            assertArrayEquals(
+                    new int[] {2, 3, 5, 7, 11, 13, 17, 19},
+                    MtxMath.sieveOfEratosthenes(20)
+            );
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsPrimesUpToThirty() {
+            assertArrayEquals(
+                    new int[] {2, 3, 5, 7, 11, 13, 17, 19, 23, 29},
+                    MtxMath.sieveOfEratosthenes(30)
+            );
+        }
+
+        @Test
+        void testSieveOfEratosthenes_ReturnsOnlyPrimeWhenLimitIsPrime() {
+            assertArrayEquals(
+                    new int[] {2, 3, 5, 7, 11, 13},
+                    MtxMath.sieveOfEratosthenes(13)
+            );
+        }
+
+        @Test
+        void testSieveOfEratosthenes_DoesNotIncludeCompositeUpperBound() {
+            assertArrayEquals(
+                    new int[] {2, 3, 5, 7, 11, 13},
+                    MtxMath.sieveOfEratosthenes(15)
+            );
+        }
+    }
 }
