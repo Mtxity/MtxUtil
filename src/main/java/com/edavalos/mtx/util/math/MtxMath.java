@@ -314,6 +314,31 @@ public final class MtxMath {
         }
     }
 
+    public static int sqrt(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative numbers do not have real square roots.");
+        }
+
+        if (n == 0 || n == 1) {
+            return n;
+        }
+
+        int left = 1, right = n;
+        int ans = 0;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if ((long) mid * mid == n) {
+                return mid;
+            } else if ((long) mid * mid < n) {
+                ans = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return ans;
+    }
+
     public static boolean isPrime(int i) {
         if (i <= 1) {
             return false;
