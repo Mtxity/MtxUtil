@@ -761,4 +761,12 @@ public final class MtxMath {
     public static double pythagoreanTheorem(double a, double b) {
         return sqrt(a * a + b * b);
     }
+
+    public static double floor(double x) {
+        long i = (long) x;
+        if (x >= 0 || x == i) {
+            return i;
+        }
+        return i - 1;
+    }
 }
