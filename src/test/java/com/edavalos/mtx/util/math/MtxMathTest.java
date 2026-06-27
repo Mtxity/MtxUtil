@@ -1367,4 +1367,26 @@ public class MtxMathTest {
             );
         }
     }
+
+    @Nested
+    class RoundToDecimalsTests {
+
+        @Test
+        void testRoundToDecimals_negativeDecimals() {
+            String message = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.roundToDecimals(5.0, -1)
+            ).getMessage();
+            assertEquals("Decimal places must be non-negative.", message);
+        }
+
+        @Test
+        void testRoundToDecimals_positiveDecimals() {
+            assertEquals(3.14,  MtxMath.roundToDecimals(3.14159, 2));
+            assertEquals(3.15,  MtxMath.roundToDecimals(3.145,   2));
+            assertEquals(2.718, MtxMath.roundToDecimals(2.71828, 3));
+            assertEquals(123.0, MtxMath.roundToDecimals(123.0,   0));
+            assertEquals(-1.24, MtxMath.roundToDecimals(-1.235,  2));
+        }
+    }
 }
