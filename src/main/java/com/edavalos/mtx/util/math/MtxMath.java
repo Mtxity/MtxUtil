@@ -713,7 +713,7 @@ public final class MtxMath {
     }
 
     public static double lerp(double a, double b, double t) {
-        t = Math.max(0.0, Math.min(1.0, t));
+        t = max(0.0, min(1.0, t));
         return a + (b - a) * t;
     }
 
