@@ -511,6 +511,13 @@ public final class MtxMath {
         return n;
     }
 
+    public static double abs(double n) {
+        if (n < 0) {
+            return -n;
+        }
+        return n;
+    }
+
     public static int sumOfDigits(int n) {
         int sum = 0;
         n = Math.abs(n);
