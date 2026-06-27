@@ -482,6 +482,28 @@ public final class MtxMath {
         return result;
     }
 
+    public static double power(double base, int exponent) {
+        if (exponent == 0) {
+            return 1.0;
+        }
+
+        long exp = exponent;
+        if (exp < 0) {
+            base = 1.0 / base;
+            exp = -exp;
+        }
+
+        double result = 1.0;
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                result *= base;
+            }
+            base *= base;
+            exp >>= 1;
+        }
+        return result;
+    }
+
     public static int abs(int n) {
         if (n < 0) {
             return -n;
