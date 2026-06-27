@@ -3,6 +3,8 @@ package com.edavalos.mtx.util.math;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -1702,6 +1704,48 @@ public class MtxMathTest {
         @Test
         void testFloor_largeNegative() {
             assertEquals(-123456790.0, MtxMath.floor(-123456789.123));
+        }
+    }
+
+    @Nested
+    class RoundTests {
+
+        @ParameterizedTest
+        @CsvSource({
+                "0.0, 0",
+                "0.2, 0",
+                "0.5, 1",
+                "0.7, 1",
+                "3.2, 3",
+                "3.5, 4",
+                "3.7, 4"
+        })
+        void testRound_positiveValues(double input, long expected) {
+            assertEquals(expected, MtxMath.round(input));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "-0.2, 0",
+                "-0.5, 0",
+                "-0.7, -1",
+                "-3.2, -3",
+                "-3.5, -3",
+                "-3.7, -4"
+        })
+        void testRound_negativeValues(double input, long expected) {
+            assertEquals(expected, MtxMath.round(input));
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+                "123456789.4, 123456789",
+                "123456789.5, 123456790",
+                "-123456789.4, -123456789",
+                "-123456789.5, -123456789"
+        })
+        void testRound_largerValues(double input, long expected) {
+            assertEquals(expected, MtxMath.round(input));
         }
     }
 }
