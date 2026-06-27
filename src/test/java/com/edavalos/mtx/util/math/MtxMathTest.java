@@ -683,19 +683,42 @@ public class MtxMathTest {
     @Nested
     class AbsTests {
 
-        @Test
-        void testAbs_PositiveNumber() {
-            assertEquals(7, MtxMath.abs(7));
+        @Nested
+        class IntAbsTests {
+
+            @Test
+            void testAbs_PositiveNumber() {
+                assertEquals(7, MtxMath.abs(7));
+            }
+
+            @Test
+            void testAbs_NegativeNumber() {
+                assertEquals(7, MtxMath.abs(-7));
+            }
+
+            @Test
+            void testAbs_Zero() {
+                assertEquals(0, MtxMath.abs(0));
+            }
         }
 
-        @Test
-        void testAbs_NegativeNumber() {
-            assertEquals(7, MtxMath.abs(-7));
-        }
+        @Nested
+        class DoubleAbsTests {
 
-        @Test
-        void testAbs_Zero() {
-            assertEquals(0, MtxMath.abs(0));
+            @Test
+            void testAbs_double_positiveNumber() {
+                assertEquals(7.5, MtxMath.abs(7.5));
+            }
+
+            @Test
+            void testAbs_double_negativeNumber() {
+                assertEquals(7.5, MtxMath.abs(-7.5));
+            }
+
+            @Test
+            void testAbs_double_zero() {
+                assertEquals(0.0, MtxMath.abs(0.0));
+            }
         }
     }
 
