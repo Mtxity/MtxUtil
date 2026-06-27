@@ -676,4 +676,13 @@ public final class MtxMath {
         }
         return result;
     }
+
+    public static double roundToDecimals(double value, int decimals) {
+        if (decimals < 0) {
+            throw new IllegalArgumentException("Decimal places must be non-negative.");
+        }
+
+        double factor = Math.pow(10, decimals);
+        return Math.round(value * factor) / factor;
+    }
 }
