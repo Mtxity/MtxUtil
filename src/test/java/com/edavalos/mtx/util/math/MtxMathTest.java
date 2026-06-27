@@ -1389,4 +1389,26 @@ public class MtxMathTest {
             assertEquals(-1.24, MtxMath.roundToDecimals(-1.235,  2));
         }
     }
+
+    @Nested
+    class PythagoreanTheoremTests {
+
+        @Test
+        void testPythagoreanTheorem_wholeNumbers() {
+            assertEquals(5,  MtxMath.pythagoreanTheorem(3, 4));
+            assertEquals(13, MtxMath.pythagoreanTheorem(5, 12));
+            assertEquals(25, MtxMath.pythagoreanTheorem(7, 24));
+            assertEquals(17, MtxMath.pythagoreanTheorem(8, 15));
+            assertEquals(41, MtxMath.pythagoreanTheorem(9, 40));
+        }
+
+        @Test
+        void testPythagoreanTheorem_decimals() {
+            assertEquals(4.085339643163099, MtxMath.pythagoreanTheorem(1.5, 3.8));
+            assertEquals(5.547071299343465, MtxMath.pythagoreanTheorem(2.6, 4.9));
+            assertEquals(7.58946638440411,  MtxMath.pythagoreanTheorem(7.2, 2.4));
+            assertEquals(8.532877591996735, MtxMath.pythagoreanTheorem(8.4, 1.5));
+            assertEquals(9.974467404327912, MtxMath.pythagoreanTheorem(9.0, 4.3));
+        }
+    }
 }
