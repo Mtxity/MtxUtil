@@ -245,7 +245,7 @@ public final class MtxMath {
             double mean = this.getMean();
             double stdDev = 0.0;
             for (double j : this.contents) {
-                stdDev += Math.pow(j - mean, 2);
+                stdDev += power(j - mean, 2);
             }
 
             return Math.sqrt(stdDev / this.contents.size());
@@ -373,7 +373,7 @@ public final class MtxMath {
     public static double[] quadraticFormulaSolver(int a, int b, int c) {
         double[] x = new double[2];
 
-        double rootOfDeterminant = Math.sqrt(Math.pow(b, 2) - (4 * a * c));
+        double rootOfDeterminant = Math.sqrt(power(b, 2) - (4 * a * c));
         double positiveDeterminant = (-1 * b) + rootOfDeterminant;
         double negativeDeterminant = (-1 * b) - rootOfDeterminant;
 
@@ -747,7 +747,7 @@ public final class MtxMath {
             throw new IllegalArgumentException("Decimal places must be non-negative.");
         }
 
-        double factor = Math.pow(10, decimals);
+        double factor = power(10, decimals);
         return Math.round(value * factor) / factor;
     }
 
