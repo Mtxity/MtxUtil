@@ -350,7 +350,7 @@ public final class MtxMath {
 
         double x = n;
         double precision = 1e-10;
-        while (Math.abs(x - n / x) > precision) {
+        while (abs(x - n / x) > precision) {
             x = (x + n / x) / 2;
         }
 
@@ -520,7 +520,7 @@ public final class MtxMath {
 
     public static int sumOfDigits(int n) {
         int sum = 0;
-        n = Math.abs(n);
+        n = abs(n);
 
         while (n > 0) {
             sum += n % 10;
@@ -531,7 +531,7 @@ public final class MtxMath {
 
     public static int reverseNumber(int n) {
         int reversed = 0;
-        int num = Math.abs(n);
+        int num = abs(n);
 
         while (num > 0) {
             reversed = reversed * 10 + (num % 10);
@@ -547,7 +547,7 @@ public final class MtxMath {
         }
 
         int count = 0;
-        int num = Math.abs(n);
+        int num = abs(n);
 
         while (num > 0) {
             count++;
@@ -588,7 +588,7 @@ public final class MtxMath {
 
     public static List<Integer> primeFactors(int n) {
         List<Integer> factors = new ArrayList<>();
-        int num = Math.abs(n);
+        int num = abs(n);
 
         if (num <= 1) {
             return factors;
@@ -647,7 +647,7 @@ public final class MtxMath {
     }
 
     public static int digitalRoot(int n) {
-        int root = Math.abs(n);
+        int root = abs(n);
 
         while (root >= 10) {
             root = sumOfDigits(root);
