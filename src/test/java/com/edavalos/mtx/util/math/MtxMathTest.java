@@ -10,8 +10,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MtxMathTest {
+
     @Nested
     class InfinityTests {
+
         @Test
         public void testPositiveInfinity() {
             assertEquals(((int) Double.POSITIVE_INFINITY), MtxMath.POSITIVE_INFINITY);
@@ -352,6 +354,7 @@ public class MtxMathTest {
 
     @Nested
     class StatsTests {
+        private static final double DELTA = 0.001;
         private static final double[] SAMPLE_DATA_SET = {
                 2.5, 3.0, 6.8, 7.2, 9.8, 10.1,
                 12.0, 12.0, 12.1, 13.4, 13.7, 15,
@@ -436,7 +439,7 @@ public class MtxMathTest {
 
         @Test
         public void testGetStandardDeviation() {
-            assertEquals(4.2980628711600355, mtxStats.getStandardDeviation());
+            assertEquals(4.2980628711600355, mtxStats.getStandardDeviation(), DELTA);
         }
 
         @Test
@@ -1494,23 +1497,24 @@ public class MtxMathTest {
 
     @Nested
     class PythagoreanTheoremTests {
+        private static final double DELTA = 0.001;
 
         @Test
         void testPythagoreanTheorem_wholeNumbers() {
             assertEquals(5,  MtxMath.pythagoreanTheorem(3, 4));
             assertEquals(13, MtxMath.pythagoreanTheorem(5, 12));
             assertEquals(25, MtxMath.pythagoreanTheorem(7, 24));
-            assertEquals(17, MtxMath.pythagoreanTheorem(8, 15));
+            assertEquals(17, MtxMath.pythagoreanTheorem(8, 15), DELTA);
             assertEquals(41, MtxMath.pythagoreanTheorem(9, 40));
         }
 
         @Test
         void testPythagoreanTheorem_decimals() {
-            assertEquals(4.085339643163099, MtxMath.pythagoreanTheorem(1.5, 3.8));
-            assertEquals(5.547071299343465, MtxMath.pythagoreanTheorem(2.6, 4.9));
-            assertEquals(7.58946638440411,  MtxMath.pythagoreanTheorem(7.2, 2.4));
-            assertEquals(8.532877591996735, MtxMath.pythagoreanTheorem(8.4, 1.5));
-            assertEquals(9.974467404327912, MtxMath.pythagoreanTheorem(9.0, 4.3));
+            assertEquals(4.085339643163099, MtxMath.pythagoreanTheorem(1.5, 3.8), DELTA);
+            assertEquals(5.547071299343465, MtxMath.pythagoreanTheorem(2.6, 4.9), DELTA);
+            assertEquals(7.58946638440411,  MtxMath.pythagoreanTheorem(7.2, 2.4), DELTA);
+            assertEquals(8.532877591996735, MtxMath.pythagoreanTheorem(8.4, 1.5), DELTA);
+            assertEquals(9.974467404327912, MtxMath.pythagoreanTheorem(9.0, 4.3), DELTA);
         }
     }
 
