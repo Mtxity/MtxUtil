@@ -248,7 +248,7 @@ public final class MtxMath {
                 stdDev += power(j - mean, 2);
             }
 
-            return Math.sqrt(stdDev / this.contents.size());
+            return sqrt(stdDev / this.contents.size());
         }
 
         public double getMean() {
@@ -373,7 +373,7 @@ public final class MtxMath {
     public static double[] quadraticFormulaSolver(int a, int b, int c) {
         double[] x = new double[2];
 
-        double rootOfDeterminant = Math.sqrt(power(b, 2) - (4 * a * c));
+        double rootOfDeterminant = sqrt(power(b, 2) - (4 * a * c));
         double positiveDeterminant = (-1 * b) + rootOfDeterminant;
         double negativeDeterminant = (-1 * b) - rootOfDeterminant;
 
@@ -697,7 +697,7 @@ public final class MtxMath {
             return false;
         }
 
-        long root = (long) Math.sqrt(n);
+        long root = sqrt(n);
         return root * root == n;
     }
 
@@ -759,6 +759,6 @@ public final class MtxMath {
     }
 
     public static double pythagoreanTheorem(double a, double b) {
-        return Math.sqrt(a * a + b * b);
+        return sqrt(a * a + b * b);
     }
 }
