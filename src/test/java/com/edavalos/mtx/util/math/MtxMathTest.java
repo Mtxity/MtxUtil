@@ -1411,4 +1411,72 @@ public class MtxMathTest {
             assertEquals(9.974467404327912, MtxMath.pythagoreanTheorem(9.0, 4.3));
         }
     }
+
+    @Nested
+    class SqrtTests {
+
+        @Nested
+        class IntSqrtTests {
+
+            @Test
+            void testSqrt_int_minGreaterThanMax() {
+            }
+
+            @Test
+            void testSqrt_int_zero() {
+                assertEquals(0, MtxMath.sqrt(0));
+            }
+
+            @Test
+            void testSqrt_int_one() {
+                assertEquals(1, MtxMath.sqrt(1));
+            }
+
+            @Test
+            void testSqrt_int_perfectSquares() {
+                assertEquals(2,  MtxMath.sqrt(4));
+                assertEquals(3,  MtxMath.sqrt(9));
+                assertEquals(4,  MtxMath.sqrt(16));
+                assertEquals(5,  MtxMath.sqrt(25));
+                assertEquals(10, MtxMath.sqrt(100));
+            }
+
+            @Test
+            void testSqrt_int_nonPerfectSquares() {
+                assertEquals(1, MtxMath.sqrt(2));
+                assertEquals(1, MtxMath.sqrt(3));
+                assertEquals(2, MtxMath.sqrt(5));
+                assertEquals(2, MtxMath.sqrt(8));
+                assertEquals(3, MtxMath.sqrt(15));
+                assertEquals(4, MtxMath.sqrt(24));
+                assertEquals(5, MtxMath.sqrt(35));
+            }
+
+            @Test
+            void testSqrt_int_largeNumbers() {
+                assertEquals(31622, MtxMath.sqrt(1_000_000_000));
+                assertEquals(46340, MtxMath.sqrt(Integer.MAX_VALUE));
+            }
+
+            @Test
+            void testSqrt_int_negative() {
+                IllegalArgumentException exception = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.sqrt(-1)
+                );
+
+                assertEquals(
+                        "Negative numbers do not have real square roots.",
+                        exception.getMessage()
+                );
+            }
+
+            @Test
+            void testSqrt_int_boundaryValues() {
+                assertEquals(46339, MtxMath.sqrt(2_147_395_599));
+                assertEquals(46340, MtxMath.sqrt(2_147_395_600)); // 46340²
+                assertEquals(46340, MtxMath.sqrt(Integer.MAX_VALUE));
+            }
+        }
+    }
 }
