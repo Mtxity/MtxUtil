@@ -769,4 +769,8 @@ public final class MtxMath {
         }
         return i - 1;
     }
+
+    public static long round(double x) {
+        return (long) floor(x + 0.5);
+    }
 }
