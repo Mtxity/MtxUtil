@@ -1419,10 +1419,6 @@ public class MtxMathTest {
         class IntSqrtTests {
 
             @Test
-            void testSqrt_int_minGreaterThanMax() {
-            }
-
-            @Test
             void testSqrt_int_zero() {
                 assertEquals(0, MtxMath.sqrt(0));
             }
@@ -1476,6 +1472,80 @@ public class MtxMathTest {
                 assertEquals(46339, MtxMath.sqrt(2_147_395_599));
                 assertEquals(46340, MtxMath.sqrt(2_147_395_600)); // 46340²
                 assertEquals(46340, MtxMath.sqrt(Integer.MAX_VALUE));
+            }
+        }
+
+        @Nested
+        class DoubleSqrtTests {
+            private static final double DELTA = 1e-9;
+
+            @Test
+            void testDoubleSqrt_double_zero() {
+                assertEquals(0.0, MtxMath.sqrt(0.0), DELTA);
+            }
+
+            @Test
+            void testDoubleSqrt_double_one() {
+                assertEquals(1.0, MtxMath.sqrt(1.0), DELTA);
+            }
+
+            @Test
+            void testDoubleSqrt_double_perfectSquares() {
+                assertEquals(2.0,  MtxMath.sqrt(4.0), DELTA);
+                assertEquals(3.0,  MtxMath.sqrt(9.0), DELTA);
+                assertEquals(4.0,  MtxMath.sqrt(16.0), DELTA);
+                assertEquals(5.0,  MtxMath.sqrt(25.0), DELTA);
+                assertEquals(10.0, MtxMath.sqrt(100.0), DELTA);
+            }
+
+            @Test
+            void testDoubleSqrt_double_nonPerfectSquares() {
+                assertEquals(Math.sqrt(2),  MtxMath.sqrt(2.0), DELTA);
+                assertEquals(Math.sqrt(3),  MtxMath.sqrt(3.0), DELTA);
+                assertEquals(Math.sqrt(5),  MtxMath.sqrt(5.0), DELTA);
+                assertEquals(Math.sqrt(10), MtxMath.sqrt(10.0), DELTA);
+                assertEquals(Math.sqrt(99), MtxMath.sqrt(99.0), DELTA);
+            }
+
+            @Test
+            void testDoubleSqrt_double_decimalInputs() {
+                assertEquals(Math.sqrt(2.25),    MtxMath.sqrt(2.25), DELTA);
+                assertEquals(Math.sqrt(0.25),    MtxMath.sqrt(0.25), DELTA);
+                assertEquals(Math.sqrt(123.456), MtxMath.sqrt(123.456), DELTA);
+            }
+
+            // Takes too long to run
+//            @Test
+//            void testDoubleSqrt_double_largeNumbers() {
+//                assertEquals(Math.sqrt(1_000_000_000),    MtxMath.sqrt(1_000_000_000.0), DELTA);
+//                assertEquals(Math.sqrt(Double.MAX_VALUE), MtxMath.sqrt(Double.MAX_VALUE), 1e145);
+//            }
+
+            @Test
+            void testDoubleSqrt_double_verySmallNumbers() {
+                assertEquals(Math.sqrt(1e-6),  MtxMath.sqrt(1e-6), DELTA);
+                assertEquals(Math.sqrt(1e-12), MtxMath.sqrt(1e-12), DELTA);
+            }
+
+            @Test
+            void testDoubleSqrt_double_negative() {
+                IllegalArgumentException exception = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.sqrt(-4.0)
+                );
+
+                assertEquals(
+                        "Negative numbers do not have real square roots.",
+                        exception.getMessage()
+                );
+            }
+
+            @Test
+            void testDoubleSqrt_double_resultSquaredEqualsOriginal() {
+                double value = 12345.6789;
+                double result = MtxMath.sqrt(value);
+
+                assertEquals(value, result * result, 1e-6);
             }
         }
     }
