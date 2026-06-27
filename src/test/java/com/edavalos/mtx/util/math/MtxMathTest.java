@@ -1655,4 +1655,53 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class FloorTests {
+
+        @Test
+        void testFloor_positiveInteger() {
+            assertEquals(3.0, MtxMath.floor(3.0));
+        }
+
+        @Test
+        void testFloor_positiveFraction() {
+            assertEquals(3.0, MtxMath.floor(3.7));
+        }
+
+        @Test
+        void testFloor_zero() {
+            assertEquals(0.0, MtxMath.floor(0.0));
+        }
+
+        @Test
+        void testFloor_negativeInteger() {
+            assertEquals(-3.0, MtxMath.floor(-3.0));
+        }
+
+        @Test
+        void testFloor_negativeFraction() {
+            assertEquals(-4.0, MtxMath.floor(-3.2));
+        }
+
+        @Test
+        void testFloor_negativeFractionCloseToZero() {
+            assertEquals(-1.0, MtxMath.floor(-0.2));
+        }
+
+        @Test
+        void testFloor_positiveFractionCloseToZero() {
+            assertEquals(0.0, MtxMath.floor(0.2));
+        }
+
+        @Test
+        void testFloor_largePositive() {
+            assertEquals(123456789.0, MtxMath.floor(123456789.987));
+        }
+
+        @Test
+        void testFloor_largeNegative() {
+            assertEquals(-123456790.0, MtxMath.floor(-123456789.123));
+        }
+    }
 }
