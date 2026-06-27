@@ -685,4 +685,8 @@ public final class MtxMath {
         double factor = Math.pow(10, decimals);
         return Math.round(value * factor) / factor;
     }
+
+    public static double pythagoreanTheorem(double a, double b) {
+        return Math.sqrt(a * a + b * b);
+    }
 }
