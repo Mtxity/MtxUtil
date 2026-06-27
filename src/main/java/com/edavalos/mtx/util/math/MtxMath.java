@@ -770,6 +770,14 @@ public final class MtxMath {
         return i - 1;
     }
 
+    public static double ceil(double x) {
+        long i = (long) x;
+        if (x <= 0 || x == i) {
+            return i;
+        }
+        return i + 1;
+    }
+
     public static long round(double x) {
         return (long) floor(x + 0.5);
     }
