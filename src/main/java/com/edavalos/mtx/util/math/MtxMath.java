@@ -755,7 +755,7 @@ public final class MtxMath {
         }
 
         double factor = power(10, decimals);
-        return Math.round(value * factor) / factor;
+        return round(value * factor) / factor;
     }
 
     public static double pythagoreanTheorem(double a, double b) {
