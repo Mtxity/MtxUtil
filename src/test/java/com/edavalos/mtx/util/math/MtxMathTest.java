@@ -702,42 +702,121 @@ public class MtxMathTest {
     @Nested
     class PowerTests {
 
-        @Test
-        void testPower_PositiveExponent() {
-            assertEquals(8, MtxMath.power(2, 3));
+        @Nested
+        class IntPowerTests {
+
+            @Test
+            void testPower_PositiveExponent() {
+                assertEquals(8, MtxMath.power(2, 3));
+            }
+
+            @Test
+            void testPower_ExponentZero() {
+                assertEquals(1, MtxMath.power(5, 0));
+            }
+
+            @Test
+            void testPower_ExponentOne() {
+                assertEquals(7, MtxMath.power(7, 1));
+            }
+
+            @Test
+            void testPower_NegativeBaseOddExponent() {
+                assertEquals(-8, MtxMath.power(-2, 3));
+            }
+
+            @Test
+            void testPower_NegativeBaseEvenExponent() {
+                assertEquals(16, MtxMath.power(-2, 4));
+            }
+
+            @Test
+            void testPower_ZeroBasePositiveExponent() {
+                assertEquals(0, MtxMath.power(0, 5));
+            }
+
+            @Test
+            void testPower_NegativeExponentThrows() {
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.power(2, -1)
+                );
+            }
         }
 
-        @Test
-        void testPower_ExponentZero() {
-            assertEquals(1, MtxMath.power(5, 0));
-        }
+        @Nested
+        class DoublePowerTests {
+            private static final double DELTA = 1e-9;
 
-        @Test
-        void testPower_ExponentOne() {
-            assertEquals(7, MtxMath.power(7, 1));
-        }
+            @Test
+            void testPower_double_positiveExponent() {
+                assertEquals(8.0, MtxMath.power(2.0, 3), DELTA);
+            }
 
-        @Test
-        void testPower_NegativeBaseOddExponent() {
-            assertEquals(-8,MtxMath.power(-2, 3));
-        }
+            @Test
+            void testPower_double_exponentZero() {
+                assertEquals(1.0, MtxMath.power(5.0, 0), DELTA);
+            }
 
-        @Test
-        void testPower_NegativeBaseEvenExponent() {
-            assertEquals(16, MtxMath.power(-2, 4));
-        }
+            @Test
+            void testPower_double_baseZeroPositiveExponent() {
+                assertEquals(0.0, MtxMath.power(0.0, 5), DELTA);
+            }
 
-        @Test
-        void testPower_ZeroBasePositiveExponent() {
-            assertEquals(0, MtxMath.power(0, 5));
-        }
+            @Test
+            void testPower_double_baseOne() {
+                assertEquals(1.0, MtxMath.power(1.0, 100), DELTA);
+            }
 
-        @Test
-        void testPower_NegativeExponentThrows() {
-            assertThrows(
-                    IllegalArgumentException.class,
-                    () -> MtxMath.power(2, -1)
-            );
+            @Test
+            void testPower_double_negativeExponent() {
+                assertEquals(0.125, MtxMath.power(2.0, -3), DELTA);
+            }
+
+            @Test
+            void testPower_double_negativeBaseOddExponent() {
+                assertEquals(-8.0, MtxMath.power(-2.0, 3), DELTA);
+            }
+
+            @Test
+            void testPower_double_negativeBaseEvenExponent() {
+                assertEquals(16.0, MtxMath.power(-2.0, 4), DELTA);
+            }
+
+            @Test
+            void testPower_double_negativeBaseNegativeExponent() {
+                assertEquals(-0.125, MtxMath.power(-2.0, -3), DELTA);
+            }
+
+            @Test
+            void testPower_double_fractionalBase() {
+                assertEquals(0.25, MtxMath.power(0.5, 2), DELTA);
+            }
+
+            @Test
+            void testPower_double_fractionalBaseNegativeExponent() {
+                assertEquals(4.0, MtxMath.power(0.5, -2), DELTA);
+            }
+
+            @Test
+            void testPower_double_zeroBaseZeroExponent() {
+                assertEquals(1.0, MtxMath.power(0.0, 0), DELTA);
+            }
+
+            @Test
+            void testPower_double_largeExponent() {
+                assertEquals(1024.0, MtxMath.power(2.0, 10), DELTA);
+            }
+
+            @Test
+            void testPower_double_negativeOneEvenExponent() {
+                assertEquals(1.0, MtxMath.power(-1.0, 100), DELTA);
+            }
+
+            @Test
+            void testPower_double_negativeOneOddExponent() {
+                assertEquals(-1.0, MtxMath.power(-1.0, 101), DELTA);
+            }
         }
     }
 
