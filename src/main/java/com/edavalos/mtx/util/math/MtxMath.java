@@ -339,6 +339,24 @@ public final class MtxMath {
         return ans;
     }
 
+    public static double sqrt(double n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("Negative numbers do not have real square roots.");
+        }
+
+        if (n == 0) {
+            return 0;
+        }
+
+        double x = n;
+        double precision = 1e-10;
+        while (Math.abs(x - n / x) > precision) {
+            x = (x + n / x) / 2;
+        }
+
+        return x;
+    }
+
     public static boolean isPrime(int i) {
         if (i <= 1) {
             return false;
