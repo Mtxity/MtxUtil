@@ -1708,6 +1708,55 @@ public class MtxMathTest {
     }
 
     @Nested
+    class CeilTests {
+
+        @Test
+        void testCeil_positiveInteger() {
+            assertEquals(3.0, MtxMath.ceil(3.0));
+        }
+
+        @Test
+        void testCeil_positiveFraction() {
+            assertEquals(4.0, MtxMath.ceil(3.2));
+        }
+
+        @Test
+        void testCeil_zero() {
+            assertEquals(0.0, MtxMath.ceil(0.0));
+        }
+
+        @Test
+        void testCeil_negativeInteger() {
+            assertEquals(-3.0, MtxMath.ceil(-3.0));
+        }
+
+        @Test
+        void testCeil_negativeFraction() {
+            assertEquals(-3.0, MtxMath.ceil(-3.2));
+        }
+
+        @Test
+        void testCeil_negativeFractionCloseToZero() {
+            assertEquals(0.0, MtxMath.ceil(-0.2));
+        }
+
+        @Test
+        void testCeil_positiveFractionCloseToZero() {
+            assertEquals(1.0, MtxMath.ceil(0.2));
+        }
+
+        @Test
+        void testCeil_largePositive() {
+            assertEquals(123456790.0, MtxMath.ceil(123456789.123));
+        }
+
+        @Test
+        void testCeil_largeNegative() {
+            assertEquals(-123456789.0, MtxMath.ceil(-123456789.987));
+        }
+    }
+
+    @Nested
     class RoundTests {
 
         @ParameterizedTest
