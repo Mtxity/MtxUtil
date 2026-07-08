@@ -762,6 +762,11 @@ public final class MtxMath {
         return sqrt(a * a + b * b);
     }
 
+    // @TODO: use FdLibm Hypot-inspired implementation
+    public static double hypotenuse(double a, double b) {
+        return sqrt(a * a + b * b);
+    }
+
     public static double floor(double x) {
         long i = (long) x;
         if (x >= 0 || x == i) {
