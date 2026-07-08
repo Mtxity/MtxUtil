@@ -1820,4 +1820,51 @@ public class MtxMathTest {
             assertEquals(expected, MtxMath.round(input));
         }
     }
+
+    @Nested
+    class DistanceBetweenPointsTests {
+        private static final double EPSILON = 1e-9;
+
+        @Test
+        void testDistanceBetweenPoints_distanceBetweenSamePointIsZero() {
+            assertEquals(0.0, MtxMath.distanceBetweenPoints(2.5, -4.0, 2.5, -4.0), EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceBetweenHorizontalPoints() {
+            assertEquals(5.0, MtxMath.distanceBetweenPoints(1.0, 3.0, 6.0, 3.0), EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceBetweenVerticalPoints() {
+            assertEquals(7.0, MtxMath.distanceBetweenPoints(2.0, 1.0, 2.0, 8.0), EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceBetweenDiagonalPoints() {
+            assertEquals(5.0, MtxMath.distanceBetweenPoints(0.0, 0.0, 3.0, 4.0), EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceIsSymmetric() {
+            double d1 = MtxMath.distanceBetweenPoints(-2.0, 5.0, 4.0, -3.0);
+            double d2 = MtxMath.distanceBetweenPoints(4.0, -3.0, -2.0, 5.0);
+
+            assertEquals(d1, d2, EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceWithNegativeCoordinates() {
+            assertEquals(5.0, MtxMath.distanceBetweenPoints(-1.0, -1.0, -4.0, -5.0), EPSILON);
+        }
+
+        @Test
+        void testDistanceBetweenPoints_distanceWithLargeCoordinates() {
+            assertEquals(
+                    5.0,
+                    MtxMath.distanceBetweenPoints(1_000_000.0, 1_000_000.0, 1_000_003.0, 1_000_004.0),
+                    EPSILON
+            );
+        }
+    }
 }
