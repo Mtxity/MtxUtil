@@ -1521,6 +1521,29 @@ public class MtxMathTest {
     }
 
     @Nested
+    class HypotenuseTests {
+        private static final double DELTA = 0.001;
+
+        @Test
+        void testHypotenuse_wholeNumbers() {
+            assertEquals(5,  MtxMath.hypotenuse(3, 4));
+            assertEquals(13, MtxMath.hypotenuse(5, 12));
+            assertEquals(25, MtxMath.hypotenuse(7, 24));
+            assertEquals(17, MtxMath.hypotenuse(8, 15), DELTA);
+            assertEquals(41, MtxMath.hypotenuse(9, 40));
+        }
+
+        @Test
+        void testHypotenuse_decimals() {
+            assertEquals(4.085339643163099, MtxMath.hypotenuse(1.5, 3.8), DELTA);
+            assertEquals(5.547071299343465, MtxMath.hypotenuse(2.6, 4.9), DELTA);
+            assertEquals(7.58946638440411,  MtxMath.hypotenuse(7.2, 2.4), DELTA);
+            assertEquals(8.532877591996735, MtxMath.hypotenuse(8.4, 1.5), DELTA);
+            assertEquals(9.974467404327912, MtxMath.hypotenuse(9.0, 4.3), DELTA);
+        }
+    }
+
+    @Nested
     class SqrtTests {
 
         @Nested
