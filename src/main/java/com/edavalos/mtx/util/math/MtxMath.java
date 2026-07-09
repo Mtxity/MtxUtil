@@ -2,11 +2,8 @@ package com.edavalos.mtx.util.math;
 
 import com.edavalos.mtx.util.list.MtxArrayList;
 import com.edavalos.mtx.util.list.MtxList;
-import jdk.internal.math.DoubleConsts;
 
 import java.util.*;
-
-import static java.lang.Double.PRECISION;
 
 public final class MtxMath {
     private static final int DEFAULT_SIZE = 8;
@@ -801,5 +798,10 @@ public final class MtxMath {
         double dx = x2 - x1;
         double dy = y2 - y1;
         return hypotenuse(dx, dy);
+    }
+
+    public static int highOrderBit(double x) {
+        long transducer = Double.doubleToRawLongBits(x);
+        return (int) (transducer >> 32);
     }
 }
