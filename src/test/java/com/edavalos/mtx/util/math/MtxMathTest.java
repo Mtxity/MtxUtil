@@ -846,6 +846,59 @@ public class MtxMathTest {
                 assertEquals(-1.0, MtxMath.power(-1.0, 101), DELTA);
             }
         }
+
+        @Nested
+        class PowerOfTwoTests {
+
+            @Test
+            void testPowerOfTwo_exponentTooSmall() {
+                IllegalArgumentException exception = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.powerOfTwo(-1023)
+                );
+
+                assertEquals(
+                        "Result must fit in a double",
+                        exception.getMessage()
+                );
+            }
+
+            @Test
+            void testPowerOfTwo_exponentTooBig() {
+                IllegalArgumentException exception = assertThrows(
+                        IllegalArgumentException.class,
+                        () -> MtxMath.powerOfTwo(1024)
+                );
+
+                assertEquals(
+                        "Result must fit in a double",
+                        exception.getMessage()
+                );
+            }
+
+            @Test
+            void testPowerOfTwo_exponentZero() {
+                assertEquals(1.0, MtxMath.powerOfTwo(0));
+            }
+
+            @Test
+            void testPowerOfTwo_exponentSmall() {
+                assertEquals(2.0,  MtxMath.powerOfTwo(1));
+                assertEquals(4.0,  MtxMath.powerOfTwo(2));
+                assertEquals(8.0,  MtxMath.powerOfTwo(3));
+                assertEquals(16.0, MtxMath.powerOfTwo(4));
+                assertEquals(32.0, MtxMath.powerOfTwo(5));
+            }
+
+            @Test
+            void testPowerOfTwo_exponentLarge() {
+                int expected = 32;
+                for (int i = 5; i < 20; i++) {
+                    assertEquals(expected, MtxMath.powerOfTwo(i));
+                    expected *= 2;
+                }
+            }
+        }
     }
 
     @Nested
