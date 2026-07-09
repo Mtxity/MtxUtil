@@ -2,8 +2,11 @@ package com.edavalos.mtx.util.math;
 
 import com.edavalos.mtx.util.list.MtxArrayList;
 import com.edavalos.mtx.util.list.MtxList;
+import jdk.internal.math.DoubleConsts;
 
 import java.util.*;
+
+import static java.lang.Double.PRECISION;
 
 public final class MtxMath {
     private static final int DEFAULT_SIZE = 8;
@@ -502,6 +505,13 @@ public final class MtxMath {
             exp >>= 1;
         }
         return result;
+    }
+
+    public static double powerOfTwo(int n) {
+        if (n < Double.MIN_EXPONENT || n > Double.MAX_EXPONENT) {
+            throw new IllegalArgumentException("Result must fit in a double");
+        }
+        return Double.longBitsToDouble((long) (n + Double.MAX_EXPONENT) << 52);
     }
 
     public static int abs(int n) {
