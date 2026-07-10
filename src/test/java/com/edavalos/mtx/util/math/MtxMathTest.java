@@ -1920,4 +1920,81 @@ public class MtxMathTest {
             );
         }
     }
+
+    @Nested
+    class OrderBitTests {
+
+        @Test
+        void testOrderBit_zero() {
+            assertEquals(0x00000000, MtxMath.highOrderBit(0.0));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(0.0));
+        }
+
+        @Test
+        void testOrderBit_negativeZero() {
+            assertEquals(0x80000000, MtxMath.highOrderBit(-0.0));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(-0.0));
+        }
+
+        @Test
+        void testOrderBit_one() {
+            assertEquals(0x3FF00000, MtxMath.highOrderBit(1.0));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(1.0));
+        }
+
+        @Test
+        void testOrderBit_negativeOne() {
+            assertEquals(0xBFF00000, MtxMath.highOrderBit(-1.0));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(-1.0));
+        }
+
+        @Test
+        void testOrderBit_pi() {
+            assertEquals(0x400921FB, MtxMath.highOrderBit(Math.PI));
+            assertEquals(0x54442D18, MtxMath.lowOrderBit(Math.PI));
+        }
+
+        @Test
+        void testOrderBit_positiveInfinity() {
+            assertEquals(0x7FF00000, MtxMath.highOrderBit(Double.POSITIVE_INFINITY));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(Double.POSITIVE_INFINITY));
+        }
+
+        @Test
+        void testOrderBit_negativeInfinity() {
+            assertEquals(0xFFF00000, MtxMath.highOrderBit(Double.NEGATIVE_INFINITY));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testOrderBit_canonicalNaN() {
+            assertEquals(0x7FF80000, MtxMath.highOrderBit(Double.NaN));
+            assertEquals(0x00000000, MtxMath.lowOrderBit(Double.NaN));
+        }
+
+        @Test
+        void testOrderBit_roundTripFromRawBits() {
+            long raw = 0x123456789ABCDEFL;
+            double value = Double.longBitsToDouble(raw);
+
+            int high = MtxMath.highOrderBit(value);
+            int low = MtxMath.lowOrderBit(value);
+
+            long reconstructed = ((long) high << 32) | (low & 0xFFFFFFFFL);
+
+            assertEquals(raw, reconstructed);
+        }
+
+        @Test
+        void testOrderBit_roundTripWithArbitraryValue() {
+            double value = 12345.6789;
+
+            int high = MtxMath.highOrderBit(value);
+            int low = MtxMath.lowOrderBit(value);
+
+            long reconstructed = ((long) high << 32) | (low & 0xFFFFFFFFL);
+
+            assertEquals(Double.doubleToRawLongBits(value), reconstructed);
+        }
+    }
 }
