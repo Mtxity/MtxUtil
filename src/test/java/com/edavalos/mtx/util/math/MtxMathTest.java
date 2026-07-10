@@ -1996,5 +1996,107 @@ public class MtxMathTest {
 
             assertEquals(Double.doubleToRawLongBits(value), reconstructed);
         }
+
+        @Nested
+        class HighOrderBitTests {
+
+            @Test
+            void testHighOrderBit_replacesHigh32BitsAndPreservesLow32Bits() {
+                double original = 123.456;
+
+                long originalBits = Double.doubleToRawLongBits(original);
+                int newHigh = 0xCAFEBABE;
+
+                double result = MtxMath.highOrderBit(original, newHigh);
+
+                long resultBits = Double.doubleToRawLongBits(result);
+
+                assertEquals(newHigh, (int) (resultBits >>> 32));
+                assertEquals(
+                        originalBits & 0x0000_0000_FFFF_FFFFL,
+                        resultBits & 0x0000_0000_FFFF_FFFFL);
+            }
+
+            @Test
+            void testHighOrderBit_canConstructExpectedBitPattern() {
+                double original = -9876.54321;
+                int newHigh = 0x12345678;
+
+                long expectedBits =
+                        (Double.doubleToRawLongBits(original) & 0x0000_0000_FFFF_FFFFL)
+                                | (((long) newHigh) << 32);
+
+                double result = MtxMath.highOrderBit(original, newHigh);
+
+                assertEquals(expectedBits, Double.doubleToRawLongBits(result));
+            }
+
+            @Test
+            void testHighOrderBit_preservesLowBitsForNaN() {
+                double original = Double.longBitsToDouble(0x7ff8_1234_5678_9ABCL);
+                int newHigh = 0x80000000;
+
+                double result = MtxMath.highOrderBit(original, newHigh);
+
+                long resultBits = Double.doubleToRawLongBits(result);
+
+                assertEquals(newHigh, (int) (resultBits >>> 32));
+                assertEquals(
+                        0x5678_9ABCL,
+                        resultBits & 0x0000_0000_FFFF_FFFFL);
+            }
+
+            @Test
+            void testHighOrderBit_worksWithNegativeHighWord() {
+                double original = 1.0;
+                int newHigh = 0xFFFFFFFF;
+
+                double result = MtxMath.highOrderBit(original, newHigh);
+
+                long bits = Double.doubleToRawLongBits(result);
+
+                assertEquals(0xFFFFFFFF, (int) (bits >>> 32));
+            }
+
+            @Test
+            void testHighOrderBit_worksWithSignedZero() {
+                double result = MtxMath.highOrderBit(+0.0, 0x80000000);
+
+                long bits = Double.doubleToRawLongBits(result);
+
+                assertEquals(0x80000000, (int) (bits >>> 32));
+                assertEquals(0L, bits & 0x0000_0000_FFFF_FFFFL);
+            }
+
+            @Test
+            void testHighOrderBit_preservesLowWordForManyInputs() {
+                long[] values = {
+                        0L, 1L, -1L,
+                        0x0123_4567_89AB_CDEFL,
+                        0x7FF0_0000_0000_0000L,
+                        0xFFF0_0000_0000_0000L,
+                        0x7FF8_0000_0000_0001L
+                };
+
+                int[] highs = {
+                        0, 1, -1,
+                        0x12345678,
+                        0x80000000,
+                        0x7FFFFFFF
+                };
+
+                for (long bits : values) {
+                    double x = Double.longBitsToDouble(bits);
+                    long low = bits & 0x0000_0000_FFFF_FFFFL;
+
+                    for (int high : highs) {
+                        long result = Double.doubleToRawLongBits(MtxMath.highOrderBit(x, high));
+
+                        assertEquals(high, (int) (result >>> 32));
+                        assertEquals(low, result & 0x0000_0000_FFFF_FFFFL);
+                    }
+                }
+            }
+        }
     }
 }
