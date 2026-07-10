@@ -805,6 +805,11 @@ public final class MtxMath {
         return (int) (transducer >> 32);
     }
 
+    public static double highOrderBit(double x, int high) {
+        long transX = Double.doubleToRawLongBits(x);
+        return Double.longBitsToDouble( (transX & 0x0000_0000_FFFF_FFFFL) | ((((long)high)) << 32) );
+    }
+
     public static int lowOrderBit(double x) {
         long transducer = Double.doubleToRawLongBits(x);
         return (int) transducer;
