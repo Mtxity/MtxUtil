@@ -12,4 +12,10 @@ public class MtxComplex {
     public MtxComplex plus(MtxComplex b) {
         return new MtxComplex(this.re + b.re, this.im + b.im);
     }
+
+    public MtxComplex times(MtxComplex b) {
+        double real = this.re * b.re - this.im * b.im;
+        double imag = this.re * b.im + this.im * b.re;
+        return new MtxComplex(real, imag);
+    }
 }
