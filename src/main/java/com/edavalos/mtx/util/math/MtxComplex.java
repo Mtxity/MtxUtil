@@ -8,4 +8,8 @@ public class MtxComplex {
         this.re = real;
         this.im = imag;
     }
+
+    public MtxComplex plus(MtxComplex b) {
+        return new MtxComplex(this.re + b.re, this.im + b.im);
+    }
 }
