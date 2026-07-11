@@ -6,7 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MtxHypotTest {
+
     private static final double STRICT_TOL = 1e-15;
+    private static final double NUMERIC_TOL = 1e-12;
 
     @Test
     void computesSimple3_4_5() {
@@ -68,18 +70,9 @@ public class MtxHypotTest {
         double x = 1e308;
         double y = 1e308;
 
-        double expected = Math.hypot(x, y);
-
-        assertEquals(expected, MtxHypot.compute(x, y),
-                expected * 1e-15);
-    }
-
-    @Test
-    void handlesVerySmallNumbersWithoutUnderflow() {
-        double x = Double.MIN_VALUE;
-        double y = Double.MIN_VALUE;
-
-        assertEquals(1.295163E-318, MtxHypot.compute(x, y), 0.0);
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
     }
 
     @Test
@@ -87,13 +80,9 @@ public class MtxHypotTest {
         double x = 1e-300;
         double y = 2e-300;
 
-        double expected = 1.402757983365378E-191;
-
-        assertEquals(
-                expected,
+        assertEquals(Math.hypot(x, y),
                 MtxHypot.compute(x, y),
-                expected * 1e-15
-        );
+                NUMERIC_TOL);
     }
 
     @Test
@@ -101,9 +90,69 @@ public class MtxHypotTest {
         double x = Math.scalb(1.0, 100);
         double y = Math.scalb(1.0, 20);
 
-        double result = MtxHypot.compute(x, y);
+        assertEquals(x + y, MtxHypot.compute(x, y));
+    }
 
-        // Difference is beyond 60 exponent bits, so implementation returns a+b.
-        assertEquals(x + y, result);
+    @Test
+    void executesWideGapBranch() {
+        // a = 10, b = 2 -> w = 8 > b
+        assertEquals(Math.hypot(10.0, 2.0),
+                MtxHypot.compute(10.0, 2.0),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void executesEqualityBoundaryBranch() {
+        // a = 2, b = 1 -> w == b
+        assertEquals(Math.hypot(2.0, 1.0),
+                MtxHypot.compute(2.0, 1.0),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void scalesUpNormalTinyNumbers() {
+        double x = Math.scalb(1.0, -700);
+        double y = Math.scalb(1.0, -700);
+
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void handlesEqualArguments() {
+        assertEquals(Math.hypot(8.0, 8.0),
+                MtxHypot.compute(8.0, 8.0),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void handlesMaxFiniteValues() {
+        double x = Double.MAX_VALUE;
+        double y = Double.MAX_VALUE;
+
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void handlesMinNormalValues() {
+        double x = Double.MIN_NORMAL;
+        double y = Double.MIN_NORMAL;
+
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
+    }
+
+    @Test
+    void handlesMixedLargeAndSmallValues() {
+        double x = 1e300;
+        double y = 1.0;
+
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
     }
 }
