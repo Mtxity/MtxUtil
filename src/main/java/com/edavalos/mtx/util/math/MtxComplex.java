@@ -18,4 +18,8 @@ public class MtxComplex {
         double imag = this.re * b.im + this.im * b.re;
         return new MtxComplex(real, imag);
     }
+
+    public double abs() {
+        return MtxMath.hypotenuse(re, im); // Avoids underflow/overflow
+    }
 }
