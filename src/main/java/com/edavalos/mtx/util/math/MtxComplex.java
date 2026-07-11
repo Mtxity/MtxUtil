@@ -26,4 +26,8 @@ public class MtxComplex {
     public double abs() {
         return MtxMath.hypotenuse(re, im); // Avoids underflow/overflow
     }
+
+    public MtxComplex conjugate() {
+        return new MtxComplex(this.re, -this.im);
+    }
 }
