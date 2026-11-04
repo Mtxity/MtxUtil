@@ -901,6 +901,11 @@ public class MtxMathTest {
             }
 
             @Test
+            void testDoubleDoublePower_fractionalExponent() {
+                assertEquals(2.0, MtxMath.power(4.0, 0.5), 1e-9);
+            }
+
+            @Test
             void testDoubleDoublePower_exponentZero() {
                 assertEquals(1.0, MtxMath.power(5.0, 0.0), 1e-9);
             }
@@ -918,6 +923,62 @@ public class MtxMathTest {
             @Test
             void testDoubleDoublePower_negativeExponent() {
                 assertEquals(0.125, MtxMath.power(2.0, -3.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_negativeBaseIntegerExponent() {
+                assertEquals(-8.0, MtxMath.power(-2.0, 3.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_negativeBaseEvenIntegerExponent() {
+                assertEquals(16.0, MtxMath.power(-2.0, 4.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_negativeBaseFractionalExponentThrows() {
+                assertThrows(
+                        ArithmeticException.class,
+                        () -> MtxMath.power(-2.0, 0.5)
+                );
+            }
+
+            @Test
+            void testDoubleDoublePower_zeroBaseNegativeExponentThrows() {
+                assertThrows(
+                        ArithmeticException.class,
+                        () -> MtxMath.power(0.0, -1.0)
+                );
+            }
+        }
+
+        @Nested
+        class ExpTests {
+            private static final double DELTA = 1e-9;
+
+            @Test
+            void testExp_zero() {
+                assertEquals(1.0, MtxMath.exp(0.0), DELTA);
+            }
+
+            @Test
+            void testExp_positiveValue() {
+                assertEquals(Math.exp(1.0), MtxMath.exp(1.0), DELTA);
+            }
+
+            @Test
+            void testExp_negativeValue() {
+                assertEquals(Math.exp(-1.0), MtxMath.exp(-1.0), DELTA);
+            }
+
+            @Test
+            void testExp_fractionalValue() {
+                assertEquals(Math.exp(2.5), MtxMath.exp(2.5), DELTA);
+            }
+
+            @Test
+            void testExp_largeValue() {
+                assertEquals(Math.exp(100.0), MtxMath.exp(100.0), Math.exp(100.0) * 1e-12);
             }
         }
 

@@ -123,6 +123,14 @@ class MtxComplexTest {
     }
 
     @Test
+    void computesComplexExponentialDecimal() {
+        MtxComplex result = new MtxComplex(3.5, 3.5).exp();
+
+        assertEquals(-31.01118643937451, result.real(), TOLERANCE);
+        assertEquals(-11.61634512447063, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void computesPrincipalComplexLogarithm() {
         MtxComplex result = new MtxComplex(3.0, 4.0).log();
 

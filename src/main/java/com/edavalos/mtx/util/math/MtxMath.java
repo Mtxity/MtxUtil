@@ -551,16 +551,42 @@ public final class MtxMath {
         return result;
     }
 
-    // @TODO: Support non integer exponents
     public static double power(double base, double exponent) {
-        double result = 1.0;
-        int exp = (int) exponent;
-
-        for (int i = 0; i < abs(exp); i++) {
-            result *= base;
+        if (base == 0) {
+            if (exponent > 0) {
+                return 0;
+            }
+            throw new ArithmeticException("Undefined result");
         }
 
-        return exp < 0 ? 1.0 / result : result;
+        if (base < 0) {
+            if (exponent != (long) exponent) {
+                throw new ArithmeticException(
+                        "Negative base with fractional exponent"
+                );
+            }
+
+            return power(-base, exponent) * ((long) exponent % 2 == 0 ? 1 : -1);
+        }
+
+        return exp(exponent * ln(base));
+    }
+
+    public static double exp(double x) {
+        // Taylor series: e^x = 1 + x + x²/2! + ...
+        double sum = 1;
+        double term = 1;
+
+        for (int i = 1; i <= 200; i++) {
+            term *= x / i;
+            sum += term;
+
+            if (abs(term) < 1e-15) {
+                break;
+            }
+        }
+
+        return sum;
     }
 
     public static double powerOfTwo(int n) {
