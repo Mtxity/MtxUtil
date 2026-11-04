@@ -504,6 +504,17 @@ public final class MtxMath {
         return result;
     }
 
+    public static double power(double base, double exponent) {
+        double result = 1.0;
+        int exp = (int) exponent;
+
+        for (int i = 0; i < abs(exp); i++) {
+            result *= base;
+        }
+
+        return exp < 0 ? 1.0 / result : result;
+    }
+
     public static double powerOfTwo(int n) {
         if (n < Double.MIN_EXPONENT || n > Double.MAX_EXPONENT) {
             throw new IllegalArgumentException("Result must fit in a double");
@@ -519,6 +530,13 @@ public final class MtxMath {
     }
 
     public static double abs(double n) {
+        if (n < 0) {
+            return -n;
+        }
+        return n;
+    }
+
+    public static long abs(long n) {
         if (n < 0) {
             return -n;
         }
