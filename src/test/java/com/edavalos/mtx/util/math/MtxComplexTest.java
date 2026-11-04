@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MtxComplexTest {
@@ -98,6 +99,89 @@ class MtxComplexTest {
         void testToString_bothNaN() {
             MtxComplex complex = new MtxComplex(Double.NaN, Double.NaN);
             assertEquals("NaN + NaNi", complex.toString());
+        }
+    }
+
+    @Nested
+    class EqualsAndHashCodeTests {
+
+        @Test
+        void equalComplexNumbersAreEqual() {
+            MtxComplex first = new MtxComplex(3.0, 4.0);
+            MtxComplex second = new MtxComplex(3.0, 4.0);
+
+            assertEquals(first, second);
+        }
+
+        @Test
+        void equalComplexNumbersAreCopies() {
+            MtxComplex first = new MtxComplex(3.0, 4.0);
+
+            assertEquals(first, first);
+        }
+
+        @Test
+        void equalComplexNumbersHaveSameHashCode() {
+            MtxComplex first = new MtxComplex(3.0, 4.0);
+            MtxComplex second = new MtxComplex(3.0, 4.0);
+
+            assertEquals(first.hashCode(), second.hashCode());
+        }
+
+        @Test
+        void differentRealPartsAreNotEqual() {
+            assertNotEquals(
+                    new MtxComplex(3.0, 4.0),
+                    new MtxComplex(5.0, 4.0)
+            );
+        }
+
+        @Test
+        void differentImaginaryPartsAreNotEqual() {
+            assertNotEquals(
+                    new MtxComplex(3.0, 4.0),
+                    new MtxComplex(3.0, 5.0)
+            );
+        }
+
+        @Test
+        void complexNumberIsNotEqualToNull() {
+            assertNotEquals(new MtxComplex(3.0, 4.0), null);
+        }
+
+        @Test
+        void complexNumberIsNotEqualToAnotherType() {
+            assertNotEquals(new MtxComplex(3.0, 4.0), "3.000 + 4.000i");
+        }
+
+        @Test
+        void nanRealComponentsCompareAsEqual() {
+            MtxComplex first = new MtxComplex(Double.NaN, 4.0);
+            MtxComplex second = new MtxComplex(Double.NaN, 4.0);
+
+            assertEquals(first, second);
+            assertEquals(first.hashCode(), second.hashCode());
+        }
+
+        @Test
+        void nanImgComponentsCompareAsEqual() {
+            MtxComplex first = new MtxComplex(4.0, Double.NaN);
+            MtxComplex second = new MtxComplex(4.0, Double.NaN);
+
+            assertEquals(first, second);
+            assertEquals(first.hashCode(), second.hashCode());
+        }
+
+        @Test
+        void positiveAndNegativeZeroAreDifferent() {
+            assertNotEquals(
+                    new MtxComplex(0.0, 0.0),
+                    new MtxComplex(-0.0, 0.0)
+            );
+            assertNotEquals(
+                    new MtxComplex(0.0, 0.0),
+                    new MtxComplex(0.0, -0.0)
+            );
         }
     }
 }
