@@ -357,6 +357,53 @@ public final class MtxMath {
         return x;
     }
 
+    public static double ln(double n) {
+        if (Double.isNaN(n) || n < 0.0) {
+            return Double.NaN;
+        }
+        if (n == 0.0) {
+            return Double.NEGATIVE_INFINITY;
+        }
+        if (n == Double.POSITIVE_INFINITY) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        long bits = Double.doubleToRawLongBits(n);
+        int encodedExponent = (int) ((bits >>> 52) & 0x7ffL);
+        int exponentAdjustment = 0;
+
+        // Scale subnormal values into the normal range before extracting the
+        // exponent. The adjustment restores the original exponent below.
+        if (encodedExponent == 0) {
+            n *= 0x1.0p52;
+            bits = Double.doubleToRawLongBits(n);
+            encodedExponent = (int) ((bits >>> 52) & 0x7ffL);
+            exponentAdjustment = -52;
+        }
+
+        int exponent = encodedExponent - 1023 + exponentAdjustment;
+        double mantissa = Double.longBitsToDouble(
+                (bits & 0x000f_ffff_ffff_ffffL) | 0x3ff0_0000_0000_0000L);
+        double y = (mantissa - 1.0) / (mantissa + 1.0);
+        double ySquared = y * y;
+        double term = y;
+        double result = 0.0;
+
+        // ln(m) = 2 * (y + y^3/3 + y^5/5 + ...), y=(m-1)/(m+1).
+        for (int denominator = 1; denominator <= 127; denominator += 2) {
+            result += term / denominator;
+            term *= ySquared;
+        }
+
+        return exponent * LN2 + 2.0 * result;
+    }
+
+    public static double log10(double n) {
+        return ln(n) / 2.302585092994046;
+    }
+
+    // @TODO: Add logN() / log() method here
+
     public static boolean isPrime(int i) {
         if (i <= 1) {
             return false;
@@ -504,6 +551,7 @@ public final class MtxMath {
         return result;
     }
 
+    // @TODO: Support non integer exponents
     public static double power(double base, double exponent) {
         double result = 1.0;
         int exp = (int) exponent;

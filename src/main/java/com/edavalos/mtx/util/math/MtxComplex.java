@@ -81,7 +81,7 @@ public class MtxComplex {
 
     public MtxComplex log() {
         return new MtxComplex(
-                Math.log(this.abs()),
+                MtxMath.ln(this.abs()),
                 this.argument()
         );
     }
