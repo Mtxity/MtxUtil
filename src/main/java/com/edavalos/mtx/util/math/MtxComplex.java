@@ -35,6 +35,19 @@ public class MtxComplex {
         return Math.atan2(this.im, this.re);
     }
 
+    public MtxComplex negate() {
+        return new MtxComplex(-this.re, -this.im);
+    }
+
+    public MtxComplex reciprocal() {
+        double denominator = this.absSquared();
+        if (denominator == 0) {
+            throw new ArithmeticException("Division by zero");
+        }
+
+        return new MtxComplex(this.re / denominator, -this.im / denominator);
+    }
+
     public MtxComplex conjugate() {
         return new MtxComplex(this.re, -this.im);
     }
