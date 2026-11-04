@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.math;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -164,5 +165,48 @@ public class MtxHypotTest {
         assertEquals(Math.hypot(x, y),
                 MtxHypot.compute(x, y),
                 NUMERIC_TOL);
+    }
+
+    @Nested
+    class NDimHypot {
+
+        @Test
+        void computesEuclideanNormForThreeValues() {
+            assertEquals(13.0, MtxHypot.compute(3.0, 4.0, 12.0), STRICT_TOL);
+        }
+
+        @Test
+        void computesEuclideanNormForMultipleValues() {
+            assertEquals(
+                    64.08736224873653,
+                    MtxHypot.compute(
+                            3.0,
+                            4.0,
+                            12.0,
+                            19.5,
+                            25.2,
+                            28.0,
+                            32.3,
+                            33.1
+                    ),
+                    NUMERIC_TOL
+            );
+        }
+
+        @Test
+        void returnsZeroForEmptyValues() {
+            assertEquals(0.0, MtxHypot.compute());
+        }
+
+        @Test
+        void handlesLargeMultipleValuesWithoutOverflow() {
+            double value = 1e308;
+
+            assertEquals(
+                    Math.sqrt(3.0) * value,
+                    MtxHypot.compute(value, value, value),
+                    NUMERIC_TOL * value
+            );
+        }
     }
 }
