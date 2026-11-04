@@ -147,6 +147,16 @@ public class MtxHypotTest {
     }
 
     @Test
+    void handlesNonzeroSubnormalValues() {
+        double x = Double.MIN_VALUE;
+        double y = Math.nextUp(x);
+
+        assertEquals(Math.hypot(x, y),
+                MtxHypot.compute(x, y),
+                NUMERIC_TOL);
+    }
+
+    @Test
     void handlesMixedLargeAndSmallValues() {
         double x = 1e300;
         double y = 1.0;
