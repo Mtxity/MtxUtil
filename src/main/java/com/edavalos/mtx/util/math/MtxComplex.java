@@ -27,12 +27,20 @@ public class MtxComplex {
         return MtxMath.hypotenuse(re, im); // Avoids underflow/overflow
     }
 
+    public double absSquared() {
+        return this.re * this.re + this.im * this.im;
+    }
+
+    public double argument() {
+        return Math.atan2(this.im, this.re);
+    }
+
     public MtxComplex conjugate() {
         return new MtxComplex(this.re, -this.im);
     }
 
     public MtxComplex divide(MtxComplex b) {
-        double denominator = b.re * b.re + b.im * b.im;
+        double denominator = b.absSquared();
         if (denominator == 0) {
             throw new ArithmeticException("Division by zero");
         }
