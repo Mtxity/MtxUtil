@@ -84,6 +84,32 @@ public class MtxMathTest {
     }
 
     @Nested
+    class LogarithmTests {
+
+        @Test
+        public void testComputesNaturalLogarithm() {
+            assertEquals(0.0, MtxMath.ln(1.0), 1e-15);
+            assertEquals(Math.log(2.0), MtxMath.ln(2.0), 1e-14);
+            assertEquals(Math.log(0.5), MtxMath.ln(0.5), 1e-14);
+            assertEquals(Math.log(1000.0), MtxMath.ln(1000.0), 1e-14);
+        }
+
+        @Test
+        public void testComputesBaseTenLogarithm() {
+            assertEquals(0.0, MtxMath.log10(1.0), 1e-15);
+            assertEquals(1.0, MtxMath.log10(10.0), 1e-14);
+            assertEquals(3.0, MtxMath.log10(1000.0), 1e-14);
+        }
+
+        @Test
+        public void testHandlesLogarithmDomains() {
+            assertEquals(Double.NEGATIVE_INFINITY, MtxMath.ln(0.0));
+            assertTrue(Double.isNaN(MtxMath.ln(-1.0)));
+            assertEquals(Double.POSITIVE_INFINITY, MtxMath.log10(Double.POSITIVE_INFINITY));
+        }
+    }
+
+    @Nested
     class FactorialTests {
         private static final List<Integer> SAMPLE_FACTORIALS = new ArrayList<>() {
             {
