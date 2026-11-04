@@ -17,6 +17,63 @@ class MtxComplexTest {
     }
 
     @Test
+    void negatesComplexNumbers() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).negate();
+
+        assertEquals(-3.0, result.real());
+        assertEquals(-4.0, result.imaginary());
+    }
+
+    @Test
+    void negatesComplexNumbersNegative() {
+        MtxComplex result = new MtxComplex(-3.0, -4.0).negate();
+
+        assertEquals(3.0, result.real());
+        assertEquals(4.0, result.imaginary());
+    }
+
+    @Test
+    void computesSquaredAbsoluteValue() {
+        assertEquals(
+                25.0,
+                new MtxComplex(3.0, 4.0).absSquared(),
+                TOLERANCE
+        );
+    }
+
+    @Test
+    void computesArgument() {
+        assertEquals(
+                Math.atan2(4.0, 3.0),
+                new MtxComplex(3.0, 4.0).argument(),
+                TOLERANCE
+        );
+    }
+
+    @Test
+    void computesReciprocal() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).reciprocal();
+
+        assertEquals(3.0 / 25.0,  result.real(),      TOLERANCE);
+        assertEquals(-4.0 / 25.0, result.imaginary(), TOLERANCE);
+        assertEquals(
+                1.0,
+                new MtxComplex(3.0, 4.0).times(result).abs(),
+                TOLERANCE
+        );
+    }
+
+    @Test
+    void rejectsReciprocalOfZero() {
+        ArithmeticException exception = assertThrows(
+                ArithmeticException.class,
+                () -> new MtxComplex(0.0, 0.0).reciprocal()
+        );
+
+        assertEquals("Division by zero", exception.getMessage());
+    }
+
+    @Test
     void addsComplexNumbers() {
         MtxComplex result = new MtxComplex(3.0, 4.0).plus(new MtxComplex(1.0, -2.0));
 
