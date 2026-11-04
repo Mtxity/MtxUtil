@@ -74,6 +74,63 @@ class MtxComplexTest {
     }
 
     @Test
+    void raisesComplexNumberToAnIntegerPower() {
+        MtxComplex result = new MtxComplex(1.0, 2.0).pow(3);
+
+        assertEquals(-11.0, result.real(), TOLERANCE);
+        assertEquals(-2.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void returnsOneForZeroPower() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).pow(0);
+
+        assertEquals(1.0, result.real(), TOLERANCE);
+        assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void supportsNegativePowers() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).pow(-1);
+
+        assertEquals(3.0 / 25.0, result.real(), TOLERANCE);
+        assertEquals(-4.0 / 25.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesPrincipalSquareRoot() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).sqrt();
+
+        assertEquals(2.0, result.real(), TOLERANCE);
+        assertEquals(1.0, result.imaginary(), TOLERANCE);
+        assertEquals(new MtxComplex(3.0, 4.0).toString(), result.times(result).toString());
+    }
+
+    @Test
+    void computesSquareRootOfNegativeRealNumber() {
+        MtxComplex result = new MtxComplex(-9.0, 0.0).sqrt();
+
+        assertEquals(0.0, result.real(), TOLERANCE);
+        assertEquals(3.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesComplexExponential() {
+        MtxComplex result = new MtxComplex(0.0, Math.PI).exp();
+
+        assertEquals(-1.0, result.real(), TOLERANCE);
+        assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesPrincipalComplexLogarithm() {
+        MtxComplex result = new MtxComplex(3.0, 4.0).log();
+
+        assertEquals(Math.log(5.0), result.real(), TOLERANCE);
+        assertEquals(Math.atan2(4.0, 3.0), result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void addsComplexNumbers() {
         MtxComplex result = new MtxComplex(3.0, 4.0).plus(new MtxComplex(1.0, -2.0));
 
