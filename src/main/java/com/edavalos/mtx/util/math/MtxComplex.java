@@ -60,4 +60,19 @@ public class MtxComplex {
             return num + " + " + String.format("%.3f", this.im) + 'i';
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof MtxComplex other)) {
+            return false;
+        }
+        return (this.re == other.re) && (this.im == other.im);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Double.hashCode(this.re);
+        result = 31 * result + Double.hashCode(this.im);
+        return result;
+    }
 }
