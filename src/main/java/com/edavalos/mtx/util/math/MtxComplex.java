@@ -35,6 +35,57 @@ public class MtxComplex {
         return Math.atan2(this.im, this.re);
     }
 
+    public MtxComplex pow(int exponent) {
+        MtxComplex base = exponent < 0 ? this.reciprocal() : this;
+        long remaining = MtxMath.abs((long) exponent);
+        MtxComplex result = new MtxComplex(1.0, 0.0);
+        while (remaining > 0) {
+            if ((remaining & 1) == 1) {
+                result = result.times(base);
+            }
+            base = base.times(base);
+            remaining >>= 1;
+        }
+        return result;
+    }
+
+    public MtxComplex sqrt() {
+        if (this.re == 0.0 && this.im == 0.0) {
+            return new MtxComplex(0.0, 0.0);
+        }
+
+        double magnitude = this.abs();
+        double real, imaginary;
+        if (this.re >= 0.0) {
+            real = MtxMath.sqrt((magnitude + this.re) / 2.0);
+            imaginary = this.im / (2.0 * real);
+        } else {
+            imaginary = MtxMath.sqrt((magnitude - this.re) / 2.0);
+            real = Math.abs(this.im) / (2.0 * imaginary);
+        }
+
+        if (this.im < 0.0) {
+            imaginary = -imaginary;
+        }
+
+        return new MtxComplex(real, imaginary);
+    }
+
+    public MtxComplex exp() {
+        double scale = Math.pow(MtxMath.E, this.re);
+        return new MtxComplex(
+                scale * Math.cos(this.im),
+                scale * Math.sin(this.im)
+        );
+    }
+
+    public MtxComplex log() {
+        return new MtxComplex(
+                Math.log(this.abs()),
+                this.argument()
+        );
+    }
+
     public MtxComplex negate() {
         return new MtxComplex(-this.re, -this.im);
     }
