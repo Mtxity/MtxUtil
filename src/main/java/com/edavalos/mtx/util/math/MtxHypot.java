@@ -81,4 +81,12 @@ public final class MtxHypot {
 
         return k != 0 ? MtxMath.powerOfTwo(k) * w : w;
     }
+
+    public static double compute(double... values) {
+        double result = 0.0;
+        for (double value : values) {
+            result = compute(result, value);
+        }
+        return result;
+    }
 }
