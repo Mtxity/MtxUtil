@@ -63,10 +63,15 @@ public class MtxComplex {
 
     @Override
     public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
         if (!(obj instanceof MtxComplex other)) {
             return false;
         }
-        return (this.re == other.re) && (this.im == other.im);
+
+        return Double.compare(this.re, other.re) == 0
+            && Double.compare(this.im, other.im) == 0;
     }
 
     @Override
