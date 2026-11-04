@@ -50,4 +50,14 @@ public class MtxComplex {
     public double imaginary() {
         return this.im;
     }
+
+    @Override
+    public String toString() {
+        String num = String.format("%.3f", this.re);
+        if (this.im == 0.0) {
+            return num;
+        } else {
+            return num + " + " + String.format("%.3f", this.im) + 'i';
+        }
+    }
 }
