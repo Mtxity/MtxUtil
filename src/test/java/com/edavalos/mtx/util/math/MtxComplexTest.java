@@ -72,13 +72,25 @@ class MtxComplexTest {
         @Test
         void testToString_realNumber() {
             MtxComplex complex = new MtxComplex(3.0, 0.0);
-            assertEquals("3.000", complex.toString());
+            assertEquals("3.0", complex.toString());
+        }
+
+        @Test
+        void testToString_realNumber_withDecimals() {
+            MtxComplex complex = new MtxComplex(3.34567, 0.0);
+            assertEquals("3.346", complex.toString());
         }
 
         @Test
         void testToString_imaginaryNumber() {
             MtxComplex complex = new MtxComplex(3.0, 1.5);
-            assertEquals("3.000 + 1.500i", complex.toString());
+            assertEquals("3.0 + 1.5i", complex.toString());
+        }
+
+        @Test
+        void testToString_imaginaryNumber_withDecimals() {
+            MtxComplex complex = new MtxComplex(3.0, 1.56789);
+            assertEquals("3.0 + 1.568i", complex.toString());
         }
 
         @Test
@@ -86,19 +98,19 @@ class MtxComplexTest {
             MtxComplex complex1 = new MtxComplex(Double.NaN, 0.0);
             assertEquals("NaN", complex1.toString());
             MtxComplex complex2 = new MtxComplex(Double.NaN, 1.0);
-            assertEquals("NaN + 1.000i", complex2.toString());
+            assertEquals("NaN + 1.0i", complex2.toString());
         }
 
         @Test
         void testToString_imaginaryNaN() {
             MtxComplex complex = new MtxComplex(3.0, Double.NaN);
-            assertEquals("3.000 + NaNi", complex.toString());
+            assertEquals("3.0", complex.toString());
         }
 
         @Test
         void testToString_bothNaN() {
             MtxComplex complex = new MtxComplex(Double.NaN, Double.NaN);
-            assertEquals("NaN + NaNi", complex.toString());
+            assertEquals("NaN", complex.toString());
         }
     }
 
@@ -151,7 +163,7 @@ class MtxComplexTest {
 
         @Test
         void complexNumberIsNotEqualToAnotherType() {
-            assertNotEquals(new MtxComplex(3.0, 4.0), "3.000 + 4.000i");
+            assertNotEquals(new MtxComplex(3.0, 4.0), "3.0 + 4.0i");
         }
 
         @Test

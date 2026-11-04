@@ -53,12 +53,27 @@ public class MtxComplex {
 
     @Override
     public String toString() {
-        String num = String.format("%.3f", this.re);
-        if (this.im == 0.0) {
+        String num = formatDouble("%.3f", this.re);
+        if (this.im == 0.0 || Double.isNaN(this.im)) {
             return num;
         } else {
-            return num + " + " + String.format("%.3f", this.im) + 'i';
+            return num + " + " + formatDouble("%.3f", this.im) + 'i';
         }
+    }
+
+    private static String formatDouble(String format, double value) {
+        if (!Double.isFinite(value)) {
+            return String.valueOf(value);
+        }
+
+        String result = String.format(format, value);
+        int end = result.length();
+        int dot = result.indexOf('.');
+
+        while (end > dot + 2 && result.charAt(end - 1) == '0') {
+            end--;
+        }
+        return result.substring(0, end);
     }
 
     @Override
