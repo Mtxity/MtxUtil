@@ -1,5 +1,6 @@
 package com.edavalos.mtx.util.math;
 
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,5 +63,41 @@ class MtxComplexTest {
         );
 
         assertEquals("Division by zero", exception.getMessage());
+    }
+
+    @Nested
+    class ToStringTests {
+
+        @Test
+        void testToString_realNumber() {
+            MtxComplex complex = new MtxComplex(3.0, 0.0);
+            assertEquals("3.000", complex.toString());
+        }
+
+        @Test
+        void testToString_imaginaryNumber() {
+            MtxComplex complex = new MtxComplex(3.0, 1.5);
+            assertEquals("3.000 + 1.500i", complex.toString());
+        }
+
+        @Test
+        void testToString_realNaN() {
+            MtxComplex complex1 = new MtxComplex(Double.NaN, 0.0);
+            assertEquals("NaN", complex1.toString());
+            MtxComplex complex2 = new MtxComplex(Double.NaN, 1.0);
+            assertEquals("NaN + 1.000i", complex2.toString());
+        }
+
+        @Test
+        void testToString_imaginaryNaN() {
+            MtxComplex complex = new MtxComplex(3.0, Double.NaN);
+            assertEquals("3.000 + NaNi", complex.toString());
+        }
+
+        @Test
+        void testToString_bothNaN() {
+            MtxComplex complex = new MtxComplex(Double.NaN, Double.NaN);
+            assertEquals("NaN + NaNi", complex.toString());
+        }
     }
 }
