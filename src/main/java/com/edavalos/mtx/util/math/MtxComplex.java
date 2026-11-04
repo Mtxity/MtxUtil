@@ -61,7 +61,7 @@ public class MtxComplex {
             imaginary = this.im / (2.0 * real);
         } else {
             imaginary = MtxMath.sqrt((magnitude - this.re) / 2.0);
-            real = Math.abs(this.im) / (2.0 * imaginary);
+            real = MtxMath.abs(this.im) / (2.0 * imaginary);
         }
 
         if (this.im < 0.0) {
@@ -72,7 +72,7 @@ public class MtxComplex {
     }
 
     public MtxComplex exp() {
-        double scale = Math.pow(MtxMath.E, this.re);
+        double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
                 scale * Math.cos(this.im),
                 scale * Math.sin(this.im)

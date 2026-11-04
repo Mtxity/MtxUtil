@@ -725,6 +725,25 @@ public class MtxMathTest {
                 assertEquals(0.0, MtxMath.abs(0.0));
             }
         }
+
+        @Nested
+        class LongAbsTests {
+
+            @Test
+            void testAbs_double_positiveNumber() {
+                assertEquals((long) 7.5, MtxMath.abs((long) 7.5));
+            }
+
+            @Test
+            void testAbs_double_negativeNumber() {
+                assertEquals((long) 7.5, MtxMath.abs((long) -7.5));
+            }
+
+            @Test
+            void testAbs_double_zero() {
+                assertEquals((long) 0.0, MtxMath.abs((long) 0.0));
+            }
+        }
     }
 
     @Nested
@@ -844,6 +863,35 @@ public class MtxMathTest {
             @Test
             void testPower_double_negativeOneOddExponent() {
                 assertEquals(-1.0, MtxMath.power(-1.0, 101), DELTA);
+            }
+        }
+
+        @Nested
+        class DoubleDoublePowerTests {
+
+            @Test
+            void testDoubleDoublePower_positiveExponent() {
+                assertEquals(8.0, MtxMath.power(2.0, 3.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_exponentZero() {
+                assertEquals(1.0, MtxMath.power(5.0, 0.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_baseZeroPositiveExponent() {
+                assertEquals(0.0, MtxMath.power(0.0, 5.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_baseOne() {
+                assertEquals(1.0, MtxMath.power(1.0, 100.0), 1e-9);
+            }
+
+            @Test
+            void testDoubleDoublePower_negativeExponent() {
+                assertEquals(0.125, MtxMath.power(2.0, -3.0), 1e-9);
             }
         }
 
