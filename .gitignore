@@ -10,6 +10,7 @@
 *.iws
 *.iml
 *.ipr
+/htmlReport/
 
 ### Eclipse ###
 .apt_generated
