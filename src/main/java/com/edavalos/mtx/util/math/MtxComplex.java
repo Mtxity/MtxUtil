@@ -42,4 +42,12 @@ public class MtxComplex {
 
         return new MtxComplex(real, imag);
     }
+
+    public double real() {
+        return this.re;
+    }
+
+    public double imaginary() {
+        return this.im;
+    }
 }
