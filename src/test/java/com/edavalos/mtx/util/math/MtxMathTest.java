@@ -89,9 +89,27 @@ public class MtxMathTest {
         @Test
         public void testComputesNaturalLogarithm() {
             assertEquals(0.0, MtxMath.ln(1.0), 1e-15);
-            assertEquals(Math.log(2.0), MtxMath.ln(2.0), 1e-14);
+            assertEquals(Math.log(2.1), MtxMath.ln(2.1), 1e-14);
+            assertEquals(Math.log(3.1), MtxMath.ln(3.1), 1e-14);
             assertEquals(Math.log(0.5), MtxMath.ln(0.5), 1e-14);
             assertEquals(Math.log(1000.0), MtxMath.ln(1000.0), 1e-14);
+        }
+
+        @Test
+        public void testComputesNaturalLogarithm_preloadedValues() {
+            assertEquals(Math.log(2.0), MtxMath.ln(2.0), 1e-14);
+            assertEquals(Math.log(3.0), MtxMath.ln(3.0), 1e-14);
+        }
+
+        @Test
+        public void testComputesNaturalLogarithm_notANumber() {
+            assertEquals(Double.NaN, MtxMath.ln(Double.NaN));
+            assertEquals(Double.NaN, MtxMath.ln(-1.0));
+        }
+
+        @Test
+        public void testComputesNaturalLogarithm_positiveSubnormal() {
+            assertEquals(-744.4400719213812, MtxMath.ln(Double.MIN_VALUE));
         }
 
         @Test
