@@ -32,6 +32,7 @@ public class MtxComplex {
     }
 
     public double argument() {
+        // @TODO: Use Mtx-based trig methods
         return Math.atan2(this.im, this.re);
     }
 
@@ -49,6 +50,7 @@ public class MtxComplex {
         return result;
     }
 
+    // @TODO: Complete code coverage
     public MtxComplex sqrt() {
         if (this.re == 0.0 && this.im == 0.0) {
             return new MtxComplex(0.0, 0.0);
@@ -74,6 +76,7 @@ public class MtxComplex {
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
+                // @TODO: Use Mtx-based trig methods
                 scale * Math.cos(this.im),
                 scale * Math.sin(this.im)
         );
