@@ -368,6 +368,14 @@ public final class MtxMath {
             return Double.POSITIVE_INFINITY;
         }
 
+        // Preloaded values
+        if (n == 2.0) {
+            return LN2;
+        }
+        if (n == 3.0) {
+            return LN3;
+        }
+
         long bits = Double.doubleToRawLongBits(n);
         int encodedExponent = (int) ((bits >>> 52) & 0x7ffL);
         int exponentAdjustment = 0;
