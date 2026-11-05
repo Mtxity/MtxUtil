@@ -99,12 +99,70 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class SinTests {
+
+        @Test
+        void testSin_signedZero() {
+            assertSameBits(0.0, MtxTrig.sin(0.0));
+            assertSameBits(-0.0, MtxTrig.sin(-0.0));
+        }
+
+        @Test
+        void testSin_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.sin(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.sin(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.sin(Double.NEGATIVE_INFINITY)));
+        }
+
+        @Test
+        void testSin_knownAngles() {
+            assertSin(0.0);
+            assertSin(-0.0);
+            assertSin(Math.PI / 6.0);
+            assertSin(Math.PI / 4.0);
+            assertSin(Math.PI / 2.0);
+            assertSin(Math.PI);
+            assertSin(3.0 * Math.PI / 2.0);
+            assertSin(2.0 * Math.PI);
+            assertSin(-Math.PI / 6.0);
+            assertSin(-Math.PI / 2.0);
+            assertSin(-Math.PI);
+        }
+
+        @Test
+        void testSin_argumentReduction() {
+            assertSin(10.0);
+            assertSin(-10.0);
+        }
+
+        @Test
+        void testSin_largeArgumentReduction() {
+            double x = 0x1.0p21;
+            assertSin(x, 1e-9);
+            assertSin(-x, 1e-9);
+        }
+    }
+
     private static void assertAngle(double y, double x) {
         assertEquals(
                 Math.atan2(y, x),
                 MtxTrig.atan(y, x),
                 TOLERANCE,
                 "atan(" + y + ", " + x + ")"
+        );
+    }
+
+    private static void assertSin(double x) {
+        assertSin(x, TOLERANCE);
+    }
+
+    private static void assertSin(double x, double tolerance) {
+        assertEquals(
+                StrictMath.sin(x),
+                MtxTrig.sin(x),
+                tolerance,
+                "sin(" + x + ")"
         );
     }
 
