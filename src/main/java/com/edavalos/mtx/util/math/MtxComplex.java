@@ -32,8 +32,7 @@ public class MtxComplex {
     }
 
     public double argument() {
-        // @TODO: Use Mtx-based trig methods
-        return Math.atan2(this.im, this.re);
+        return MtxTrig.atan(this.im, this.re);
     }
 
     public MtxComplex pow(int exponent) {
@@ -76,9 +75,8 @@ public class MtxComplex {
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
-                // @TODO: Use Mtx-based trig methods
-                scale * Math.cos(this.im),
-                scale * Math.sin(this.im)
+                scale * MtxTrig.cos(this.im),
+                scale * MtxTrig.sin(this.im)
         );
     }
 
