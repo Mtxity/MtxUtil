@@ -178,4 +178,52 @@ public final class MtxTrig {
             return (hx < 0) ? -z: z;
         }
     }
+
+    public static double sin(double x) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
+            return Double.NaN;
+        }
+        if (x == 0.0) {
+            return x; // preserve the sign of zero
+        }
+
+        // Reduce to [-pi, pi]. Split pi/2 into high and low parts so the
+        // subtraction retains useful precision for ordinary sized arguments.
+        double ax = MtxMath.abs(x);
+        if (ax > 0x1.0p20) {
+            // A bounded remainder avoids overflow and keeps the polynomial's
+            // input small. For very large inputs the available double-precision
+            // value of 2*pi limits the accuracy of this reduction.
+            x %= 2.0 * MtxMath.PI;
+        }
+
+        double n = MtxMath.floor(MtxMath.abs(x) * 0x1.45f306dc9c883p-1 + 0.5);
+        if (x < 0.0) {
+            n = -n;
+        }
+        double r = x - n * 0x1.921fb54400000p0;
+        r -= n * 0x1.0b4611a626331p-34;
+
+        // Rounding to the nearest multiple of pi/2 already bounds r to
+        // [-pi/4, pi/4], so the quadrant comes directly from n.
+        int quadrant = ((int) n) & 3;
+
+        double z = r * r;
+        double s = r * (1.0 + z * (-1.0 / 6.0 + z * (1.0 / 120.0
+                 + z * (-1.0 / 5040.0 + z * (1.0 / 362880.0
+                 + z * (-1.0 / 39916800.0 + z * (1.0 / 6227020800.0
+                 + z * (-1.0 / 1307674368000.0 + z * (1.0 / 355687428096000.0
+                 - z / 121645100408832000.0)))))))));
+        double c = 1.0 + z * (-1.0 / 2.0 + z * (1.0 / 24.0
+                 + z * (-1.0 / 720.0 + z * (1.0 / 40320.0
+                 + z * (-1.0 / 3628800.0 + z * (1.0 / 479001600.0
+                 + z * (-1.0 / 87178291200.0 + z / 20922789888000.0)))))));
+
+        return switch (quadrant) {
+            case 0 -> s;
+            case 1 -> c;
+            case 2 -> -s;
+            default -> -c;
+        };
+    }
 }
