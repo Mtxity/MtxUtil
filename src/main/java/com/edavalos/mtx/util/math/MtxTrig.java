@@ -226,4 +226,41 @@ public final class MtxTrig {
             default -> -c;
         };
     }
+
+    public static double cos(double x) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
+            return Double.NaN;
+        }
+
+        double ax = MtxMath.abs(x);
+        if (ax > 0x1.0p20) {
+            x %= 2.0 * MtxMath.PI;
+        }
+
+        double n = MtxMath.floor(MtxMath.abs(x) * 0x1.45f306dc9c883p-1 + 0.5);
+        if (x < 0.0) {
+            n = -n;
+        }
+        double r = x - n * 0x1.921fb54400000p0;
+        r -= n * 0x1.0b4611a626331p-34;
+        int quadrant = ((int) n) & 3;
+
+        double z = r * r;
+        double s = r * (1.0 + z * (-1.0 / 6.0 + z * (1.0 / 120.0
+                 + z * (-1.0 / 5040.0 + z * (1.0 / 362880.0
+                 + z * (-1.0 / 39916800.0 + z * (1.0 / 6227020800.0
+                 + z * (-1.0 / 1307674368000.0 + z * (1.0 / 355687428096000.0
+                 - z / 121645100408832000.0)))))))));
+        double c = 1.0 + z * (-1.0 / 2.0 + z * (1.0 / 24.0
+                 + z * (-1.0 / 720.0 + z * (1.0 / 40320.0
+                 + z * (-1.0 / 3628800.0 + z * (1.0 / 479001600.0
+                 + z * (-1.0 / 87178291200.0 + z / 20922789888000.0)))))));
+
+        return switch (quadrant) {
+            case 0 -> c;
+            case 1 -> -s;
+            case 2 -> -c;
+            default -> s;
+        };
+    }
 }
