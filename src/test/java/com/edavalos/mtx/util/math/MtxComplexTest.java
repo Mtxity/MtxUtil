@@ -107,11 +107,35 @@ class MtxComplexTest {
     }
 
     @Test
+    void computesSquareRootOfZero() {
+        MtxComplex result = new MtxComplex(0.0, 0.0).sqrt();
+
+        assertEquals(0.0, result.real(), TOLERANCE);
+        assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesSquareRootWithNegativeImaginaryPartAndNonnegativeRealPart() {
+        MtxComplex result = new MtxComplex(3.0, -4.0).sqrt();
+
+        assertEquals(2.0, result.real(), TOLERANCE);
+        assertEquals(-1.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void computesSquareRootOfNegativeRealNumber() {
         MtxComplex result = new MtxComplex(-9.0, 0.0).sqrt();
 
         assertEquals(0.0, result.real(), TOLERANCE);
         assertEquals(3.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesSquareRootWithNegativeRealAndImaginaryParts() {
+        MtxComplex result = new MtxComplex(-3.0, -4.0).sqrt();
+
+        assertEquals(1.0, result.real(), TOLERANCE);
+        assertEquals(-2.0, result.imaginary(), TOLERANCE);
     }
 
     @Test

@@ -49,7 +49,6 @@ public class MtxComplex {
         return result;
     }
 
-    // @TODO: Complete code coverage
     public MtxComplex sqrt() {
         if (this.re == 0.0 && this.im == 0.0) {
             return new MtxComplex(0.0, 0.0);
@@ -65,11 +64,7 @@ public class MtxComplex {
             real = MtxMath.abs(this.im) / (2.0 * imaginary);
         }
 
-        if (this.im < 0.0) {
-            imaginary = -imaginary;
-        }
-
-        return new MtxComplex(real, imaginary);
+        return new MtxComplex(real, Math.copySign(imaginary, this.im));
     }
 
     public MtxComplex exp() {
