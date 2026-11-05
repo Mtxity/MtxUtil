@@ -188,7 +188,7 @@ public final class MtxTrig {
         }
 
         // Reduce to [-pi, pi]. Split pi/2 into high and low parts so the
-        // subtraction retains useful precision for ordinary sized arguments.
+        // subtraction retains useful precision for ordinary-sized arguments.
         double ax = MtxMath.abs(x);
         if (ax > 0x1.0p20) {
             // A bounded remainder avoids overflow and keeps the polynomial's
