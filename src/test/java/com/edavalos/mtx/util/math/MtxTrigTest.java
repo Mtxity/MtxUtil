@@ -144,6 +144,45 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class CosTests {
+
+        @Test
+        void testCos_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.cos(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.cos(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.cos(Double.NEGATIVE_INFINITY)));
+        }
+
+        @Test
+        void testCos_knownAngles() {
+            assertCos(0.0);
+            assertCos(-0.0);
+            assertCos(Math.PI / 6.0);
+            assertCos(Math.PI / 4.0);
+            assertCos(Math.PI / 2.0);
+            assertCos(Math.PI);
+            assertCos(3.0 * Math.PI / 2.0);
+            assertCos(2.0 * Math.PI);
+            assertCos(-Math.PI / 6.0);
+            assertCos(-Math.PI / 2.0);
+            assertCos(-Math.PI);
+        }
+
+        @Test
+        void testCos_argumentReduction() {
+            assertCos(10.0);
+            assertCos(-10.0);
+        }
+
+        @Test
+        void testCos_largeArgumentReduction() {
+            double x = 0x1.0p21;
+            assertCos(x, 1e-9);
+            assertCos(-x, 1e-9);
+        }
+    }
+
     private static void assertAngle(double y, double x) {
         assertEquals(
                 Math.atan2(y, x),
@@ -163,6 +202,19 @@ class MtxTrigTest {
                 MtxTrig.sin(x),
                 tolerance,
                 "sin(" + x + ")"
+        );
+    }
+
+    private static void assertCos(double x) {
+        assertCos(x, TOLERANCE);
+    }
+
+    private static void assertCos(double x, double tolerance) {
+        assertEquals(
+                StrictMath.cos(x),
+                MtxTrig.cos(x),
+                tolerance,
+                "cos(" + x + ")"
         );
     }
 
