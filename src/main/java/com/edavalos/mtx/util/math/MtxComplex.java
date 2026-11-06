@@ -49,6 +49,10 @@ public class MtxComplex {
         return result;
     }
 
+    public MtxComplex pow(MtxComplex exponent) {
+        return exponent.times(this.log()).exp();
+    }
+
     public MtxComplex sqrt() {
         if (this.re == 0.0 && this.im == 0.0) {
             return new MtxComplex(0.0, 0.0);
