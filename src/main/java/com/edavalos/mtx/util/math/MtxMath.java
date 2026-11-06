@@ -923,4 +923,13 @@ public final class MtxMath {
         long transducer = Double.doubleToRawLongBits(x);
         return (int) transducer;
     }
+
+    public static double copySign(double magnitude, double sign) {
+        return Double.longBitsToDouble(
+                (Double.doubleToRawLongBits(sign) & (1L << (Double.SIZE - 1)))
+              | (Double.doubleToRawLongBits(magnitude)
+                & (((1L << (Double.SIZE - 53)) - 1) << (53 - 1) | ((1L << (53 - 1)) - 1))
+                )
+        );
+    }
 }

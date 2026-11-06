@@ -68,8 +68,7 @@ public class MtxComplex {
             real = MtxMath.abs(this.im) / (2.0 * imaginary);
         }
 
-        // @TODO: Add copySign() method to MtxMath and use it here
-        return new MtxComplex(real, Math.copySign(imaginary, this.im));
+        return new MtxComplex(real, MtxMath.copySign(imaginary, this.im));
     }
 
     public MtxComplex exp() {
