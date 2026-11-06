@@ -125,6 +125,28 @@ public class MtxMathTest {
             assertTrue(Double.isNaN(MtxMath.ln(-1.0)));
             assertEquals(Double.POSITIVE_INFINITY, MtxMath.log10(Double.POSITIVE_INFINITY));
         }
+
+        @Test
+        public void testComputesVariableBaseLogarithm() {
+            assertEquals(3.0, MtxMath.logN(2.0, 8.0), 1e-14);
+            assertEquals(2.0, MtxMath.logN(10.0, 100.0), 1e-14);
+            assertEquals(-2.0, MtxMath.logN(0.5, 4.0), 1e-14);
+        }
+
+        @Test
+        public void testHandlesVariableBaseLogarithmDomains() {
+            assertTrue(Double.isNaN(MtxMath.logN(0.0, 10.0)));
+            assertTrue(Double.isNaN(MtxMath.logN(1.0, 10.0)));
+            assertTrue(Double.isNaN(MtxMath.logN(10.0, -1.0)));
+        }
+
+        @Test
+        public void testHandlesVariableBaseLogarithmNaN() {
+            assertEquals(Double.NaN, MtxMath.logN(Double.NaN, 10.0));
+            assertEquals(Double.NaN, MtxMath.logN(0.0, Double.NaN));
+            assertEquals(Double.NaN, MtxMath.logN(1.0, 10.0));
+            assertEquals(Double.NaN, MtxMath.logN(1.0, -10.0));
+        }
     }
 
     @Nested
