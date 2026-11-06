@@ -222,6 +222,12 @@ class MtxComplexTest {
         }
 
         @Test
+        void testToString_realNumber_negative() {
+            MtxComplex complex = new MtxComplex(-3.0, 0.0);
+            assertEquals("-3.0", complex.toString());
+        }
+
+        @Test
         void testToString_realNumber_withDecimals() {
             MtxComplex complex = new MtxComplex(3.34567, 0.0);
             assertEquals("3.346", complex.toString());
@@ -231,6 +237,18 @@ class MtxComplexTest {
         void testToString_imaginaryNumber() {
             MtxComplex complex = new MtxComplex(3.0, 1.5);
             assertEquals("3.0 + 1.5i", complex.toString());
+        }
+
+        @Test
+        void testToString_imaginaryNumber_negativeImaginaryPart_positiveRealPart() {
+            MtxComplex complex = new MtxComplex(3.0, -1.5);
+            assertEquals("3.0 - 1.5i", complex.toString());
+        }
+
+        @Test
+        void testToString_imaginaryNumber_negativeImaginaryPart_negativeRealPart() {
+            MtxComplex complex = new MtxComplex(-3.0, -1.5);
+            assertEquals("-3.0 - 1.5i", complex.toString());
         }
 
         @Test
