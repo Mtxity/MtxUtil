@@ -38,6 +38,10 @@ public final class MtxMath {
      * The natural logarithm of 3
      */
     public static final double LN3 = 1.09861228866810969139524523692205;
+    /**
+     * The natural logarithm of 10
+     */
+    public static final double LN10 = 2.30258509299404568401799145468436;
 
     public static class MtxFactorial implements Iterable<Integer> {
         private static final String NEGATIVE_SIZE_ERR = "Factorial is not defined for negative numbers.";
@@ -407,8 +411,7 @@ public final class MtxMath {
     }
 
     public static double log10(double n) {
-        // @TODO: Add a constant for ln10
-        return ln(n) / 2.302585092994046;
+        return ln(n) / LN10;
     }
 
     public static double logN(double base, double value) {
