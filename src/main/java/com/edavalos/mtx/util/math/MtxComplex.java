@@ -64,6 +64,7 @@ public class MtxComplex {
             real = MtxMath.abs(this.im) / (2.0 * imaginary);
         }
 
+        // @TODO: Add copySign() method to MtxMath and use it here
         return new MtxComplex(real, Math.copySign(imaginary, this.im));
     }
 
@@ -124,6 +125,8 @@ public class MtxComplex {
         String num = formatDouble("%.3f", this.re);
         if (this.im == 0.0 || Double.isNaN(this.im)) {
             return num;
+        } else if (this.im < 0.0) {
+            return num + " - " + formatDouble("%.3f", -this.im) + 'i';
         } else {
             return num + " + " + formatDouble("%.3f", this.im) + 'i';
         }
