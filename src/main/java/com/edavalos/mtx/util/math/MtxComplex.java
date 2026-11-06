@@ -169,4 +169,11 @@ public class MtxComplex {
         result = 31 * result + Double.hashCode(this.im);
         return result;
     }
+
+    public static MtxComplex fromPolar(double magnitude, double argument) {
+        return new MtxComplex(
+                magnitude * MtxTrig.cos(argument),
+                magnitude * MtxTrig.sin(argument)
+        );
+    }
 }
