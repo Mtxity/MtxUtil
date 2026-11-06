@@ -2280,4 +2280,48 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class CopySignTests {
+
+        @Test
+        void appliesPositiveSignToMagnitude() {
+            assertEquals(3.5, MtxMath.copySign(-3.5, 1.0));
+        }
+
+        @Test
+        void appliesNegativeSignToMagnitude() {
+            assertEquals(-3.5, MtxMath.copySign(3.5, -1.0));
+        }
+
+        @Test
+        void preservesMagnitudeAndSignWhenAlreadyMatching() {
+            assertEquals(-3.5, MtxMath.copySign(-3.5, -1.0));
+            assertEquals(3.5, MtxMath.copySign(3.5, 1.0));
+        }
+
+        @Test
+        void usesNegativeZeroSignBit() {
+            double result = MtxMath.copySign(0.0, -0.0);
+
+            assertEquals(Double.doubleToRawLongBits(-0.0), Double.doubleToRawLongBits(result));
+        }
+
+        @Test
+        void preservesMagnitudeBitsIncludingNaNPayload() {
+            double magnitude = Double.longBitsToDouble(0x7FF8_1234_5678_9ABCL);
+            double result = MtxMath.copySign(magnitude, -1.0);
+
+            assertEquals(
+                    Double.doubleToRawLongBits(magnitude) | Long.MIN_VALUE,
+                    Double.doubleToRawLongBits(result)
+            );
+        }
+
+        @Test
+        void copiesSignToInfinity() {
+            assertEquals(Double.NEGATIVE_INFINITY, MtxMath.copySign(Double.POSITIVE_INFINITY, -1.0));
+            assertEquals(Double.POSITIVE_INFINITY, MtxMath.copySign(Double.NEGATIVE_INFINITY, 1.0));
+        }
+    }
 }
