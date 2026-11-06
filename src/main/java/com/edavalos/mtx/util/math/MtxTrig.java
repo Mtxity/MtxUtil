@@ -257,10 +257,20 @@ public final class MtxTrig {
                  + z * (-1.0 / 87178291200.0 + z / 20922789888000.0)))))));
 
         return switch (quadrant) {
-            case 0 -> c;
+            case 0 ->  c;
             case 1 -> -s;
             case 2 -> -c;
             default -> s;
         };
+    }
+
+    public static double tan(double x) {
+        if (Double.isNaN(x) || Double.isInfinite(x)) {
+            return Double.NaN;
+        }
+        if (x == 0.0) {
+            return x; // preserve the sign of zero
+        }
+        return sin(x) / cos(x);
     }
 }
