@@ -82,6 +82,14 @@ class MtxComplexTest {
     }
 
     @Test
+    void raisesComplexNumberToAnEvenIntegerPower() {
+        MtxComplex result = new MtxComplex(1.0, 2.0).pow(2);
+
+        assertEquals(-3.0, result.real(), TOLERANCE);
+        assertEquals(4.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void returnsOneForZeroPower() {
         MtxComplex result = new MtxComplex(3.0, 4.0).pow(0);
 
@@ -95,6 +103,22 @@ class MtxComplexTest {
 
         assertEquals(3.0 / 25.0, result.real(), TOLERANCE);
         assertEquals(-4.0 / 25.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void raisesComplexNumberToAComplexPower() {
+        MtxComplex result = new MtxComplex(1.0, 1.0).pow(new MtxComplex(2.0, 0.0));
+
+        assertEquals(0.0, result.real(), TOLERANCE);
+        assertEquals(2.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void raisesNegativeRealNumberToFractionalComplexPowerUsingPrincipalLogarithm() {
+        MtxComplex result = new MtxComplex(-1.0, 0.0).pow(new MtxComplex(0.5, 0.0));
+
+        assertEquals(0.0, result.real(), TOLERANCE);
+        assertEquals(1.0, result.imaginary(), TOLERANCE);
     }
 
     @Test
@@ -112,6 +136,16 @@ class MtxComplexTest {
 
         assertEquals(0.0, result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
+    void computesSquareRootOfPureImaginaryNumber() {
+        MtxComplex value = new MtxComplex(0.0, 1.0);
+        MtxComplex result = value.sqrt();
+        MtxComplex squared = result.times(result);
+
+        assertEquals(value.real(), squared.real(), TOLERANCE);
+        assertEquals(value.imaginary(), squared.imaginary(), TOLERANCE);
     }
 
     @Test
