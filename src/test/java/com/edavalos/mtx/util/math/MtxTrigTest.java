@@ -183,6 +183,50 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class TanTests {
+
+        @Test
+        void testTan_signedZero() {
+            assertSameBits(0.0, MtxTrig.tan(0.0));
+            assertSameBits(-0.0, MtxTrig.tan(-0.0));
+        }
+
+        @Test
+        void testTan_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.tan(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.tan(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.tan(Double.NEGATIVE_INFINITY)));
+        }
+
+        @Test
+        void testTan_knownAngles() {
+            assertTan(0.0);
+            assertTan(-0.0);
+            assertTan(Math.PI / 6.0);
+            assertTan(-Math.PI / 6.0);
+            assertTan(Math.PI / 4.0);
+            assertTan(-Math.PI / 4.0);
+            assertTan(Math.PI);
+            assertTan(-Math.PI);
+            assertTanRelative(Math.PI / 2.0, 1e-10);
+            assertTanRelative(-Math.PI / 2.0, 1e-10);
+        }
+
+        @Test
+        void testTan_argumentReduction() {
+            assertTan(10.0);
+            assertTan(-10.0);
+        }
+
+        @Test
+        void testTan_largeArgumentReduction() {
+            double x = 0x1.0p21;
+            assertTan(x, 1e-8);
+            assertTan(-x, 1e-8);
+        }
+    }
+
     private static void assertAngle(double y, double x) {
         assertEquals(
                 Math.atan2(y, x),
@@ -215,6 +259,30 @@ class MtxTrigTest {
                 MtxTrig.cos(x),
                 tolerance,
                 "cos(" + x + ")"
+        );
+    }
+
+    private static void assertTan(double x) {
+        assertTan(x, TOLERANCE);
+    }
+
+    private static void assertTan(double x, double tolerance) {
+        assertEquals(
+                StrictMath.tan(x),
+                MtxTrig.tan(x),
+                tolerance,
+                "tan(" + x + ")"
+        );
+    }
+
+    private static void assertTanRelative(double x, double relativeTolerance) {
+        double expected = StrictMath.tan(x);
+        double actual = MtxTrig.tan(x);
+        assertEquals(
+                0.0,
+                Math.abs((actual - expected) / expected),
+                relativeTolerance,
+                "relative error for tan(" + x + ")"
         );
     }
 
