@@ -407,10 +407,17 @@ public final class MtxMath {
     }
 
     public static double log10(double n) {
+        // @TODO: Add a constant for ln10
         return ln(n) / 2.302585092994046;
     }
 
-    // @TODO: Add logN() / log() method here
+    public static double logN(double base, double value) {
+        if (Double.isNaN(base) || Double.isNaN(value) || base <= 0.0 || base == 1.0 || value < 0.0) {
+            return Double.NaN;
+        }
+
+        return ln(value) / ln(base);
+    }
 
     public static boolean isPrime(int i) {
         if (i <= 1) {
