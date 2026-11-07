@@ -11,7 +11,7 @@ class MtxTrigTest {
     private static final double TOLERANCE = 1e-15;
 
     @Nested
-    class AtanTests {
+    class ArcTanTests {
 
         @Test
         void testAtan_everyQuadrant() {
@@ -96,6 +96,39 @@ class MtxTrigTest {
             assertAngle(1.0, 3.0);
             assertAngle(-0.0, 3.0);
             assertAngle(Math.scalb(1.0, -30), 1.0);
+        }
+    }
+
+    @Nested
+    class ArcSinTests {
+
+        @Test
+        void testAsin_signedZero() {
+            assertSameBits(0.0, MtxTrig.asin(0.0));
+            assertSameBits(-0.0, MtxTrig.asin(-0.0));
+        }
+
+        @Test
+        void testAsin_domainAndSpecialValues() {
+            assertTrue(Double.isNaN(MtxTrig.asin(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.asin(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.asin(Double.NEGATIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.asin(1.0001)));
+            assertTrue(Double.isNaN(MtxTrig.asin(-1.0001)));
+        }
+
+        @Test
+        void testAsin_knownValues() {
+            assertAsin(0.0);
+            assertAsin(-0.0);
+            assertAsin(0.5);
+            assertAsin(-0.5);
+            assertAsin(Math.sqrt(0.5));
+            assertAsin(-Math.sqrt(0.5));
+            assertAsin(1.0);
+            assertAsin(-1.0);
+            assertAsin(Math.nextDown(1.0));
+            assertAsin(Math.nextUp(-1.0));
         }
     }
 
@@ -233,6 +266,15 @@ class MtxTrigTest {
                 MtxTrig.atan(y, x),
                 TOLERANCE,
                 "atan(" + y + ", " + x + ")"
+        );
+    }
+
+    private static void assertAsin(double x) {
+        assertEquals(
+                StrictMath.asin(x),
+                MtxTrig.asin(x),
+                TOLERANCE,
+                "asin(" + x + ")"
         );
     }
 
