@@ -348,4 +348,30 @@ public final class MtxTrig {
             sum = next;
         }
     }
+
+    public static double cosh(double x) {
+        if (Double.isNaN(x)) {
+            return x;
+        }
+        if (Double.isInfinite(x)) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        // The Maclaurin series has only non-negative terms, avoiding
+        // cancellation for both small and large inputs.
+        double xSquared = x * x;
+        double term = 1.0;
+        double sum = 1.0;
+        for (int n = 1; ; n++) {
+            term *= xSquared / ((2.0 * n - 1.0) * (2.0 * n));
+            double next = sum + term;
+            if (Double.isInfinite(next)) {
+                return next;
+            }
+            if (next == sum || term <= next * 0x1.0p-53) {
+                return next;
+            }
+            sum = next;
+        }
+    }
 }
