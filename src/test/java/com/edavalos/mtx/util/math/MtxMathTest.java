@@ -105,6 +105,7 @@ public class MtxMathTest {
         public void testComputesNaturalLogarithm_preloadedValues() {
             assertEquals(Math.log(2.0), MtxMath.ln(2.0), 1e-14);
             assertEquals(Math.log(3.0), MtxMath.ln(3.0), 1e-14);
+            assertEquals(Math.log(10.0), MtxMath.ln(10.0), 1e-14);
         }
 
         @Test

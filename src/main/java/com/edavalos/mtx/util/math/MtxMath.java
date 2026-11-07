@@ -379,6 +379,9 @@ public final class MtxMath {
         if (n == 3.0) {
             return LN3;
         }
+        if (n == 10.0) {
+            return LN10;
+        }
 
         long bits = Double.doubleToRawLongBits(n);
         int encodedExponent = (int) ((bits >>> 52) & 0x7ffL);
