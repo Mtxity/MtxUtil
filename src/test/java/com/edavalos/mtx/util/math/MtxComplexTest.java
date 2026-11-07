@@ -51,6 +51,14 @@ class MtxComplexTest {
     }
 
     @Test
+    void createsComplexNumberFromPolarCoordinates() {
+        MtxComplex result = MtxComplex.fromPolar(2.0, Math.PI / 3.0);
+
+        assertEquals(1.0, result.real(), TOLERANCE);
+        assertEquals(Math.sqrt(3.0), result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void computesReciprocal() {
         MtxComplex result = new MtxComplex(3.0, 4.0).reciprocal();
 
