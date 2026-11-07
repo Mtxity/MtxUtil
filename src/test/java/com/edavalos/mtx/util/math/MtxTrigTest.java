@@ -414,6 +414,58 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class SinhTests {
+
+        @Test
+        void testSinh_signedZero() {
+            assertSameBits(0.0, MtxTrig.sinh(0.0));
+            assertSameBits(-0.0, MtxTrig.sinh(-0.0));
+        }
+
+        @Test
+        void testSinh_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.sinh(Double.NaN)));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.sinh(Double.POSITIVE_INFINITY));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.sinh(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testSinh_knownValues() {
+            assertSinh(0.0);
+            assertSinh(-0.0);
+            assertSinh(0.5);
+            assertSinh(-0.5);
+            assertSinh(0.009);
+            assertSinh(1e-100);
+            assertSinh(-1e-100);
+            assertSinh(1.0);
+            assertSinh(-1.0);
+            assertSinh(10.0);
+            assertSinh(-10.0);
+            assertSinh(20.0);
+            assertSinh(-20.0);
+        }
+
+        @Test
+        void testSinh_overflow() {
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.sinh(1000.0));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.sinh(-1000.0));
+        }
+
+        private static void assertSinh(double x) {
+            double expected = StrictMath.sinh(x);
+            // Slightly larger tolerance for large values to avoid rounding errors.
+            double tolerance = TOLERANCE * (MtxMath.abs(expected) > 1.0 ? MtxMath.abs(expected) : 1.0);
+            assertEquals(
+                    expected,
+                    MtxTrig.sinh(x),
+                    tolerance,
+                    "sinh(" + x + ")"
+            );
+        }
+    }
+
     private static void assertSameBits(double expected, double actual) {
         assertEquals(
                 Double.doubleToRawLongBits(expected),
