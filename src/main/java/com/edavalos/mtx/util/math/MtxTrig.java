@@ -325,4 +325,27 @@ public final class MtxTrig {
         }
         return sin(x) / cos(x);
     }
+
+    public static double sinh(double x) {
+        if (Double.isNaN(x) || Double.isInfinite(x) || x == 0.0) {
+            return x;
+        }
+
+        // The Maclaurin series is well-conditioned for sinh: all terms have
+        // the same sign, so it avoids cancellation for both small and large x.
+        double xSquared = x * x;
+        double term = x;
+        double sum = x;
+        for (int n = 1; ; n++) {
+            term *= xSquared / ((2.0 * n) * (2.0 * n + 1.0));
+            double next = sum + term;
+            if (Double.isInfinite(next)) {
+                return next;
+            }
+            if (next == sum || MtxMath.abs(term) <= MtxMath.abs(next) * 0x1.0p-53) {
+                return next;
+            }
+            sum = next;
+        }
+    }
 }
