@@ -415,7 +415,7 @@ class MtxTrigTest {
     }
 
     @Nested
-    class SinhTests {
+    class SinHypTests {
 
         @Test
         void testSinh_signedZero() {
@@ -455,15 +455,70 @@ class MtxTrigTest {
 
         private static void assertSinh(double x) {
             double expected = StrictMath.sinh(x);
-            // Slightly larger tolerance for large values to avoid rounding errors.
-            double tolerance = TOLERANCE * (MtxMath.abs(expected) > 1.0 ? MtxMath.abs(expected) : 1.0);
             assertEquals(
                     expected,
                     MtxTrig.sinh(x),
-                    tolerance,
+                    scaledTolerance(expected),
                     "sinh(" + x + ")"
             );
         }
+    }
+
+    @Nested
+    class CosHypTests {
+
+        @Test
+        void testCosh_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.cosh(Double.NaN)));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.cosh(Double.POSITIVE_INFINITY));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.cosh(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testCosh_knownValues() {
+            assertCosh(0.0);
+            assertCosh(-0.0);
+            assertCosh(0.009);
+            assertCosh(1e-100);
+            assertCosh(0.5);
+            assertCosh(-0.5);
+            assertCosh(1.0);
+            assertCosh(-1.0);
+            assertCosh(10.0);
+            assertCosh(-10.0);
+            assertCosh(20.0);
+            assertCosh(-20.0);
+        }
+
+        @Test
+        void testCosh_overflow() {
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.cosh(1000.0));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.cosh(-1000.0));
+        }
+
+        private static void assertCosh(double x) {
+            double expected = StrictMath.cosh(x);
+            assertEquals(
+                    expected,
+                    MtxTrig.cosh(x),
+                    scaledTolerance(expected),
+                    "cosh(" + x + ")"
+            );
+        }
+    }
+
+    /**
+     * Scales the test tolerance with the expected result's magnitude. Hyperbolic
+     * functions grow quickly, so a fixed absolute tolerance is too strict for
+     * larger outputs even when the implementation's relative error is tiny.
+     * For values below one, the base tolerance remains an absolute tolerance.
+     *
+     * @param expected the reference result
+     * @return the allowed absolute error for comparing the result
+     */
+    private static double scaledTolerance(double expected) {
+        double magnitude = MtxMath.abs(expected);
+        return TOLERANCE * (magnitude > 1.0 ? magnitude : 1.0);
     }
 
     private static void assertSameBits(double expected, double actual) {
