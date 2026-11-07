@@ -179,6 +179,29 @@ public final class MtxTrig {
         }
     }
 
+    public static double asin(double x) {
+        if (Double.isNaN(x) || x < -1.0 || x > 1.0) {
+            return Double.NaN;
+        }
+        if (x == 0.0) {
+            return x;
+        }
+        if (x == 1.0) {
+            return pi_o_2;
+        }
+        if (x == -1.0) {
+            return -pi_o_2;
+        }
+
+        double absX = MtxMath.abs(x);
+        double radicand = (1.0 - absX) * (1.0 + absX);
+        double root = MtxMath.sqrt(radicand);
+        for (int i = 0; i < 4; i++) {
+            root = 0.5 * (root + radicand / root);
+        }
+        return atan(x / root);
+    }
+
     public static double sin(double x) {
         if (Double.isNaN(x) || Double.isInfinite(x)) {
             return Double.NaN;
