@@ -123,6 +123,7 @@ public final class MtxTrig {
         };
     }
 
+    // @TODO: Complete code coverage
     private static double atan(double x) {
         double w, s1, s2, z;
         int ix, hx, id;
@@ -195,11 +196,40 @@ public final class MtxTrig {
 
         double absX = MtxMath.abs(x);
         double radicand = (1.0 - absX) * (1.0 + absX);
-        double root = MtxMath.sqrt(radicand);
-        for (int i = 0; i < 4; i++) {
-            root = 0.5 * (root + radicand / root);
-        }
+        double root = refinedSqrt(radicand);
         return atan(x / root);
+    }
+
+    public static double acos(double x) {
+        if (Double.isNaN(x) || x < -1.0 || x > 1.0) {
+            return Double.NaN;
+        }
+        if (x == 1.0) {
+            return 0.0;
+        }
+        if (x == -1.0) {
+            return MtxMath.PI;
+        }
+
+        double absX = MtxMath.abs(x);
+        double radicand = (1.0 - absX) * (1.0 + absX);
+        double root = refinedSqrt(radicand);
+        return atan(root, x);
+    }
+
+    /**
+     * MtxMath.sqrt stops at an absolute 1e-10 error, which is too coarse for asin/acos near +/-1 where the result is
+     * sensitive to sqrt(x). A few Newton steps refine its estimate to double precision.
+     *
+     * @param x the non-negative value whose square root is being refined
+     * @return the square root of {@code x}, refined with Newton's method
+     */
+    private static double refinedSqrt(double x) {
+        double root = MtxMath.sqrt(x);
+        for (int i = 0; i < 4; i++) {
+            root = 0.5 * (root + x / root);
+        }
+        return root;
     }
 
     public static double sin(double x) {
