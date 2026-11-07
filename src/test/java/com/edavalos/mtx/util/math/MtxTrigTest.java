@@ -97,6 +97,15 @@ class MtxTrigTest {
             assertAngle(-0.0, 3.0);
             assertAngle(Math.scalb(1.0, -30), 1.0);
         }
+
+        private static void assertAngle(double y, double x) {
+            assertEquals(
+                    Math.atan2(y, x),
+                    MtxTrig.atan(y, x),
+                    TOLERANCE,
+                    "atan(" + y + ", " + x + ")"
+            );
+        }
     }
 
     @Nested
@@ -129,6 +138,50 @@ class MtxTrigTest {
             assertAsin(-1.0);
             assertAsin(Math.nextDown(1.0));
             assertAsin(Math.nextUp(-1.0));
+        }
+
+        private static void assertAsin(double x) {
+            assertEquals(
+                    StrictMath.asin(x),
+                    MtxTrig.asin(x),
+                    TOLERANCE,
+                    "asin(" + x + ")"
+            );
+        }
+    }
+
+    @Nested
+    class ArcCosTests {
+
+        @Test
+        void testAcos_domainAndSpecialValues() {
+            assertTrue(Double.isNaN(MtxTrig.acos(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.acos(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.acos(Double.NEGATIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.acos(1.0001)));
+            assertTrue(Double.isNaN(MtxTrig.acos(-1.0001)));
+        }
+
+        @Test
+        void testAcos_knownValues() {
+            assertAcos(-1.0);
+            assertAcos(-Math.sqrt(0.5));
+            assertAcos(-0.5);
+            assertAcos(0.0);
+            assertAcos(0.5);
+            assertAcos(Math.sqrt(0.5));
+            assertAcos(1.0);
+            assertAcos(Math.nextDown(1.0));
+            assertAcos(Math.nextUp(-1.0));
+        }
+
+        private static void assertAcos(double x) {
+            assertEquals(
+                    StrictMath.acos(x),
+                    MtxTrig.acos(x),
+                    TOLERANCE,
+                    "acos(" + x + ")"
+            );
         }
     }
 
@@ -175,6 +228,19 @@ class MtxTrigTest {
             assertSin(x, 1e-9);
             assertSin(-x, 1e-9);
         }
+
+        private static void assertSin(double x) {
+            assertSin(x, TOLERANCE);
+        }
+
+        private static void assertSin(double x, double tolerance) {
+            assertEquals(
+                    StrictMath.sin(x),
+                    MtxTrig.sin(x),
+                    tolerance,
+                    "sin(" + x + ")"
+            );
+        }
     }
 
     @Nested
@@ -213,6 +279,19 @@ class MtxTrigTest {
             double x = 0x1.0p21;
             assertCos(x, 1e-9);
             assertCos(-x, 1e-9);
+        }
+
+        private static void assertCos(double x) {
+            assertCos(x, TOLERANCE);
+        }
+
+        private static void assertCos(double x, double tolerance) {
+            assertEquals(
+                    StrictMath.cos(x),
+                    MtxTrig.cos(x),
+                    tolerance,
+                    "cos(" + x + ")"
+            );
         }
     }
 
@@ -258,74 +337,30 @@ class MtxTrigTest {
             assertTan(x, 1e-8);
             assertTan(-x, 1e-8);
         }
-    }
 
-    private static void assertAngle(double y, double x) {
-        assertEquals(
-                Math.atan2(y, x),
-                MtxTrig.atan(y, x),
-                TOLERANCE,
-                "atan(" + y + ", " + x + ")"
-        );
-    }
+        private static void assertTan(double x) {
+            assertTan(x, TOLERANCE);
+        }
 
-    private static void assertAsin(double x) {
-        assertEquals(
-                StrictMath.asin(x),
-                MtxTrig.asin(x),
-                TOLERANCE,
-                "asin(" + x + ")"
-        );
-    }
+        private static void assertTan(double x, double tolerance) {
+            assertEquals(
+                    StrictMath.tan(x),
+                    MtxTrig.tan(x),
+                    tolerance,
+                    "tan(" + x + ")"
+            );
+        }
 
-    private static void assertSin(double x) {
-        assertSin(x, TOLERANCE);
-    }
-
-    private static void assertSin(double x, double tolerance) {
-        assertEquals(
-                StrictMath.sin(x),
-                MtxTrig.sin(x),
-                tolerance,
-                "sin(" + x + ")"
-        );
-    }
-
-    private static void assertCos(double x) {
-        assertCos(x, TOLERANCE);
-    }
-
-    private static void assertCos(double x, double tolerance) {
-        assertEquals(
-                StrictMath.cos(x),
-                MtxTrig.cos(x),
-                tolerance,
-                "cos(" + x + ")"
-        );
-    }
-
-    private static void assertTan(double x) {
-        assertTan(x, TOLERANCE);
-    }
-
-    private static void assertTan(double x, double tolerance) {
-        assertEquals(
-                StrictMath.tan(x),
-                MtxTrig.tan(x),
-                tolerance,
-                "tan(" + x + ")"
-        );
-    }
-
-    private static void assertTanRelative(double x, double relativeTolerance) {
-        double expected = StrictMath.tan(x);
-        double actual = MtxTrig.tan(x);
-        assertEquals(
-                0.0,
-                Math.abs((actual - expected) / expected),
-                relativeTolerance,
-                "relative error for tan(" + x + ")"
-        );
+        private static void assertTanRelative(double x, double relativeTolerance) {
+            double expected = StrictMath.tan(x);
+            double actual = MtxTrig.tan(x);
+            assertEquals(
+                    0.0,
+                    Math.abs((actual - expected) / expected),
+                    relativeTolerance,
+                    "relative error for tan(" + x + ")"
+            );
+        }
     }
 
     private static void assertSameBits(double expected, double actual) {
