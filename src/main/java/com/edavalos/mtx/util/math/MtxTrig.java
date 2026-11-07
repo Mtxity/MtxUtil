@@ -123,8 +123,7 @@ public final class MtxTrig {
         };
     }
 
-    // @TODO: Complete code coverage
-    private static double atan(double x) {
+    protected static double atan(double x) {
         double w, s1, s2, z;
         int ix, hx, id;
 

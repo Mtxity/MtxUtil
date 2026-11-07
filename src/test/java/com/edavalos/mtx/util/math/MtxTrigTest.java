@@ -83,6 +83,13 @@ class MtxTrigTest {
             assertAngle(-Math.scalb(1.0, 100), 1.0);
             assertEquals(Math.PI, MtxTrig.atan(Math.scalb(1.0, -100), -Math.scalb(1.0, 100)), TOLERANCE);
             assertEquals(-Math.PI, MtxTrig.atan(-Math.scalb(1.0, -100), -Math.scalb(1.0, 100)), TOLERANCE);
+
+            assertAngle(Double.MAX_VALUE, Double.MIN_VALUE);
+            assertAngle(-Double.MAX_VALUE, Double.MIN_VALUE);
+            assertAngle(Double.MIN_VALUE, Double.MAX_VALUE);
+            assertAngle(-Double.MIN_VALUE, Double.MAX_VALUE);
+            assertAngle(Double.MIN_VALUE, -Double.MAX_VALUE);
+            assertAngle(-Double.MIN_VALUE, -Double.MAX_VALUE);
         }
 
         @Test
@@ -98,12 +105,56 @@ class MtxTrigTest {
             assertAngle(Math.scalb(1.0, -30), 1.0);
         }
 
+        @Test
+        void testAtan_privateKernelReductionRanges() {
+            // Use x != 1 to exercise the custom scalar atan kernel rather than
+            // the StrictMath special case in atan(y, x).
+            assertAngle(0.25, 2.0); // |y/x| < 0.4375
+            assertAngle(1.0, 2.0);  // reduction id 0
+            assertAngle(1.5, 2.0);  // reduction id 1
+            assertAngle(3.0, 2.0);  // reduction id 2
+            assertAngle(5.0, 2.0);  // reduction id 3
+        }
+
+        @Test
+        void testAtan_scalarKernel_specialAndLargeValues() {
+            assertTrue(Double.isNaN(MtxTrig.atan(Double.NaN)));
+            assertKernelAngle(Double.POSITIVE_INFINITY);
+            assertKernelAngle(Double.NEGATIVE_INFINITY);
+            assertKernelAngle(Math.scalb(1.0, 66));
+            assertKernelAngle(-Math.scalb(1.0, 66));
+        }
+
+        @Test
+        void testAtan_scalarKernel_smallValuesAndReductionRanges() {
+            assertSameBits(Math.scalb(1.0, -30), MtxTrig.atan(Math.scalb(1.0, -30)));
+            assertSameBits(-Math.scalb(1.0, -30), MtxTrig.atan(-Math.scalb(1.0, -30)));
+            assertKernelAngle(0.25); // no argument reduction
+            assertKernelAngle(0.5);  // reduction id 0
+            assertKernelAngle(0.75); // reduction id 1
+            assertKernelAngle(1.5);  // reduction id 2
+            assertKernelAngle(3.0);  // reduction id 3
+            assertKernelAngle(-0.5);
+            assertKernelAngle(-0.75);
+            assertKernelAngle(-1.5);
+            assertKernelAngle(-3.0);
+        }
+
         private static void assertAngle(double y, double x) {
             assertEquals(
                     Math.atan2(y, x),
                     MtxTrig.atan(y, x),
                     TOLERANCE,
                     "atan(" + y + ", " + x + ")"
+            );
+        }
+
+        private static void assertKernelAngle(double x) {
+            assertEquals(
+                    StrictMath.atan(x),
+                    MtxTrig.atan(x),
+                    TOLERANCE,
+                    "atan kernel(" + x + ")"
             );
         }
     }
