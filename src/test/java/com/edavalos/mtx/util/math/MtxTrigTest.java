@@ -573,6 +573,51 @@ class MtxTrigTest {
     }
 
     @Nested
+    class ArcSinHypTests {
+
+        @Test
+        void testAsinh_signedZero() {
+            assertSameBits(0.0, MtxTrig.asinh(0.0));
+            assertSameBits(-0.0, MtxTrig.asinh(-0.0));
+        }
+
+        @Test
+        void testAsinh_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.asinh(Double.NaN)));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.asinh(Double.POSITIVE_INFINITY));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.asinh(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testAsinh_knownValues() {
+            assertAsinh(1e-100, 1e-100);
+            assertAsinh(-1e-100, -1e-100);
+            assertAsinh(0.1, 0.09983407889920758);
+            assertAsinh(-0.1, -0.09983407889920758);
+            assertAsinh(0.5, 0.48121182505960347);
+            assertAsinh(-0.5, -0.48121182505960347);
+            assertAsinh(1.0, 0.88137358701954305);
+            assertAsinh(-1.0, -0.88137358701954305);
+            assertAsinh(2.0, 1.4436354751788103);
+            assertAsinh(-2.0, -1.4436354751788103);
+            assertAsinh(10.0, 2.9982229502979698);
+            assertAsinh(-10.0, -2.9982229502979698);
+        }
+
+        @Test
+        void testAsinh_largeFiniteValues() {
+            assertAsinh(1e100, 230.95165647996453);
+            assertAsinh(-1e100, -230.95165647996453);
+            assertAsinh(Double.MAX_VALUE, 710.4758600739439);
+            assertAsinh(-Double.MAX_VALUE, -710.4758600739439);
+        }
+
+        private static void assertAsinh(double x, double expected) {
+            assertEquals(expected, MtxTrig.asinh(x), scaledTolerance(expected), "asinh(" + x + ")");
+        }
+    }
+
+    @Nested
     class ArcCosHypTests {
 
         @Test
