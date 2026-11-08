@@ -225,8 +225,12 @@ public final class MtxTrig {
      */
     private static double refinedSqrt(double x) {
         double root = MtxMath.sqrt(x);
-        for (int i = 0; i < 4; i++) {
-            root = 0.5 * (root + x / root);
+        for (int i = 0; i < 64; i++) {
+            double next = 0.5 * (root + x / root);
+            if (next == root) {
+                return root;
+            }
+            root = next;
         }
         return root;
     }
@@ -437,5 +441,28 @@ public final class MtxTrig {
             result = 0.5 * MtxMath.ln((1.0 + absX) / (1.0 - absX));
         }
         return x < 0.0 ? -result : result;
+    }
+
+    public static double acosh(double x) {
+        if (Double.isNaN(x) || x < 1.0) {
+            return Double.NaN;
+        }
+        if (x == 1.0) {
+            return 0.0;
+        }
+        if (Double.isInfinite(x)) {
+            return Double.POSITIVE_INFINITY;
+        }
+
+        if (x < 2.0) {
+            double radicand = (x - 1.0) * (x + 1.0);
+            return MtxMath.ln(x + refinedSqrt(radicand));
+        }
+
+        // This equivalent form avoids overflowing x + sqrt(x*x - 1) for
+        // large finite x: acosh(x) = ln(x) + ln(1 + sqrt(1 - 1/x^2)).
+        double reciprocal = 1.0 / x;
+        double root = refinedSqrt(1.0 - reciprocal * reciprocal);
+        return MtxMath.ln(x) + MtxMath.ln(1.0 + root);
     }
 }
