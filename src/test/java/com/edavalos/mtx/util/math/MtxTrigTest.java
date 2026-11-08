@@ -573,6 +573,38 @@ class MtxTrigTest {
     }
 
     @Nested
+    class ArcCosHypTests {
+
+        @Test
+        void testAcosh_domainAndSpecialValues() {
+            assertTrue(Double.isNaN(MtxTrig.acosh(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.acosh(Double.NEGATIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.acosh(0.9999)));
+            assertEquals(0.0, MtxTrig.acosh(1.0));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.acosh(Double.POSITIVE_INFINITY));
+        }
+
+        @Test
+        void testAcosh_knownValues() {
+            assertAcosh(Math.nextUp(1.0), 2.1073424255447017e-8);
+            assertAcosh(1.0001, 0.014142017775251547);
+            assertAcosh(1.5, 0.9624236501192069);
+            assertAcosh(2.0, 1.3169578969248166);
+            assertAcosh(10.0, 2.993222846126381);
+            assertAcosh(1e100, 230.95165647996453);
+        }
+
+        @Test
+        void testAcosh_largeFiniteValue() {
+            assertAcosh(Double.MAX_VALUE, 710.4758600739439);
+        }
+
+        private static void assertAcosh(double x, double expected) {
+            assertEquals(expected, MtxTrig.acosh(x), scaledTolerance(expected), "acosh(" + x + ")");
+        }
+    }
+
+    @Nested
     class ArcTanHypTests {
 
         @Test
