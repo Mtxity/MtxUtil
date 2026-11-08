@@ -465,4 +465,37 @@ public final class MtxTrig {
         double root = refinedSqrt(1.0 - reciprocal * reciprocal);
         return MtxMath.ln(x) + MtxMath.ln(1.0 + root);
     }
+
+    public static double asinh(double x) {
+        if (Double.isNaN(x) || Double.isInfinite(x) || x == 0.0) {
+            return x;
+        }
+
+        double absX = MtxMath.abs(x);
+        double result;
+        if (absX <= 0.5) {
+            // asinh(x) = x - x^3/6 + 3x^5/40 - ...; the series preserves
+            // precision for inputs where the logarithm form would cancel.
+            double xSquared = absX * absX;
+            double term = absX;
+            result = absX;
+            for (int n = 0; ; n++) {
+                term *= -xSquared * (2.0 * n + 1.0) * (2.0 * n + 1.0)
+                        / (2.0 * (n + 1.0) * (2.0 * n + 3.0));
+                double next = result + term;
+                if (next == result || MtxMath.abs(term) <= MtxMath.abs(next) * 0x1.0p-53) {
+                    result = next;
+                    break;
+                }
+                result = next;
+            }
+        } else if (absX <= 2.0) {
+            result = MtxMath.ln(absX + refinedSqrt(absX * absX + 1.0));
+        } else {
+            double reciprocal = 1.0 / absX;
+            double root = refinedSqrt(1.0 + reciprocal * reciprocal);
+            result = MtxMath.ln(absX) + MtxMath.ln(1.0 + root);
+        }
+        return x < 0.0 ? -result : result;
+    }
 }
