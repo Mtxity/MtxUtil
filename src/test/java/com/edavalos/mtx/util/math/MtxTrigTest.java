@@ -507,6 +507,55 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class TanHypTests {
+
+        @Test
+        void testTanh_signedZero() {
+            assertSameBits(0.0, MtxTrig.tanh(0.0));
+            assertSameBits(-0.0, MtxTrig.tanh(-0.0));
+        }
+
+        @Test
+        void testTanh_specialValues() {
+            assertTrue(Double.isNaN(MtxTrig.tanh(Double.NaN)));
+            assertEquals(1.0, MtxTrig.tanh(Double.POSITIVE_INFINITY));
+            assertEquals(-1.0, MtxTrig.tanh(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testTanh_knownValues() {
+            assertTanh(0.0);
+            assertTanh(-0.0);
+            assertTanh(1e-100);
+            assertTanh(-1e-100);
+            assertTanh(0.5);
+            assertTanh(-0.5);
+            assertTanh(1.0);
+            assertTanh(-1.0);
+            assertTanh(10.0);
+            assertTanh(-10.0);
+        }
+
+        @Test
+        void testTanh_largeFiniteValues() {
+            assertEquals(1.0, MtxTrig.tanh(20.0));
+            assertEquals(-1.0, MtxTrig.tanh(-20.0));
+            assertEquals(1.0, MtxTrig.tanh(Double.MAX_VALUE));
+            assertEquals(-1.0, MtxTrig.tanh(-Double.MAX_VALUE));
+        }
+
+        private static void assertTanh(double x) {
+            double expected = StrictMath.tanh(x);
+            assertEquals(
+                    expected,
+                    MtxTrig.tanh(x),
+                    scaledTolerance(expected),
+                    "tanh(" + x + ")"
+            );
+        }
+    }
+
     /**
      * Scales the test tolerance with the expected result's magnitude. Hyperbolic
      * functions grow quickly, so a fixed absolute tolerance is too strict for
