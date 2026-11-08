@@ -572,6 +572,53 @@ class MtxTrigTest {
         }
     }
 
+    @Nested
+    class ArcTanHypTests {
+
+        @Test
+        void testAtanh_signedZero() {
+            assertSameBits(0.0, MtxTrig.atanh(0.0));
+            assertSameBits(-0.0, MtxTrig.atanh(-0.0));
+        }
+
+        @Test
+        void testAtanh_domainAndSpecialValues() {
+            assertTrue(Double.isNaN(MtxTrig.atanh(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.atanh(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.atanh(Double.NEGATIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.atanh(1.0001)));
+            assertTrue(Double.isNaN(MtxTrig.atanh(-1.0001)));
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.atanh(1.0));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.atanh(-1.0));
+        }
+
+        @Test
+        void testAtanh_knownValues() {
+            assertAtanh(1e-100, 1e-100);
+            assertAtanh(-1e-100, -1e-100);
+            assertAtanh(0.1, 0.10033534773107558);
+            assertAtanh(-0.1, -0.10033534773107558);
+            assertAtanh(0.5, 0.5493061443340549);
+            assertAtanh(-0.5, -0.5493061443340549);
+            assertAtanh(0.75, 0.9729550745276566);
+            assertAtanh(-0.75, -0.9729550745276566);
+            assertAtanh(0.9, 1.4722194895832204);
+            assertAtanh(-0.9, -1.4722194895832204);
+            assertAtanh(0.99, 2.6466524123622457);
+            assertAtanh(-0.99, -2.6466524123622457);
+        }
+
+        @Test
+        void testAtanh_nearDomainBoundaries() {
+            assertAtanh(Math.nextDown(1.0), 18.714973875118524);
+            assertAtanh(Math.nextUp(-1.0), -18.714973875118524);
+        }
+
+        private static void assertAtanh(double x, double expected) {
+            assertEquals(expected, MtxTrig.atanh(x), scaledTolerance(expected), "atanh(" + x + ")");
+        }
+    }
+
     /**
      * Scales the test tolerance with the expected result's magnitude. Hyperbolic
      * functions grow quickly, so a fixed absolute tolerance is too strict for
