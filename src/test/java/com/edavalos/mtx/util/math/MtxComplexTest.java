@@ -189,6 +189,14 @@ class MtxComplexTest {
     }
 
     @Test
+    void computesComplexSine() {
+        MtxComplex result = new MtxComplex(Math.PI / 2.0, 1.0).sin();
+
+        assertEquals(Math.cosh(1.0), result.real(), TOLERANCE);
+        assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void computesComplexExponentialDecimal() {
         MtxComplex result = new MtxComplex(3.5, 3.5).exp();
 
