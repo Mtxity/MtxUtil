@@ -533,16 +533,32 @@ class MtxTrigTest {
             assertTanh(-0.5);
             assertTanh(1.0);
             assertTanh(-1.0);
+            assertTanh(2.0);
+            assertTanh(-2.0);
+            assertTanh(5.0);
+            assertTanh(-5.0);
             assertTanh(10.0);
             assertTanh(-10.0);
+            assertTanh(18.0);
+            assertTanh(-18.0);
+            assertTanh(19.0);
+            assertTanh(-19.0);
+            assertTanh(19.5);
+            assertTanh(-19.5);
         }
 
         @Test
         void testTanh_largeFiniteValues() {
-            assertEquals(1.0, MtxTrig.tanh(20.0));
-            assertEquals(-1.0, MtxTrig.tanh(-20.0));
-            assertEquals(1.0, MtxTrig.tanh(Double.MAX_VALUE));
-            assertEquals(-1.0, MtxTrig.tanh(-Double.MAX_VALUE));
+            assertTanh(20.0);
+            assertTanh(-20.0);
+            assertTanh(20.1);
+            assertTanh(-20.1);
+            assertTanh(100.0);
+            assertTanh(-100.0);
+            assertTanh(1e100);
+            assertTanh(-1e100);
+            assertTanh(Double.MAX_VALUE);
+            assertTanh(-Double.MAX_VALUE);
         }
 
         private static void assertTanh(double x) {
