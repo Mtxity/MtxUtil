@@ -123,7 +123,11 @@ public final class MtxTrig {
         };
     }
 
-    protected static double atan(double x) {
+    public static double atan2(double y, double x) {
+        return atan(y, x);
+    }
+
+    public static double atan(double x) {
         double w, s1, s2, z;
         int ix, hx, id;
 

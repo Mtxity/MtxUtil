@@ -32,6 +32,12 @@ class MtxTrigTest {
         }
 
         @Test
+        void testAtan2_matchesTwoArgumentAtan() {
+            assertEquals(MtxTrig.atan(1.0, 1.0), MtxTrig.atan2(1.0, 1.0), TOLERANCE);
+            assertEquals(MtxTrig.atan(-2.0, -5.0), MtxTrig.atan2(-2.0, -5.0), TOLERANCE);
+        }
+
+        @Test
         void testAtan_signedZeroWithPositiveX() {
             assertSameBits(0.0, MtxTrig.atan(0.0, 2.0));
             assertSameBits(-0.0, MtxTrig.atan(-0.0, 2.0));
