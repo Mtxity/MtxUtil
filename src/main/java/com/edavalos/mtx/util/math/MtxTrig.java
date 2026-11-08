@@ -398,4 +398,44 @@ public final class MtxTrig {
         }
         return x < 0.0 ? -result : result;
     }
+
+    public static double atanh(double x) {
+        if (Double.isNaN(x) || x < -1.0 || x > 1.0) {
+            return Double.NaN;
+        }
+        if (x == 1.0) {
+            return Double.POSITIVE_INFINITY;
+        }
+        if (x == -1.0) {
+            return Double.NEGATIVE_INFINITY;
+        }
+        if (x == 0.0) {
+            return x;
+        }
+
+        double absX = MtxMath.abs(x);
+        double result;
+        if (absX <= 0.5) {
+            // atanh(x) = x + x^3/3 + x^5/5 + ...; this avoids subtracting
+            // nearly equal logarithms when x is close to zero.
+            double xSquared = absX * absX;
+            double term = absX;
+            result = absX;
+            for (int n = 1; ; n++) {
+                term *= xSquared;
+                double addend = term / (2.0 * n + 1.0);
+                double next = result + addend;
+                if (next == result || addend <= next * 0x1.0p-53) {
+                    result = next;
+                    break;
+                }
+                result = next;
+            }
+        } else {
+            // The logarithm form converges quickly near |x| = 1, where the
+            // direct power series would require many terms.
+            result = 0.5 * MtxMath.ln((1.0 + absX) / (1.0 - absX));
+        }
+        return x < 0.0 ? -result : result;
+    }
 }
