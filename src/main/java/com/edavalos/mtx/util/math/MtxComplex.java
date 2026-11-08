@@ -71,6 +71,13 @@ public class MtxComplex {
         return new MtxComplex(real, MtxMath.copySign(imaginary, this.im));
     }
 
+    public MtxComplex sin() {
+        return new MtxComplex(
+                MtxTrig.sin(this.re) * MtxTrig.cosh(this.im),
+                MtxTrig.cos(this.re) * MtxTrig.sinh(this.im)
+        );
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
