@@ -374,4 +374,21 @@ public final class MtxTrig {
             sum = next;
         }
     }
+
+    public static double tanh(double x) {
+        if (Double.isNaN(x) || x == 0.0) {
+            return x;
+        }
+        if (Double.isInfinite(x)) {
+            return x < 0.0 ? -1.0 : 1.0;
+        }
+
+        // sinh/cosh would overflow together for large finite x. At this point
+        // tanh has rounded to its signed limit in double precision.
+        if (MtxMath.abs(x) >= 20.0) {
+            return x < 0.0 ? -1.0 : 1.0;
+        }
+
+        return sinh(x) / cosh(x);
+    }
 }
