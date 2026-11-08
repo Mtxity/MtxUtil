@@ -54,7 +54,7 @@ public final class MtxTrig {
             return x + y;
         }
         if (((hx - 0x3ff0_0000) | lx) == 0) { // x = 1.0
-            return StrictMath.atan(y);
+            return atan(y);
         }
         m = ((hy >> 31) & 1) | ((hx >> 30) & 2); // 2*sign(x) + sign(y)
 
@@ -383,12 +383,19 @@ public final class MtxTrig {
             return x < 0.0 ? -1.0 : 1.0;
         }
 
-        // sinh/cosh would overflow together for large finite x. At this point
-        // tanh has rounded to its signed limit in double precision.
-        if (MtxMath.abs(x) >= 20.0) {
-            return x < 0.0 ? -1.0 : 1.0;
+        double absX = MtxMath.abs(x);
+        int doublings = 0;
+        while (absX > 0.5) {
+            absX *= 0.5;
+            doublings++;
         }
 
-        return sinh(x) / cosh(x);
+        // Evaluate in the well-conditioned range, then repeatedly use
+        // tanh(2x) = 2*tanh(x)/(1 + tanh(x)^2). This avoids sinh/cosh overflow.
+        double result = sinh(absX) / cosh(absX);
+        for (int i = 0; i < doublings; i++) {
+            result = (2.0 * result) / (1.0 + result * result);
+        }
+        return x < 0.0 ? -result : result;
     }
 }
