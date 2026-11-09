@@ -85,6 +85,10 @@ public class MtxComplex {
         );
     }
 
+    public MtxComplex tan() {
+        return this.sin().divide(this.cos());
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
