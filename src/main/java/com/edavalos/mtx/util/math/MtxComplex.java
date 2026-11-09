@@ -78,6 +78,13 @@ public class MtxComplex {
         );
     }
 
+    public MtxComplex cos() {
+        return new MtxComplex(
+                MtxTrig.cos(this.re) * MtxTrig.cosh(this.im),
+                -MtxTrig.sin(this.re) * MtxTrig.sinh(this.im)
+        );
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
