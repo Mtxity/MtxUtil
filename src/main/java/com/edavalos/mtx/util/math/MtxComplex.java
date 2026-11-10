@@ -103,6 +103,13 @@ public class MtxComplex {
         return new MtxComplex(Math.PI / 2.0, 0.0).minus(this.asin());
     }
 
+    public MtxComplex atan() {
+        MtxComplex iz = MtxComplex.I.times(this);
+        MtxComplex num = MtxComplex.ONE.minus(iz);
+        MtxComplex den = MtxComplex.ONE.plus(iz);
+        return new MtxComplex(0.0, 0.5).times(num.divide(den).log());
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
