@@ -221,6 +221,14 @@ class MtxComplexTest {
     }
 
     @Test
+    void computesComplexArccosine() {
+        MtxComplex result = new MtxComplex(1.0, 0.0).acos();
+
+        assertEquals(0.0, result.real(), TOLERANCE);
+        assertEquals(0.0, result.imaginary(), TOLERANCE);
+    }
+
+    @Test
     void verifiesConstants() {
         assertEquals(0.0, MtxComplex.ZERO.real());
         assertEquals(0.0, MtxComplex.ZERO.imaginary());
