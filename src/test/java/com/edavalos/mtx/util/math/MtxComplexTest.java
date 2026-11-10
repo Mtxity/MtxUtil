@@ -213,6 +213,16 @@ class MtxComplexTest {
     }
 
     @Test
+    void verifiesConstants() {
+        assertEquals(0.0, MtxComplex.ZERO.real());
+        assertEquals(0.0, MtxComplex.ZERO.imaginary());
+        assertEquals(1.0, MtxComplex.ONE.real());
+        assertEquals(0.0, MtxComplex.ONE.imaginary());
+        assertEquals(0.0, MtxComplex.I.real());
+        assertEquals(1.0, MtxComplex.I.imaginary());
+    }
+
+    @Test
     void computesComplexExponentialDecimal() {
         MtxComplex result = new MtxComplex(3.5, 3.5).exp();
 
