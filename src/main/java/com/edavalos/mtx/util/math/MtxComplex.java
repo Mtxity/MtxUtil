@@ -1,6 +1,10 @@
 package com.edavalos.mtx.util.math;
 
 public class MtxComplex {
+    public static final MtxComplex ZERO = new MtxComplex(0.0, 0.0);
+    public static final MtxComplex ONE = new MtxComplex(1.0, 0.0);
+    public static final MtxComplex I = new MtxComplex(0.0, 1.0);
+
     private final double re; // Real part
     private final double im; // Imaginary part
 
