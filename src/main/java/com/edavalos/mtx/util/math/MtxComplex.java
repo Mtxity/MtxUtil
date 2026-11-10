@@ -93,6 +93,12 @@ public class MtxComplex {
         return this.sin().divide(this.cos());
     }
 
+    public MtxComplex asin() {
+        MtxComplex iz = MtxComplex.I.times(this);
+        MtxComplex sqrtTerm = MtxComplex.ONE.minus(this.pow(2)).sqrt();
+        return new MtxComplex(0.0, -1.0).times(iz.plus(sqrtTerm).log());
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
