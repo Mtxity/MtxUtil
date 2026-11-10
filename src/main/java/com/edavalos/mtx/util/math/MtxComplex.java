@@ -99,6 +99,10 @@ public class MtxComplex {
         return new MtxComplex(0.0, -1.0).times(iz.plus(sqrtTerm).log());
     }
 
+    public MtxComplex acos() {
+        return new MtxComplex(Math.PI / 2.0, 0.0).minus(this.asin());
+    }
+
     public MtxComplex exp() {
         double scale = MtxMath.power(MtxMath.E, this.re);
         return new MtxComplex(
