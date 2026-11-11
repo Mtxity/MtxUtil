@@ -157,6 +157,44 @@ public class MtxMatrix {
         }
     }
 
+    public void pow(int n) {
+        if (!this.isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        if (n < 0) {
+            throw new IllegalArgumentException("Matrix power must be non-negative!");
+        }
+        if (n == 0) {
+            MtxMatrix I = new MtxMatrix(this.rows, this.rows);
+            for (int i = 0; i < this.rows; i++) {
+                I.setValueAt(i, i, 1);
+            }
+            MtxMath.twoDimensionArrayCopy(I.matrix, this.matrix);
+        }
+
+        MtxMatrix result = new MtxMatrix(this.rows, this.rows);
+        for (int i = 0; i < this.rows; i++) {
+            result.setValueAt(i, i, 1);
+        }
+        MtxMatrix base = this.copy();
+
+        int exp = n;
+        while (exp > 0) {
+            if (exp % 2 == 1) {
+                result = dotProduct(result, base);
+            }
+            base = dotProduct(base, base);
+            exp /= 2;
+        }
+        MtxMath.twoDimensionArrayCopy(result.matrix, this.matrix);
+    }
+
+    public static MtxMatrix pow(MtxMatrix m, int n) {
+        m = m.copy();
+        m.pow(n);
+        return m;
+    }
+
     public static MtxMatrix addTogether(MtxMatrix m1, MtxMatrix m2) {
         return MtxMatrix.addOrSubtract(m1, m2, true);
     }
