@@ -263,4 +263,30 @@ public class MtxMatrix {
         }
         return sub;
     }
+
+    public int determinant() {
+        if (!isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        if (this.rows == 0) {
+            return 1;
+        }
+        if (this.rows == 1) {
+            return this.matrix[0][0];
+        }
+        if (this.rows == 2) {
+            return this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0];
+        }
+
+        int det = 0;
+        for (int c = 0; c < this.cols; c++) {
+            int sign = (c % 2 == 0) ? 1 : -1;
+            det += sign * this.matrix[0][c] * this.minor(0, c).determinant();
+        }
+        return det;
+    }
+
+    public static int determinant(MtxMatrix m) {
+        return m.determinant();
+    }
 }
