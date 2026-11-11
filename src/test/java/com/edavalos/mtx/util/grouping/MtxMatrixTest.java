@@ -350,4 +350,15 @@ public class MtxMatrixTest {
         assertEquals(i3, MtxMatrix.getIdentityMatrix(3));
         assertEquals(i4, MtxMatrix.getIdentityMatrix(4));
     }
+
+    @Test
+    public void testIsSquare_true() {
+        assertTrue(mtxMatrix.isSquare());
+        assertTrue(new MtxMatrix(2, 2).isSquare());
+    }
+
+    @Test
+    public void testIsSquare_false() {
+        assertFalse(new MtxMatrix(2, 3).isSquare());
+    }
 }
