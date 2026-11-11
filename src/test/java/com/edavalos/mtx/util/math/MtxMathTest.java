@@ -2419,4 +2419,268 @@ public class MtxMathTest {
             assertEquals(result[0], a.multiply(result[1]).add(b.multiply(result[2])));
         }
     }
+
+    @Nested
+    class ChineseRemainderTheoremTests {
+
+        @Test
+        void testBasicCRT() {
+            // x = 2 (mod 3)
+            // x = 3 (mod 5)
+            // x = 2 (mod 7)
+
+            BigInteger[] remainders = {
+                    bi(2), bi(3), bi(2)
+            };
+
+            BigInteger[] moduli = {
+                    bi(3), bi(5), bi(7)
+            };
+
+            assertEquals(
+                    bi(23),
+                    MtxMath.chineseRemainderTheorem(
+                            remainders, moduli
+                    )
+            );
+        }
+
+        @Test
+        void testTwoCongruences() {
+            // x = 2 (mod 3)
+            // x = 3 (mod 5)
+            // Solution: 8
+
+            assertEquals(
+                    bi(8),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(2), bi(3)},
+                            new BigInteger[]{bi(3), bi(5)}
+                    )
+            );
+        }
+
+        @Test
+        void testNonCoprimeModuliWithSolution() {
+            // x = 2 (mod 6)
+            // x = 8 (mod 10)
+            // Solution: 8
+
+            assertEquals(
+                    bi(8),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(2), bi(8)},
+                            new BigInteger[]{bi(6), bi(10)}
+                    )
+            );
+        }
+
+        @Test
+        void testNonCoprimeModuliWithoutSolution() {
+            // x = 1 (mod 6)
+            // x = 2 (mod 10)
+            // No solution exists.
+
+            assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1), bi(2)},
+                            new BigInteger[]{bi(6), bi(10)}
+                    )
+            );
+        }
+
+        @Test
+        void testNegativeRemainders() {
+            // x = -1 (mod 5)
+            // x = 3 (mod 7)
+            // Solution: 24
+
+            assertEquals(
+                    bi(24),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(-1), bi(3)},
+                            new BigInteger[]{bi(5), bi(7)}
+                    )
+            );
+        }
+
+        @Test
+        void testRemainderGreaterThanModulus() {
+            // x = 8 (mod 5) -> x = 3 (mod 5)
+            // x = 10 (mod 7) -> x = 3 (mod 7)
+            // Solution: 3
+
+            assertEquals(
+                    bi(3),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(8), bi(10)},
+                            new BigInteger[]{bi(5), bi(7)}
+                    )
+            );
+        }
+
+        @Test
+        void testSingleCongruence() {
+            // x = 7 (mod 11)
+            // Solution: 7
+
+            assertEquals(
+                    bi(7),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(7)},
+                            new BigInteger[]{bi(11)}
+                    )
+            );
+        }
+
+        @Test
+        void testZeroRemainders() {
+            // x = 0 (mod 3)
+            // x = 0 (mod 5)
+            // Solution: 0
+
+            assertEquals(
+                    bi(0),
+                    MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(0), bi(0)},
+                            new BigInteger[]{bi(3), bi(5)}
+                    )
+            );
+        }
+
+        @Test
+        void testEmptyArrays() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{},
+                            new BigInteger[]{}
+                    )
+            );
+        }
+
+        @Test
+        void testDifferentArrayLengths() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1), bi(2)},
+                            new BigInteger[]{bi(3)}
+                    )
+            );
+        }
+
+        @Test
+        void testZeroModulus() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1)},
+                            new BigInteger[]{bi(0)}
+                    )
+            );
+        }
+
+        @Test
+        void testNegativeModulus() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1)},
+                            new BigInteger[]{bi(-5)}
+                    )
+            );
+        }
+
+        @Test
+        void testLargeNumbers() {
+            BigInteger[] remainders = {
+                    new BigInteger("123456789"),
+                    new BigInteger("987654321")
+            };
+
+            BigInteger[] moduli = {
+                    new BigInteger("1000000007"),
+                    new BigInteger("1000000009")
+            };
+
+            BigInteger result =
+                    MtxMath.chineseRemainderTheorem(
+                            remainders, moduli
+                    );
+
+            assertTrue(result.signum() >= 0);
+            assertTrue(result.compareTo(
+                    BigInteger.valueOf(1000000007L)
+                            .multiply(BigInteger.valueOf(1000000009L))
+            ) < 0);
+
+            assertEquals(
+                    remainders[0].mod(moduli[0]),
+                    result.mod(moduli[0])
+            );
+
+            assertEquals(
+                    remainders[1].mod(moduli[1]),
+                    result.mod(moduli[1])
+            );
+        }
+
+        @Test
+        void testZeroModulusThrowsException() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1)},
+                            new BigInteger[]{bi(0)}
+                    )
+            );
+
+            assertEquals("Moduli must be positive.", exception.getMessage());
+        }
+
+        @Test
+        void testNegativeModulusThrowsException() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1)},
+                            new BigInteger[]{bi(-5)}
+                    )
+            );
+
+            assertEquals("Moduli must be positive.", exception.getMessage());
+        }
+
+        @Test
+        void testZeroSecondModulusThrowsException() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1), bi(2)},
+                            new BigInteger[]{bi(3), bi(0)}
+                    )
+            );
+
+            assertEquals("Moduli must be positive.", exception.getMessage());
+        }
+
+        @Test
+        void testNegativeSecondModulusThrowsException() {
+            IllegalArgumentException exception = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.chineseRemainderTheorem(
+                            new BigInteger[]{bi(1), bi(2)},
+                            new BigInteger[]{bi(3), bi(-5)}
+                    )
+            );
+
+            assertEquals("Moduli must be positive.", exception.getMessage());
+        }
+
+        private static BigInteger bi(long value) {
+            return BigInteger.valueOf(value);
+        }
+    }
 }
