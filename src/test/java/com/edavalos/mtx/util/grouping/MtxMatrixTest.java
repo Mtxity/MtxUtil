@@ -337,24 +337,38 @@ public class MtxMatrixTest {
                 new int[]{4, 5, 6}
         );
         assertEquals(expected, m.copy());
-        // @TODO: Add transpose() or rotate() to MtxMatrix
-        //assertEquals(m, m.transpose().copy().transpose());
     }
 
-//    @Test
-//    public void testTranspose() {
-//        MtxMatrix m = new MtxMatrix(
-//                new int[]{1, 2, 3},
-//                new int[]{4, 5, 6}
-//        );
-//        MtxMatrix expectedT = new MtxMatrix(
-//                new int[]{1, 4},
-//                new int[]{2, 5},
-//                new int[]{3, 6}
-//        );
-//        assertEquals(expectedT, m.transpose());
-//        assertEquals(expectedT, MtxMatrix.transpose(m));
-//    }
+    @Test
+    public void testTranspose() {
+        MtxMatrix m = new MtxMatrix(
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6}
+        );
+        MtxMatrix expectedT = new MtxMatrix(
+                new int[]{1, 4},
+                new int[]{2, 5},
+                new int[]{3, 6}
+        );
+        assertEquals(expectedT, m.transpose());
+        assertEquals(expectedT, MtxMatrix.transpose(m));
+    }
+
+    @Test
+    public void testTranspose_nonSquare() {
+        MtxMatrix m = new MtxMatrix(
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6}
+        );
+        MtxMatrix t = m.transpose();
+        assertEquals(1, t.getValueAt(0, 0));
+        assertEquals(4, t.getValueAt(0, 1));
+        assertEquals(2, t.getValueAt(1, 0));
+        assertEquals(5, t.getValueAt(1, 1));
+        assertEquals(3, t.getValueAt(2, 0));
+        assertEquals(6, t.getValueAt(2, 1));
+        assertEquals(t, MtxMatrix.transpose(m));
+    }
 
     @Test
     public void testDotProduct() {
