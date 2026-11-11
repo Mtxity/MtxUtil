@@ -2424,7 +2424,7 @@ public class MtxMathTest {
     class ChineseRemainderTheoremTests {
 
         @Test
-        void testBasicCRT() {
+        void testChineseRemainderTheorem_testBasicCRT() {
             // x = 2 (mod 3)
             // x = 3 (mod 5)
             // x = 2 (mod 7)
@@ -2446,7 +2446,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testTwoCongruences() {
+        void testChineseRemainderTheorem_testTwoCongruences() {
             // x = 2 (mod 3)
             // x = 3 (mod 5)
             // Solution: 8
@@ -2461,7 +2461,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNonCoprimeModuliWithSolution() {
+        void testChineseRemainderTheorem_testNonCoprimeModuliWithSolution() {
             // x = 2 (mod 6)
             // x = 8 (mod 10)
             // Solution: 8
@@ -2476,7 +2476,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNonCoprimeModuliWithoutSolution() {
+        void testChineseRemainderTheorem_testNonCoprimeModuliWithoutSolution() {
             // x = 1 (mod 6)
             // x = 2 (mod 10)
             // No solution exists.
@@ -2491,7 +2491,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNegativeRemainders() {
+        void testChineseRemainderTheorem_testNegativeRemainders() {
             // x = -1 (mod 5)
             // x = 3 (mod 7)
             // Solution: 24
@@ -2506,7 +2506,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testRemainderGreaterThanModulus() {
+        void testChineseRemainderTheorem_testRemainderGreaterThanModulus() {
             // x = 8 (mod 5) -> x = 3 (mod 5)
             // x = 10 (mod 7) -> x = 3 (mod 7)
             // Solution: 3
@@ -2521,7 +2521,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testSingleCongruence() {
+        void testChineseRemainderTheorem_testSingleCongruence() {
             // x = 7 (mod 11)
             // Solution: 7
 
@@ -2535,7 +2535,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testZeroRemainders() {
+        void testChineseRemainderTheorem_testZeroRemainders() {
             // x = 0 (mod 3)
             // x = 0 (mod 5)
             // Solution: 0
@@ -2550,7 +2550,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testEmptyArrays() {
+        void testChineseRemainderTheorem_testEmptyArrays() {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2561,7 +2561,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testDifferentArrayLengths() {
+        void testChineseRemainderTheorem_testDifferentArrayLengths() {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2572,7 +2572,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testZeroModulus() {
+        void testChineseRemainderTheorem_testZeroModulus() {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2583,7 +2583,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNegativeModulus() {
+        void testChineseRemainderTheorem_testNegativeModulus() {
             assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2594,7 +2594,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testLargeNumbers() {
+        void testChineseRemainderTheorem_testLargeNumbers() {
             BigInteger[] remainders = {
                     new BigInteger("123456789"),
                     new BigInteger("987654321")
@@ -2628,7 +2628,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testZeroModulusThrowsException() {
+        void testChineseRemainderTheorem_testZeroModulusThrowsException() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2641,7 +2641,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNegativeModulusThrowsException() {
+        void testChineseRemainderTheorem_testNegativeModulusThrowsException() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2654,7 +2654,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testZeroSecondModulusThrowsException() {
+        void testChineseRemainderTheorem_testZeroSecondModulusThrowsException() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
@@ -2667,7 +2667,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void testNegativeSecondModulusThrowsException() {
+        void testChineseRemainderTheorem_testNegativeSecondModulusThrowsException() {
             IllegalArgumentException exception = assertThrows(
                     IllegalArgumentException.class,
                     () -> MtxMath.chineseRemainderTheorem(
