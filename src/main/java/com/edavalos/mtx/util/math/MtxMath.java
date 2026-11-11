@@ -994,4 +994,47 @@ public final class MtxMath {
 
         return new BigInteger[] { gcd, x, y };
     }
+
+    public static BigInteger chineseRemainderTheorem(BigInteger[] remainders, BigInteger[] moduli) {
+        if (remainders.length == 0 || remainders.length != moduli.length) {
+            throw new IllegalArgumentException("Invalid input.");
+        }
+
+        BigInteger x = remainders[0];
+        BigInteger m = moduli[0];
+        if (m.signum() <= 0) {
+            throw new IllegalArgumentException("Moduli must be positive.");
+        }
+
+        x = x.mod(m);
+        for (int i = 1; i < remainders.length; i++) {
+            BigInteger a = remainders[i];
+            BigInteger n = moduli[i];
+            if (n.signum() <= 0) {
+                throw new IllegalArgumentException("Moduli must be positive.");
+            }
+
+            BigInteger[] extGCD = extendedGCD(m, n);
+            BigInteger gcd = extGCD[0];
+            BigInteger inverse = extGCD[1];
+
+            a = a.mod(n);
+            BigInteger difference = a.subtract(x);
+            if (!difference.remainder(gcd).equals(BigInteger.ZERO)) {
+                throw new ArithmeticException("No solution exists.");
+            }
+
+            BigInteger mReduced = m.divide(gcd);
+            BigInteger nReduced = n.divide(gcd);
+            BigInteger k = difference.divide(gcd)
+                    .multiply(inverse)
+                    .mod(nReduced);
+
+            x = x.add(m.multiply(k));
+            m = m.multiply(nReduced);
+            x = x.mod(m);
+        }
+
+        return x;
+    }
 }
