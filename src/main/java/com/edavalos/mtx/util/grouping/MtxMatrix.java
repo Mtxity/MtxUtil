@@ -156,6 +156,21 @@ public class MtxMatrix {
         return this.rows == this.cols;
     }
 
+    public boolean isSymmetric() {
+        if (!this.isSquare()) {
+            return false;
+        }
+        int n = this.rows;
+        for (int r = 0; r < n; r++) {
+            for (int c = r + 1; c < n; c++) {
+                if (this.matrix[r][c] != this.matrix[c][r]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public int trace() {
         if (!this.isSquare()) {
             throw new IllegalArgumentException(ERROR_NOT_SQUARE);
