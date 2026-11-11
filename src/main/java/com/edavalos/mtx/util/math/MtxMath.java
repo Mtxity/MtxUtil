@@ -3,6 +3,7 @@ package com.edavalos.mtx.util.math;
 import com.edavalos.mtx.util.list.MtxArrayList;
 import com.edavalos.mtx.util.list.MtxList;
 
+import java.math.BigInteger;
 import java.util.*;
 
 public final class MtxMath {
@@ -968,5 +969,29 @@ public final class MtxMath {
             }
         }
         return largestImpossible;
+    }
+
+    /**
+     * Returns { gcd, x, y } Such that <code> a*x + b*y = gcd(a,b) </code>
+     * @param a
+     * @param b
+     * @return <code> BigInteger[]{gcd, x, y} </code>
+     */
+    public static BigInteger[] extendedGCD(BigInteger a, BigInteger b) {
+        if (b.equals(BigInteger.ZERO)) {
+            return new BigInteger[] {
+                    a, BigInteger.ONE, BigInteger.ZERO
+            };
+        }
+
+        BigInteger[] result = extendedGCD(b, a.mod(b));
+
+        BigInteger gcd = result[0];
+        BigInteger x = result[2];
+        BigInteger y = result[1].subtract(
+                a.divide(b).multiply(result[2])
+        );
+
+        return new BigInteger[] { gcd, x, y };
     }
 }
