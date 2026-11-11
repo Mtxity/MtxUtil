@@ -935,4 +935,38 @@ public final class MtxMath {
                 )
         );
     }
+
+    public static int frobeniusNumber(int[] values) {
+        // @TODO: Implement a sorting algorithm to use instead of this one
+        Arrays.sort(values);
+        int gcd = values[0];
+        for (int coin : values) {
+            if (coin <= 0) {
+                throw new IllegalArgumentException("All values must be positive.");
+            }
+            gcd = gcd(gcd, coin);
+        }
+
+        if (gcd != 1) {
+            throw new IllegalArgumentException("Frobenius number exists only when GCD is 1.");
+        }
+
+        int max = values[values.length - 1];
+        boolean[] dp = new boolean[max * max + 1];
+        dp[0] = true;
+
+        int largestImpossible = -1;
+        for (int amount = 1; amount < dp.length; amount++) {
+            for (int coin : values) {
+                if (amount >= coin && dp[amount - coin]) {
+                    dp[amount] = true;
+                    break;
+                }
+            }
+            if (!dp[amount]) {
+                largestImpossible = amount;
+            }
+        }
+        return largestImpossible;
+    }
 }
