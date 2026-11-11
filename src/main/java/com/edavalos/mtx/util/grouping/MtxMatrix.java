@@ -189,6 +189,18 @@ public class MtxMatrix {
         return newMatrix;
     }
 
+    public MtxMatrix copy() {
+        int r = this.rows;
+        int c = this.cols;
+        MtxMatrix copy = new MtxMatrix(r, c);
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                copy.setValueAt(i, j, this.matrix[i][j]);
+            }
+        }
+        return copy;
+    }
+
     public static MtxMatrix dotProduct(MtxMatrix m1, MtxMatrix m2) {
         if (m1.cols != m2.rows) {
             throw new IllegalArgumentException(String.format(ERROR_DIFFERING_ROWS_COLS, m1.cols, m2.rows));
