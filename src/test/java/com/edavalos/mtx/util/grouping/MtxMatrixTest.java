@@ -327,8 +327,34 @@ public class MtxMatrixTest {
         assertEquals(mtxMatrix, copy);
         copy.setValueAt(0, 0, 99);
         assertFalse(mtxMatrix.equals(copy));
-        // @TODO: Add more test coverage here
+
+        MtxMatrix m = new MtxMatrix(
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6}
+        );
+        MtxMatrix expected = new MtxMatrix(
+                new int[]{1, 2, 3},
+                new int[]{4, 5, 6}
+        );
+        assertEquals(expected, m.copy());
+        // @TODO: Add transpose() or rotate() to MtxMatrix
+        //assertEquals(m, m.transpose().copy().transpose());
     }
+
+//    @Test
+//    public void testTranspose() {
+//        MtxMatrix m = new MtxMatrix(
+//                new int[]{1, 2, 3},
+//                new int[]{4, 5, 6}
+//        );
+//        MtxMatrix expectedT = new MtxMatrix(
+//                new int[]{1, 4},
+//                new int[]{2, 5},
+//                new int[]{3, 6}
+//        );
+//        assertEquals(expectedT, m.transpose());
+//        assertEquals(expectedT, MtxMatrix.transpose(m));
+//    }
 
     @Test
     public void testDotProduct() {
@@ -403,6 +429,25 @@ public class MtxMatrixTest {
     @Test
     public void testIsSquare_false() {
         assertFalse(new MtxMatrix(2, 3).isSquare());
+    }
+
+    @Test
+    public void testIsSymmetric() {
+        MtxMatrix sym = new MtxMatrix(
+                new int[]{1, 2, 3},
+                new int[]{2, 5, 6},
+                new int[]{3, 6, 9}
+        );
+        assertTrue(sym.isSymmetric());
+        assertFalse(mtxMatrix.isSymmetric());
+    }
+
+    @Test
+    public void testIsSymmetric_notSquare() {
+        MtxMatrix nonSym = new MtxMatrix(
+                new int[]{1, 2, 3}
+        );
+        assertFalse(nonSym.isSymmetric());
     }
 
     @Test
