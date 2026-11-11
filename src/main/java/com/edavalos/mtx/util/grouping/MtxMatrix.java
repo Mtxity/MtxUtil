@@ -265,7 +265,7 @@ public class MtxMatrix {
     }
 
     public int determinant() {
-        if (!isSquare()) {
+        if (!this.isSquare()) {
             throw new IllegalArgumentException(ERROR_NOT_SQUARE);
         }
         if (this.rows == 0) {

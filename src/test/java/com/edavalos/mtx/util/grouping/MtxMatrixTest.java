@@ -383,6 +383,28 @@ public class MtxMatrixTest {
     }
 
     @Test
+    public void testMinor() {
+        MtxMatrix matrix = new MtxMatrix(3, 3);
+        int[][] values = {
+                {1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 9}
+        };
+
+        for (int r = 0; r < 3; r++) {
+            for (int c = 0; c < 3; c++) {
+                matrix.setValueAt(r, c, values[r][c]);
+            }
+        }
+        MtxMatrix result = matrix.minor(1, 1);
+
+        assertEquals(1, result.getValueAt(0, 0));
+        assertEquals(3, result.getValueAt(0, 1));
+        assertEquals(7, result.getValueAt(1, 0));
+        assertEquals(9, result.getValueAt(1, 1));
+    }
+
+    @Test
     public void testDeterminant() {
         assertEquals(1, new MtxMatrix().determinant());
         assertEquals(1, new MtxMatrix(new int[]{1}).determinant());
