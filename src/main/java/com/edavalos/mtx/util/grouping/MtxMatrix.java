@@ -162,6 +162,24 @@ public class MtxMatrix {
         return t;
     }
 
+    public MtxMatrix rotate(boolean clockwise) {
+        if (!this.isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        int n = this.rows;
+        MtxMatrix rot = new MtxMatrix(n, n);
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                if (clockwise) {
+                    rot.setValueAt(c, n - 1 - r, this.matrix[r][c]);
+                } else {
+                    rot.setValueAt(n - 1 - c, r, this.matrix[r][c]);
+                }
+            }
+        }
+        return rot;
+    }
+
     // @TODO: Add rotation methods
 
     public boolean isSquare() {
