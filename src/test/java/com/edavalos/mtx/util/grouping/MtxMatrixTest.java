@@ -467,6 +467,19 @@ public class MtxMatrixTest {
     }
 
     @Test
+    public void testIsDiagonal() {
+        MtxMatrix diag = new MtxMatrix(
+                new int[]{1, 0, 0},
+                new int[]{0, 5, 0},
+                new int[]{0, 0, 9}
+        );
+        assertTrue(diag.isDiagonal());
+        assertFalse(mtxMatrix.isDiagonal());
+        assertFalse(new MtxMatrix(0, 0).isDiagonal());
+        assertFalse(new MtxMatrix(0, 1).isDiagonal());
+    }
+
+    @Test
     public void testTrace() {
         assertEquals(15, mtxMatrix.trace());
         assertEquals(15, MtxMatrix.trace(mtxMatrix));
