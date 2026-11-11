@@ -171,6 +171,33 @@ public class MtxMatrix {
         return true;
     }
 
+    public boolean isIdentity() {
+        if (!this.isSquare() || this.rows == 0) {
+            return false;
+        }
+        int n = this.rows;
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                int expected = (r == c) ? 1 : 0;
+                if (this.matrix[r][c] != expected) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public boolean isZero() {
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.cols; c++) {
+                if (this.matrix[r][c] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public int trace() {
         if (!this.isSquare()) {
             throw new IllegalArgumentException(ERROR_NOT_SQUARE);
