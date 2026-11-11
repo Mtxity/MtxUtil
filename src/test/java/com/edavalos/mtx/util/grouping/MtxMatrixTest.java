@@ -287,6 +287,15 @@ public class MtxMatrixTest {
         }
     }
 
+
+    @Test
+    public void testCopy() {
+        MtxMatrix copy = mtxMatrix.copy();
+        assertEquals(mtxMatrix, copy);
+        copy.setValueAt(0, 0, 99);
+        assertFalse(mtxMatrix.equals(copy));
+    }
+
     @Test
     public void testDotProduct() {
         MtxMatrix m1 = new MtxMatrix(
