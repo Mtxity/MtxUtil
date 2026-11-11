@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -2366,6 +2367,56 @@ public class MtxMathTest {
                     () -> MtxMath.frobeniusNumber(new int[]{4, 6})
             );
             assertEquals("Frobenius number exists only when GCD is 1.", ex2.getMessage());
+        }
+    }
+
+    @Nested
+    class ExtendedGcdTests {
+
+        @Test
+        void testExtendedGCD_baseCaseZeroB() {
+            BigInteger a = BigInteger.valueOf(15);
+            BigInteger b = BigInteger.ZERO;
+            BigInteger[] result = MtxMath.extendedGCD(a, b);
+
+            assertEquals(3, result.length);
+            assertEquals(a, result[0]);
+            assertEquals(BigInteger.ONE, result[1]);
+            assertEquals(BigInteger.ZERO, result[2]);
+            assertEquals(a, a.multiply(result[1]).add(b.multiply(result[2])));
+        }
+
+        @Test
+        void testExtendedGCD_positiveNumbers() {
+            BigInteger a = BigInteger.valueOf(35);
+            BigInteger b = BigInteger.valueOf(15);
+            BigInteger[] result = MtxMath.extendedGCD(a, b);
+
+            assertEquals(3, result.length);
+            assertEquals(BigInteger.valueOf(5), result[0]);
+            assertEquals(result[0], a.multiply(result[1]).add(b.multiply(result[2])));
+        }
+
+        @Test
+        void testExtendedGCD_coprimeNumbers() {
+            BigInteger a = BigInteger.valueOf(101);
+            BigInteger b = BigInteger.valueOf(13);
+            BigInteger[] result = MtxMath.extendedGCD(a, b);
+
+            assertEquals(3, result.length);
+            assertEquals(BigInteger.ONE, result[0]);
+            assertEquals(result[0], a.multiply(result[1]).add(b.multiply(result[2])));
+        }
+
+        @Test
+        void testExtendedGCD_largeNumbers() {
+            BigInteger a = new BigInteger("12345678901234567890");
+            BigInteger b = new BigInteger("98765432109876543210");
+            BigInteger[] result = MtxMath.extendedGCD(a, b);
+
+            assertEquals(3, result.length);
+            assertEquals(new BigInteger("900000000090"), result[0]);
+            assertEquals(result[0], a.multiply(result[1]).add(b.multiply(result[2])));
         }
     }
 }
