@@ -381,4 +381,34 @@ public class MtxMatrixTest {
         IllegalArgumentException iaeStatic = assertThrows(IllegalArgumentException.class, () -> MtxMatrix.trace(nonSquare));
         assertEquals(MtxMatrix.ERROR_NOT_SQUARE, iaeStatic.getMessage());
     }
+
+    @Test
+    public void testDeterminant() {
+        assertEquals(1, new MtxMatrix().determinant());
+        assertEquals(1, new MtxMatrix(new int[]{1}).determinant());
+        assertEquals(-2, new MtxMatrix(
+                new int[]{1, 2},
+                new int[]{3, 4}
+        ).determinant());
+        assertEquals(-306, new MtxMatrix(
+                new int[]{6, 1, 1},
+                new int[]{4, -2, 5},
+                new int[]{2, 8, 7}
+        ).determinant());
+        assertEquals(-306, MtxMatrix.determinant(new MtxMatrix(
+                new int[]{6, 1, 1},
+                new int[]{4, -2, 5},
+                new int[]{2, 8, 7}
+        )));
+    }
+
+    @Test
+    public void testDeterminant_nonSquare() {
+        MtxMatrix nonSquare = new MtxMatrix(2, 3);
+        IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, nonSquare::determinant);
+        assertEquals(MtxMatrix.ERROR_NOT_SQUARE, iae.getMessage());
+
+        IllegalArgumentException iaeStatic = assertThrows(IllegalArgumentException.class, () -> MtxMatrix.determinant(nonSquare));
+        assertEquals(MtxMatrix.ERROR_NOT_SQUARE, iaeStatic.getMessage());
+    }
 }
