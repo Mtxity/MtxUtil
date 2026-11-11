@@ -152,6 +152,18 @@ public class MtxMatrix {
         return copy;
     }
 
+    public MtxMatrix transpose() {
+        MtxMatrix t = new MtxMatrix(this.cols, this.rows);
+        for (int r = 0; r < this.rows; r++) {
+            for (int c = 0; c < this.cols; c++) {
+                t.setValueAt(c, r, this.matrix[r][c]);
+            }
+        }
+        return t;
+    }
+
+    // @TODO: Add rotation methods
+
     public boolean isSquare() {
         return this.rows == this.cols;
     }
@@ -412,4 +424,10 @@ public class MtxMatrix {
     public static int determinant(MtxMatrix m) {
         return m.determinant();
     }
+
+    public static MtxMatrix transpose(MtxMatrix m) {
+        return m.transpose();
+    }
+
+    // @TODO: Add static methods (utilities) for other getters
 }
