@@ -361,4 +361,24 @@ public class MtxMatrixTest {
     public void testIsSquare_false() {
         assertFalse(new MtxMatrix(2, 3).isSquare());
     }
+
+    @Test
+    public void testTrace() {
+        assertEquals(15, mtxMatrix.trace());
+        assertEquals(15, MtxMatrix.trace(mtxMatrix));
+        assertEquals(5, new MtxMatrix(
+                new int[]{5, 2},
+                new int[]{3, 0}
+        ).trace());
+    }
+
+    @Test
+    public void testTrace_nonSquare() {
+        MtxMatrix nonSquare = new MtxMatrix(2, 3);
+        IllegalArgumentException iae = assertThrows(IllegalArgumentException.class, nonSquare::trace);
+        assertEquals(MtxMatrix.ERROR_NOT_SQUARE, iae.getMessage());
+
+        IllegalArgumentException iaeStatic = assertThrows(IllegalArgumentException.class, () -> MtxMatrix.trace(nonSquare));
+        assertEquals(MtxMatrix.ERROR_NOT_SQUARE, iaeStatic.getMessage());
+    }
 }
