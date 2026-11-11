@@ -240,6 +240,39 @@ public class MtxMatrixTest {
         }
     }
 
+    @Test
+    public void testPow() {
+        MtxMatrix m = new MtxMatrix(
+                new int[]{1, 2},
+                new int[]{3, 4}
+        );
+        MtxMatrix expectedPow0 = new MtxMatrix(
+                new int[]{1, 0},
+                new int[]{0, 1}
+        );
+        assertEquals(expectedPow0, MtxMatrix.pow(m, 0));
+        assertEquals(m, MtxMatrix.pow(m, 1));
+
+        MtxMatrix expectedPow2 = new MtxMatrix(
+                new int[]{7, 10},
+                new int[]{15, 22}
+        );
+        assertEquals(expectedPow2, MtxMatrix.pow(m, 2));
+    }
+
+    @Test
+    public void testPow_negativePower_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> mtxMatrix.pow(-1));
+        assertThrows(IllegalArgumentException.class, () -> MtxMatrix.pow(mtxMatrix, -1));
+    }
+
+    @Test
+    public void testPow_nonSquare_throwsException() {
+        MtxMatrix nonSquare = new MtxMatrix(2, 3);
+        assertThrows(IllegalArgumentException.class, () -> nonSquare.pow(2));
+        assertThrows(IllegalArgumentException.class, () -> MtxMatrix.pow(nonSquare, 2));
+    }
+
     @Nested
     public class EqualsTests {
         private static final MtxMatrix MATRIX_DIFFERING_ROWS = new MtxMatrix(
