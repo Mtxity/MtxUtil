@@ -15,7 +15,7 @@ public class MtxMatrix {
     protected static final String ERROR_DIFFERING_ROWS_COLS = "The number of columns in the first matrix must be the " +
                                                                "same as the number of rows in the second matrix! " +
                                                                "First matrix's columns: %d, second matrix's rows: %d";
-    protected static final String ERROR_NOT_SQUARE = "Matrix must be square!";
+    protected static final String ERROR_NOT_SQUARE = "Matrix must be square! (rows == cols)";
 
     private static final HashMap<Integer, MtxMatrix> identityMatrices = new HashMap<>();
 
@@ -226,5 +226,20 @@ public class MtxMatrix {
 
     public boolean isSquare() {
         return this.rows == this.cols;
+    }
+
+    public int trace() {
+        if (!this.isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        int traceVal = 0;
+        for (int i = 0; i < this.rows; i++) {
+            traceVal += this.matrix[i][i];
+        }
+        return traceVal;
+    }
+
+    public static int trace(MtxMatrix m) {
+        return m.trace();
     }
 }
