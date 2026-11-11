@@ -23,6 +23,9 @@ public class MtxMatrix {
     private final int cols;
     private final int[][] matrix;
 
+
+    // ----------------------- Constructors ------------------------
+
     public MtxMatrix(int rows, int columns) {
         this.matrix = new int[rows][columns];
         this.rows = rows;
@@ -49,15 +52,8 @@ public class MtxMatrix {
         this.cols = columns;
     }
 
-    public void setValueAt(int row, int column, int newValue) {
-        validateIndices(row, column);
-        this.matrix[row][column] = newValue;
-    }
 
-    public int getValueAt(int row, int column) {
-        validateIndices(row, column);
-        return this.matrix[row][column];
-    }
+    // ---------------------- Private Methods ----------------------
 
     private void validateIndices(int row, int column) {
         if (row < 0 || column < 0) {
@@ -69,6 +65,14 @@ public class MtxMatrix {
         if (column >= this.cols) {
             throw new IndexOutOfBoundsException(ERROR_COL_TOO_BIG);
         }
+    }
+
+
+    // ------------------------- Getters --------------------------
+
+    public int getValueAt(int row, int column) {
+        validateIndices(row, column);
+        return this.matrix[row][column];
     }
 
     @Override
@@ -135,6 +139,85 @@ public class MtxMatrix {
         return true;
     }
 
+    // @TODO: Add clone()
+    public MtxMatrix copy() {
+        int r = this.rows;
+        int c = this.cols;
+        MtxMatrix copy = new MtxMatrix(r, c);
+        for (int i = 0; i < r; i++) {
+            for (int j = 0; j < c; j++) {
+                copy.setValueAt(i, j, this.matrix[i][j]);
+            }
+        }
+        return copy;
+    }
+
+    public boolean isSquare() {
+        return this.rows == this.cols;
+    }
+
+    public int trace() {
+        if (!this.isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        int traceVal = 0;
+        for (int i = 0; i < this.rows; i++) {
+            traceVal += this.matrix[i][i];
+        }
+        return traceVal;
+    }
+
+    public MtxMatrix minor(int rowToRemove, int colToRemove) {
+        int n = this.rows;
+        MtxMatrix sub = new MtxMatrix(n - 1, n - 1);
+        int subR = 0;
+        for (int r = 0; r < n; r++) {
+            if (r == rowToRemove) {
+                continue;
+            }
+            int subC = 0;
+            for (int c = 0; c < n; c++) {
+                if (c == colToRemove) {
+                    continue;
+                }
+                sub.setValueAt(subR, subC, this.matrix[r][c]);
+                subC++;
+            }
+            subR++;
+        }
+        return sub;
+    }
+
+    public int determinant() {
+        if (!this.isSquare()) {
+            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
+        }
+        if (this.rows == 0) {
+            return 1;
+        }
+        if (this.rows == 1) {
+            return this.matrix[0][0];
+        }
+        if (this.rows == 2) {
+            return this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0];
+        }
+
+        int det = 0;
+        for (int c = 0; c < this.cols; c++) {
+            int sign = (c % 2 == 0) ? 1 : -1;
+            det += sign * this.matrix[0][c] * this.minor(0, c).determinant();
+        }
+        return det;
+    }
+
+
+    // ------------------------- Mutators --------------------------
+
+    public void setValueAt(int row, int column, int newValue) {
+        validateIndices(row, column);
+        this.matrix[row][column] = newValue;
+    }
+
     public void add(MtxMatrix otherMatrix) {
         MtxMath.twoDimensionArrayCopy(
                 MtxMatrix.addTogether(this, otherMatrix).matrix,
@@ -189,6 +272,9 @@ public class MtxMatrix {
         MtxMath.twoDimensionArrayCopy(result.matrix, this.matrix);
     }
 
+
+    // ------------------------- Utilities -------------------------
+
     public static MtxMatrix pow(MtxMatrix m, int n) {
         m = m.copy();
         m.pow(n);
@@ -227,18 +313,6 @@ public class MtxMatrix {
         return newMatrix;
     }
 
-    public MtxMatrix copy() {
-        int r = this.rows;
-        int c = this.cols;
-        MtxMatrix copy = new MtxMatrix(r, c);
-        for (int i = 0; i < r; i++) {
-            for (int j = 0; j < c; j++) {
-                copy.setValueAt(i, j, this.matrix[i][j]);
-            }
-        }
-        return copy;
-    }
-
     public static MtxMatrix dotProduct(MtxMatrix m1, MtxMatrix m2) {
         if (m1.cols != m2.rows) {
             throw new IllegalArgumentException(String.format(ERROR_DIFFERING_ROWS_COLS, m1.cols, m2.rows));
@@ -274,66 +348,8 @@ public class MtxMatrix {
         return I;
     }
 
-    public boolean isSquare() {
-        return this.rows == this.cols;
-    }
-
-    public int trace() {
-        if (!this.isSquare()) {
-            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
-        }
-        int traceVal = 0;
-        for (int i = 0; i < this.rows; i++) {
-            traceVal += this.matrix[i][i];
-        }
-        return traceVal;
-    }
-
     public static int trace(MtxMatrix m) {
         return m.trace();
-    }
-
-    public MtxMatrix minor(int rowToRemove, int colToRemove) {
-        int n = this.rows;
-        MtxMatrix sub = new MtxMatrix(n - 1, n - 1);
-        int subR = 0;
-        for (int r = 0; r < n; r++) {
-            if (r == rowToRemove) {
-                continue;
-            }
-            int subC = 0;
-            for (int c = 0; c < n; c++) {
-                if (c == colToRemove) {
-                    continue;
-                }
-                sub.setValueAt(subR, subC, this.matrix[r][c]);
-                subC++;
-            }
-            subR++;
-        }
-        return sub;
-    }
-
-    public int determinant() {
-        if (!this.isSquare()) {
-            throw new IllegalArgumentException(ERROR_NOT_SQUARE);
-        }
-        if (this.rows == 0) {
-            return 1;
-        }
-        if (this.rows == 1) {
-            return this.matrix[0][0];
-        }
-        if (this.rows == 2) {
-            return this.matrix[0][0] * this.matrix[1][1] - this.matrix[0][1] * this.matrix[1][0];
-        }
-
-        int det = 0;
-        for (int c = 0; c < this.cols; c++) {
-            int sign = (c % 2 == 0) ? 1 : -1;
-            det += sign * this.matrix[0][c] * this.minor(0, c).determinant();
-        }
-        return det;
     }
 
     public static int determinant(MtxMatrix m) {
