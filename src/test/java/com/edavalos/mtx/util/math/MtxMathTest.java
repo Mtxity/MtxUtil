@@ -2325,4 +2325,47 @@ public class MtxMathTest {
             assertEquals(Double.POSITIVE_INFINITY, MtxMath.copySign(Double.NEGATIVE_INFINITY, 1.0));
         }
     }
+
+    @Nested
+    class FrobeniusNumberTests {
+
+        @Test
+        void testFrobeniusNumber_valid() {
+            assertEquals(7, MtxMath.frobeniusNumber(new int[]{3, 5}));
+            assertEquals(23, MtxMath.frobeniusNumber(new int[]{5, 7}));
+            assertEquals(1, MtxMath.frobeniusNumber(new int[]{2, 3}));
+            assertEquals(7, MtxMath.frobeniusNumber(new int[]{5, 3}));
+            assertEquals(43, MtxMath.frobeniusNumber(new int[]{6, 9, 20}));
+        }
+
+        @Test
+        void testFrobeniusNumber_nonPositiveCoin_throwsException() {
+            IllegalArgumentException ex1 = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.frobeniusNumber(new int[]{0, 3})
+            );
+            assertEquals("All values must be positive.", ex1.getMessage());
+
+            IllegalArgumentException ex2 = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.frobeniusNumber(new int[]{-1, 3})
+            );
+            assertEquals("All values must be positive.", ex2.getMessage());
+        }
+
+        @Test
+        void testFrobeniusNumber_gcdNotOne_throwsException() {
+            IllegalArgumentException ex1 = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.frobeniusNumber(new int[]{2, 4})
+            );
+            assertEquals("Frobenius number exists only when GCD is 1.", ex1.getMessage());
+
+            IllegalArgumentException ex2 = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.frobeniusNumber(new int[]{4, 6})
+            );
+            assertEquals("Frobenius number exists only when GCD is 1.", ex2.getMessage());
+        }
+    }
 }
