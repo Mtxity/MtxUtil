@@ -2287,30 +2287,30 @@ public class MtxMathTest {
     class CopySignTests {
 
         @Test
-        void appliesPositiveSignToMagnitude() {
+        void testCopySign_appliesPositiveSignToMagnitude() {
             assertEquals(3.5, MtxMath.copySign(-3.5, 1.0));
         }
 
         @Test
-        void appliesNegativeSignToMagnitude() {
+        void testCopySign_appliesNegativeSignToMagnitude() {
             assertEquals(-3.5, MtxMath.copySign(3.5, -1.0));
         }
 
         @Test
-        void preservesMagnitudeAndSignWhenAlreadyMatching() {
+        void testCopySign_preservesMagnitudeAndSignWhenAlreadyMatching() {
             assertEquals(-3.5, MtxMath.copySign(-3.5, -1.0));
             assertEquals(3.5, MtxMath.copySign(3.5, 1.0));
         }
 
         @Test
-        void usesNegativeZeroSignBit() {
+        void testCopySign_usesNegativeZeroSignBit() {
             double result = MtxMath.copySign(0.0, -0.0);
 
             assertEquals(Double.doubleToRawLongBits(-0.0), Double.doubleToRawLongBits(result));
         }
 
         @Test
-        void preservesMagnitudeBitsIncludingNaNPayload() {
+        void testCopySign_preservesMagnitudeBitsIncludingNaNPayload() {
             double magnitude = Double.longBitsToDouble(0x7FF8_1234_5678_9ABCL);
             double result = MtxMath.copySign(magnitude, -1.0);
 
@@ -2321,7 +2321,7 @@ public class MtxMathTest {
         }
 
         @Test
-        void copiesSignToInfinity() {
+        void testCopySign_copiesSignToInfinity() {
             assertEquals(Double.NEGATIVE_INFINITY, MtxMath.copySign(Double.POSITIVE_INFINITY, -1.0));
             assertEquals(Double.POSITIVE_INFINITY, MtxMath.copySign(Double.NEGATIVE_INFINITY, 1.0));
         }
