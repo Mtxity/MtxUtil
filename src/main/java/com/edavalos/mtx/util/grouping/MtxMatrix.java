@@ -242,4 +242,25 @@ public class MtxMatrix {
     public static int trace(MtxMatrix m) {
         return m.trace();
     }
+
+    public MtxMatrix minor(int rowToRemove, int colToRemove) {
+        int n = this.rows;
+        MtxMatrix sub = new MtxMatrix(n - 1, n - 1);
+        int subR = 0;
+        for (int r = 0; r < n; r++) {
+            if (r == rowToRemove) {
+                continue;
+            }
+            int subC = 0;
+            for (int c = 0; c < n; c++) {
+                if (c == colToRemove) {
+                    continue;
+                }
+                sub.setValueAt(subR, subC, this.matrix[r][c]);
+                subC++;
+            }
+            subR++;
+        }
+        return sub;
+    }
 }
