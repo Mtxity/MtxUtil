@@ -451,6 +451,22 @@ public class MtxMatrixTest {
     }
 
     @Test
+    public void testIsIdentity() {
+        MtxMatrix id = MtxMatrix.getIdentityMatrix(3);
+        assertTrue(id.isIdentity());
+        assertFalse(mtxMatrix.isIdentity());
+        assertFalse(new MtxMatrix(0, 0).isIdentity());
+        assertFalse(new MtxMatrix(0, 1).isIdentity());
+    }
+
+    @Test
+    public void testIsZero() {
+        MtxMatrix zero = new MtxMatrix(3, 3);
+        assertTrue(zero.isZero());
+        assertFalse(mtxMatrix.isZero());
+    }
+
+    @Test
     public void testTrace() {
         assertEquals(15, mtxMatrix.trace());
         assertEquals(15, MtxMatrix.trace(mtxMatrix));
