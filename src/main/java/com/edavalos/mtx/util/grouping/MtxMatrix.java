@@ -13,8 +13,9 @@ public class MtxMatrix {
     protected static final String ERROR_DIFFERING_ROWS = "Cannot %s matrices with differing number of rows!";
     protected static final String ERROR_DIFFERING_COLS = "Cannot %s matrices with differing number of columns!";
     protected static final String ERROR_DIFFERING_ROWS_COLS = "The number of columns in the first matrix must be the " +
-                                                              "same as the number of rows in the second matrix! " +
-                                                              "First matrix's columns: %d, second matrix's rows: %d";
+                                                               "same as the number of rows in the second matrix! " +
+                                                               "First matrix's columns: %d, second matrix's rows: %d";
+    protected static final String ERROR_NOT_SQUARE = "Matrix must be square!";
 
     private static final HashMap<Integer, MtxMatrix> identityMatrices = new HashMap<>();
 
@@ -221,5 +222,9 @@ public class MtxMatrix {
         }
         identityMatrices.put(size, I);
         return I;
+    }
+
+    public boolean isSquare() {
+        return this.rows == this.cols;
     }
 }
