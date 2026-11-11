@@ -327,6 +327,7 @@ public class MtxMatrixTest {
         assertEquals(mtxMatrix, copy);
         copy.setValueAt(0, 0, 99);
         assertFalse(mtxMatrix.equals(copy));
+        // @TODO: Add more test coverage here
     }
 
     @Test

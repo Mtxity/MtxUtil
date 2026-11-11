@@ -198,6 +198,21 @@ public class MtxMatrix {
         return true;
     }
 
+    public boolean isDiagonal() {
+        if (!this.isSquare() || this.rows == 0) {
+            return false;
+        }
+        int n = this.rows;
+        for (int r = 0; r < n; r++) {
+            for (int c = 0; c < n; c++) {
+                if (r != c && this.matrix[r][c] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public int trace() {
         if (!this.isSquare()) {
             throw new IllegalArgumentException(ERROR_NOT_SQUARE);
