@@ -191,49 +191,91 @@ class MtxComplexTest {
     @Test
     void computesComplexSine() {
         MtxComplex result = new MtxComplex(Math.PI / 2.0, 1.0).sin();
-
         assertEquals(Math.cosh(1.0), result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+
+        MtxComplex resultZero = new MtxComplex(0.0, 0.0).sin();
+        assertEquals(0.0, resultZero.real(), TOLERANCE);
+        assertEquals(0.0, resultZero.imaginary(), TOLERANCE);
+
+        MtxComplex resultPi = new MtxComplex(Math.PI, 0.0).sin();
+        assertEquals(0.0, resultPi.real(), TOLERANCE);
+        assertEquals(0.0, resultPi.imaginary(), TOLERANCE);
     }
 
     @Test
     void computesComplexCosine() {
         MtxComplex result = new MtxComplex(Math.PI / 2.0, 1.0).cos();
-
         assertEquals(0.0, result.real(), TOLERANCE);
         assertEquals(-Math.sinh(1.0), result.imaginary(), TOLERANCE);
+
+        MtxComplex resultZero = new MtxComplex(0.0, 0.0).cos();
+        assertEquals(1.0, resultZero.real(), TOLERANCE);
+        assertEquals(0.0, resultZero.imaginary(), TOLERANCE);
+
+        MtxComplex resultPi = new MtxComplex(Math.PI, 0.0).cos();
+        assertEquals(-1.0, resultPi.real(), TOLERANCE);
+        assertEquals(0.0, resultPi.imaginary(), TOLERANCE);
     }
 
     @Test
     void computesComplexTangent() {
         MtxComplex result = new MtxComplex(Math.PI / 4.0, 0.0).tan();
-
         assertEquals(1.0, result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+
+        MtxComplex resultZero = new MtxComplex(0.0, 0.0).tan();
+        assertEquals(0.0, resultZero.real(), TOLERANCE);
+        assertEquals(0.0, resultZero.imaginary(), TOLERANCE);
+
+        MtxComplex resultPi = new MtxComplex(Math.PI, 0.0).tan();
+        assertEquals(0.0, resultPi.real(), TOLERANCE);
+        assertEquals(0.0, resultPi.imaginary(), TOLERANCE);
     }
 
     @Test
     void computesComplexArcsine() {
         MtxComplex result = new MtxComplex(1.0, 0.0).asin();
-
         assertEquals(Math.PI / 2.0, result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+
+        MtxComplex resultZero = new MtxComplex(0.0, 0.0).asin();
+        assertEquals(0.0, resultZero.real(), TOLERANCE);
+        assertEquals(0.0, resultZero.imaginary(), TOLERANCE);
+
+        MtxComplex resultNegOne = new MtxComplex(-1.0, 0.0).asin();
+        assertEquals(-Math.PI / 2.0, resultNegOne.real(), TOLERANCE);
+        assertEquals(0.0, resultNegOne.imaginary(), TOLERANCE);
     }
 
     @Test
     void computesComplexArccosine() {
         MtxComplex result = new MtxComplex(1.0, 0.0).acos();
-
         assertEquals(0.0, result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+
+        MtxComplex resultNegOne = new MtxComplex(-1.0, 0.0).acos();
+        assertEquals(Math.PI, resultNegOne.real(), TOLERANCE);
+        assertEquals(0.0, resultNegOne.imaginary(), TOLERANCE);
+
+        MtxComplex resultZero = new MtxComplex(0.0, 0.0).acos();
+        assertEquals(Math.PI / 2.0, resultZero.real(), TOLERANCE);
+        assertEquals(0.0, resultZero.imaginary(), TOLERANCE);
     }
 
     @Test
     void computesComplexArctangent() {
         MtxComplex result = new MtxComplex(0.0, 0.0).atan();
-
         assertEquals(0.0, result.real(), TOLERANCE);
         assertEquals(0.0, result.imaginary(), TOLERANCE);
+
+        MtxComplex resultOne = new MtxComplex(1.0, 0.0).atan();
+        assertEquals(Math.PI / 4.0, resultOne.real(), TOLERANCE);
+        assertEquals(0.0, resultOne.imaginary(), TOLERANCE);
+
+        MtxComplex resultNegOne = new MtxComplex(-1.0, 0.0).atan();
+        assertEquals(-Math.PI / 4.0, resultNegOne.real(), TOLERANCE);
+        assertEquals(0.0, resultNegOne.imaginary(), TOLERANCE);
     }
 
     @Test
