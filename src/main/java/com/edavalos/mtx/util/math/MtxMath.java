@@ -1037,4 +1037,8 @@ public final class MtxMath {
 
         return x;
     }
+
+    public static int sign(int n) {
+        return Integer.compare(n, 0);
+    }
 }
