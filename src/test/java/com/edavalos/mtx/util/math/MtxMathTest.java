@@ -2683,4 +2683,52 @@ public class MtxMathTest {
             return BigInteger.valueOf(value);
         }
     }
+
+    @Nested
+    class SignTests {
+
+        @Test
+        public void testSign_positive() {
+            assertEquals(1, MtxMath.sign(1));
+            assertEquals(1, MtxMath.sign(46));
+            assertEquals(1, MtxMath.sign(Integer.MAX_VALUE));
+        }
+
+        @Test
+        public void testSign_negative() {
+            assertEquals(-1, MtxMath.sign(-1));
+            assertEquals(-1, MtxMath.sign(-46));
+            assertEquals(-1, MtxMath.sign(Integer.MIN_VALUE));
+        }
+
+        @Test
+        public void testSign_zero() {
+            assertEquals(0, MtxMath.sign(0));
+        }
+
+        @Test
+        public void testSign_positiveDouble() {
+            assertEquals(1.0, MtxMath.sign(1.0));
+            assertEquals(1.0, MtxMath.sign(46.5));
+            assertEquals(1.0, MtxMath.sign(Double.POSITIVE_INFINITY));
+        }
+
+        @Test
+        public void testSign_negativeDouble() {
+            assertEquals(-1.0, MtxMath.sign(-1.0));
+            assertEquals(-1.0, MtxMath.sign(-46.5));
+            assertEquals(-1.0, MtxMath.sign(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        public void testSign_zeroDouble() {
+            assertEquals(0.0, MtxMath.sign(0.0));
+            assertEquals(-0.0, MtxMath.sign(-0.0));
+        }
+
+        @Test
+        public void testSign_notANumber() {
+            assertTrue(Double.isNaN(MtxMath.sign(Double.NaN)));
+        }
+    }
 }
