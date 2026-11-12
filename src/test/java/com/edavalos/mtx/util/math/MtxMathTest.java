@@ -2837,4 +2837,52 @@ public class MtxMathTest {
                     MtxMath.modulo(-1, Integer.MIN_VALUE));
         }
     }
+
+    @Nested
+    class FractionalPartTests {
+
+        @Test
+        public void testFractionalPart_positive() {
+            assertEquals(0.5, MtxMath.fractionalPart(1.5), 1e-15);
+            assertEquals(0.25, MtxMath.fractionalPart(2.25), 1e-15);
+            assertEquals(0.75, MtxMath.fractionalPart(10.75), 1e-15);
+        }
+
+        @Test
+        public void testFractionalPart_negative() {
+            assertEquals(0.5, MtxMath.fractionalPart(-1.5), 1e-15);
+            assertEquals(0.75, MtxMath.fractionalPart(-2.25), 1e-15);
+            assertEquals(0.25, MtxMath.fractionalPart(-10.75), 1e-15);
+        }
+
+        @Test
+        public void testFractionalPart_integer() {
+            assertEquals(0.0, MtxMath.fractionalPart(1.0), 1e-15);
+            assertEquals(0.0, MtxMath.fractionalPart(-1.0), 1e-15);
+            assertEquals(0.0, MtxMath.fractionalPart(100.0), 1e-15);
+        }
+
+        @Test
+        public void testFractionalPart_zero() {
+            assertEquals(0.0, MtxMath.fractionalPart(0.0), 1e-15);
+            assertEquals(0.0, MtxMath.fractionalPart(-0.0), 1e-15);
+        }
+
+        @Test
+        public void testFractionalPart_infinity() {
+            assertTrue(Double.isNaN(
+                    MtxMath.fractionalPart(Double.POSITIVE_INFINITY)
+            ));
+            assertTrue(Double.isNaN(
+                    MtxMath.fractionalPart(Double.NEGATIVE_INFINITY)
+            ));
+        }
+
+        @Test
+        public void testFractionalPart_notANumber() {
+            assertTrue(Double.isNaN(
+                    MtxMath.fractionalPart(Double.NaN)
+            ));
+        }
+    }
 }
