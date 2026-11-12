@@ -371,6 +371,32 @@ public class MtxMatrixTest {
     }
 
     @Test
+    public void testRotate() {
+        MtxMatrix m = new MtxMatrix(
+                new int[]{1, 2},
+                new int[]{3, 4}
+        );
+        MtxMatrix expected90 = new MtxMatrix(
+                new int[]{3, 1},
+                new int[]{4, 2}
+        );
+        assertEquals(expected90, m.rotate(true));
+        assertEquals(expected90, m.rotate(false).rotate(false).rotate(false));
+
+        MtxMatrix expectedCCW = new MtxMatrix(
+                new int[]{2, 4},
+                new int[]{1, 3}
+        );
+        assertEquals(expectedCCW, m.rotate(false));
+        assertEquals(expectedCCW, m.rotate(true).rotate(true).rotate(true));
+
+        assertEquals(MtxMatrix.ERROR_NOT_SQUARE, assertThrows(
+                IllegalArgumentException.class,
+                () -> new MtxMatrix(new int[]{2, 4}).rotate(true)
+        ).getMessage());
+    }
+
+    @Test
     public void testDotProduct() {
         MtxMatrix m1 = new MtxMatrix(
                 new int[]{1,2,3},
