@@ -2972,4 +2972,50 @@ public class MtxMathTest {
             assertFalse(MtxMath.isPowerOfTwo(Integer.MAX_VALUE));
         }
     }
+
+    @Nested
+    class SignumTests {
+
+        @Test
+        void testSignum_shouldReturnOneForPositiveNumbers() {
+            assertEquals(1.0, MtxMath.signum(5.0));
+            assertEquals(1.0, MtxMath.signum(0.5));
+            assertEquals(1.0, MtxMath.signum(Double.MIN_VALUE));
+            assertEquals(1.0, MtxMath.signum(Double.POSITIVE_INFINITY));
+        }
+
+        @Test
+        void testSignum_shouldReturnNegativeOneForNegativeNumbers() {
+            assertEquals(-1.0, MtxMath.signum(-5.0));
+            assertEquals(-1.0, MtxMath.signum(-0.5));
+            assertEquals(-1.0, MtxMath.signum(-Double.MIN_VALUE));
+            assertEquals(-1.0, MtxMath.signum(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        void testSignum_shouldReturnPositiveZeroForPositiveZero() {
+            double result = MtxMath.signum(0.0);
+
+            assertEquals(0.0, result);
+            assertEquals(
+                    Double.doubleToRawLongBits(0.0),
+                    Double.doubleToRawLongBits(result)
+            );
+        }
+
+        @Test
+        void testSignum_shouldPreserveNegativeZero() {
+            double result = MtxMath.signum(-0.0);
+
+            assertEquals(
+                    Double.doubleToRawLongBits(-0.0),
+                    Double.doubleToRawLongBits(result)
+            );
+        }
+
+        @Test
+        void testSignum_shouldReturnNaNForNaNInput() {
+            assertTrue(Double.isNaN(MtxMath.signum(Double.NaN)));
+        }
+    }
 }
