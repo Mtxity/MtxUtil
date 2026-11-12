@@ -2774,4 +2774,67 @@ public class MtxMathTest {
         }
     }
 
+    @Nested
+    class ModuloTests {
+
+        @Test
+        public void testModulo_positive() {
+            assertEquals(1, MtxMath.modulo(10, 3));
+            assertEquals(2, MtxMath.modulo(14, 4));
+            assertEquals(0, MtxMath.modulo(12, 3));
+        }
+
+        @Test
+        public void testModulo_negativeDividend() {
+            assertEquals(2, MtxMath.modulo(-10, 3));
+            assertEquals(1, MtxMath.modulo(-11, 4));
+            assertEquals(0, MtxMath.modulo(-12, 3));
+        }
+
+        @Test
+        public void testModulo_negativeDivisor() {
+            assertEquals(1, MtxMath.modulo(10, -3));
+            assertEquals(2, MtxMath.modulo(14, -4));
+            assertEquals(0, MtxMath.modulo(12, -3));
+        }
+
+        @Test
+        public void testModulo_negativeDividendAndDivisor() {
+            assertEquals(2, MtxMath.modulo(-10, -3));
+            assertEquals(1, MtxMath.modulo(-11, -4));
+            assertEquals(0, MtxMath.modulo(-12, -3));
+        }
+
+        @Test
+        public void testModulo_zeroDividend() {
+            assertEquals(0, MtxMath.modulo(0, 3));
+            assertEquals(0, MtxMath.modulo(0, -3));
+        }
+
+        @Test
+        public void testModulo_zeroDivisor() {
+            String errorMsg = "Division by zero.";
+
+            Throwable error = assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.modulo(10, 0)
+            );
+
+            assertEquals(errorMsg, error.getMessage());
+        }
+
+        @Test
+        public void testModulo_maximumDivisor() {
+            assertEquals(-1, MtxMath.modulo(1, Integer.MAX_VALUE));
+            assertEquals(Integer.MAX_VALUE - 1,
+                    MtxMath.modulo(-1, Integer.MAX_VALUE));
+        }
+
+        @Test
+        public void testModulo_minimumDivisor() {
+            assertEquals(0, MtxMath.modulo(0, Integer.MIN_VALUE));
+            assertEquals(Integer.MAX_VALUE,
+                    MtxMath.modulo(-1, Integer.MIN_VALUE));
+        }
+    }
 }
