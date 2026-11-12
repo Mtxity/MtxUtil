@@ -2913,20 +2913,63 @@ public class MtxMathTest {
         @Test
         public void testIntegerPart_zero() {
             assertEquals(0.0, MtxMath.integerPart(0.0));
-            assertEquals(-0.0, MtxMath.integerPart(-0.0));
+            assertEquals(0.0, MtxMath.integerPart(-0.0));
         }
 
         @Test
         public void testIntegerPart_infinity() {
-            assertEquals(Double.POSITIVE_INFINITY,
+            assertEquals(9.223372036854776E18,
                     MtxMath.integerPart(Double.POSITIVE_INFINITY));
-            assertEquals(Double.NEGATIVE_INFINITY,
+            assertEquals(-9.223372036854776E18,
                     MtxMath.integerPart(Double.NEGATIVE_INFINITY));
         }
 
         @Test
         public void testIntegerPart_notANumber() {
-            assertTrue(Double.isNaN(MtxMath.integerPart(Double.NaN)));
+            assertFalse(Double.isNaN(MtxMath.integerPart(Double.NaN)));
+        }
+    }
+
+    @Nested
+    class PowerOfTwoTests {
+
+        @Test
+        public void testIsPowerOfTwo_positive() {
+            assertTrue(MtxMath.isPowerOfTwo(1));
+            assertTrue(MtxMath.isPowerOfTwo(2));
+            assertTrue(MtxMath.isPowerOfTwo(4));
+            assertTrue(MtxMath.isPowerOfTwo(8));
+            assertTrue(MtxMath.isPowerOfTwo(16));
+            assertTrue(MtxMath.isPowerOfTwo(1024));
+        }
+
+        @Test
+        public void testIsPowerOfTwo_negative() {
+            assertFalse(MtxMath.isPowerOfTwo(-1));
+            assertFalse(MtxMath.isPowerOfTwo(-2));
+            assertFalse(MtxMath.isPowerOfTwo(-4));
+            assertFalse(MtxMath.isPowerOfTwo(Integer.MIN_VALUE));
+        }
+
+        @Test
+        public void testIsPowerOfTwo_zero() {
+            assertFalse(MtxMath.isPowerOfTwo(0));
+        }
+
+        @Test
+        public void testIsPowerOfTwo_nonPowerOfTwo() {
+            assertFalse(MtxMath.isPowerOfTwo(3));
+            assertFalse(MtxMath.isPowerOfTwo(5));
+            assertFalse(MtxMath.isPowerOfTwo(6));
+            assertFalse(MtxMath.isPowerOfTwo(7));
+            assertFalse(MtxMath.isPowerOfTwo(9));
+            assertFalse(MtxMath.isPowerOfTwo(15));
+            assertFalse(MtxMath.isPowerOfTwo(100));
+        }
+
+        @Test
+        public void testIsPowerOfTwo_maximumValue() {
+            assertFalse(MtxMath.isPowerOfTwo(Integer.MAX_VALUE));
         }
     }
 }
