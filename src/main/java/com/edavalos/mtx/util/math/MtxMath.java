@@ -1049,4 +1049,12 @@ public final class MtxMath {
     public static double reciprocal(double n) {
         return 1.0 / n;
     }
+
+    public static int modulo(int a, int b) {
+        if (b == 0) {
+            throw new ArithmeticException("Division by zero.");
+        }
+
+        return ((a % b) + abs(b)) % abs(b);
+    }
 }
