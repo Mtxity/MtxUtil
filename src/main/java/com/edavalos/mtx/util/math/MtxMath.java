@@ -1041,4 +1041,8 @@ public final class MtxMath {
     public static int sign(int n) {
         return Integer.compare(n, 0);
     }
+
+    public static double sign(double n) {
+        return Math.signum(n);
+    }
 }
