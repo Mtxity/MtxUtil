@@ -1045,4 +1045,8 @@ public final class MtxMath {
     public static double sign(double n) {
         return Math.signum(n);
     }
+
+    public static double reciprocal(double n) {
+        return 1.0 / n;
+    }
 }
