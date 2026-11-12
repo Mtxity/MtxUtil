@@ -1065,4 +1065,8 @@ public final class MtxMath {
     public static double integerPart(double n) {
         return n < 0 ? ceil(n) : floor(n);
     }
+
+    public static boolean isPowerOfTwo(int n) {
+        return n > 0 && (n & (n - 1)) == 0;
+    }
 }
