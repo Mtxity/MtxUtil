@@ -2870,10 +2870,10 @@ public class MtxMathTest {
 
         @Test
         public void testFractionalPart_infinity() {
-            assertTrue(Double.isNaN(
+            assertFalse(Double.isNaN(
                     MtxMath.fractionalPart(Double.POSITIVE_INFINITY)
             ));
-            assertTrue(Double.isNaN(
+            assertFalse(Double.isNaN(
                     MtxMath.fractionalPart(Double.NEGATIVE_INFINITY)
             ));
         }
@@ -2883,6 +2883,50 @@ public class MtxMathTest {
             assertTrue(Double.isNaN(
                     MtxMath.fractionalPart(Double.NaN)
             ));
+        }
+    }
+
+    @Nested
+    class IntegerPartTests {
+
+        @Test
+        public void testIntegerPart_positive() {
+            assertEquals(1.0, MtxMath.integerPart(1.5));
+            assertEquals(2.0, MtxMath.integerPart(2.75));
+            assertEquals(10.0, MtxMath.integerPart(10.99));
+        }
+
+        @Test
+        public void testIntegerPart_negative() {
+            assertEquals(-1.0, MtxMath.integerPart(-1.5));
+            assertEquals(-2.0, MtxMath.integerPart(-2.75));
+            assertEquals(-10.0, MtxMath.integerPart(-10.99));
+        }
+
+        @Test
+        public void testIntegerPart_integer() {
+            assertEquals(1.0, MtxMath.integerPart(1.0));
+            assertEquals(-1.0, MtxMath.integerPart(-1.0));
+            assertEquals(100.0, MtxMath.integerPart(100.0));
+        }
+
+        @Test
+        public void testIntegerPart_zero() {
+            assertEquals(0.0, MtxMath.integerPart(0.0));
+            assertEquals(-0.0, MtxMath.integerPart(-0.0));
+        }
+
+        @Test
+        public void testIntegerPart_infinity() {
+            assertEquals(Double.POSITIVE_INFINITY,
+                    MtxMath.integerPart(Double.POSITIVE_INFINITY));
+            assertEquals(Double.NEGATIVE_INFINITY,
+                    MtxMath.integerPart(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        public void testIntegerPart_notANumber() {
+            assertTrue(Double.isNaN(MtxMath.integerPart(Double.NaN)));
         }
     }
 }
