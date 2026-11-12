@@ -1057,4 +1057,8 @@ public final class MtxMath {
 
         return ((a % b) + abs(b)) % abs(b);
     }
+
+    public static double fractionalPart(double n) {
+        return n - floor(n);
+    }
 }
