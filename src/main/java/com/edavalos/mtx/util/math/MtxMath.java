@@ -1061,4 +1061,8 @@ public final class MtxMath {
     public static double fractionalPart(double n) {
         return n - floor(n);
     }
+
+    public static double integerPart(double n) {
+        return n < 0 ? ceil(n) : floor(n);
+    }
 }
