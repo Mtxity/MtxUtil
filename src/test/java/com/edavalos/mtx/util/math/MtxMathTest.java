@@ -2731,4 +2731,47 @@ public class MtxMathTest {
             assertTrue(Double.isNaN(MtxMath.sign(Double.NaN)));
         }
     }
+
+    @Nested
+    class ReciprocalTests {
+
+        @Test
+        public void testReciprocal_positive() {
+            assertEquals(1.0, MtxMath.reciprocal(1.0));
+            assertEquals(0.5, MtxMath.reciprocal(2.0));
+            assertEquals(0.25, MtxMath.reciprocal(4.0));
+            assertEquals(0.1, MtxMath.reciprocal(10.0));
+        }
+
+        @Test
+        public void testReciprocal_negative() {
+            assertEquals(-1.0, MtxMath.reciprocal(-1.0));
+            assertEquals(-0.5, MtxMath.reciprocal(-2.0));
+            assertEquals(-0.25, MtxMath.reciprocal(-4.0));
+        }
+
+        @Test
+        public void testReciprocal_zero() {
+            assertEquals(Double.POSITIVE_INFINITY, MtxMath.reciprocal(0.0));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxMath.reciprocal(-0.0));
+        }
+
+        @Test
+        public void testReciprocal_infinity() {
+            assertEquals(0.0, MtxMath.reciprocal(Double.POSITIVE_INFINITY));
+            assertEquals(-0.0, MtxMath.reciprocal(Double.NEGATIVE_INFINITY));
+        }
+
+        @Test
+        public void testReciprocal_notANumber() {
+            assertTrue(Double.isNaN(MtxMath.reciprocal(Double.NaN)));
+        }
+
+        @Test
+        public void testReciprocal_subnormal() {
+            assertEquals(Double.POSITIVE_INFINITY, MtxMath.reciprocal(Double.MIN_VALUE));
+            assertEquals(Double.NEGATIVE_INFINITY, MtxMath.reciprocal(-Double.MIN_VALUE));
+        }
+    }
+
 }
