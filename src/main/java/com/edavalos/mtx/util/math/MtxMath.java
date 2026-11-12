@@ -1069,4 +1069,8 @@ public final class MtxMath {
     public static boolean isPowerOfTwo(int n) {
         return n > 0 && (n & (n - 1)) == 0;
     }
+
+    public static double signum(double d) {
+        return (d == 0.0 || Double.isNaN(d)) ? d : copySign(1.0, d);
+    }
 }
