@@ -2974,6 +2974,47 @@ public class MtxMathTest {
     }
 
     @Nested
+    class NextPowerOfTwoTests {
+
+        @Test
+        public void testNextPowerOfTwo_exactPowers() {
+            assertEquals(1, MtxMath.nextPowerOfTwo(1));
+            assertEquals(2, MtxMath.nextPowerOfTwo(2));
+            assertEquals(4, MtxMath.nextPowerOfTwo(4));
+            assertEquals(8, MtxMath.nextPowerOfTwo(8));
+            assertEquals(1024, MtxMath.nextPowerOfTwo(1024));
+        }
+
+        @Test
+        public void testNextPowerOfTwo_roundsUp() {
+            assertEquals(4, MtxMath.nextPowerOfTwo(3));
+            assertEquals(8, MtxMath.nextPowerOfTwo(5));
+            assertEquals(16, MtxMath.nextPowerOfTwo(9));
+            assertEquals(16, MtxMath.nextPowerOfTwo(15));
+            assertEquals(1024, MtxMath.nextPowerOfTwo(1000));
+        }
+
+        @Test
+        public void testNextPowerOfTwo_zeroAndNegative() {
+            assertEquals(1, MtxMath.nextPowerOfTwo(0));
+            assertEquals(1, MtxMath.nextPowerOfTwo(-1));
+            assertEquals(1, MtxMath.nextPowerOfTwo(Integer.MIN_VALUE));
+        }
+
+        @Test
+        public void testNextPowerOfTwo_largestRepresentable() {
+            assertEquals(1073741824, MtxMath.nextPowerOfTwo(1073741823));
+            assertEquals(1073741824, MtxMath.nextPowerOfTwo(1073741824));
+        }
+
+        @Test
+        public void testNextPowerOfTwo_overflow() {
+            assertThrows(ArithmeticException.class, () -> MtxMath.nextPowerOfTwo(1073741825));
+            assertThrows(ArithmeticException.class, () -> MtxMath.nextPowerOfTwo(Integer.MAX_VALUE));
+        }
+    }
+
+    @Nested
     class SignumTests {
 
         @Test
