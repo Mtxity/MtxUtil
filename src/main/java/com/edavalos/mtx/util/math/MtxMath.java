@@ -1111,6 +1111,19 @@ public final class MtxMath {
         return isPowerOfN(n, 10);
     }
 
+    public static int floorPowerOfTen(int n) {
+        if (n < 1) {
+            throw new IllegalArgumentException("Input must be at least 1.");
+        }
+
+        int power = 1;
+        while (power <= n / 10) {
+            power *= 10;
+        }
+
+        return power;
+    }
+
     public static boolean isPerfectPower(int n) {
         if (n == 1) {
             return true;
