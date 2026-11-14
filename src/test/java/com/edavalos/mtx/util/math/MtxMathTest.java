@@ -3133,6 +3133,41 @@ public class MtxMathTest {
     }
 
     @Nested
+    class FloorPowerOfTenTests {
+
+        @Test
+        public void testFloorPowerOfTen_exactPowers() {
+            assertEquals(1, MtxMath.floorPowerOfTen(1));
+            assertEquals(10, MtxMath.floorPowerOfTen(10));
+            assertEquals(100, MtxMath.floorPowerOfTen(100));
+            assertEquals(1000, MtxMath.floorPowerOfTen(1000));
+            assertEquals(1000000000, MtxMath.floorPowerOfTen(1000000000));
+        }
+
+        @Test
+        public void testFloorPowerOfTen_roundsDown() {
+            assertEquals(1, MtxMath.floorPowerOfTen(2));
+            assertEquals(1, MtxMath.floorPowerOfTen(9));
+            assertEquals(10, MtxMath.floorPowerOfTen(11));
+            assertEquals(10, MtxMath.floorPowerOfTen(99));
+            assertEquals(100, MtxMath.floorPowerOfTen(999));
+            assertEquals(1000, MtxMath.floorPowerOfTen(1001));
+        }
+
+        @Test
+        public void testFloorPowerOfTen_maximumValue() {
+            assertEquals(1000000000, MtxMath.floorPowerOfTen(Integer.MAX_VALUE));
+        }
+
+        @Test
+        public void testFloorPowerOfTen_invalidInput() {
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfTen(0));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfTen(-1));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfTen(Integer.MIN_VALUE));
+        }
+    }
+
+    @Nested
     class PerfectPowerTests {
 
         @Test
