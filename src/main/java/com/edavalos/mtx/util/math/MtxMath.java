@@ -1092,4 +1092,21 @@ public final class MtxMath {
     public static boolean isPowerOfTen(int n) {
         return isPowerOfN(n, 10);
     }
+
+    public static boolean isPerfectPower(int n) {
+        if (n == 1) {
+            return true;
+        }
+        if (n < 1) {
+            return false;
+        }
+
+        for (int base = 2; base <= n / base; base++) {
+            if (isPowerOfN(n, base)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
