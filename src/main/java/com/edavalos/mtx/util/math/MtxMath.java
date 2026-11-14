@@ -1073,4 +1073,16 @@ public final class MtxMath {
     public static double signum(double d) {
         return (d == 0.0 || Double.isNaN(d)) ? d : copySign(1.0, d);
     }
+
+    public static boolean isPowerOfTen(int n) {
+        if (n < 1) {
+            return false;
+        }
+
+        while (n % 10 == 0) {
+            n /= 10;
+        }
+
+        return n == 1;
+    }
 }
