@@ -1070,6 +1070,24 @@ public final class MtxMath {
         return n > 0 && (n & (n - 1)) == 0;
     }
 
+    public static int nextPowerOfTwo(int n) {
+        if (n <= 0) {
+            return 1;
+        }
+        if (n > (1 << 30)) {
+            throw new ArithmeticException("Overflow: next power of two exceeds int range.");
+        }
+
+        n--;
+        n |= n >> 1;
+        n |= n >> 2;
+        n |= n >> 4;
+        n |= n >> 8;
+        n |= n >> 16;
+
+        return n + 1;
+    }
+
     public static double signum(double d) {
         return (d == 0.0 || Double.isNaN(d)) ? d : copySign(1.0, d);
     }
