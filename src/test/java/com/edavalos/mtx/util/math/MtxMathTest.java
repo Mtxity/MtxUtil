@@ -3018,4 +3018,76 @@ public class MtxMathTest {
             assertTrue(Double.isNaN(MtxMath.signum(Double.NaN)));
         }
     }
+
+    @Nested
+    class PowerOfNTests {
+
+        @Test
+        public void testIsPowerOfN_powersOfVariousBases() {
+            assertTrue(MtxMath.isPowerOfN(8, 2));
+            assertTrue(MtxMath.isPowerOfN(9, 3));
+            assertTrue(MtxMath.isPowerOfN(27, 3));
+            assertTrue(MtxMath.isPowerOfN(125, 5));
+            assertTrue(MtxMath.isPowerOfN(343, 7));
+            assertTrue(MtxMath.isPowerOfN(1000, 10));
+            assertTrue(MtxMath.isPowerOfN(256, 16));
+        }
+
+        @Test
+        public void testIsPowerOfN_oneIsPowerOfAnyBase() {
+            assertTrue(MtxMath.isPowerOfN(1, 2));
+            assertTrue(MtxMath.isPowerOfN(1, 7));
+            assertTrue(MtxMath.isPowerOfN(1, 100));
+        }
+
+        @Test
+        public void testIsPowerOfN_zero() {
+            assertFalse(MtxMath.isPowerOfN(0, 2));
+            assertFalse(MtxMath.isPowerOfN(0, 10));
+        }
+
+        @Test
+        public void testIsPowerOfN_negative() {
+            assertFalse(MtxMath.isPowerOfN(-1, 2));
+            assertFalse(MtxMath.isPowerOfN(-8, 2));
+            assertFalse(MtxMath.isPowerOfN(Integer.MIN_VALUE, 3));
+        }
+
+        @Test
+        public void testIsPowerOfN_nonPowers() {
+            assertFalse(MtxMath.isPowerOfN(6, 3));
+            assertFalse(MtxMath.isPowerOfN(18, 3));
+            assertFalse(MtxMath.isPowerOfN(50, 10));
+            assertFalse(MtxMath.isPowerOfN(100, 5));
+        }
+
+        @Test
+        public void testIsPowerOfN_largePowers() {
+            assertTrue(MtxMath.isPowerOfN(1073741824, 2));
+            assertTrue(MtxMath.isPowerOfN(1162261467, 3));
+            assertFalse(MtxMath.isPowerOfN(Integer.MAX_VALUE, 2));
+        }
+
+        @Test
+        public void testIsPowerOfN_invalidBase() {
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.isPowerOfN(8, 1));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.isPowerOfN(8, 0));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.isPowerOfN(8, -2));
+        }
+    }
+
+    @Test
+    void testIsPowerOfTen() {
+        assertTrue(MtxMath.isPowerOfTen(1));
+        assertTrue(MtxMath.isPowerOfTen(10));
+        assertTrue(MtxMath.isPowerOfTen(100));
+        assertTrue(MtxMath.isPowerOfTen(1000));
+        assertTrue(MtxMath.isPowerOfTen(10000));
+
+        assertFalse(MtxMath.isPowerOfTen(0));
+        assertFalse(MtxMath.isPowerOfTen(-10));
+        assertFalse(MtxMath.isPowerOfTen(5));
+        assertFalse(MtxMath.isPowerOfTen(50));
+        assertFalse(MtxMath.isPowerOfTen(101));
+    }
 }
