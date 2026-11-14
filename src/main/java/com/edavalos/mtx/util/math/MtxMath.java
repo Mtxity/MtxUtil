@@ -1088,6 +1088,15 @@ public final class MtxMath {
         return n + 1;
     }
 
+    public static int floorPowerOfTwo(int n) {
+        if (n < 1) {
+            throw new IllegalArgumentException("Input must be at least 1.");
+        }
+
+        // @TODO: Implement this locally
+        return Integer.highestOneBit(n);
+    }
+
     public static double signum(double d) {
         return (d == 0.0 || Double.isNaN(d)) ? d : copySign(1.0, d);
     }
@@ -1109,6 +1118,22 @@ public final class MtxMath {
 
     public static boolean isPowerOfTen(int n) {
         return isPowerOfN(n, 10);
+    }
+
+    public static int nextPowerOfTen(int n) {
+        if (n <= 1) {
+            return 1;
+        }
+        if (n > 1000000000) {
+            throw new ArithmeticException("Overflow: next power of ten exceeds int range.");
+        }
+
+        int power = 1;
+        while (power < n) {
+            power *= 10;
+        }
+
+        return power;
     }
 
     public static int floorPowerOfTen(int n) {
