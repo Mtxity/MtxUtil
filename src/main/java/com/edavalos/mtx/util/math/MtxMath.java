@@ -1074,15 +1074,22 @@ public final class MtxMath {
         return (d == 0.0 || Double.isNaN(d)) ? d : copySign(1.0, d);
     }
 
-    public static boolean isPowerOfTen(int n) {
+    public static boolean isPowerOfN(int n, int base) {
+        if (base < 2) {
+            throw new IllegalArgumentException("Base must be at least 2.");
+        }
         if (n < 1) {
             return false;
         }
 
-        while (n % 10 == 0) {
-            n /= 10;
+        while (n % base == 0) {
+            n /= base;
         }
 
         return n == 1;
+    }
+
+    public static boolean isPowerOfTen(int n) {
+        return isPowerOfN(n, 10);
     }
 }
