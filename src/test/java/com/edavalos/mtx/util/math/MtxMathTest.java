@@ -3090,4 +3090,59 @@ public class MtxMathTest {
         assertFalse(MtxMath.isPowerOfTen(50));
         assertFalse(MtxMath.isPowerOfTen(101));
     }
+
+    @Nested
+    class PerfectPowerTests {
+
+        @Test
+        public void testIsPerfectPower_perfectSquares() {
+            assertTrue(MtxMath.isPerfectPower(4));
+            assertTrue(MtxMath.isPerfectPower(9));
+            assertTrue(MtxMath.isPerfectPower(36));
+            assertTrue(MtxMath.isPerfectPower(100));
+            assertTrue(MtxMath.isPerfectPower(121));
+        }
+
+        @Test
+        public void testIsPerfectPower_higherPowers() {
+            assertTrue(MtxMath.isPerfectPower(8));
+            assertTrue(MtxMath.isPerfectPower(27));
+            assertTrue(MtxMath.isPerfectPower(32));
+            assertTrue(MtxMath.isPerfectPower(125));
+            assertTrue(MtxMath.isPerfectPower(128));
+            assertTrue(MtxMath.isPerfectPower(216));
+            assertTrue(MtxMath.isPerfectPower(256));
+        }
+
+        @Test
+        public void testIsPerfectPower_one() {
+            assertTrue(MtxMath.isPerfectPower(1));
+        }
+
+        @Test
+        public void testIsPerfectPower_zeroAndNegative() {
+            assertFalse(MtxMath.isPerfectPower(0));
+            assertFalse(MtxMath.isPerfectPower(-1));
+            assertFalse(MtxMath.isPerfectPower(-64));
+            assertFalse(MtxMath.isPerfectPower(Integer.MIN_VALUE));
+        }
+
+        @Test
+        public void testIsPerfectPower_nonPerfectPowers() {
+            assertFalse(MtxMath.isPerfectPower(2));
+            assertFalse(MtxMath.isPerfectPower(3));
+            assertFalse(MtxMath.isPerfectPower(6));
+            assertFalse(MtxMath.isPerfectPower(12));
+            assertFalse(MtxMath.isPerfectPower(18));
+            assertFalse(MtxMath.isPerfectPower(72));
+            assertFalse(MtxMath.isPerfectPower(101));
+        }
+
+        @Test
+        public void testIsPerfectPower_largeValues() {
+            assertTrue(MtxMath.isPerfectPower(1073741824));
+            assertTrue(MtxMath.isPerfectPower(2147395600));
+            assertFalse(MtxMath.isPerfectPower(Integer.MAX_VALUE));
+        }
+    }
 }
