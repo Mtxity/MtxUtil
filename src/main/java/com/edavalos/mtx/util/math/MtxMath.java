@@ -611,6 +611,30 @@ public final class MtxMath {
         return sum;
     }
 
+    public static int modPow(int base, int exponent, int modulus) {
+        if (exponent < 0) {
+            throw new IllegalArgumentException("Exponent must be non-negative");
+        }
+        if (modulus == 0) {
+            throw new ArithmeticException("Division by zero.");
+        }
+
+        long m = abs((long) modulus);
+        long result = 1 % m;
+        long b = ((base % m) + m) % m;
+        long exp = exponent;
+
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                result = (result * b) % m;
+            }
+            b = (b * b) % m;
+            exp >>= 1;
+        }
+
+        return (int) result;
+    }
+
     public static double powerOfTwo(int n) {
         if (n < Double.MIN_EXPONENT || n > Double.MAX_EXPONENT) {
             throw new IllegalArgumentException("Result must fit in a double");
