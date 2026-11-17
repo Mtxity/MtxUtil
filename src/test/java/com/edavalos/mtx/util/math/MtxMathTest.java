@@ -1085,13 +1085,93 @@ public class MtxMathTest {
     }
 
     @Nested
+    class ModPowTests {
+
+        @Test
+        void testModPow_positive() {
+            assertEquals(3, MtxMath.modPow(2, 3, 5));
+            assertEquals(1, MtxMath.modPow(3, 4, 5));
+            assertEquals(4, MtxMath.modPow(2, 5, 7));
+        }
+
+        @Test
+        void testModPow_exponentZero() {
+            assertEquals(1, MtxMath.modPow(5, 0, 7));
+            assertEquals(1, MtxMath.modPow(2, 0, 100));
+        }
+
+        @Test
+        void testModPow_exponentOne() {
+            assertEquals(2, MtxMath.modPow(2, 1, 5));
+            assertEquals(3, MtxMath.modPow(10, 1, 7));
+        }
+
+        @Test
+        void testModPow_baseZero() {
+            assertEquals(0, MtxMath.modPow(0, 5, 7));
+            assertEquals(1, MtxMath.modPow(0, 0, 7));
+        }
+
+        @Test
+        void testModPow_modulusOne() {
+            assertEquals(0, MtxMath.modPow(5, 3, 1));
+            assertEquals(0, MtxMath.modPow(5, 0, 1));
+        }
+
+        @Test
+        void testModPow_negativeBase() {
+            assertEquals(2, MtxMath.modPow(-2, 3, 5));
+            assertEquals(1, MtxMath.modPow(-3, 4, 5));
+            assertEquals(0, MtxMath.modPow(-10, 2, 5));
+        }
+
+        @Test
+        void testModPow_negativeModulus() {
+            assertEquals(3, MtxMath.modPow(2, 3, -5));
+            assertEquals(1, MtxMath.modPow(3, 4, -5));
+            assertEquals(0, MtxMath.modPow(5, 3, -1));
+        }
+
+        @Test
+        void testModPow_largeExponent() {
+            assertEquals(376, MtxMath.modPow(2, 100, 1000));
+            assertEquals(1, MtxMath.modPow(2, 6, 7));
+        }
+
+        @Test
+        void testModPow_largeValues() {
+            assertEquals(1, MtxMath.modPow(2147483646, 2, 2147483647));
+            assertEquals(0, MtxMath.modPow(Integer.MAX_VALUE, 2, Integer.MAX_VALUE));
+        }
+
+        @Test
+        void testModPow_negativeExponentThrows() {
+            Throwable error = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.modPow(2, -1, 5)
+            );
+
+            assertEquals("Exponent must be non-negative", error.getMessage());
+        }
+
+        @Test
+        void testModPow_zeroModulusThrows() {
+            Throwable error = assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.modPow(2, 3, 0)
+            );
+
+            assertEquals("Division by zero.", error.getMessage());
+        }
+    }
+
+    @Nested
     class IsEvenTests {
 
         @Test
         void testIsEven_True() {
             assertTrue(MtxMath.isEven(2));
         }
-
         @Test
         void testIsEven_False() {
             assertFalse(MtxMath.isEven(1));
