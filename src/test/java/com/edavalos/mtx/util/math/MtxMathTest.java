@@ -3205,6 +3205,62 @@ public class MtxMathTest {
         }
     }
 
+    @Nested
+    class NextPowerOfNTests {
+
+        @Test
+        public void testNextPowerOfN_exactPowers() {
+            assertEquals(8, MtxMath.nextPowerOfN(8, 2));
+            assertEquals(27, MtxMath.nextPowerOfN(27, 3));
+            assertEquals(125, MtxMath.nextPowerOfN(125, 5));
+            assertEquals(1000, MtxMath.nextPowerOfN(1000, 10));
+            assertEquals(256, MtxMath.nextPowerOfN(256, 16));
+        }
+
+        @Test
+        public void testNextPowerOfN_roundsUp() {
+            assertEquals(4, MtxMath.nextPowerOfN(3, 2));
+            assertEquals(9, MtxMath.nextPowerOfN(5, 3));
+            assertEquals(81, MtxMath.nextPowerOfN(28, 3));
+            assertEquals(216, MtxMath.nextPowerOfN(100, 6));
+            assertEquals(2401, MtxMath.nextPowerOfN(1000, 7));
+            assertEquals(10000, MtxMath.nextPowerOfN(1001, 10));
+            assertEquals(100, MtxMath.nextPowerOfN(2, 100));
+        }
+
+        @Test
+        public void testNextPowerOfN_zeroNegativeAndOne() {
+            assertEquals(1, MtxMath.nextPowerOfN(0, 2));
+            assertEquals(1, MtxMath.nextPowerOfN(-1, 10));
+            assertEquals(1, MtxMath.nextPowerOfN(Integer.MIN_VALUE, 3));
+            assertEquals(1, MtxMath.nextPowerOfN(1, 100));
+        }
+
+        @Test
+        public void testNextPowerOfN_largestRepresentable() {
+            assertEquals(1073741824, MtxMath.nextPowerOfN(1073741823, 2));
+            assertEquals(1073741824, MtxMath.nextPowerOfN(1073741824, 2));
+            assertEquals(1000000000, MtxMath.nextPowerOfN(999999999, 10));
+            assertEquals(1000000000, MtxMath.nextPowerOfN(1000000000, 10));
+            assertEquals(Integer.MAX_VALUE, MtxMath.nextPowerOfN(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        }
+
+        @Test
+        public void testNextPowerOfN_overflow() {
+            assertThrows(ArithmeticException.class, () -> MtxMath.nextPowerOfN(1073741825, 2));
+            assertThrows(ArithmeticException.class, () -> MtxMath.nextPowerOfN(1000000001, 10));
+            assertThrows(ArithmeticException.class, () -> MtxMath.nextPowerOfN(Integer.MAX_VALUE, Integer.MAX_VALUE - 1));
+        }
+
+        @Test
+        public void testNextPowerOfN_invalidBase() {
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.nextPowerOfN(8, 1));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.nextPowerOfN(8, 0));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.nextPowerOfN(8, -2));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.nextPowerOfN(0, 1));
+        }
+    }
+
     @Test
     void testIsPowerOfTen() {
         assertTrue(MtxMath.isPowerOfTen(1));
