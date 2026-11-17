@@ -3153,6 +3153,58 @@ public class MtxMathTest {
         }
     }
 
+    @Nested
+    class FloorPowerOfNTests {
+
+        @Test
+        public void testFloorPowerOfN_exactPowers() {
+            assertEquals(8, MtxMath.floorPowerOfN(8, 2));
+            assertEquals(27, MtxMath.floorPowerOfN(27, 3));
+            assertEquals(125, MtxMath.floorPowerOfN(125, 5));
+            assertEquals(1000, MtxMath.floorPowerOfN(1000, 10));
+            assertEquals(256, MtxMath.floorPowerOfN(256, 16));
+        }
+
+        @Test
+        public void testFloorPowerOfN_roundsDown() {
+            assertEquals(2, MtxMath.floorPowerOfN(3, 2));
+            assertEquals(9, MtxMath.floorPowerOfN(26, 3));
+            assertEquals(27, MtxMath.floorPowerOfN(28, 3));
+            assertEquals(36, MtxMath.floorPowerOfN(100, 6));
+            assertEquals(343, MtxMath.floorPowerOfN(1000, 7));
+            assertEquals(10, MtxMath.floorPowerOfN(99, 10));
+        }
+
+        @Test
+        public void testFloorPowerOfN_oneAndBaseGreaterThanInput() {
+            assertEquals(1, MtxMath.floorPowerOfN(1, 2));
+            assertEquals(1, MtxMath.floorPowerOfN(1, 100));
+            assertEquals(1, MtxMath.floorPowerOfN(9, 10));
+            assertEquals(1, MtxMath.floorPowerOfN(2, 100));
+        }
+
+        @Test
+        public void testFloorPowerOfN_largeValues() {
+            assertEquals(1073741824, MtxMath.floorPowerOfN(Integer.MAX_VALUE, 2));
+            assertEquals(1000000000, MtxMath.floorPowerOfN(Integer.MAX_VALUE, 10));
+            assertEquals(Integer.MAX_VALUE, MtxMath.floorPowerOfN(Integer.MAX_VALUE, Integer.MAX_VALUE));
+        }
+
+        @Test
+        public void testFloorPowerOfN_invalidInput() {
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(0, 2));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(-1, 3));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(Integer.MIN_VALUE, 10));
+        }
+
+        @Test
+        public void testFloorPowerOfN_invalidBase() {
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(8, 1));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(8, 0));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.floorPowerOfN(8, -2));
+        }
+    }
+
     @Test
     void testIsPowerOfTen() {
         assertTrue(MtxMath.isPowerOfTen(1));
