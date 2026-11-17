@@ -1132,6 +1132,25 @@ public final class MtxMath {
         return power;
     }
 
+    public static int nextPowerOfN(int n, int base) {
+        if (base < 2) {
+            throw new IllegalArgumentException("Base must be at least 2.");
+        }
+        if (n <= 1) {
+            return 1;
+        }
+
+        int power = 1;
+        while (power < n) {
+            if (power > Integer.MAX_VALUE / base) {
+                throw new ArithmeticException("Overflow: next power exceeds int range.");
+            }
+            power *= base;
+        }
+
+        return power;
+    }
+
     public static boolean isPowerOfTen(int n) {
         return isPowerOfN(n, 10);
     }
