@@ -635,6 +635,36 @@ public final class MtxMath {
         return (int) result;
     }
 
+    public static int modInverse(int a, int modulus) {
+        if (modulus == 0) {
+            throw new ArithmeticException("Division by zero.");
+        }
+
+        long m = abs((long) modulus);
+        long b = ((a % m) + m) % m;
+
+        // Iterative extended Euclidean algorithm
+        long oldR = b, r = m;
+        long oldS = 1, s = 0;
+        while (r != 0) {
+            long quotient = oldR / r;
+
+            long tmp = r;
+            r = oldR - quotient * r;
+            oldR = tmp;
+
+            tmp = s;
+            s = oldS - quotient * s;
+            oldS = tmp;
+        }
+
+        if (oldR != 1) {
+            throw new ArithmeticException("Modular inverse exists only when GCD is 1.");
+        }
+
+        return (int) (((oldS % m) + m) % m);
+    }
+
     public static double powerOfTwo(int n) {
         if (n < Double.MIN_EXPONENT || n > Double.MAX_EXPONENT) {
             throw new IllegalArgumentException("Result must fit in a double");
