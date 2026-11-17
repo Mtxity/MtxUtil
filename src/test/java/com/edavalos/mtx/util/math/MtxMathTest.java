@@ -1166,6 +1166,85 @@ public class MtxMathTest {
     }
 
     @Nested
+    class ModInverseTests {
+
+        @Test
+        void testModInverse_positive() {
+            assertEquals(5, MtxMath.modInverse(3, 7));
+            assertEquals(3, MtxMath.modInverse(2, 5));
+            assertEquals(1, MtxMath.modInverse(1, 5));
+            assertEquals(6, MtxMath.modInverse(6, 7));
+        }
+
+        @Test
+        void testModInverse_negativeA() {
+            assertEquals(2, MtxMath.modInverse(-3, 7));
+            assertEquals(2, MtxMath.modInverse(-2, 5));
+        }
+
+        @Test
+        void testModInverse_negativeModulus() {
+            assertEquals(5, MtxMath.modInverse(3, -7));
+            assertEquals(3, MtxMath.modInverse(2, -5));
+        }
+
+        @Test
+        void testModInverse_modulusOne() {
+            assertEquals(0, MtxMath.modInverse(5, 1));
+            assertEquals(0, MtxMath.modInverse(0, 1));
+        }
+
+        @Test
+        void testModInverse_largeValues() {
+            assertEquals(2753, MtxMath.modInverse(17, 3120));
+            assertEquals(2147483646, MtxMath.modInverse(2147483646, 2147483647));
+            assertEquals(2147483646, MtxMath.modInverse(-1, 2147483647));
+        }
+
+        @Test
+        void testModInverse_resultSatisfiesDefinition() {
+            int[][] pairs = {
+                    {3, 7},
+                    {10, 17},
+                    {25, 49},
+                    {-3, 26},
+                    {1234567, 2147483647}
+            };
+
+            for (int[] pair : pairs) {
+                int x = MtxMath.modInverse(pair[0], pair[1]);
+                long product = ((long) pair[0] * x) % pair[1];
+                if (product < 0) {
+                    product += pair[1];
+                }
+                assertEquals(1, product);
+            }
+        }
+
+        @Test
+        void testModInverse_notCoprimeThrows() {
+            Throwable error = assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.modInverse(2, 4)
+            );
+            assertEquals("Modular inverse exists only when GCD is 1.", error.getMessage());
+
+            assertThrows(ArithmeticException.class, () -> MtxMath.modInverse(6, 9));
+            assertThrows(ArithmeticException.class, () -> MtxMath.modInverse(0, 5));
+        }
+
+        @Test
+        void testModInverse_zeroModulusThrows() {
+            Throwable error = assertThrows(
+                    ArithmeticException.class,
+                    () -> MtxMath.modInverse(3, 0)
+            );
+
+            assertEquals("Division by zero.", error.getMessage());
+        }
+    }
+
+    @Nested
     class IsEvenTests {
 
         @Test
