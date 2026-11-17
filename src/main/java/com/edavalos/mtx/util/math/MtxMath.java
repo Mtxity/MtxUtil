@@ -1116,6 +1116,22 @@ public final class MtxMath {
         return n == 1;
     }
 
+    public static int floorPowerOfN(int n, int base) {
+        if (base < 2) {
+            throw new IllegalArgumentException("Base must be at least 2.");
+        }
+        if (n < 1) {
+            throw new IllegalArgumentException("Input must be at least 1.");
+        }
+
+        int power = 1;
+        while (power <= n / base) {
+            power *= base;
+        }
+
+        return power;
+    }
+
     public static boolean isPowerOfTen(int n) {
         return isPowerOfN(n, 10);
     }
