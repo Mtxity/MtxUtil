@@ -3603,4 +3603,30 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class HighestOneBitTests {
+
+        @Test
+        void testHighestOneBit_zero() {
+            assertEquals(0, MtxMath.highestOneBit(0));
+            assertEquals(Integer.highestOneBit(0), MtxMath.highestOneBit(0));
+        }
+
+        @Test
+        void testHighestOneBit_positive() {
+            int[] testValues = {1, 2, 3, 4, 5, 10, 15, 16, 31, 32, 100, 1000, 65535, 65536, Integer.MAX_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.highestOneBit(val), MtxMath.highestOneBit(val));
+            }
+        }
+
+        @Test
+        void testHighestOneBit_negative() {
+            int[] testValues = {-1, -2, -5, -100, Integer.MIN_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.highestOneBit(val), MtxMath.highestOneBit(val));
+            }
+        }
+    }
 }
