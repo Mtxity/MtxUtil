@@ -115,16 +115,19 @@ All of these support `equals()` and `iterator()` as well as the basic functions.
 See the interface for a complete list.
 
 ## Math Utils ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
-`MtxMath` holds a collection of mathematical utility classes, constants, and methods:
-* `MtxFactorial` - procedurally generates an infinite number of factorial integers
-* `MtxFibonacci` - procedurally generates an infinite number of fibonacci integers
-* `MtxCatalan` - procedurally generates an infinite number of catalan integers
-* `MtxStats` - takes an array of numbers and calculates values with them such as mean, median, mode, standard deviation, variance, and total
-* `PI`, `TAU`, `E`, `Y`, and `PHI` - public constants holding semi-frequently used mathematical values
-* `isPrime()` - checks if an integer is a prime number
-* `quadraticFormulaSolver()` - gets the positive x value from a quadratic equation given a, b, and c
-* `twoDimensionArrayCopy()` - copies a two dimension integer array
-* `min()` and `max()` - gets the min or max of an array or list of doubles or integers
+`MtxMath` provides mathematical constants, iterable sequences, statistics, and static utility methods:
+* Constants - `PI`, `TAU`, `E`, `Y`, `PHI`, `LN2`, etc.
+* Number sequences - iterable `MtxFactorial`, `MtxFibonacci`, and `MtxCatalan` sequences, with static methods for calculating individual values
+* Statistics - `MtxStats` calculates the mean, median, mode, variance, standard deviation, etc.
+* Powers, roots, and logarithms - `power()`, `exp()`, `sqrt()`, `ln()`, `log10()`, `logN()`, etc.
+* Modular arithmetic and number theory - `modulo()`, `modPow()`, `modInverse()`, `gcd()`, `lcm()`, `extendedGCD()`, `chineseRemainderTheorem()`, etc.
+* Primes and factorization - `isPrime()`, `nextPrime()`, `primeFactors()`, `sieveOfEratosthenes()`, `isComposite()`, etc.
+* Integer powers - `powerOfTwo()`, `isPowerOfTwo()`, `nextPowerOfN()`, `floorPowerOfN()`, `isPerfectPower()`, etc.
+* Digit and integer properties - `sumOfDigits()`, `digitalRoot()`, `reverseNumber()`, `countDigits()`, `isPalindromeNumber()`, `isArmstrongNumber()`, etc.
+* Rounding and number parts - `floor()`, `ceil()`, `round()`, `roundToDecimals()`, `fractionalPart()`, `integerPart()`, etc.
+* Comparisons and interpolation - `min()`, `max()`, `clamp()`, `isBetween()`, and `lerp()`
+* Algebra and geometry - `quadraticFormulaSolver()`, `pythagoreanTheorem()`, `hypotenuse()`, and `distanceBetweenPoints()`
+* Sign and bit helpers - `abs()`, `sign()`, `signum()`, `copySign()`, `highOrderBit()`, `lowOrderBit()`, `countSetBits()`, etc.
 
 ## Roman Numerals ([com.edavalos.mtx.util.math](https://github.com/Mtxity/MtxUtil/tree/main/src/main/java/com/edavalos/mtx/util/math))
 `MtxRomanNumeral` converts year integers into roman numerals and roman numeral strings into year integers.
