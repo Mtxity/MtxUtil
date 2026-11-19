@@ -3605,6 +3605,38 @@ public class MtxMathTest {
     }
 
     @Nested
+    class NumberOfTrailingZerosTests {
+
+        @Test
+        void testNumberOfTrailingZeros_zero() {
+            assertEquals(32, MtxMath.numberOfTrailingZeros(0));
+            assertEquals(Integer.numberOfTrailingZeros(0), MtxMath.numberOfTrailingZeros(0));
+        }
+
+        @Test
+        void testNumberOfTrailingZeros_positive() {
+            assertEquals(0, MtxMath.numberOfTrailingZeros(1));
+            assertEquals(1, MtxMath.numberOfTrailingZeros(2));
+            assertEquals(0, MtxMath.numberOfTrailingZeros(3));
+            assertEquals(2, MtxMath.numberOfTrailingZeros(4));
+            assertEquals(3, MtxMath.numberOfTrailingZeros(24));
+
+            int[] testValues = {1, 2, 3, 4, 5, 8, 12, 16, 24, 32, 64, 100, 1024, 65536, Integer.MAX_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.numberOfTrailingZeros(val), MtxMath.numberOfTrailingZeros(val));
+            }
+        }
+
+        @Test
+        void testNumberOfTrailingZeros_negative() {
+            int[] testValues = {-1, -2, -3, -4, -5, -8, -16, -100, Integer.MIN_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.numberOfTrailingZeros(val), MtxMath.numberOfTrailingZeros(val));
+            }
+        }
+    }
+
+    @Nested
     class HighestOneBitTests {
 
         @Test
