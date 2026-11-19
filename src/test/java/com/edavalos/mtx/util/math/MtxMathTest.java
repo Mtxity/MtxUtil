@@ -3567,4 +3567,40 @@ public class MtxMathTest {
             assertFalse(MtxMath.isPerfectPower(Integer.MAX_VALUE));
         }
     }
+
+    @Nested
+    class NumberOfLeadingZerosTests {
+
+        @Test
+        void testNumberOfLeadingZeros_zero() {
+            assertEquals(32, MtxMath.numberOfLeadingZeros(0));
+            assertEquals(Integer.numberOfLeadingZeros(0), MtxMath.numberOfLeadingZeros(0));
+        }
+
+        @Test
+        void testNumberOfLeadingZeros_positive() {
+            assertEquals(31, MtxMath.numberOfLeadingZeros(1));
+            assertEquals(30, MtxMath.numberOfLeadingZeros(2));
+            assertEquals(30, MtxMath.numberOfLeadingZeros(3));
+            assertEquals(29, MtxMath.numberOfLeadingZeros(4));
+            assertEquals(1, MtxMath.numberOfLeadingZeros(Integer.MAX_VALUE));
+
+            int[] testValues = {1, 2, 3, 4, 5, 10, 15, 16, 31, 32, 100, 1000, 65535, 65536, Integer.MAX_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.numberOfLeadingZeros(val), MtxMath.numberOfLeadingZeros(val));
+            }
+        }
+
+        @Test
+        void testNumberOfLeadingZeros_negative() {
+            assertEquals(0, MtxMath.numberOfLeadingZeros(-1));
+            assertEquals(0, MtxMath.numberOfLeadingZeros(-5));
+            assertEquals(0, MtxMath.numberOfLeadingZeros(Integer.MIN_VALUE));
+
+            int[] testValues = {-1, -2, -100, Integer.MIN_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.numberOfLeadingZeros(val), MtxMath.numberOfLeadingZeros(val));
+            }
+        }
+    }
 }
