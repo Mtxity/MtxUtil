@@ -3629,4 +3629,30 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class LowestOneBitTests {
+
+        @Test
+        void testLowestOneBit_zero() {
+            assertEquals(0, MtxMath.lowestOneBit(0));
+            assertEquals(Integer.lowestOneBit(0), MtxMath.lowestOneBit(0));
+        }
+
+        @Test
+        void testLowestOneBit_positive() {
+            int[] testValues = {1, 2, 3, 4, 5, 6, 10, 12, 15, 16, 31, 32, 100, 1000, 65535, 65536, Integer.MAX_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.lowestOneBit(val), MtxMath.lowestOneBit(val));
+            }
+        }
+
+        @Test
+        void testLowestOneBit_negative() {
+            int[] testValues = {-1, -2, -3, -4, -5, -100, Integer.MIN_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.lowestOneBit(val), MtxMath.lowestOneBit(val));
+            }
+        }
+    }
 }
