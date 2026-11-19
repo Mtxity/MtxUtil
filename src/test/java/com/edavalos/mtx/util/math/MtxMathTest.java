@@ -3687,4 +3687,128 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class MinkowskiQuestionMarkTests {
+
+        @Test
+        void testMinkowskiQuestionMark_zero() {
+            assertEquals(
+                    0.0,
+                    MtxMath.minkowskiQuestionMark(0, 1),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_one() {
+            assertEquals(
+                    1.0,
+                    MtxMath.minkowskiQuestionMark(1, 1),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_oneHalf() {
+            assertEquals(
+                    0.5,
+                    MtxMath.minkowskiQuestionMark(1, 2),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_oneThird() {
+            assertEquals(
+                    0.25,
+                    MtxMath.minkowskiQuestionMark(1, 3),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_twoThirds() {
+            assertEquals(
+                    0.75,
+                    MtxMath.minkowskiQuestionMark(2, 3),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_oneQuarter() {
+            assertEquals(
+                    0.125,
+                    MtxMath.minkowskiQuestionMark(1, 4),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_threeQuarters() {
+            assertEquals(
+                    0.875,
+                    MtxMath.minkowskiQuestionMark(3, 4),
+                    1e-10
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_negativeNumerator_throws() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(-1, 2)
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_numeratorGreaterThanDenominator_throws() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(3, 2)
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMarkZeroDenominator_throws() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(1, 0)
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_zeroOverZero_throws() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(0, 0)
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_negativeDenominator_throws() {
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(1, -2)
+            );
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_negativeDenominator_throwsCorrectMsg() {
+            String actualMsg = assertThrows(
+                    IllegalArgumentException.class,
+                    () -> MtxMath.minkowskiQuestionMark(1, -2)
+            ).getMessage();
+            assertEquals("Require ( 0 <= numerator <= denominator )", actualMsg);
+        }
+
+        @Test
+        void testMinkowskiQuestionMark_largeContinuedFraction() {
+            double result = MtxMath.minkowskiQuestionMark(5, 13);
+
+            assertTrue(Double.isFinite(result));
+            assertTrue(result >= 0.0 && result <= 1.0);
+        }
+    }
 }
