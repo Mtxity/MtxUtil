@@ -1313,4 +1313,33 @@ public final class MtxMath {
     public static int lowestOneBit(int i) {
         return i & -i;
     }
+
+    public static double minkowskiQuestionMark(int numerator, int denominator) {
+        if (denominator == 0 || numerator < 0 || numerator > denominator) {
+            throw new IllegalArgumentException("Require ( 0 <= numerator <= denominator )");
+        }
+
+        double result = 0.0;
+        int cumulative = 0;
+        int sign = 1;
+
+        while (true) {
+            int a = numerator == 0 ? 0 : denominator / numerator;
+
+            if (numerator == 0) {
+                break;
+            }
+
+            cumulative += a;
+            result += sign * Math.pow(2.0, 1 - cumulative);
+
+            sign = -sign;
+
+            int remainder = denominator % numerator;
+            denominator = numerator;
+            numerator = remainder;
+        }
+
+        return result;
+    }
 }
