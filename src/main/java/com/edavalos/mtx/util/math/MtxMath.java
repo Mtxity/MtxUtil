@@ -1283,4 +1283,8 @@ public final class MtxMath {
     public static int highestOneBit(int i) {
         return i & (0x80000000 >>> numberOfLeadingZeros(i));
     }
+
+    public static int lowestOneBit(int i) {
+        return i & -i;
+    }
 }
