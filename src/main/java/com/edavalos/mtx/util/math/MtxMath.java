@@ -1147,8 +1147,7 @@ public final class MtxMath {
             throw new IllegalArgumentException("Input must be at least 1.");
         }
 
-        // @TODO: Implement this locally
-        return Integer.highestOneBit(n);
+        return highestOneBit(n);
     }
 
     public static double signum(double d) {
