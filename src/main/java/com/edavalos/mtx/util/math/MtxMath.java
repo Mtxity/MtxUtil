@@ -206,6 +206,18 @@ public final class MtxMath {
         }
     }
 
+    public static long factorial(int n) {
+        return MtxFactorial.factorial(n);
+    }
+
+    public static int fibonacci(int n) {
+        return MtxFibonacci.fibonacci(n);
+    }
+
+    public static long catalan(int n) {
+        return MtxCatalan.catalan(n);
+    }
+
     public static class MtxStats {
         private final ArrayList<Double> contents;
 
