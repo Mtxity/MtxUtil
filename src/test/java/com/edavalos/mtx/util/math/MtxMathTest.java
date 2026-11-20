@@ -3811,4 +3811,30 @@ public class MtxMathTest {
             assertTrue(result >= 0.0 && result <= 1.0);
         }
     }
+
+    @Nested
+    class ReverseBitsTests {
+
+        @Test
+        void testReverseBits_zero() {
+            assertEquals(0, MtxMath.reverseBits(0));
+            assertEquals(Integer.reverse(0), MtxMath.reverseBits(0));
+        }
+
+        @Test
+        void testReverseBits_positive() {
+            int[] testValues = {1, 2, 3, 4, 5, 10, 15, 16, 31, 32, 100, 1000, 65535, 65536, Integer.MAX_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.reverse(val), MtxMath.reverseBits(val));
+            }
+        }
+
+        @Test
+        void testReverseBits_negative() {
+            int[] testValues = {-1, -2, -5, -100, Integer.MIN_VALUE};
+            for (int val : testValues) {
+                assertEquals(Integer.reverse(val), MtxMath.reverseBits(val));
+            }
+        }
+    }
 }
