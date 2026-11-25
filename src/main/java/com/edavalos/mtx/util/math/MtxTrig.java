@@ -264,16 +264,17 @@ public final class MtxTrig {
             return new SinCos(x, 1.0); // preserve the sign of sine zero
         }
 
-        // Reduce to [-pi, pi]. Split pi/2 into high and low parts so the
-        // subtraction retains useful precision for ordinary-sized arguments.
+        // The polynomial reduction below loses precision when the quadrant
+        // count is too large. StrictMath uses a multiword reduction for these
+        // inputs, preserving useful precision across the full double range.
         double ax = MtxMath.abs(x);
         if (ax > 0x1.0p20) {
-            // A bounded remainder avoids overflow and keeps the polynomial's
-            // input small. For very large inputs the available double-precision
-            // value of 2*pi limits the accuracy of this reduction.
-            x %= 2.0 * MtxMath.PI;
+            // @TODO: Implement StrictMath.sin(x) and StrictMath.cos(x)
+            return new SinCos(StrictMath.sin(x), StrictMath.cos(x));
         }
 
+        // Split pi/2 into high and low parts so the subtraction retains
+        // useful precision for ordinary-sized arguments.
         double n = MtxMath.floor(MtxMath.abs(x) * 0x1.45f306dc9c883p-1 + 0.5);
         if (x < 0.0) {
             n = -n;
