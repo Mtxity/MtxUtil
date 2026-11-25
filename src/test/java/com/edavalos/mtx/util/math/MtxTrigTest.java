@@ -936,4 +936,45 @@ class MtxTrigTest {
         refinedSqrt.setAccessible(true);
         assertTrue(Double.isNaN((double) refinedSqrt.invoke(null, Double.NaN)));
     }
+
+    @Nested
+    class AngleHelperTests {
+
+        @Test
+        void testAngleConversions() {
+            assertEquals(Math.PI, MtxTrig.toRadians(180.0), 0.0);
+            assertEquals(90.0, MtxTrig.toDegrees(Math.PI / 2.0), 0.0);
+            assertEquals(Math.toRadians(-45.0), MtxTrig.toRadians(-45.0), 0.0);
+            assertEquals(Math.toDegrees(-Math.PI), MtxTrig.toDegrees(-Math.PI), 0.0);
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.toRadians(Double.POSITIVE_INFINITY), 0.0);
+            assertTrue(Double.isNaN(MtxTrig.toDegrees(Double.NaN)));
+        }
+
+        @Test
+        void testNormalizeRadians_usesZeroInclusiveTauExclusiveRange() {
+            assertEquals(0.0, MtxTrig.normalizeRadians(0.0), 0.0);
+            assertEquals(0.0, MtxTrig.normalizeRadians(-0.0), 0.0);
+            assertEquals(Math.PI / 2.0, MtxTrig.normalizeRadians(Math.PI / 2.0), 0.0);
+            assertEquals(Math.PI, MtxTrig.normalizeRadians(-Math.PI), 0.0);
+            assertEquals(3.0 * Math.PI / 2.0, MtxTrig.normalizeRadians(-Math.PI / 2.0), TOLERANCE);
+            assertEquals(0.0, MtxTrig.normalizeRadians(MtxMath.TAU), 0.0);
+            assertEquals(0.0, MtxTrig.normalizeRadians(-MtxMath.TAU), 0.0);
+
+            // Adding TAU to this tiny negative remainder rounds up to TAU,
+            // exercising the upper-bound rounding guard.
+            assertEquals(0.0, MtxTrig.normalizeRadians(-Double.MIN_VALUE), 0.0);
+            assertEquals(Math.PI / 2.0, MtxTrig.normalizeRadians(5.0 * Math.PI / 2.0), TOLERANCE);
+        }
+
+        @Test
+        void testNormalizeRadians_nonFiniteAndLargeValues() {
+            assertTrue(Double.isNaN(MtxTrig.normalizeRadians(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.normalizeRadians(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.normalizeRadians(Double.NEGATIVE_INFINITY)));
+            for (double angle : new double[]{Double.MAX_VALUE, -Double.MAX_VALUE}) {
+                double normalized = MtxTrig.normalizeRadians(angle);
+                assertTrue(normalized >= 0.0 && normalized < MtxMath.TAU);
+            }
+        }
+    }
 }
