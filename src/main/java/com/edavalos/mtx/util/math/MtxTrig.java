@@ -490,4 +490,20 @@ public final class MtxTrig {
     public static double toDegrees(double radians) {
         return radians * RADIANS_TO_DEGREES;
     }
+
+    /**
+     * Normalizes an angle in radians to the range {@code [0, 2π)}.
+     * Returns {@link Double#NaN} for NaN or infinite inputs.
+     */
+    public static double normalizeRadians(double radians) {
+        if (!Double.isFinite(radians)) {
+            return Double.NaN;
+        }
+        double normalized = radians % MtxMath.TAU;
+        if (normalized < 0.0) {
+            normalized += MtxMath.TAU;
+        }
+        // Rounding can produce TAU for a result just below the upper bound.
+        return normalized >= MtxMath.TAU ? 0.0 : normalized;
+    }
 }
