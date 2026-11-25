@@ -15,6 +15,44 @@ class MtxTrigTest {
     private static final double PSEUDO_INFINITY_ADJ = 1.1169973830808549E308;
 
     @Nested
+    class SinCosTests {
+
+        @Test
+        void testSinCos_matchesIndividualFunctionsAndStrictMath() {
+            double[] inputs = {0.0, -0.0, 0.25, -0.25, Math.PI / 4.0, Math.PI / 2.0,
+                    Math.PI, -Math.PI, 10.0, -10.0};
+            for (double x : inputs) {
+                MtxTrig.SinCos result = MtxTrig.sinCos(x);
+                assertEquals(StrictMath.sin(x), result.sin(), TOLERANCE, "sinCos.sin(" + x + ")");
+                assertEquals(StrictMath.cos(x), result.cos(), TOLERANCE, "sinCos.cos(" + x + ")");
+                assertEquals(MtxTrig.sin(x), result.sin(), 0.0, "sin(" + x + ")");
+                assertEquals(MtxTrig.cos(x), result.cos(), 0.0, "cos(" + x + ")");
+            }
+        }
+
+        @Test
+        void testSinCos_largeArgumentReduction() {
+            double x = Math.scalb(1.0, 21);
+            MtxTrig.SinCos result = MtxTrig.sinCos(x);
+            // The current large-input fallback reduces with a double-precision 2*pi remainder.
+            assertEquals(StrictMath.sin(x), result.sin(), 1e-9);
+            assertEquals(StrictMath.cos(x), result.cos(), 1e-9);
+        }
+
+        @Test
+        void testSinCos_signedZeroAndNonFiniteInputs() {
+            assertSameBits(0.0, MtxTrig.sinCos(0.0).sin());
+            assertSameBits(-0.0, MtxTrig.sinCos(-0.0).sin());
+            assertEquals(1.0, MtxTrig.sinCos(0.0).cos(), 0.0);
+            for (double x : new double[]{Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY}) {
+                MtxTrig.SinCos result = MtxTrig.sinCos(x);
+                assertTrue(Double.isNaN(result.sin()));
+                assertTrue(Double.isNaN(result.cos()));
+            }
+        }
+    }
+
+    @Nested
     class ArcTanTests {
 
         @Test
