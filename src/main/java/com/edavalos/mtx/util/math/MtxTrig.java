@@ -314,6 +314,16 @@ public final class MtxTrig {
         return sin(x) / cos(x);
     }
 
+    /**
+     * Returns {@code cos(x) / sin(x)}. At sine zeros, the result follows
+     * IEEE-754 division semantics; near those singularities it may be very
+     * large or infinite due to floating-point precision. No pole threshold is applied.
+     */
+    public static double cot(double x) {
+        SinCos values = sinCos(x);
+        return values.cos() / values.sin();
+    }
+
     public static double sinh(double x) {
         if (Double.isNaN(x) || Double.isInfinite(x) || x == 0.0) {
             return x;
