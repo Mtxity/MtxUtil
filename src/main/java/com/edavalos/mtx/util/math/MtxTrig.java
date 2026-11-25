@@ -11,6 +11,8 @@ public final class MtxTrig {
     private static final double pi_lo = 0x1.1a62633145c07p-53;
     private static final int EXP_BITS = 0x7ff0_0000;
     private static final int EXP_SIGNIF_BITS = 0x7fff_ffff;
+    private static final double DEGREES_TO_RADIANS = 0.017453292519943295;
+    private static final double RADIANS_TO_DEGREES = 57.29577951308232;
 
     private static final double[] atanHi = {
             0x1.dac670561bb4fp-2,  // atan(0.5)hi 4.63647609000806093515e-01
@@ -479,5 +481,13 @@ public final class MtxTrig {
             result = MtxMath.ln(absX) + MtxMath.ln(1.0 + root);
         }
         return x < 0.0 ? -result : result;
+    }
+
+    public static double toRadians(double degrees) {
+        return degrees * DEGREES_TO_RADIANS;
+    }
+
+    public static double toDegrees(double radians) {
+        return radians * RADIANS_TO_DEGREES;
     }
 }
