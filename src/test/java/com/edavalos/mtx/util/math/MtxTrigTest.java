@@ -32,11 +32,13 @@ class MtxTrigTest {
 
         @Test
         void testSinCos_largeArgumentReduction() {
-            double x = Math.scalb(1.0, 21);
-            MtxTrig.SinCos result = MtxTrig.sinCos(x);
-            // The current large-input fallback reduces with a double-precision 2*pi remainder.
-            assertEquals(StrictMath.sin(x), result.sin(), 1e-9);
-            assertEquals(StrictMath.cos(x), result.cos(), 1e-9);
+            double[] inputs = {Math.scalb(1.0, 21), -Math.scalb(1.0, 21), 1e100, -1e100,
+                    Double.MAX_VALUE, -Double.MAX_VALUE};
+            for (double x : inputs) {
+                MtxTrig.SinCos result = MtxTrig.sinCos(x);
+                assertEquals(StrictMath.sin(x), result.sin(), TOLERANCE, "sinCos.sin(" + x + ")");
+                assertEquals(StrictMath.cos(x), result.cos(), TOLERANCE, "sinCos.cos(" + x + ")");
+            }
         }
 
         @Test
@@ -361,8 +363,8 @@ class MtxTrigTest {
         @Test
         void testSin_largeArgumentReduction() {
             double x = 0x1.0p21;
-            assertSin(x, 1e-9);
-            assertSin(-x, 1e-9);
+            assertSin(x);
+            assertSin(-x);
         }
 
         @Test
@@ -423,8 +425,8 @@ class MtxTrigTest {
         @Test
         void testCos_largeArgumentReduction() {
             double x = 0x1.0p21;
-            assertCos(x, 1e-9);
-            assertCos(-x, 1e-9);
+            assertCos(x);
+            assertCos(-x);
         }
 
         @Test
