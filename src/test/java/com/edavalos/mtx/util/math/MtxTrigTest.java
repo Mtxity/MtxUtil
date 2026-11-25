@@ -694,6 +694,42 @@ class MtxTrigTest {
     }
 
     @Nested
+    class ReciprocalTrigTests {
+
+        @Test
+        void testCotSecCsc_knownValues() {
+            double x = 0.3;
+            assertEquals(StrictMath.cos(x) / StrictMath.sin(x), MtxTrig.cot(x), TOLERANCE);
+            assertEquals(1.0 / StrictMath.cos(x), MtxTrig.sec(x), TOLERANCE);
+            assertEquals(1.0 / StrictMath.sin(x), MtxTrig.csc(x), TOLERANCE);
+            assertEquals(1.0, MtxTrig.sec(0.0), 0.0);
+            assertEquals(1.0, MtxTrig.csc(Math.PI / 2.0), TOLERANCE);
+        }
+
+        @Test
+        void testCotSecCsc_singularitiesAndSignedZero() {
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.cot(0.0), 0.0);
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.cot(-0.0), 0.0);
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.csc(0.0), 0.0);
+            assertEquals(Double.NEGATIVE_INFINITY, MtxTrig.csc(-0.0), 0.0);
+            for (double x : new double[]{Double.NaN, Double.POSITIVE_INFINITY, Double.NEGATIVE_INFINITY}) {
+                assertTrue(Double.isNaN(MtxTrig.cot(x)));
+                assertTrue(Double.isNaN(MtxTrig.sec(x)));
+                assertTrue(Double.isNaN(MtxTrig.csc(x)));
+            }
+        }
+
+        @Test
+        void testSecAndCsc_nearSingularitiesCanBeLarge() {
+            double nearCosineZero = Math.nextDown(Math.PI / 2.0);
+            double nearSineZero = Double.MIN_VALUE;
+            assertTrue(Double.isFinite(MtxTrig.sec(nearCosineZero)));
+            assertTrue(MtxMath.abs(MtxTrig.sec(nearCosineZero)) > 1.0e15);
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.csc(nearSineZero), 0.0);
+        }
+    }
+
+    @Nested
     class TanHypTests {
 
         @Test
