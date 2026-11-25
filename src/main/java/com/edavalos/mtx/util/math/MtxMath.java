@@ -994,6 +994,11 @@ public final class MtxMath {
         return (int) transducer;
     }
 
+    public static double lowOrderBit(double x, int low) {
+        long transX = Double.doubleToRawLongBits(x);
+        return Double.longBitsToDouble((transX & 0xFFFF_FFFF_0000_0000L) | (low & 0x0000_0000_FFFF_FFFFL));
+    }
+
     public static double copySign(double magnitude, double sign) {
         return Double.longBitsToDouble(
                 (Double.doubleToRawLongBits(sign) & (1L << (Double.SIZE - 1)))
