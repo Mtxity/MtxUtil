@@ -3837,4 +3837,40 @@ public class MtxMathTest {
             }
         }
     }
+
+    @Nested
+    class TopLevelSequenceTests {
+
+        @Test
+        void testFactorial() {
+            assertEquals(1L, MtxMath.factorial(0));
+            assertEquals(1L, MtxMath.factorial(1));
+            assertEquals(2L, MtxMath.factorial(2));
+            assertEquals(6L, MtxMath.factorial(3));
+            assertEquals(120L, MtxMath.factorial(5));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.factorial(-1));
+        }
+
+        @Test
+        void testFibonacci() {
+            assertEquals(1, MtxMath.fibonacci(1));
+            assertEquals(1, MtxMath.fibonacci(2));
+            assertEquals(2, MtxMath.fibonacci(3));
+            assertEquals(3, MtxMath.fibonacci(4));
+            assertEquals(5, MtxMath.fibonacci(5));
+            assertEquals(21, MtxMath.fibonacci(8));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.fibonacci(0));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.fibonacci(-1));
+        }
+
+        @Test
+        void testCatalan() {
+            assertEquals(1L, MtxMath.catalan(0));
+            assertEquals(1L, MtxMath.catalan(1));
+            assertEquals(2L, MtxMath.catalan(2));
+            assertEquals(5L, MtxMath.catalan(3));
+            assertEquals(14L, MtxMath.catalan(4));
+            assertThrows(IllegalArgumentException.class, () -> MtxMath.catalan(-1));
+        }
+    }
 }
