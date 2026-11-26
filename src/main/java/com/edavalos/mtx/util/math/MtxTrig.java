@@ -966,5 +966,10 @@ public final class MtxTrig {
 
             return n & 7;
         }
+
+        private static double primPowerOfTwoD(int n) {
+            // Native method
+            return Double.longBitsToDouble((long) (n + EXP_BIAS) << SIGNIFICAND_WIDTH - 1);
+        }
     }
 }
