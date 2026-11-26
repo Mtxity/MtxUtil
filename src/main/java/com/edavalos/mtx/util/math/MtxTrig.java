@@ -967,6 +967,28 @@ public final class MtxTrig {
             return n & 7;
         }
 
+        protected static double sCalB(double d, int scaleFactor) {
+            if (scaleFactor > -EXP_BIAS) {
+                if (scaleFactor <= EXP_BIAS) {
+                    return d * primPowerOfTwoD(scaleFactor);
+                }
+                if (scaleFactor <= 2 * EXP_BIAS) {
+                    return d * primPowerOfTwoD(scaleFactor - EXP_BIAS) * F_UP;
+                }
+                if (scaleFactor < 2 * EXP_BIAS + SIGNIFICAND_WIDTH - 1) {
+                    return d * primPowerOfTwoD(scaleFactor - 2 * EXP_BIAS) * F_UP * F_UP;
+                }
+                return d * F_UP * F_UP * F_UP;
+            }
+            if (scaleFactor > -2 * EXP_BIAS) {
+                return d * primPowerOfTwoD(scaleFactor + EXP_BIAS) * F_DOWN;
+            }
+            if (scaleFactor > -2 * EXP_BIAS - SIGNIFICAND_WIDTH) {
+                return d * primPowerOfTwoD(scaleFactor + 2 * EXP_BIAS) * F_DOWN * F_DOWN;
+            }
+            return d * MIN_VALUE * MIN_VALUE;
+        }
+
         private static double primPowerOfTwoD(int n) {
             // Native method
             return Double.longBitsToDouble((long) (n + EXP_BIAS) << SIGNIFICAND_WIDTH - 1);
