@@ -603,6 +603,33 @@ public final class MtxTrig {
         private static final double F_DOWN = 0x1p-1023; // subnormal, exact, 2^-DoubleConsts.EXP_BIAS
         private static final double MIN_VALUE = 0x0.0000000000001P-1022; // 4.9e-324
 
+        public static double computeSin(double x) {
+            double[] y = new double[2];
+            double z = 0.0;
+            int n, ix;
+
+            // High word of x
+            ix = MtxMath.highOrderBit(x);
+
+            // |x| ~< pi/4
+            ix &= EXP_SIGNIF_BITS;
+            if (ix <= 0x3fe9_21fb) {
+                return kernelSin(x, z, 0);
+            } else if (ix >= EXP_BITS) {
+                // sin(Inf or NaN) is NaN
+                return 0.0;
+            } else {
+                // argument reduction needed
+                n = ieee754RemPio2(x, y);
+                return switch (n & 3) {
+                    case 0 ->   kernelSin(y[0], y[1], 1);
+                    case 1 ->   kernelCos(y[0], y[1]);
+                    case 2 ->  -kernelSin(y[0], y[1], 1);
+                    default -> -kernelCos(y[0], y[1]);
+                };
+            }
+        }
+
         private static double kernelCos(double x, double y) {
             double z = x * x;
             double r = z * (C1 + z * (C2 + z * (C3 + z * (C4 + z * (C5 + z * C6)))));
