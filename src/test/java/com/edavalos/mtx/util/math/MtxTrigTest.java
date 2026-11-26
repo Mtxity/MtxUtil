@@ -3,9 +3,11 @@ package com.edavalos.mtx.util.math;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class MtxTrigTest {
@@ -1013,6 +1015,122 @@ class MtxTrigTest {
                 double normalized = MtxTrig.normalizeRadians(angle);
                 assertTrue(normalized >= 0.0 && normalized < MtxMath.TAU);
             }
+        }
+    }
+
+    @Nested
+    class StrictTrigTests {
+
+        @Test
+        void computeSin_coversKernelAndQuadrants() {
+            for (double x : new double[]{0.0, -0.0, Double.MIN_VALUE, -Double.MIN_VALUE,
+                    0.1, -0.1, Math.PI / 4.0, Math.nextUp(Math.PI / 4.0),
+                    1.2, 2.35, Math.PI / 2.0, -Math.PI / 2.0, Math.PI, -Math.PI,
+                    3.0 * Math.PI / 2.0, 1e6, -1e6, 1e20, -1e20,
+                    Double.MAX_VALUE, -Double.MAX_VALUE}) {
+                assertEquals(StrictMath.sin(x), MtxTrig.MtxStrictTrig.computeSin(x),
+                        2e-15, "strict sin(" + x + ")");
+            }
+            assertFalse(Double.isNaN(MtxTrig.MtxStrictTrig.computeSin(Double.POSITIVE_INFINITY)));
+            assertFalse(Double.isNaN(MtxTrig.MtxStrictTrig.computeSin(Double.NaN)));
+        }
+
+        @Test
+        void kernelSin_coversCorrectionModesAndTinyInputs() {
+            for (int correction : new int[]{0, 1}) {
+                double actual = MtxTrig.MtxStrictTrig.kernelSin(0.3, 1e-17, correction);
+                assertEquals(StrictMath.sin(0.3), actual, 1e-15);
+            }
+            assertSameBits(-0.0, MtxTrig.MtxStrictTrig.kernelSin(-0.0, 0.0, 0));
+            assertSameBits(Double.MIN_VALUE,
+                    MtxTrig.MtxStrictTrig.kernelSin(Double.MIN_VALUE, 0.0, 0));
+        }
+
+        @Test
+        void remPio2_coversSmallSpecialMediumAndLargeInputs() {
+            double[] y = new double[2];
+            assertEquals(0, MtxTrig.MtxStrictTrig.ieee754RemPio2(0.2, y));
+            assertEquals(1, MtxTrig.MtxStrictTrig.ieee754RemPio2(1.0, y));
+            assertEquals(-1, MtxTrig.MtxStrictTrig.ieee754RemPio2(-1.0, y));
+            assertEquals(1, MtxTrig.MtxStrictTrig.ieee754RemPio2(Math.PI / 2.0, y));
+            assertEquals(-1, MtxTrig.MtxStrictTrig.ieee754RemPio2(-Math.PI / 2.0, y));
+            assertEquals(2, MtxTrig.MtxStrictTrig.ieee754RemPio2(3.0, y));
+            assertEquals(-2, MtxTrig.MtxStrictTrig.ieee754RemPio2(-3.0, y));
+            int positiveLarge = MtxTrig.MtxStrictTrig.ieee754RemPio2(1e20, y);
+            assertTrue(Math.abs(y[0] + y[1]) <= Math.PI / 4.0);
+            assertTrue(positiveLarge >= 0);
+            int negativeLarge = MtxTrig.MtxStrictTrig.ieee754RemPio2(-1e20, y);
+            assertEquals(-positiveLarge, negativeLarge);
+            assertEquals(0, MtxTrig.MtxStrictTrig.ieee754RemPio2(Double.POSITIVE_INFINITY, y));
+            assertEquals(0, MtxTrig.MtxStrictTrig.ieee754RemPio2(Double.NaN, y));
+        }
+
+        @Test
+        void kernelRemPio2_supportsEachPrecisionMode() throws ReflectiveOperationException {
+            int[] table = twoOverPiTable();
+            for (int precision = 0; precision <= 3; precision++) {
+                double[] y = new double[3];
+                int quadrant = MtxTrig.MtxStrictTrig.kernelRemPio2(
+                        new double[]{1.0, 0.0, 0.0}, y, 0, 1, precision, table);
+                assertTrue(quadrant >= 0 && quadrant < 8);
+                assertTrue(Double.isFinite(y[0]));
+                if (precision > 0) assertTrue(Double.isFinite(y[1]));
+            }
+        }
+
+        @Test
+        void kernelRemPio2_exercisesExponentAndRoundingBranches() throws ReflectiveOperationException {
+            int[] table = twoOverPiTable();
+            int[] exponents = {-40, -1, 0, 1, 2, 3, 4, 5, 6, 24, 25, 26, 48, 100, 300, 900};
+            double[] chunks = {1.0, 0x1.555555p23, 0x1.0p23, 0x1.fffffep23};
+            for (int e0 : exponents) {
+                for (double chunk : chunks) {
+                    for (int nx : new int[]{1, 2, 3}) {
+                        double[] x = {chunk, chunk == 1.0 ? 0.0 : 0x1.0p20, 1.0};
+                        for (int precision = 0; precision <= 3; precision++) {
+                            double[] y = new double[3];
+                            int quadrant = MtxTrig.MtxStrictTrig.kernelRemPio2(
+                                    x, y, e0, nx, precision, table);
+                            assertTrue(quadrant >= 0 && quadrant < 8);
+                            assertTrue(Double.isFinite(y[0]));
+                        }
+                    }
+                }
+            }
+        }
+
+        @Test
+        void kernelRemPio2_trimsZeroRemainderDigits() {
+            int[] sparseTwoOverPi = new int[66];
+            // Leave the highest two quotient chunks empty while retaining a
+            // lower nonzero chunk. Extreme scaling makes z zero, so trimming
+            // must step past the empty iq digit before reaching the nonzero one.
+            sparseTwoOverPi[2] = 1;
+            double[] remainder = new double[3];
+            int quadrant = MtxTrig.MtxStrictTrig.kernelRemPio2(
+                    new double[]{0x1.0p20}, remainder, -2100, 1, 2, sparseTwoOverPi);
+
+            assertTrue(quadrant >= 0 && quadrant < 8);
+            assertEquals(0.0, remainder[0], 0.0);
+        }
+
+        private static int[] twoOverPiTable() throws ReflectiveOperationException {
+            Field field = MtxTrig.MtxStrictTrig.class.getDeclaredField("two_over_pi");
+            field.setAccessible(true);
+            return (int[]) field.get(null);
+        }
+
+        @Test
+        void scalingHelper_coversNormalAndSubnormalScaleRanges() {
+            for (int exponent : new int[]{1023, 1024, 2046, 2047, 2097, -1023, -1024,
+                    -2046, -2047, -2080, -2100}) {
+                double result = MtxTrig.MtxStrictTrig.sCalB(1.0, exponent);
+                assertEquals(StrictMath.scalb(1.0, exponent), result, 0.0,
+                        "sCalB exponent " + exponent);
+            }
+            assertEquals(Double.POSITIVE_INFINITY,
+                    MtxTrig.MtxStrictTrig.sCalB(Double.MAX_VALUE, 3070));
+            assertEquals(0.0, MtxTrig.MtxStrictTrig.sCalB(1.0, -3000), 0.0);
         }
     }
 }
