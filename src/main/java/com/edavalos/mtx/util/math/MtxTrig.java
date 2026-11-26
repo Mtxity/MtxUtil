@@ -612,5 +612,23 @@ public final class MtxTrig {
             double qx = MtxMath.abs(x) > 0.78125 ? 0.28125 : 0.5 * z;
             return (1.0 - qx) - ((0.5 * z - qx) - (z * r - x * y));
         }
+
+        protected static double kernelSin(double x, double y, int iy) {
+            double z, r, v;
+            int ix;
+            ix = MtxMath.highOrderBit(x) & EXP_SIGNIF_BITS; // high word of x
+            if (ix < 0x3e40_0000) {                         // |x| < 2**-27
+                if ((int) x == 0)                           // generate inexact
+                    return x;
+            }
+            z = x * x;
+            v = z * x;
+            r = S2 + z * (S3 + z * (S4 + z * (S5 + z * S6)));
+            if (iy == 0) {
+                return x + v * (S1 + z * r);
+            } else {
+                return x - ((z * (0.5 * y - v * r) - y) - v * S1);
+            }
+        }
     }
 }
