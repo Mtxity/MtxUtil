@@ -57,6 +57,35 @@ class MtxTrigTest {
     }
 
     @Nested
+    class CardinalSinTests {
+
+        @Test
+        void testSinc_zeroAndSmallInputs() {
+            assertEquals(1.0, MtxTrig.sinc(0.0), 0.0);
+            assertEquals(1.0, MtxTrig.sinc(-0.0), 0.0);
+            for (double x : new double[]{Double.MIN_VALUE, -Double.MIN_VALUE, 1e-12, -1e-12, 1e-4, -1e-4}) {
+                double expected = x == 0.0 ? 1.0 : StrictMath.sin(x) / x;
+                assertEquals(expected, MtxTrig.sinc(x), TOLERANCE, "sinc(" + x + ")");
+            }
+        }
+
+        @Test
+        void testSinc_knownValuesAndLargeArguments() {
+            for (double x : new double[]{Math.PI / 2.0, Math.PI, -Math.PI, 10.0, -10.0,
+                    Math.scalb(1.0, 21), 1e100, Double.MAX_VALUE}) {
+                assertEquals(StrictMath.sin(x) / x, MtxTrig.sinc(x), TOLERANCE, "sinc(" + x + ")");
+            }
+        }
+
+        @Test
+        void testSinc_nonFiniteInputs() {
+            assertTrue(Double.isNaN(MtxTrig.sinc(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.sinc(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.sinc(Double.NEGATIVE_INFINITY)));
+        }
+    }
+
+    @Nested
     class ArcTanTests {
 
         @Test
