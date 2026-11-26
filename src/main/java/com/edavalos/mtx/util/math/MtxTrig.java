@@ -657,5 +657,110 @@ public final class MtxTrig {
                 return x - ((z * (0.5 * y - v * r) - y) - v * S1);
             }
         }
+
+        protected static int ieee754RemPio2(double x, double[] y) {
+            double z = 0.0, w, t, r, fn;
+            double[] tx = new double[3];
+            int e0, i, j, nx, n, ix, hx;
+
+            hx = MtxMath.highOrderBit(x); // high word of x
+            ix = hx & EXP_SIGNIF_BITS;
+            if (ix <= 0x3fe9_21fb) { // |x| ~<= pi/4, no need for reduction
+                y[0] = x;
+                y[1] = 0;
+                return 0;
+            }
+
+            if (ix < 0x4002_d97c) { // |x| < 3pi/4, special case with n=+-1
+                if (hx > 0) {
+                    z = x - pio2_1;
+                    if (ix != 0x3ff9_21fb) { // 33+53 bit pi is good enough
+                        y[0] = z - pio2_1t;
+                        y[1] = (z - y[0]) - pio2_1t;
+                    } else { // near pi/2, use 33+33+53 bit pi
+                        z -= pio2_2;
+                        y[0] = z - pio2_2t;
+                        y[1] = (z-y[0])-pio2_2t;
+                    }
+                    return 1;
+                } else { // negative x
+                    z = x + pio2_1;
+                    if (ix != 0x3ff_921fb) { // 33+53 bit pi is good enough
+                        y[0] = z + pio2_1t;
+                        y[1] = (z - y[0]) + pio2_1t;
+                    } else { // near pi/2, use 33+33+53 bit pi
+                        z += pio2_2;
+                        y[0] = z + pio2_2t;
+                        y[1] = (z - y[0]) + pio2_2t;
+                    }
+                    return -1;
+                }
+            }
+
+            if (ix <= 0x4139_21fb) { // |x| ~<= 2^19*(pi/2), medium size
+                t  = MtxMath.abs(x);
+                n  = (int) (t * invpio2 + 0.5);
+                fn = n;
+                r  = t - fn * pio2_1;
+                w  = fn * pio2_1t; // 1st round good to 85 bit
+                if (n < 32 && ix != npio2_hw[n - 1]) {
+                    y[0] = r - w; // quick check no cancellation
+                } else {
+                    j = ix >> 20;
+                    y[0] = r - w;
+                    i = j - (((MtxMath.highOrderBit(y[0])) >> 20) & 0x7ff);
+                    if (i > 16) { // 2nd iteration needed, good to 118
+                        t  = r;
+                        w  = fn * pio2_2;
+                        r  = t - w;
+                        w  = fn * pio2_2t - ((t - r) - w);
+                        y[0] = r - w;
+                        i = j - (((MtxMath.highOrderBit(y[0])) >> 20) & 0x7ff);
+                        if (i > 49)  { // 3rd iteration need, 151 bits acc
+                            t  = r; // will cover all possible cases
+                            w  = fn * pio2_3;
+                            r  = t - w;
+                            w  = fn * pio2_3t - ((t - r) - w);
+                            y[0] = r - w;
+                        }
+                    }
+                }
+                y[1] = (r - y[0]) - w;
+                if (hx < 0) {
+                    y[0] = -y[0];
+                    y[1] = -y[1];
+                    return -n;
+                } else {
+                    return n;
+                }
+            }
+
+            // all other (large) arguments
+            if (ix >= EXP_BITS) { // x is inf or NaN
+                y[0] = y[1] = 0.0;
+                return 0;
+            }
+
+            // set z = scalbn(|x|, ilogb(x)-23)
+            z = MtxMath.lowOrderBit(z, MtxMath.lowOrderBit(x));
+            e0 = (ix >> 20) - 1046; // e0 = ilogb(z) - 23;
+            z = MtxMath.highOrderBit(z, ix - (e0 << 20));
+            for (i=0; i < 2; i++) {
+                tx[i] = (int)(z);
+                z = (z - tx[i])*TWO24;
+            }
+            tx[2] = z;
+            nx = 3;
+            while (tx[nx - 1] == 0.0) { // skip zero term
+                nx--;
+            }
+            n = kernelRemPio2(tx, y, e0, nx, 2, two_over_pi);
+            if (hx < 0) {
+                y[0] = -y[0];
+                y[1] = -y[1];
+                return -n;
+            }
+            return n;
+        }
     }
 }
