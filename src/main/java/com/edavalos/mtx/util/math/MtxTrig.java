@@ -248,6 +248,25 @@ public final class MtxTrig {
         return sinCos(x).sin();
     }
 
+    /**
+     * Returns the unnormalized sinc function, {@code sin(x) / x}, with
+     * {@code sinc(0) = 1}. A Taylor expansion avoids loss of precision near zero.
+     */
+    public static double sinc(double x) {
+        if (x == 0.0) {
+            return 1.0;
+        }
+
+        if (MtxMath.abs(x) < 0.01) {
+            double xSquared = x * x;
+            return 1.0 + xSquared * (-1.0 / 6.0 + xSquared * (1.0 / 120.0
+                    + xSquared * (-1.0 / 5040.0 + xSquared * (1.0 / 362880.0
+                    - xSquared / 39916800.0))));
+        }
+
+        return sin(x) / x;
+    }
+
     public static double cos(double x) {
         return sinCos(x).cos();
     }
