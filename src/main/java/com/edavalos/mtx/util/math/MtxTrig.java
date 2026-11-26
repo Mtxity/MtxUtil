@@ -267,6 +267,25 @@ public final class MtxTrig {
         return sin(x) / x;
     }
 
+    /**
+     * Returns the unnormalized cosc function, {@code (1 - cos(x)) / x},
+     * with {@code cosc(0) = 0}. A Taylor expansion avoids cancellation near zero.
+     */
+    public static double cosc(double x) {
+        if (x == 0.0) {
+            return x;
+        }
+
+        if (MtxMath.abs(x) < 0.1) {
+            double xSquared = x * x;
+            return x * (0.5 + xSquared * (-1.0 / 24.0 + xSquared * (1.0 / 720.0
+                    + xSquared * (-1.0 / 40320.0 + xSquared * (1.0 / 3628800.0
+                    + xSquared * (-1.0 / 479001600.0 + xSquared / 87178291200.0))))));
+        }
+
+        return (1.0 - cos(x)) / x;
+    }
+
     public static double cos(double x) {
         return sinCos(x).cos();
     }
