@@ -535,4 +535,82 @@ public final class MtxTrig {
         // Rounding can produce TAU for a result just below the upper bound.
         return normalized >= MtxMath.TAU ? 0.0 : normalized;
     }
+
+    public static class MtxStrictTrig {
+        private static final double S1  = -0x1.5555555555549p-3;
+        private static final double S2  =  0x1.111111110f8a6p-7;
+        private static final double S3  = -0x1.a01a019c161d5p-13;
+        private static final double S4  =  0x1.71de357b1fe7dp-19;
+        private static final double S5  = -0x1.ae5e68a2b9cebp-26;
+        private static final double S6  =  0x1.5d93a5acfd57cp-33;
+        private static final double C1  =  0x1.555555555554cp-5;
+        private static final double C2  = -0x1.6c16c16c15177p-10;
+        private static final double C3  =  0x1.a01a019cb1590p-16;
+        private static final double C4  = -0x1.27e4f809c52adp-22;
+        private static final double C5  =  0x1.1ee9ebdb4b1c4p-29;
+        private static final double C6  = -0x1.8fae9be8838d4p-37;
+
+        private static final double
+                invpio2 =  0x1.45f306dc9c883p-1,   // 6.36619772367581382433e-01
+                pio2_1  =  0x1.921fb544p0,         // 1.57079632673412561417e+00
+                pio2_1t =  0x1.0b4611a626331p-34,  // 6.07710050650619224932e-11
+                pio2_2  =  0x1.0b4611a6p-34,       // 6.07710050630396597660e-11
+                pio2_2t =  0x1.3198a2e037073p-69,  // 2.02226624879595063154e-21
+                pio2_3  =  0x1.3198a2ep-69,        // 2.02226624871116645580e-21
+                pio2_3t =  0x1.b839a252049c1p-104; // 8.47842766036889956997e-32
+
+        private static final int[] npio2_hw = {
+                0x3FF921FB, 0x400921FB, 0x4012D97C, 0x401921FB, 0x401F6A7A, 0x4022D97C,
+                0x4025FDBB, 0x402921FB, 0x402C463A, 0x402F6A7A, 0x4031475C, 0x4032D97C,
+                0x40346B9C, 0x4035FDBB, 0x40378FDB, 0x403921FB, 0x403AB41B, 0x403C463A,
+                0x403DD85A, 0x403F6A7A, 0x40407E4C, 0x4041475C, 0x4042106C, 0x4042D97C,
+                0x4043A28C, 0x40446B9C, 0x404534AC, 0x4045FDBB, 0x4046C6CB, 0x40478FDB,
+                0x404858EB, 0x404921FB,
+        };
+
+        private static final int[] two_over_pi = {
+                0xA2F983, 0x6E4E44, 0x1529FC, 0x2757D1, 0xF534DD, 0xC0DB62,
+                0x95993C, 0x439041, 0xFE5163, 0xABDEBB, 0xC561B7, 0x246E3A,
+                0x424DD2, 0xE00649, 0x2EEA09, 0xD1921C, 0xFE1DEB, 0x1CB129,
+                0xA73EE8, 0x8235F5, 0x2EBB44, 0x84E99C, 0x7026B4, 0x5F7E41,
+                0x3991D6, 0x398353, 0x39F49C, 0x845F8B, 0xBDF928, 0x3B1FF8,
+                0x97FFDE, 0x05980F, 0xEF2F11, 0x8B5A0A, 0x6D1F6D, 0x367ECF,
+                0x27CB09, 0xB74F46, 0x3F669E, 0x5FEA2D, 0x7527BA, 0xC7EBE5,
+                0xF17B3D, 0x0739F7, 0x8A5292, 0xEA6BFB, 0x5FB11F, 0x8D5D08,
+                0x560330, 0x46FC7B, 0x6BABF0, 0xCFBC20, 0x9AF436, 0x1DA9E3,
+                0x91615E, 0xE61B08, 0x659985, 0x5F14A0, 0x68408D, 0xFFD880,
+                0x4D7327, 0x310606, 0x1556CA, 0x73A8C9, 0x60E27B, 0xC08C6B,
+        };
+
+        private static final double TWO24 = 0x1.0p24; // 1.67772160000000000000e+07
+        private static final int init_jk[] = {2, 3, 4, 6};
+        private static final double twon24 = 0x1.0p-24;
+
+        private static final double PIo2[] = {
+                0x1.921fb4p0,    // 1.57079625129699707031e+00
+                0x1.4442dp-24,   // 7.54978941586159635335e-08
+                0x1.846988p-48,  // 5.39030252995776476554e-15
+                0x1.8cc516p-72,  // 3.28200341580791294123e-22
+                0x1.01b838p-96,  // 1.27065575308067607349e-29
+                0x1.a25204p-120, // 1.22933308981111328932e-36
+                0x1.382228p-145, // 2.73370053816464559624e-44
+                0x1.9f31dp-169,  // 2.16741683877804819444e-51
+        };
+
+        private static final int SIGNIFICAND_WIDTH = 53;
+        private static final int EXP_BIAS = (1 << (64 - SIGNIFICAND_WIDTH - 1)) - 1; // 1023
+        private static final double F_UP = 0x1p1023; // normal, exact, 2^DoubleConsts.EXP_BIAS
+        private static final double F_DOWN = 0x1p-1023; // subnormal, exact, 2^-DoubleConsts.EXP_BIAS
+        private static final double MIN_VALUE = 0x0.0000000000001P-1022; // 4.9e-324
+
+        private static double kernelCos(double x, double y) {
+            double z = x * x;
+            double r = z * (C1 + z * (C2 + z * (C3 + z * (C4 + z * (C5 + z * C6)))));
+            if (MtxMath.abs(x) < 0.3) {
+                return 1.0 - (0.5 * z - (z * r - x * y));
+            }
+            double qx = MtxMath.abs(x) > 0.78125 ? 0.28125 : 0.5 * z;
+            return (1.0 - qx) - ((0.5 * z - qx) - (z * r - x * y));
+        }
+    }
 }
