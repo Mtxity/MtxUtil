@@ -268,6 +268,25 @@ public final class MtxTrig {
     }
 
     /**
+     * Returns the unnormalized tangent cardinal function, {@code tan(x) / x},
+     * with {@code tanc(0) = 1}. A Taylor expansion avoids loss of precision near zero.
+     */
+    public static double tanc(double x) {
+        if (x == 0.0) {
+            return 1.0;
+        }
+
+        if (MtxMath.abs(x) < 0.1) {
+            double xSquared = x * x;
+            return 1.0 + xSquared * (1.0 / 3.0 + xSquared * (2.0 / 15.0
+                    + xSquared * (17.0 / 315.0 + xSquared * (62.0 / 2835.0
+                    + xSquared * 1382.0 / 155925.0))));
+        }
+
+        return tan(x) / x;
+    }
+
+    /**
      * Returns the unnormalized cosc function, {@code (1 - cos(x)) / x},
      * with {@code cosc(0) = 0}. A Taylor expansion avoids cancellation near zero.
      */
