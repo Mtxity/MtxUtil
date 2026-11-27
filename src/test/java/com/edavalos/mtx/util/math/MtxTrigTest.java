@@ -1245,4 +1245,50 @@ class MtxTrigTest {
             assertEquals(0.0, MtxTrig.MtxStrictTrig.sCalB(1.0, -3000), 0.0);
         }
     }
+
+    @Nested
+    class SinPiTests {
+
+        @Test
+        void testSinPi_integersReturnSignedZero() {
+            for (double x : new double[]{0.0, -0.0, 1.0, -1.0, 2.0, -2.0, 17.0, -17.0,
+                    Math.scalb(1.0, 53), -Math.scalb(1.0, 53), 1e20, -1e20}) {
+                assertSameBits(Math.copySign(0.0, x), MtxTrig.sinPi(x));
+            }
+        }
+
+        @Test
+        void testSinPi_halfIntegersReturnExactUnitValues() {
+            double[][] cases = {
+                    {0.5, 1.0}, {-0.5, -1.0},
+                    {1.5, -1.0}, {-1.5, 1.0},
+                    {2.5, 1.0}, {-2.5, -1.0}
+            };
+            for (double[] testCase : cases) {
+                assertEquals(testCase[1], MtxTrig.sinPi(testCase[0]), 0.0);
+            }
+        }
+
+        @Test
+        void testSinPi_generalAndLargeFractionalInputs() {
+            double largeFraction = Math.scalb(1.0, 40) + 0.25;
+            double largeHalfInteger = Math.scalb(1.0, 51) + 0.5;
+            for (double x : new double[]{0.125, 0.25, 0.75, 1.25, -0.25, -0.75}) {
+                assertEquals(StrictMath.sin(Math.PI * x), MtxTrig.sinPi(x), TOLERANCE, "sinPi(" + x + ")");
+            }
+            assertEquals(StrictMath.sqrt(0.5), MtxTrig.sinPi(largeFraction), TOLERANCE);
+            assertEquals(1.0, MtxTrig.sinPi(largeHalfInteger), 0.0);
+
+            double nearInteger = Math.nextDown(1.0);
+            double expected = StrictMath.sin(Math.PI * (1.0 - nearInteger));
+            assertEquals(expected, MtxTrig.sinPi(nearInteger), 1e-30);
+        }
+
+        @Test
+        void testSinPi_nonFiniteInputs() {
+            assertTrue(Double.isNaN(MtxTrig.sinPi(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.sinPi(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.sinPi(Double.NEGATIVE_INFINITY)));
+        }
+    }
 }
