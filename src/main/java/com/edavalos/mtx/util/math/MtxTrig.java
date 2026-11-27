@@ -592,6 +592,39 @@ public final class MtxTrig {
         return normalized >= MtxMath.TAU ? 0.0 : normalized;
     }
 
+    /**
+     * Returns {@code sin(π * x)} while reducing {@code x} before multiplying
+     * by π. Integer inputs return signed zero, and half-integer inputs return
+     * exactly {@code +1} or {@code -1}.
+     */
+    public static double sinPi(double x) {
+        if (!Double.isFinite(x)) {
+            return Double.NaN;
+        }
+
+        double reduced = x % 2.0;
+        if (reduced == 0.0 || MtxMath.abs(reduced) == 1.0) {
+            return MtxMath.copySign(0.0, x);
+        }
+        if (reduced > 1.0) {
+            reduced -= 2.0;
+        } else if (reduced < -1.0) {
+            reduced += 2.0;
+        }
+
+        if (MtxMath.abs(reduced) == 0.5) {
+            return MtxMath.copySign(1.0, reduced);
+        }
+
+        // Reflect values near +/-1 toward zero to reduce multiplication error.
+        if (reduced > 0.5) {
+            reduced = 1.0 - reduced;
+        } else if (reduced < -0.5) {
+            reduced = -1.0 - reduced;
+        }
+        return sin(MtxMath.PI * reduced);
+    }
+
     public static class MtxStrictTrig {
         private static final double S1  = -0x1.5555555555549p-3;
         private static final double S2  =  0x1.111111110f8a6p-7;
