@@ -1097,6 +1097,20 @@ class MtxTrigTest {
         }
 
         @Test
+        void computeCos_coversKernelAndQuadrants() {
+            for (double x : new double[]{0.0, -0.0, Double.MIN_VALUE, -Double.MIN_VALUE,
+                    0.1, -0.1, Math.PI / 4.0, Math.nextUp(Math.PI / 4.0),
+                    1.2, 2.35, Math.PI / 2.0, -Math.PI / 2.0, Math.PI, -Math.PI,
+                    3.0 * Math.PI / 2.0, 1e6, -1e6, 1e20, -1e20,
+                    Double.MAX_VALUE, -Double.MAX_VALUE}) {
+                assertEquals(StrictMath.cos(x), MtxTrig.MtxStrictTrig.computeCos(x),
+                        2e-15, "strict cos(" + x + ")");
+            }
+            assertFalse(Double.isNaN(MtxTrig.MtxStrictTrig.computeCos(Double.POSITIVE_INFINITY)));
+            assertFalse(Double.isNaN(MtxTrig.MtxStrictTrig.computeCos(Double.NaN)));
+        }
+
+        @Test
         void kernelSin_coversCorrectionModesAndTinyInputs() {
             for (int correction : new int[]{0, 1}) {
                 double actual = MtxTrig.MtxStrictTrig.kernelSin(0.3, 1e-17, correction);
