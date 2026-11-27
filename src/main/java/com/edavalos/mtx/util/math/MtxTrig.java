@@ -625,6 +625,42 @@ public final class MtxTrig {
         return sin(MtxMath.PI * reduced);
     }
 
+    /**
+     * Returns {@code cos(π * x)} while reducing {@code x} before multiplying
+     * by π. Integer inputs return exactly {@code +1} or {@code -1}, and
+     * half-integer inputs return exact zero.
+     */
+    public static double cosPi(double x) {
+        if (!Double.isFinite(x)) {
+            return Double.NaN;
+        }
+
+        double reduced = x % 2.0;
+        if (reduced == 0.0) {
+            return 1.0;
+        }
+        if (MtxMath.abs(reduced) == 1.0) {
+            return -1.0;
+        }
+        if (reduced > 1.0) {
+            reduced -= 2.0;
+        } else if (reduced < -1.0) {
+            reduced += 2.0;
+        }
+
+        double absReduced = MtxMath.abs(reduced);
+        if (absReduced == 0.5) {
+            return 0.0;
+        }
+
+        // Near half-integers, express cosine as a sine of the small distance
+        // from its zero. For smaller magnitudes, direct cosine stays conditioned.
+        if (absReduced < 0.25) {
+            return cos(MtxMath.PI * reduced);
+        }
+        return sin(MtxMath.PI * (0.5 - absReduced));
+    }
+
     public static class MtxStrictTrig {
         private static final double S1  = -0x1.5555555555549p-3;
         private static final double S2  =  0x1.111111110f8a6p-7;
