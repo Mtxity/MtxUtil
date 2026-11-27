@@ -86,6 +86,43 @@ class MtxTrigTest {
     }
 
     @Nested
+    class CardinalTanTests {
+
+        @Test
+        void testTanc_zeroAndSmallInputs() {
+            assertEquals(1.0, MtxTrig.tanc(0.0), 0.0);
+            assertEquals(1.0, MtxTrig.tanc(-0.0), 0.0);
+            for (double x : new double[]{Double.MIN_VALUE, -Double.MIN_VALUE, 1e-12, -1e-12, 1e-4, -1e-4}) {
+                double expected = x == 0.0 ? 1.0 : StrictMath.tan(x) / x;
+                assertEquals(expected, MtxTrig.tanc(x), TOLERANCE, "tanc(" + x + ")");
+            }
+        }
+
+        @Test
+        void testTanc_knownValuesAndLargeArguments() {
+            for (double x : new double[]{Math.PI / 4.0, Math.PI, -Math.PI, 10.0, -10.0,
+                    Math.scalb(1.0, 21), 1e100, Double.MAX_VALUE}) {
+                assertEquals(StrictMath.tan(x) / x, MtxTrig.tanc(x), TOLERANCE, "tanc(" + x + ")");
+            }
+        }
+
+        @Test
+        void testTanc_nearTangentPole() {
+            double x = Math.nextDown(Math.PI / 2.0);
+            double expected = StrictMath.tan(x) / x;
+            double actual = MtxTrig.tanc(x);
+            assertEquals(0.0, Math.abs((actual - expected) / expected), 1e-9);
+        }
+
+        @Test
+        void testTanc_nonFiniteInputs() {
+            assertTrue(Double.isNaN(MtxTrig.tanc(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.tanc(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.tanc(Double.NEGATIVE_INFINITY)));
+        }
+    }
+
+    @Nested
     class CardinalCosTests {
 
         @Test
