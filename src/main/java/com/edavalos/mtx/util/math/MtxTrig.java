@@ -307,8 +307,7 @@ public final class MtxTrig {
         // inputs, preserving useful precision across the full double range.
         double ax = MtxMath.abs(x);
         if (ax > 0x1.0p20) {
-            // @TODO: Implement StrictMath.sin(x) and StrictMath.cos(x)
-            return new SinCos(StrictMath.sin(x), StrictMath.cos(x));
+            return new SinCos(MtxStrictTrig.computeSin(x), MtxStrictTrig.computeCos(x));
         }
 
         // Split pi/2 into high and low parts so the subtraction retains
@@ -664,6 +663,33 @@ public final class MtxTrig {
                     case 1 ->   kernelCos(y[0], y[1]);
                     case 2 ->  -kernelSin(y[0], y[1], 1);
                     default -> -kernelCos(y[0], y[1]);
+                };
+            }
+        }
+
+        public static double computeCos(double x) {
+            double[] y = new double[2];
+            double z = 0.0;
+            int n, ix;
+
+            // High word of x
+            ix = MtxMath.highOrderBit(x);
+
+            // |x| ~< pi/4
+            ix &= EXP_SIGNIF_BITS;
+            if (ix <= 0x3fe9_21fb) {
+                return kernelCos(x, z);
+            } else if (ix >= EXP_BITS) {
+                // Match computeSin's handling of infinities and NaN.
+                return 0.0;
+            } else {
+                // argument reduction needed
+                n = ieee754RemPio2(x, y);
+                return switch (n & 3) {
+                    case 0 -> kernelCos(y[0], y[1]);
+                    case 1 -> -kernelSin(y[0], y[1], 1);
+                    case 2 -> -kernelCos(y[0], y[1]);
+                    default -> kernelSin(y[0], y[1], 1);
                 };
             }
         }
