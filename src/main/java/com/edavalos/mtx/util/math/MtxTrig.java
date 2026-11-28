@@ -661,6 +661,21 @@ public final class MtxTrig {
         return sin(MtxMath.PI * (0.5 - absReduced));
     }
 
+    /**
+     * Returns {@code tan(π * x)} using {@link #sinPi(double)} and
+     * {@link #cosPi(double)} for accurate reduction. Integer inputs return
+     * signed zero; exact half-integer poles return signed infinity.
+     */
+    public static double tanPi(double x) {
+        if (!Double.isFinite(x)) {
+            return Double.NaN;
+        }
+        if (x % 1.0 == 0.0) {
+            return MtxMath.copySign(0.0, x);
+        }
+        return sinPi(x) / cosPi(x);
+    }
+
     public static class MtxStrictTrig {
         private static final double S1  = -0x1.5555555555549p-3;
         private static final double S2  =  0x1.111111110f8a6p-7;
