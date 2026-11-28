@@ -1291,4 +1291,54 @@ class MtxTrigTest {
             assertTrue(Double.isNaN(MtxTrig.sinPi(Double.NEGATIVE_INFINITY)));
         }
     }
+
+    @Nested
+    class CosPiTests {
+
+        @Test
+        void testCosPi_integersReturnExactAlternatingValues() {
+            for (double[] testCase : new double[][]{
+                    {0.0, 1.0}, {-0.0, 1.0}, {1.0, -1.0}, {-1.0, -1.0},
+                    {2.0, 1.0}, {-2.0, 1.0}, {17.0, -1.0}, {-17.0, -1.0},
+                    {Math.scalb(1.0, 53), 1.0}, {-1e20, 1.0}
+            }) {
+                assertEquals(testCase[1], MtxTrig.cosPi(testCase[0]), 0.0);
+            }
+        }
+
+        @Test
+        void testCosPi_halfIntegersReturnExactZero() {
+            for (double x : new double[]{0.5, -0.5, 1.5, -1.5, 2.5, -2.5}) {
+                assertSameBits(0.0, MtxTrig.cosPi(x));
+            }
+        }
+
+        @Test
+        void testCosPi_generalAndLargeFractionalInputs() {
+            for (double x : new double[]{0.125, 0.25, 0.75, 1.25, -0.25, -0.75}) {
+                assertEquals(StrictMath.cos(Math.PI * x), MtxTrig.cosPi(x), TOLERANCE, "cosPi(" + x + ")");
+            }
+            double largeFraction = Math.scalb(1.0, 40) + 0.25;
+            double largeNegativeFraction = Math.scalb(1.0, 40) + 0.75;
+            double largeHalfInteger = Math.scalb(1.0, 51) + 0.5;
+            assertEquals(StrictMath.sqrt(0.5), MtxTrig.cosPi(largeFraction), TOLERANCE);
+            assertEquals(-StrictMath.sqrt(0.5), MtxTrig.cosPi(largeNegativeFraction), TOLERANCE);
+            assertSameBits(0.0, MtxTrig.cosPi(largeHalfInteger));
+        }
+
+        @Test
+        void testCosPi_nearHalfIntegerMaintainsPrecision() {
+            for (double x : new double[]{Math.nextDown(0.5), Math.nextUp(0.5)}) {
+                double expected = StrictMath.sin(Math.PI * (0.5 - x));
+                assertEquals(expected, MtxTrig.cosPi(x), 1e-30);
+            }
+        }
+
+        @Test
+        void testCosPi_nonFiniteInputs() {
+            assertTrue(Double.isNaN(MtxTrig.cosPi(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.cosPi(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.cosPi(Double.NEGATIVE_INFINITY)));
+        }
+    }
 }
