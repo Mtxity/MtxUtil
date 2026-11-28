@@ -10,7 +10,7 @@ public final class MtxHypot {
         double a = MtxMath.abs(x);
         double b = MtxMath.abs(y);
 
-        if (!Double.isFinite(a) || !Double.isFinite(b)) {
+        if (!MtxMath.isFinite(a) || !MtxMath.isFinite(b)) {
             if (a == Double.POSITIVE_INFINITY || b == Double.POSITIVE_INFINITY) {
                 return Double.POSITIVE_INFINITY;
             } else {

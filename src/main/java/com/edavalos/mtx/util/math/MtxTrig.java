@@ -581,7 +581,7 @@ public final class MtxTrig {
      * Returns {@link Double#NaN} for NaN or infinite inputs.
      */
     public static double normalizeRadians(double radians) {
-        if (!Double.isFinite(radians)) {
+        if (!MtxMath.isFinite(radians)) {
             return Double.NaN;
         }
         double normalized = radians % MtxMath.TAU;
@@ -598,7 +598,7 @@ public final class MtxTrig {
      * exactly {@code +1} or {@code -1}.
      */
     public static double sinPi(double x) {
-        if (!Double.isFinite(x)) {
+        if (!MtxMath.isFinite(x)) {
             return Double.NaN;
         }
 
@@ -631,7 +631,7 @@ public final class MtxTrig {
      * half-integer inputs return exact zero.
      */
     public static double cosPi(double x) {
-        if (!Double.isFinite(x)) {
+        if (!MtxMath.isFinite(x)) {
             return Double.NaN;
         }
 
@@ -667,7 +667,7 @@ public final class MtxTrig {
      * signed zero; exact half-integer poles return signed infinity.
      */
     public static double tanPi(double x) {
-        if (!Double.isFinite(x)) {
+        if (!MtxMath.isFinite(x)) {
             return Double.NaN;
         }
         if (x % 1.0 == 0.0) {

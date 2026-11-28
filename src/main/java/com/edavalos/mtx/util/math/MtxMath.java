@@ -1366,4 +1366,8 @@ public final class MtxMath {
 
         return result;
     }
+
+    public static boolean isFinite(double d) {
+        return abs(d) <= Double.MAX_VALUE;
+    }
 }

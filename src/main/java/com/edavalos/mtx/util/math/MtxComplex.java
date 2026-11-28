@@ -175,7 +175,7 @@ public class MtxComplex {
     }
 
     private static String formatDouble(String format, double value) {
-        if (!Double.isFinite(value)) {
+        if (!MtxMath.isFinite(value)) {
             return String.valueOf(value);
         }
 
