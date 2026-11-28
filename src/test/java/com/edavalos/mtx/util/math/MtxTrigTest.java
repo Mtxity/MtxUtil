@@ -1341,4 +1341,60 @@ class MtxTrigTest {
             assertTrue(Double.isNaN(MtxTrig.cosPi(Double.NEGATIVE_INFINITY)));
         }
     }
+
+    @Nested
+    class TanPiTests {
+
+        @Test
+        void testTanPi_integersReturnSignedZero() {
+            for (double x : new double[]{0.0, -0.0, 1.0, -1.0, 2.0, -2.0, 17.0, -17.0,
+                    Math.scalb(1.0, 53), -Math.scalb(1.0, 53)}) {
+                assertSameBits(Math.copySign(0.0, x), MtxTrig.tanPi(x));
+            }
+        }
+
+        @Test
+        void testTanPi_exactHalfIntegerPolesReturnSignedInfinity() {
+            double[][] cases = {
+                    {0.5, Double.POSITIVE_INFINITY}, {-0.5, Double.NEGATIVE_INFINITY},
+                    {1.5, Double.NEGATIVE_INFINITY}, {-1.5, Double.POSITIVE_INFINITY},
+                    {2.5, Double.POSITIVE_INFINITY}, {-2.5, Double.NEGATIVE_INFINITY}
+            };
+            for (double[] testCase : cases) {
+                assertEquals(testCase[1], MtxTrig.tanPi(testCase[0]), 0.0);
+            }
+        }
+
+        @Test
+        void testTanPi_generalAndLargeFractionalInputs() {
+            for (double x : new double[]{0.125, 0.25, 0.75, 1.25, -0.25, -0.75, 10.125}) {
+                // Reduce before forming the reference angle too, avoiding rounding from pi * large x.
+                double reduced = x % 1.0;
+                assertEquals(StrictMath.tan(Math.PI * reduced), MtxTrig.tanPi(x), TOLERANCE,
+                        "tanPi(" + x + ")");
+            }
+            double largeQuarter = Math.scalb(1.0, 40) + 0.25;
+            double largeThreeQuarter = Math.scalb(1.0, 40) + 0.75;
+            double largeHalfInteger = Math.scalb(1.0, 51) + 0.5;
+            assertEquals(1.0, MtxTrig.tanPi(largeQuarter), TOLERANCE);
+            assertEquals(-1.0, MtxTrig.tanPi(largeThreeQuarter), TOLERANCE);
+            assertEquals(Double.POSITIVE_INFINITY, MtxTrig.tanPi(largeHalfInteger), 0.0);
+        }
+
+        @Test
+        void testTanPi_nearHalfIntegerPoles() {
+            for (double x : new double[]{Math.nextDown(0.5), Math.nextUp(0.5)}) {
+                double expected = 1.0 / StrictMath.tan(Math.PI * (0.5 - x));
+                double actual = MtxTrig.tanPi(x);
+                assertEquals(0.0, Math.abs((actual - expected) / expected), 1e-9);
+            }
+        }
+
+        @Test
+        void testTanPi_nonFiniteInputs() {
+            assertTrue(Double.isNaN(MtxTrig.tanPi(Double.NaN)));
+            assertTrue(Double.isNaN(MtxTrig.tanPi(Double.POSITIVE_INFINITY)));
+            assertTrue(Double.isNaN(MtxTrig.tanPi(Double.NEGATIVE_INFINITY)));
+        }
+    }
 }
