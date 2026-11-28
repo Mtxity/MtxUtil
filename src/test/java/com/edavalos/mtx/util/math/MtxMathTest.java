@@ -3945,4 +3945,23 @@ public class MtxMathTest {
             assertThrows(IllegalArgumentException.class, () -> MtxMath.catalan(-1));
         }
     }
+
+    @Nested
+    class IsFiniteTests {
+
+        @Test
+        void testIsFinite_lessThanMax() {
+            assertTrue(MtxMath.isFinite(128));
+        }
+
+        @Test
+        void testIsFinite_equalsMax() {
+            assertTrue(MtxMath.isFinite(Double.MAX_VALUE));
+        }
+
+        @Test
+        void testIsFinite_greaterThanMax() {
+            assertFalse(MtxMath.isFinite(Double.NaN));
+        }
+    }
 }
